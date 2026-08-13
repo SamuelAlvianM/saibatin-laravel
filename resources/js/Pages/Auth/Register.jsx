@@ -18,6 +18,46 @@ import { bacaKtp } from '@/lib/ocr-ktp';
 const OTP_AKTIF = false;
 
 /**
+ * 🔴 `Bagian` dan `TandaOcr` WAJIB berada di luar komponen halaman.
+ *
+ * Sebelumnya keduanya dideklarasikan di dalam `Register()`. Setiap ketikan
+ * membuat state berubah → `Register()` dijalankan ulang → `Bagian` menjadi
+ * **fungsi baru**, yang oleh React dianggap **tipe komponen berbeda**. Akibatnya
+ * seluruh isi fieldset dilepas lalu dipasang ulang pada tiap huruf: DOM input
+ * yang lama dibuang, fokusnya hilang, dan warga harus mengklik ulang kolomnya
+ * setiap satu karakter. Dilaporkan user 13 Agu 2026.
+ *
+ * Pola yang sama pernah ada di `Components/EditorDemografi.jsx`.
+ */
+
+/** `sorot` untuk bagian yang isinya bukan <input> (mis. kamera selfie), yang
+ *  tidak bisa ditandai lewat kelas field seperti isian biasa. */
+function Bagian({ no, judul, anak, sorot }) {
+  return (
+    <fieldset className={`space-y-3 rounded-xl border p-4 ${
+      sorot ? 'border-rose-400 bg-rose-50/40' : 'border-slate-200 bg-white/60'
+    }`}>
+      <legend className="flex items-center gap-2 px-1 text-xs font-semibold uppercase tracking-wide text-brand">
+        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-brand text-[11px] text-white">{no}</span>
+        {judul}
+      </legend>
+      {anak}
+    </fieldset>
+  );
+}
+
+/** Badge "dari scan KTP" di samping label kolom hasil OCR. */
+function TandaOcr({ aktif }) {
+  if (!aktif) return null;
+
+  return (
+    <span className="ml-1.5 inline-flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-[0.62rem] font-semibold uppercase tracking-wide text-amber-800 ring-1 ring-amber-300">
+      <ScanLine className="h-3 w-3" /> Dari scan — periksa
+    </span>
+  );
+}
+
+/**
  * Pendaftaran akun warga — port dari `app/register/RegisterContent.tsx`.
  *
  * Mengikuti template Dukcapil Bantul: SATU formulir bersegmen, bukan wizard
@@ -77,13 +117,6 @@ export default function Register({ kecamatan, otpWajib, otpKanal, prefill, perba
     `w-full rounded-md border bg-white px-3 py-2 text-sm outline-none transition-all focus:ring-2 focus:ring-brand/40 ${
       ditandai(k) ? 'border-rose-400 bg-rose-50/50' : 'border-slate-300 focus:border-brand'
     } ${cincinOcr(k)}`;
-
-  /** Badge "dari scan KTP" di samping label kolom hasil OCR. */
-  const TandaOcr = ({ nama }) => (ocrTerisi.includes(nama) ? (
-    <span className="ml-1.5 inline-flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-[0.62rem] font-semibold uppercase tracking-wide text-amber-800 ring-1 ring-amber-300">
-      <ScanLine className="h-3 w-3" /> Dari scan — periksa
-    </span>
-  ) : null);
 
   /** Setter yang sekaligus melepas tanda OCR: kolom yang disunting warga bukan
    *  lagi "hasil pemindaian yang belum diperiksa". */
@@ -202,20 +235,6 @@ export default function Register({ kecamatan, otpWajib, otpKanal, prefill, perba
   const sudahOtp = Boolean(data.otpBukti);
   const targetOtp = otpKanal === 'wa' ? data.hp : data.email;
 
-  // `sorot` dipakai bagian yang isinya bukan <input> (mis. kamera selfie), yang
-  // tidak bisa ditandai lewat kelas field seperti isian biasa.
-  const Bagian = ({ no, judul, anak, sorot }) => (
-    <fieldset className={`space-y-3 rounded-xl border p-4 ${
-      sorot ? 'border-rose-400 bg-rose-50/40' : 'border-slate-200 bg-white/60'
-    }`}>
-      <legend className="flex items-center gap-2 px-1 text-xs font-semibold uppercase tracking-wide text-brand">
-        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-brand text-[11px] text-white">{no}</span>
-        {judul}
-      </legend>
-      {anak}
-    </fieldset>
-  );
-
   return (
     <KartuAuth
       judul="Pendaftaran Akun"
@@ -249,19 +268,19 @@ export default function Register({ kecamatan, otpWajib, otpKanal, prefill, perba
         <Bagian no={1} judul="Informasi Personal" anak={
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="space-y-1.5">
-              <label className="text-sm font-medium text-slate-700">NIK<TandaOcr nama="nik" /></label>
+              <label className="text-sm font-medium text-slate-700">NIK<TandaOcr aktif={ocrTerisi.includes('nik')} /></label>
               <input value={data.nik} inputMode="numeric" placeholder="16 digit"
                      onChange={(e) => isi('nik', e.target.value.replace(/\D/g, '').slice(0, 16))}
                      className={`${kelasField('nik')} font-mono`} />
             </div>
             <div className="space-y-1.5">
-              <label className="text-sm font-medium text-slate-700">Nomor KK<TandaOcr nama="kk" /></label>
+              <label className="text-sm font-medium text-slate-700">Nomor KK<TandaOcr aktif={ocrTerisi.includes('kk')} /></label>
               <input value={data.kk} inputMode="numeric" placeholder="16 digit"
                      onChange={(e) => isi('kk', e.target.value.replace(/\D/g, '').slice(0, 16))}
                      className={`${kelasField('kk')} font-mono`} />
             </div>
             <div className="space-y-1.5 sm:col-span-2">
-              <label className="text-sm font-medium text-slate-700">Nama Lengkap<TandaOcr nama="nama" /></label>
+              <label className="text-sm font-medium text-slate-700">Nama Lengkap<TandaOcr aktif={ocrTerisi.includes('nama')} /></label>
               <input value={data.nama} onChange={(e) => isi('nama', e.target.value)}
                      placeholder="Sesuai KTP" className={kelasField('nama')} />
             </div>

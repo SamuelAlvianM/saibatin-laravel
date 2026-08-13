@@ -8,6 +8,42 @@ import { Pesan, Tombol } from '@/Components/Dasbor';
 import { ambilJson, kirimBerkas, kirimJson } from '@/lib/api';
 
 /**
+ * 🔴 Di TINGKAT MODUL, bukan di dalam `EditorDemografi`.
+ *
+ * Sebelumnya komponen ini dideklarasikan di dalam komponen induknya. Tiap
+ * ketikan membuat state berubah → induknya dijalankan ulang → `Tabel` jadi
+ * fungsi baru yang oleh React dianggap tipe komponen BERBEDA, sehingga seluruh
+ * tabel dilepas & dipasang ulang: fokus input hilang setiap satu huruf.
+ * Pola yang sama pernah ada di `Pages/Auth/Register.jsx`.
+ */
+function TabelDemografi({ baris, kosongTeks, kolom, jkOtomatis, children }) {
+  return (
+    <div className="min-h-0 flex-1 overflow-auto rounded-2xl border border-slate-200 bg-white">
+      {baris.length === 0 ? (
+        <p className="py-16 text-center text-sm text-slate-500">{kosongTeks}</p>
+      ) : (
+        <table className="w-full text-sm">
+          <thead className="sticky top-0 z-10 bg-slate-50">
+            <tr className="border-b border-slate-200 text-left text-slate-500">
+              <th className="px-3 py-2 font-medium">Kode</th>
+              <th className="px-3 py-2 font-medium">Wilayah</th>
+              {kolom.map((k) => (
+                <th key={k} className="px-3 py-2 text-right font-medium">
+                  {k}{jkOtomatis && k === 'JML' && <span className="ml-1 text-[0.6rem] font-normal text-slate-400">(otomatis)</span>}
+                </th>
+              ))}
+              <th className="px-3 py-2" />
+            </tr>
+          </thead>
+          <tbody>{children}</tbody>
+        </table>
+      )}
+    </div>
+  );
+}
+
+
+/**
  * Editor data demografi — port `components/dashboard/demografi-editor.tsx`.
  *
  * Dirender sebagai **halaman penuh lewat portal** (bukan modal): tabelnya lebar
@@ -172,30 +208,6 @@ export default function EditorDemografi({ kategori, label, onTutup, onTersimpan 
 
   const kelasSel = 'w-full rounded border border-transparent bg-transparent px-1.5 py-1 text-sm outline-none hover:border-slate-200 focus:border-brand focus:bg-white';
 
-  const Tabel = ({ baris, kosongTeks, anak }) => (
-    <div className="min-h-0 flex-1 overflow-auto rounded-2xl border border-slate-200 bg-white">
-      {baris.length === 0 ? (
-        <p className="py-16 text-center text-sm text-slate-500">{kosongTeks}</p>
-      ) : (
-        <table className="w-full text-sm">
-          <thead className="sticky top-0 z-10 bg-slate-50">
-            <tr className="border-b border-slate-200 text-left text-slate-500">
-              <th className="px-3 py-2 font-medium">Kode</th>
-              <th className="px-3 py-2 font-medium">Wilayah</th>
-              {kolom.map((k) => (
-                <th key={k} className="px-3 py-2 text-right font-medium">
-                  {k}{jkOtomatis && k === 'JML' && <span className="ml-1 text-[0.6rem] font-normal text-slate-400">(otomatis)</span>}
-                </th>
-              ))}
-              <th className="px-3 py-2" />
-            </tr>
-          </thead>
-          <tbody>{anak}</tbody>
-        </table>
-      )}
-    </div>
-  );
-
   const barisTabel = (r, aksiTambahan) => (
     <tr key={r.kode || `baru-${r.level}-${rows.indexOf(r)}`} className="border-b border-slate-100">
       <td className="px-3 py-1.5">
@@ -303,8 +315,10 @@ export default function EditorDemografi({ kategori, label, onTutup, onTersimpan 
               <p className="text-xs text-slate-500">{pekonDetail.length} desa</p>
             </div>
 
-            <Tabel baris={pekonDetail} kosongTeks="Belum ada desa. Import Excel detail atau klik “Tambah Desa”."
-                   anak={pekonDetail.map((r) => barisTabel(r))} />
+            <TabelDemografi baris={pekonDetail} kolom={kolom} jkOtomatis={jkOtomatis}
+                            kosongTeks="Belum ada desa. Import Excel detail atau klik “Tambah Desa”.">
+              {pekonDetail.map((r) => barisTabel(r))}
+            </TabelDemografi>
           </>
         ) : (
           <>
@@ -323,13 +337,15 @@ export default function EditorDemografi({ kategori, label, onTutup, onTersimpan 
               </p>
             </div>
 
-            <Tabel baris={kecamatan} kosongTeks="Belum ada kecamatan. Import Excel atau klik “Tambah Kecamatan”."
-                   anak={kecamatan.map((r) => barisTabel(r, (baris) => (
-                     <button onClick={() => setDetail(baris)}
-                             className="rounded px-2 py-1 text-xs font-medium text-brand hover:bg-brand/5">
-                       Detail
-                     </button>
-                   )))} />
+            <TabelDemografi baris={kecamatan} kolom={kolom} jkOtomatis={jkOtomatis}
+                            kosongTeks="Belum ada kecamatan. Import Excel atau klik “Tambah Kecamatan”.">
+              {kecamatan.map((r) => barisTabel(r, (baris) => (
+                <button onClick={() => setDetail(baris)}
+                        className="rounded px-2 py-1 text-xs font-medium text-brand hover:bg-brand/5">
+                  Detail
+                </button>
+              )))}
+            </TabelDemografi>
           </>
         )}
       </div>
