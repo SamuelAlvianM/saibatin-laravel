@@ -1,0 +1,27 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.jsx';
+
+/*
+  Palet brand SAIBATIN — nilainya diambil dari `app/globals.css` portal Next.js,
+  yang sendirinya berasal dari `app.css` aplikasi Laravel 9 asli. Jangan diubah
+  tanpa alasan: warna ini yang membuat portal dikenali warga.
+*/
+@theme {
+  --color-brand: #2176bd;
+  --color-brand-dark: #1b4b72;
+  --color-brand-light: #6cb2eb;
+  --color-brand-yellow: #ffed4a;
+  --color-brand-yellow-dark: #e77817;
+
+  --font-sans: Figtree, ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Kartu "frosted" yang dipakai di halaman auth & beranda. */
+@utility kartu-kaca {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px);
+}

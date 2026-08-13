@@ -1,0 +1,86 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Controllers\Api\Admin\PengaturanController;
+use App\Models\Permohonan;
+use App\Services\JamLayanan;
+use App\Support\Layanan;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
+
+/**
+ * Halaman pengajuan permohonan untuk warga/OPD.
+ *
+ * Tiap layanan punya URL sendiri (`/user/pengajuan/baru/{slug}`) supaya bisa
+ * di-bookmark dan dibuka langsung — di portal lama semuanya modal tanpa URL.
+ */
+class PengajuanController extends Controller
+{
+    public function __construct(private readonly JamLayanan $jam) {}
+
+    /** Riwayat permohonan milik pengaju. */
+    public function riwayat(Request $request)
+    {
+        return Inertia::render('Pengajuan/Riwayat', [
+            'baru' => $request->query('baru'),
+        ]);
+    }
+
+    /** Pemilih layanan. */
+    public function pilih()
+    {
+        // Layanan yang disembunyikan petugas (halaman Pengaturan) tidak
+        // ditawarkan di sini. Penyaringannya di server, bukan CSS: kartu yang
+        // cuma disembunyikan tampilannya tetap bisa dibuka lewat URL-nya.
+        $hidden = PengaturanController::hidden();
+
+        return Inertia::render('Pengajuan/Pilih', [
+            'daftar' => array_values(array_filter(
+                config('layanan.daftar'),
+                fn ($l) => ! in_array($l['kunci'], $hidden, true),
+            )),
+            'kategori' => config('layanan.kategori'),
+        ]);
+    }
+
+    /** Formulir satu layanan. */
+    public function form(Request $request, string $slug)
+    {
+        $form = Layanan::formDariRute($slug);
+
+        if (! $form) {
+            abort(404);
+        }
+
+        $u = $request->user();
+
+        // Data pemohon diisi otomatis dari akun yang login. NIK hanya diisi bila
+        // `user_id` memang 16 digit (warga) — akun OPD yang user_id-nya username
+        // dibiarkan kosong supaya tidak masuk ke kolom NIK.
+        $prefill = [];
+        if (preg_match('/^\d{16}$/', (string) $u->user_id)) {
+            $prefill['pemohonnik'] = $u->user_id;
+        }
+        if (filled($u->user_fullname)) {
+            $prefill['pemohonnama'] = $u->user_fullname;
+        }
+        if (filled($u->user_email)) {
+            $prefill['pemohonemail'] = $u->user_email;
+        }
+        if (filled($u->user_nokk)) {
+            $prefill['pemohonkk'] = $u->user_nokk;
+        }
+        if (filled($u->user_hp)) {
+            $prefill['pemohonhp'] = $u->user_hp;
+        }
+
+        return Inertia::render('Pengajuan/Form', [
+            'layanan' => $form,
+            'prefill' => $prefill,
+            // Status jam dikirim dari server, bukan diambil ulang oleh klien —
+            // sumbernya sama dengan yang menggerbang endpoint pengirimannya.
+            'jam' => $this->jam->status(),
+        ]);
+    }
+}
