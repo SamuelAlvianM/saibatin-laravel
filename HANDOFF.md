@@ -5,6 +5,10 @@
 > jadi & diuji; hanya `konten` yang menunggu situs publik) — lihat §4,
 > `_analisis/05-…` & `06-…`. Perubahan baru portal Next.js sudah disusul
 > (§4 "Sinkronisasi", `_analisis/06` §2.9–2.10).
+> **Fase 7 sedang berjalan:** kerangka situs publik + **beranda lengkap**
+> (hero, carousel, statistik + peta Leaflet, alur, berita, profil, relasi) dan
+> **halaman berita & galeri** sudah jadi & diuji di browser — `_analisis/07-FASE-7-SITUS-PUBLIK.md`
+> (antrean di §6, temuan yang butuh keputusan user di §5).
 > Riwayat langkahnya: [`../HISTORY.md` §L & §O](../HISTORY.md) · ringkasan: [`../journal.md` §3.5](../journal.md)
 
 ---
@@ -207,7 +211,7 @@ di `resources/css/app.css`.
 ### Berikutnya
 | Fase | Isi |
 |---|---|
-| 7 | **Seluruh situs publik** — pekerjaan terbesar yang tersisa, dan prasyarat halaman Konten |
+| 7 | **Situs publik** — kerangka + **beranda lengkap** + **berita (daftar & artikel)** + **galeri** SUDAH jadi (`_analisis/07`). Sisanya: produk/PPID, GIS & demografi, pengaduan/hubungi-kami, widget aksesibilitas |
 | ⛔ | **Konten Halaman** BUKAN halaman formulir: ia me-render halaman publik di dalam iframe (`?editmode=1`) dan disunting di sana. **Baru bisa dibuat setelah situs publik ada** — lihat `_analisis/06` §3.4 |
 | 8 (sebagian) | Unduh PDF permohonan — satu-satunya fungsi yang kurang di halaman yang sudah jadi |
 | 9 | OCR sisi browser (tesseract.js) |
@@ -215,7 +219,7 @@ di `resources/css/app.css`.
 
 ---
 
-## 5. 🔴 Tujuh belas jebakan yang SUDAH memakan waktu — jangan diulang
+## 5. 🔴 Dua puluh satu jebakan yang SUDAH memakan waktu — jangan diulang
 
 ### Laravel / PHP
 
@@ -341,6 +345,39 @@ di `resources/css/app.css`.
     tampil `1,80123E+15` dan kehilangan presisi. Kolom bukan-angka wajib
     `setValueExplicit($v, DataType::TYPE_STRING)`. (exceljs di portal Next.js
     tidak kena karena JS string memang disimpan sebagai teks.)
+
+### Situs publik (Fase 7)
+
+18. 🔴 **`config()` MEMOTONG kunci yang mengandung titik.**
+    `config('konten.bawaan.beranda.hero')` selalu `null` — Laravel membaca titik
+    sebagai penelusuran bertingkat (`bawaan → beranda → hero`), padahal kuncinya
+    string harfiah `"beranda.hero"`. Kunci bertitik itu sudah ada di produksi
+    dan tidak boleh diganti, jadi ambil seluruh lariknya lalu indeks manual:
+    `config('konten.bawaan', [])['beranda.hero'] ?? []`. Gejalanya: isi bawaan
+    tidak pernah terpakai, dan halaman **500** begitu ada baris DB yang tidak
+    memuat seluruh kunci.
+
+19. 🔴 **POST dari halaman publik tetap butuh token CSRF.** `routes/api.php`
+    portal ini dimuat DI DALAM grup middleware `web` (jebakan lama: autentikasinya
+    sesi cookie). Skrip pencacah kunjungan yang mem-POST `/api/kunjungan` tanpa
+    `X-CSRF-TOKEN` dijawab **419** dan hitungannya tidak pernah bertambah —
+    diam-diam, karena galatnya hanya muncul di konsol peramban.
+
+20. 🔴 **`requestAnimationFrame` TIDAK JALAN di tab yang tersembunyi.** Angka
+    kartu statistik beranda yang menghitung naik (IntersectionObserver + rAF)
+    macet di **0 selamanya** bagi pengunjung yang membuka portal di tab latar
+    (ctrl-klik / "buka di tab baru" / pemulihan sesi): pengamat memicu animasi
+    dan menandainya "sudah berjalan", tapi rAF-nya tidak pernah dieksekusi.
+    Wajib ada jalur "langsung pasang nilainya" saat `document.hidden`. Ini juga
+    sebabnya pengujian lewat Browser pane menampilkan 0 — akarnya sama dengan
+    jebakan screenshot di §6.5.
+
+21. 🔴 **Jangan merakit larik di dalam `@section` Blade.** Dua cara gagal:
+    `@json([...])` bertingkat → compile error `Unclosed '['` (Blade memotong
+    argumen direktif pada `)` pertama); dan `@php … @endphp` di dalam
+    `@section` → **seluruh isi seksi setelah blok itu hilang dari HTML tanpa
+    galat apa pun** (halaman tetap tampil, hanya tag-nya lenyap). Rakit di
+    **controller**, view cukup `{!! $sudahJadi !!}`.
 
 ---
 

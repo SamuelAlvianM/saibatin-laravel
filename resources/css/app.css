@@ -190,3 +190,188 @@
   background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(20px);
 }
+
+/* ==========================================================================
+   Situs publik — disalin dari `app/globals.css` portal Next.js.
+   ========================================================================== */
+
+/* Tautan lompat-ke-konten: tersembunyi di atas layar sampai difokus keyboard. */
+.skip-to-content {
+  position: fixed;
+  top: -100px;
+  left: 16px;
+  z-index: 100;
+  background: #1b4b72;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 8px;
+  transition: top 0.15s ease;
+}
+.skip-to-content:focus {
+  top: 12px;
+}
+
+/* Bilah navigasi kaca biru. */
+.glass-nav {
+  background: linear-gradient(180deg, rgba(45, 140, 215, 0.78) 0%, rgba(33, 118, 189, 0.74) 100%);
+  backdrop-filter: blur(22px) saturate(200%);
+  -webkit-backdrop-filter: blur(22px) saturate(200%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+.glass-card-blue {
+  background: rgba(33, 118, 189, 0.08);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+}
+
+/* ==========================================================================
+   Carousel hero — keyframes & kelas bantu (disalin dari globals.css)
+   ==========================================================================
+   🔴 Transisi slide digerakkan CSS, BUKAN framer-motion. Komponennya hanya
+   memasang/melepas kelas di bawah ini; menghapusnya membuat carousel berpindah
+   slide tanpa animasi sama sekali — tampak rusak, bukan sekadar polos.
+   Durasi 0,7s di sini terikat dengan `setTimeout(750)` di Carousel.jsx yang
+   membuka kunci tombol; kalau salah satu diubah, ubah keduanya.
+*/
+
+@keyframes carousel-slide-in-next {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+@keyframes carousel-slide-out-next {
+  from { transform: translateX(0);     opacity: 1; }
+  to   { transform: translateX(-100%); opacity: 0; }
+}
+@keyframes carousel-slide-in-prev {
+  from { transform: translateX(-100%); opacity: 0; }
+  to   { transform: translateX(0);     opacity: 1; }
+}
+@keyframes carousel-slide-out-prev {
+  from { transform: translateX(0);    opacity: 1; }
+  to   { transform: translateX(100%); opacity: 0; }
+}
+@keyframes carousel-scale-image {
+  from { transform: scale(1.2); }
+  to   { transform: scale(1);   }
+}
+@keyframes carousel-fade-in-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+.carousel-slide-enter-next { animation: carousel-slide-in-next  0.7s cubic-bezier(0.65, 0, 0.35, 1) forwards; }
+.carousel-slide-exit-next  { animation: carousel-slide-out-next 0.7s cubic-bezier(0.65, 0, 0.35, 1) forwards; }
+.carousel-slide-enter-prev { animation: carousel-slide-in-prev  0.7s cubic-bezier(0.65, 0, 0.35, 1) forwards; }
+.carousel-slide-exit-prev  { animation: carousel-slide-out-prev 0.7s cubic-bezier(0.65, 0, 0.35, 1) forwards; }
+
+/* Ken-Burns pelan pada foto slide aktif. */
+.carousel-image-scale { animation: carousel-scale-image 1.4s cubic-bezier(0.65, 0, 0.35, 1) forwards; }
+
+.carousel-text-enter {
+  animation: carousel-fade-in-up 0.8s cubic-bezier(0.65, 0, 0.35, 1) 0.3s forwards;
+  opacity: 0;
+}
+.carousel-subtitle-enter {
+  animation: carousel-fade-in-up 0.8s cubic-bezier(0.65, 0, 0.35, 1) 0.5s forwards;
+  opacity: 0;
+}
+
+.carousel-nav-dot { transition: all 0.3s cubic-bezier(0.65, 0, 0.35, 1); }
+.carousel-nav-dot:hover { transform: scale(1.2); }
+
+.carousel-nav-button {
+  transition: all 0.3s cubic-bezier(0.65, 0, 0.35, 1);
+  backdrop-filter: blur(10px);
+}
+.carousel-nav-button:hover { transform: scale(1.1); background: rgba(255, 255, 255, 0.25); }
+.carousel-nav-button:active { transform: scale(0.95); }
+
+.carousel-font-title { font-family: 'Cormorant Garamond', serif; }
+.carousel-font-subtitle { font-family: 'Montserrat', sans-serif; }
+
+/* ==========================================================================
+   Penanda lokasi kantor di peta Leaflet
+   ==========================================================================
+   Penanda dibuat dari `L.divIcon` + CSS ini, bukan berkas gambar: denyutnya
+   jalan tanpa satu pun aset tambahan yang harus ikut diunggah ke cPanel.
+*/
+
+.office-marker { position: relative; width: 44px; height: 44px; }
+
+.office-marker__pin {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  width: 34px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #2176bd, #1b4b72);
+  box-shadow: 0 4px 14px rgba(27, 75, 114, 0.45);
+  z-index: 2;
+}
+
+.office-marker__pulse {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 34px;
+  height: 34px;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+  background: rgba(33, 118, 189, 0.45);
+  animation: office-pulse 2s ease-out infinite;
+}
+
+@keyframes office-pulse {
+  0%   { transform: translate(-50%, -50%) scale(1);   opacity: 0.7; }
+  70%  { transform: translate(-50%, -50%) scale(2.6); opacity: 0; }
+  100% { transform: translate(-50%, -50%) scale(2.6); opacity: 0; }
+}
+
+.leaflet-container { font-family: inherit; }
+
+/* ==========================================================================
+   Masuk-layar untuk seksi publik
+   ==========================================================================
+   Portal Next.js memakai framer-motion (`whileInView`) untuk memunculkan tiap
+   seksi. Di sini seksinya dirender SERVER sebagai HTML biasa, jadi animasinya
+   pun CSS: elemen yang sudah ada di HTML tidak perlu menunggu React dimuat
+   hanya untuk terlihat. Tanpa ini seluruh beranda tampak diam saat digulir.
+*/
+
+@keyframes masuk-naik {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.masuk-naik {
+  animation: masuk-naik 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Hormati pengguna yang mematikan animasi di sistemnya. */
+@media (prefers-reduced-motion: reduce) {
+  .masuk-naik,
+  .carousel-text-enter,
+  .carousel-subtitle-enter,
+  .carousel-image-scale,
+  .carousel-slide-enter-next,
+  .carousel-slide-exit-next,
+  .carousel-slide-enter-prev,
+  .carousel-slide-exit-prev {
+    animation: none;
+    opacity: 1;
+  }
+}

@@ -130,4 +130,12 @@ Route::get('/uploads/media/{jalur}', App\Http\Controllers\MediaPublikController:
 Route::get('/uploads/{jalur}', [App\Http\Controllers\BerkasController::class, 'tampilkan'])
     ->where('jalur', '.*');
 
-Route::get('/', fn () => redirect('/login'));
+// ── Situs publik (Blade + React island) ─────────────────────────────────────
+// Didaftarkan PALING AKHIR: sebagian nanti berpola catch-all (`/produk/{slug}`,
+// `/ppid/{slug}`) yang akan menelan rute di atasnya kalau dinaikkan.
+Route::get('/', [App\Http\Controllers\PublikController::class, 'beranda'])->name('beranda');
+
+Route::get('/galeri', [App\Http\Controllers\PublikController::class, 'galeri'])->name('galeri');
+
+Route::get('/media/berita', [App\Http\Controllers\PublikController::class, 'beritaIndeks'])->name('berita.indeks');
+Route::get('/media/berita/{slug}', [App\Http\Controllers\PublikController::class, 'beritaDetail'])->name('berita.detail');

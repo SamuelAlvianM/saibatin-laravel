@@ -1,6 +1,6 @@
 import {
-  Baby, Book, FileText, Heart, Home, IdCard, MapPin, Printer,
-  ScrollText, UserPlus, Users, Zap,
+  Baby, Book, Clock, FileText, Gift, Heart, Home, IdCard, MapPin, Printer,
+  ScanLine, ScrollText, ShieldCheck, Smile, User, UserCircle, UserPlus, Users, Zap,
 } from 'lucide-react';
 
 /**
@@ -19,6 +19,10 @@ import {
 const PETA = {
   Baby, Book, FileText, Heart, Home, IdCard, MapPin, Printer,
   ScrollText, UserPlus, Users, Zap,
+  // Dipakai kartu "janji pelayanan" di tab Maklumat (config/konten.php).
+  Clock, Gift, ShieldCheck, Smile,
+  // Dipakai kartu statistik demografi beranda (config/konten.php kartu_beranda).
+  ScanLine, User, UserCircle,
 };
 
 export function ikon(nama) {

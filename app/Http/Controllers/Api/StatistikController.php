@@ -92,6 +92,10 @@ class StatistikController extends Controller
                     'icon' => $k['icon'],
                     'kategori' => $k['kategori'],
                     'kolom' => $k['kolom'],
+                    // Nama preset, bukan kelas Tailwind: kelasnya harus literal
+                    // agar ter-scan, jadi pemetaannya hidup di sisi klien
+                    // (`lib/statistik-kartu.js`).
+                    'warna' => $k['warna'],
                     'badge' => $badge,
                     'value' => $nilai,
                 ];
@@ -125,6 +129,13 @@ class StatistikController extends Controller
     {
         $konten = StaticContent::where('kunci', self::KUNCI_KARTU)->value('konten');
         $kartu = is_array($konten) ? ($konten['kartu'] ?? []) : [];
+
+        // Belum pernah diatur petugas → pakai susunan bawaan, bukan kosong.
+        // Beranda yang tampil tanpa satu kartu pun terbaca sebagai rusak,
+        // padahal yang terjadi cuma "belum disentuh siapa-siapa".
+        if (! is_array($kartu) || $kartu === []) {
+            $kartu = config('konten.kartu_beranda', []);
+        }
 
         return collect(is_array($kartu) ? $kartu : [])
             ->filter(fn ($k) => is_array($k))

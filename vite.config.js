@@ -12,7 +12,11 @@ export default defineConfig({
     },
     plugins: [
         laravel({
-            input: ['resources/css/app.css', 'resources/js/app.jsx'],
+            // Dua titik masuk yang sengaja dipisah: `app.jsx` untuk dashboard &
+            // formulir (Inertia), `publik.jsx` untuk situs publik (Blade +
+            // island). Warga yang membuka beranda tidak ikut mengunduh runtime
+            // Inertia beserta seluruh halaman dashboard petugas.
+            input: ['resources/css/app.css', 'resources/js/app.jsx', 'resources/js/publik.jsx'],
             refresh: true,
         }),
         react(),
