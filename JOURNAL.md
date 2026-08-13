@@ -1,9 +1,9 @@
 # Journal — SAIBATIN-LARAVEL (`saibatin-laravel`)
 
-> **Terakhir diperbarui: 2026-08-13** · anak dari [`../journal.md`](../journal.md) §3.5
+> **Terakhir diperbarui: 2026-08-14** · anak dari [`../journal.md`](../journal.md) §3.5
 >
 > 🔴 **Sebelum melanjutkan, baca [`HANDOFF.md`](HANDOFF.md).** Berkas ini cuma ringkasan
-> keadaan; panduan kerja, cara menjalankan, dan 13 jebakan ada di sana.
+> keadaan; panduan kerja, cara menjalankan, dan 17 jebakan ada di sana.
 
 ## 1. Identitas project
 
@@ -13,11 +13,27 @@
 | Tujuan | **mengganti total** portal SAIBATIN Next.js |
 | Umur | baru — dimulai **7 Agustus 2026** |
 | Port dev | **3104** (`saibatin-laravel-dev`) — 🔴 DIPATENKAN · login uji `admin`/`admin123` |
-| Git | **belum di-git** |
+| Git | ✅ **sudah di-git** — `a992920` (port Fase 1–5) · `7fc49f6` (fokus input lepas) · `df76489` (kit shadcn/ui) |
 | Server | **belum menyentuh server sama sekali** |
 
 Ini **bukan** fork codebase Next.js. Project terpisah. Jebakan keluarga Next.js
 (journal induk §5) **tidak berlaku** di sini — jebakan Laravel ada di `HANDOFF.md` §5.
+
+**Kit UI (keputusan user 14 Agu 2026).** Kontrol formulir memakai **shadcn/ui**,
+17 komponen disalin dari portal Next.js ke `resources/js/Components/ui/`
+(+ `SearchSelect`). Alasannya bukan selera: portal yang sekarang live memang
+memakai kit itu, jadi menyalinnya = memulangkan desain aslinya, bukan mendesain
+ulang. Keputusan lama "hindari shadcn demi ukuran bundel" (dulu tertulis di
+`Components/Dasbor.jsx`) **sudah dicabut** — harganya CSS 78 → 132 KB
+(20,6 KB gzip) dan JS inti praktis tetap (328 → 329 KB).
+
+**Turbine UI** (`brandymedia/turbine-ui-core`) yang ditanyakan user itu **nyata**
+tapi komponen **Blade**, jadi tidak bisa dipakai di halaman Inertia+React.
+Tempatnya kalau mau dipakai adalah **Fase 7 (situs publik)** yang memang Blade.
+Catatan pemasangannya: dokumennya menyuruh menambah path ke `content` di
+`tailwind.config.js` (gaya Tailwind v3); project ini Tailwind v4, padanannya
+satu baris `@source '../../vendor/brandymedia/turbine-ui-core/**/*.php';`
+di `resources/css/app.css`.
 
 ## 2. Keputusan yang sudah dikunci user — jangan dibuka ulang
 
@@ -85,9 +101,7 @@ bergantung padanya dan produksi masih menyimpan tiket warga. Rincian:
    prasyarat halaman **Konten** (yang me-render halaman publik di dalam iframe,
    bukan formulir tersendiri). Sisa Fase 5 sudah habis 12–13 Agu: Pengaturan,
    berita, pustaka media, galeri, dokumen publikasi, tiket & chat, demografi.
-2. 🔴 **Belum di-git.** Makin mendesak: seluruh pekerjaan Fase 3–5 (± 45 berkas)
-   hanya ada di working tree, tanpa satu pun titik pulih. Sesi 12 Agu yang
-   terputus adalah contoh persis kenapa ini berisiko.
+2. ~~Belum di-git~~ — **beres 14 Agu.** Tiga commit, ada titik pulih.
 3. **Menunggu keputusan user:** berkas warisan tidak terbuka untuk warga
    pemiliknya (HANDOFF §7 no. 4) — wajib ditutup sebelum cutover.
 4. Deployment: **sengaja ditunda** atas keputusan user. Dua syarat baru yang
@@ -102,7 +116,7 @@ bergantung padanya dan produksi masih menyimpan tiket warga. Rincian:
 
 | Berkas | Isi |
 |---|---|
-| [`HANDOFF.md`](HANDOFF.md) | **panduan melanjutkan** — status, cara jalan, 13 jebakan, berkas sementara |
+| [`HANDOFF.md`](HANDOFF.md) | **panduan melanjutkan** — status, cara jalan, 17 jebakan, berkas sementara |
 | `_analisis/00…` | kelayakan & peta port |
 | `_analisis/01…` | bukti Fase 1 (perbandingan skema) |
 | `_analisis/02…` | hasil uji auth (Fase 2) |

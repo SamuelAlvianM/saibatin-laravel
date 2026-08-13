@@ -1,7 +1,7 @@
 # HANDOFF — SAIBATIN Laravel
 
 > Untuk sesi/developer berikutnya. **Baca ini dulu sebelum menyentuh kode.**
-> Terakhir diperbarui: **2026-08-13** · Fase 1–5 selesai (16 halaman dashboard
+> Terakhir diperbarui: **2026-08-14** · Fase 1–5 selesai (16 halaman dashboard
 > jadi & diuji; hanya `konten` yang menunggu situs publik) — lihat §4,
 > `_analisis/05-…` & `06-…`. Perubahan baru portal Next.js sudah disusul
 > (§4 "Sinkronisasi", `_analisis/06` §2.9–2.10).
@@ -25,9 +25,10 @@ melayani warga sekarang).
 | DB kerja | **`saibatin_lv`** — klon dari DB dev Next.js `saibatin`. 1.386 akun · 11.902 permohonan · 1.485 berkas |
 | Dev server | **port 3104** (🔴 dipaku), entri `saibatin-laravel-dev` di `../.claude/launch.json` |
 | Login uji | `admin` / `admin123` |
-| Belum di-git | folder ini belum jadi repo. Belum ada apa pun yang menyentuh server. |
+| Git | ✅ sudah jadi repo — `a992920` (port Fase 1–5) · `7fc49f6` (fokus input) · `df76489` (kit shadcn/ui). Belum ada remote. |
+| Kit UI | **shadcn/ui**, 17 komponen di `resources/js/Components/ui/` + `Components/SearchSelect.jsx` — disalin dari portal Next.js, lihat §4 "Kit UI" |
 
-**Bukan** repo git, **bukan** di-deploy, **tidak** menyentuh produksi.
+**Bukan** di-deploy, **tidak** menyentuh produksi.
 
 ---
 
@@ -166,6 +167,43 @@ di `_analisis/06` §2.9. Ringkasnya:
 7. `1f435fd` (validasi dari TIPE field) **sudah ada sejak Fase 4** di
    `Support\Layanan::periksaField` — pesan galatnya pun sama persis.
 
+### Kit UI — shadcn/ui (14 Agu, keputusan user)
+
+Kontrol formulir tidak lagi ditulis ulang per halaman. **17 komponen** disalin
+dari `components/ui/*.tsx` portal Next.js ke `resources/js/Components/ui/*.jsx`
+(anotasi tipe dibuang, `@/components/…` → `@/Components/…`), plus
+`Components/SearchSelect.jsx` dari `components/shared/search-select.tsx`.
+
+Alasannya bukan selera: **portal yang sekarang melayani warga memang memakai kit
+itu**, jadi menyalinnya = memulangkan desain aslinya, sejalan dengan target
+"100% sama UI". Keputusan lama *"hindari shadcn demi ukuran bundel"* (dulu
+tertulis di `Components/Dasbor.jsx`) sudah **dicabut user**.
+
+- Token temanya (`@custom-variant dark`, `@theme inline`, `:root`/`.dark`)
+  disalin apa adanya dari `app/globals.css` portal ke `resources/css/app.css`.
+  Palet brand & `@utility kartu-kaca` yang sudah ada **dipertahankan**.
+- Dua paket menyusul: `tw-animate-css` (kelas `animate-in`/`fade-in-0`/
+  `slide-in-*` yang dipakai Dialog, Popover, Select, Tabs) dan
+  `@tailwindcss/typography`. Yang kedua sebenarnya sudah dibutuhkan sejak dulu —
+  `PenyuntingKaya.jsx:116` memasang kelas `prose` yang selama ini **tidak ada**.
+- **Field tanggal & jam bukan lagi `input type="date"/"time"` bawaan peramban**,
+  melainkan `DatePicker`/`TimePicker` dengan masker ketik: "17081945" →
+  17/08/1945, "1600" → 16:00. Nilai yang keluar tetap `yyyy-MM-dd` / `HH:mm`,
+  jadi tidak ada perubahan di sisi server.
+- Sisa kontrol mentah yang **sengaja** dibiarkan: kotak pencarian di dalam
+  `SearchSelect` (memang tanpa border), radio pemilih konflik di
+  `EditorDemografi` (kit tidak punya radio-group; portal pun tidak), dan
+  `input type="file"`.
+- Harga bundel: CSS **78,1 → 132,1 KB** (20,6 KB gzip), JS inti **328 → 329 KB**
+  (104,6 KB gzip) — Radix masuk ke chunk halaman, bukan ke inti.
+
+🔵 **Turbine UI** (`brandymedia/turbine-ui-core`) yang ditanyakan user itu nyata,
+tapi komponen **Blade** — tidak bisa dipakai di halaman Inertia+React. Kalau mau
+dipakai, tempatnya **Fase 7 (situs publik)** yang memang Blade. Dokumennya
+menyuruh menambah path ke `content` di `tailwind.config.js` (Tailwind v3);
+di sini padanannya satu baris `@source '../../vendor/brandymedia/turbine-ui-core/**/*.php';`
+di `resources/css/app.css`.
+
 ### Berikutnya
 | Fase | Isi |
 |---|---|
@@ -177,7 +215,7 @@ di `_analisis/06` §2.9. Ringkasnya:
 
 ---
 
-## 5. 🔴 Lima belas jebakan yang SUDAH memakan waktu — jangan diulang
+## 5. 🔴 Tujuh belas jebakan yang SUDAH memakan waktu — jangan diulang
 
 ### Laravel / PHP
 
@@ -268,6 +306,22 @@ di `_analisis/06` §2.9. Ringkasnya:
     di `routes/api.php`. Polanya menelan rute dua-segmen mana pun sesudahnya
     (`auth/session`, `profil/foto`, `skm/unsur`) — Laravel memakai rute pertama
     yang cocok.
+
+### Kit UI (shadcn/Radix)
+
+16. 🔴 **`SelectItem` TIDAK BOLEH bernilai `""`.** Radix melempar galat runtime
+    dan halamannya kosong — string kosong sudah dipakai Radix sendiri sebagai
+    "belum ada pilihan". Tiga filter di sini memang butuh opsi "semua"
+    (`Log`/`Permohonan` → petugas, `Dasbor.FilterPeriode` → periode), jadi
+    dipakai penanda **`'semua'`** yang diterjemahkan kembali ke `''` di
+    `onValueChange`. Menyalin pola `<option value="">` apa adanya dari `<select>`
+    lama = halaman mati.
+
+17. **Komponen kit WAJIB dideklarasikan di tingkat modul.** Ini pengulangan
+    pelajaran `7fc49f6`: komponen yang dibuat di dalam badan komponen lain jadi
+    tipe baru tiap render → React melepas & memasang ulang seluruh subtree →
+    **fokus input hilang tiap satu huruf**. Sudah pernah terjadi dua kali
+    (`Register.jsx`, `EditorDemografi.jsx`).
 
 ### PhpSpreadsheet
 
