@@ -2,6 +2,8 @@ import { Link, router } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import { ArrowLeft, ClipboardList, Loader2, RefreshCw, Search } from 'lucide-react';
 import KartuAuth from '@/Components/KartuAuth';
+import { Button } from '@/Components/ui/button';
+import { Input } from '@/Components/ui/input';
 import { kirimJson } from '@/lib/api';
 
 /**
@@ -79,21 +81,17 @@ export default function CekStatus({ nikAwal }) {
     >
       <div className="space-y-4 px-8 pb-8">
         <form onSubmit={periksa} className="flex gap-2">
-          <input
+          <Input
             value={nik}
             onChange={(e) => setNik(e.target.value.replace(/\D/g, '').slice(0, 16))}
             inputMode="numeric"
             placeholder="16 digit NIK"
-            className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 font-mono text-sm outline-none transition-all focus:border-brand focus:ring-2 focus:ring-brand/40"
+            className="font-mono"
           />
-          <button
-            type="submit"
-            disabled={memuat}
-            className="inline-flex shrink-0 items-center gap-1.5 rounded-md bg-brand px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-dark disabled:opacity-50"
-          >
+          <Button type="submit" disabled={memuat} className="shrink-0 font-semibold">
             {memuat ? <Loader2 className="h-4 w-4 animate-spin" /> : <Search className="h-4 w-4" />}
             Cek
-          </button>
+          </Button>
         </form>
 
         {galat && (
@@ -107,7 +105,7 @@ export default function CekStatus({ nikAwal }) {
         {hasil && !hasil.ada && (
           <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
             NIK ini belum pernah didaftarkan di portal.{' '}
-            <Link href="/register" className="font-semibold text-brand hover:underline">Daftar sekarang</Link>
+            <Link href="/register" className="font-semibold text-primary hover:underline">Daftar sekarang</Link>
           </div>
         )}
 
@@ -150,22 +148,25 @@ export default function CekStatus({ nikAwal }) {
                 )}
 
                 <div className="flex flex-col gap-2 sm:flex-row">
-                  <button
+                  <Button
+                    type="button"
+                    variant="outline"
                     onClick={ajukanUlang}
                     disabled={mengajukan}
-                    className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-brand px-3 py-2 text-sm font-semibold text-brand transition-colors hover:bg-brand/5 disabled:opacity-50"
+                    className="flex-1 border-primary font-semibold text-primary hover:bg-primary/5"
                   >
                     {mengajukan ? <Loader2 className="h-4 w-4 animate-spin" /> : <RefreshCw className="h-4 w-4" />}
                     Ajukan Ulang (data lama)
-                  </button>
+                  </Button>
                   {/* NIK dibawa ke form pendaftaran supaya data lama terisi
                       dan bagian yang ditandai petugas langsung tersorot. */}
-                  <button
+                  <Button
+                    type="button"
                     onClick={() => router.visit(`/register?nik=${nik}`)}
-                    className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-brand px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-dark"
+                    className="flex-1 font-semibold"
                   >
                     Perbaiki Data Dulu
-                  </button>
+                  </Button>
                 </div>
                 <p className="text-[11px] leading-relaxed text-slate-500">
                   Ajukan ulang tanpa mengubah apa pun kemungkinan besar ditolak lagi —
@@ -175,16 +176,15 @@ export default function CekStatus({ nikAwal }) {
             )}
 
             {hasil.status === 1 && (
-              <Link href="/login"
-                    className="inline-flex w-full items-center justify-center rounded-lg bg-brand px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-dark">
-                Login Sekarang
-              </Link>
+              <Button asChild className="w-full font-semibold">
+                <Link href="/login">Login Sekarang</Link>
+              </Button>
             )}
           </div>
         )}
 
         <div className="flex justify-center pt-1">
-          <Link href="/login" className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-brand">
+          <Link href="/login" className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-primary">
             <ArrowLeft className="h-4 w-4" />Kembali ke Login
           </Link>
         </div>

@@ -1,4 +1,7 @@
 import { Head } from '@inertiajs/react';
+import { AlertCircle } from 'lucide-react';
+
+import { Alert, AlertDescription } from '@/Components/ui/alert';
 
 /**
  * Kerangka halaman auth (login, daftar, lupa sandi, cek status).
@@ -66,11 +69,13 @@ export function KotakGalat({ errors }) {
   if (daftar.length === 0) return null;
 
   return (
-    <div className="flex gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
-      <span aria-hidden className="mt-0.5 shrink-0">⚠</span>
-      <ul className="list-inside list-disc space-y-1">
-        {daftar.map((g, i) => <li key={i}>{g}</li>)}
-      </ul>
-    </div>
+    <Alert variant="destructive" className="animate-in fade-in slide-in-from-top-2 duration-300">
+      <AlertCircle className="h-4 w-4" />
+      <AlertDescription>
+        <ul className="list-inside list-disc space-y-1">
+          {daftar.map((g, i) => <li key={i}>{g}</li>)}
+        </ul>
+      </AlertDescription>
+    </Alert>
   );
 }

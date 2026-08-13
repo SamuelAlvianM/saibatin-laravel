@@ -4,6 +4,10 @@ import LayoutDashboard from '@/Components/LayoutDashboard';
 import BidangGambar from '@/Components/BidangGambar';
 import { Kartu, Kosong, Memuat, Modal, Pesan, Tombol, tglSingkat } from '@/Components/Dasbor';
 import { ambilJson, kirimJson } from '@/lib/api';
+import { Checkbox } from '@/Components/ui/checkbox';
+import { Input } from '@/Components/ui/input';
+import { Label } from '@/Components/ui/label';
+import { Textarea } from '@/Components/ui/textarea';
 
 // tiptap ± 400 KB — hanya diunduh saat form berita/konten dibuka.
 const PenyuntingKaya = lazy(() => import('@/Components/PenyuntingKaya'));
@@ -175,17 +179,15 @@ export default function Berita() {
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-1.5 sm:col-span-2">
-                <label htmlFor="judul" className="text-sm font-medium text-slate-700">Judul</label>
-                <input id="judul" value={form.judul} onChange={(e) => setForm({ ...form, judul: e.target.value })}
-                       className="h-9 w-full rounded-lg border border-slate-300 px-3 text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/40" />
+                <Label htmlFor="judul" className="text-slate-700">Judul</Label>
+                <Input id="judul" value={form.judul} onChange={(e) => setForm({ ...form, judul: e.target.value })} />
                 {form.judul && <p className="font-mono text-xs text-slate-400">slug: /{slugify(form.judul) || '...'}</p>}
               </div>
 
               <div className="space-y-1.5">
-                <label htmlFor="kategori" className="text-sm font-medium text-slate-700">Kategori</label>
-                <input id="kategori" value={form.kategori} placeholder="mis. Pengumuman"
-                       onChange={(e) => setForm({ ...form, kategori: e.target.value })}
-                       className="h-9 w-full rounded-lg border border-slate-300 px-3 text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/40" />
+                <Label htmlFor="kategori" className="text-slate-700">Kategori</Label>
+                <Input id="kategori" value={form.kategori} placeholder="mis. Pengumuman"
+                       onChange={(e) => setForm({ ...form, kategori: e.target.value })} />
               </div>
 
               <div className="space-y-1.5">
@@ -198,19 +200,19 @@ export default function Berita() {
             </div>
 
             <div className="space-y-1.5">
-              <label htmlFor="ringkasan" className="text-sm font-medium text-slate-700">Ringkasan</label>
-              <textarea id="ringkasan" rows={2} value={form.ringkasan}
+              <Label htmlFor="ringkasan" className="text-slate-700">Ringkasan</Label>
+              <Textarea id="ringkasan" rows={2} value={form.ringkasan}
                         placeholder="Ringkasan singkat yang tampil di daftar berita"
-                        onChange={(e) => setForm({ ...form, ringkasan: e.target.value })}
-                        className="w-full rounded-lg border border-slate-300 p-2 text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/40" />
+                        onChange={(e) => setForm({ ...form, ringkasan: e.target.value })} />
             </div>
 
-            <label className="flex items-center gap-2 text-sm">
-              <input type="checkbox" checked={form.publish}
-                     onChange={(e) => setForm({ ...form, publish: e.target.checked })}
-                     className="h-4 w-4 rounded border-slate-300 text-brand focus:ring-brand/40" />
-              Publikasikan sekarang
-            </label>
+            <div className="flex items-center gap-2">
+              <Checkbox id="publish" checked={form.publish}
+                        onCheckedChange={(v) => setForm({ ...form, publish: v === true })} />
+              <Label htmlFor="publish" className="cursor-pointer font-normal select-none">
+                Publikasikan sekarang
+              </Label>
+            </div>
 
             <div className="flex justify-end gap-2 pt-2">
               <Tombol varian="garis" onClick={() => setBuka(false)}>Batal</Tombol>

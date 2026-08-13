@@ -4,6 +4,8 @@ import LayoutDashboard from '@/Components/LayoutDashboard';
 import BidangGambar from '@/Components/BidangGambar';
 import { Kartu, Kosong, Memuat, Modal, Pesan, Tombol } from '@/Components/Dasbor';
 import { ambilJson, kirimJson } from '@/lib/api';
+import { Input } from '@/Components/ui/input';
+import { Label } from '@/Components/ui/label';
 
 /**
  * Galeri foto — port `app/dashboard/galeri/AdminGaleri.tsx`.
@@ -111,9 +113,8 @@ export default function Galeri() {
         <Modal judul="Upload Foto" onTutup={() => setBuka(false)}>
           <div className="space-y-4">
             <div className="space-y-1.5">
-              <label htmlFor="judul-foto" className="text-sm font-medium text-slate-700">Judul</label>
-              <input id="judul-foto" value={judul} onChange={(e) => setJudul(e.target.value)}
-                     className="h-9 w-full rounded-lg border border-slate-300 px-3 text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/40" />
+              <Label htmlFor="judul-foto" className="text-slate-700">Judul</Label>
+              <Input id="judul-foto" value={judul} onChange={(e) => setJudul(e.target.value)} />
             </div>
 
             <div className="space-y-1.5">

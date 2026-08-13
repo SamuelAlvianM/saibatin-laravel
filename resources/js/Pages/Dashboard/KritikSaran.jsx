@@ -3,6 +3,7 @@ import { CalendarDays, Mail, MessagesSquare, Phone, Search, User } from 'lucide-
 import LayoutDashboard from '@/Components/LayoutDashboard';
 import { Kartu, Memuat, Pesan } from '@/Components/Dasbor';
 import { ambilJson } from '@/lib/api';
+import { Input } from '@/Components/ui/input';
 
 /**
  * Kritik & saran — port `app/dashboard/kritik-saran/AdminKritikSaran.tsx`.
@@ -50,8 +51,8 @@ export default function KritikSaran() {
           </div>
           <div className="relative w-full sm:w-72">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-            <input value={cari} onChange={(e) => setCari(e.target.value)} placeholder="Cari nama / isi pesan…"
-                   className="h-9 w-full rounded-lg border border-slate-300 pl-9 pr-3 text-sm" />
+            <Input value={cari} onChange={(e) => setCari(e.target.value)} placeholder="Cari nama / isi pesan…"
+                   className="pl-9" />
           </div>
         </div>
 

@@ -6,6 +6,7 @@ import LayoutDashboard from '@/Components/LayoutDashboard';
 import MediaUnggah from '@/Components/MediaUnggah';
 import { Kartu, Pesan, Tombol, useTunda } from '@/Components/Dasbor';
 import { ambilJson, kirimJson } from '@/lib/api';
+import { Input } from '@/Components/ui/input';
 
 /**
  * Pustaka Media — port `app/dashboard/media/AdminMedia.tsx`.
@@ -80,9 +81,8 @@ export default function Media() {
           <div className="flex w-full gap-2 sm:w-auto">
             <div className="relative flex-1 sm:w-64">
               <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-              <input value={cari} onChange={(e) => { setCari(e.target.value); setPage(1); }}
-                     placeholder="Cari nama file..."
-                     className="h-9 w-full rounded-lg border border-slate-300 pl-9 pr-3 text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/40" />
+              <Input value={cari} onChange={(e) => { setCari(e.target.value); setPage(1); }}
+                     placeholder="Cari nama file..." className="pl-9" />
             </div>
             <Tombol onClick={() => setUnggah((s) => !s)}>
               {unggah ? <X className="h-4 w-4" /> : <CloudUpload className="h-4 w-4" />}

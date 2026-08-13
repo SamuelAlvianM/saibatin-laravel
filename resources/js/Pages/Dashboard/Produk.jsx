@@ -5,6 +5,11 @@ import {
 import LayoutDashboard from '@/Components/LayoutDashboard';
 import { Kartu, Kosong, Memuat, Modal, Pesan, Tombol, tglSingkat } from '@/Components/Dasbor';
 import { ambilJson, kirimBerkas, kirimJson } from '@/lib/api';
+import { Input } from '@/Components/ui/input';
+import { Label } from '@/Components/ui/label';
+import {
+  Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue,
+} from '@/Components/ui/select';
 
 /**
  * Dokumen Publikasi — port `app/dashboard/produk/AdminProduk.tsx`.
@@ -105,17 +110,22 @@ export default function Produk({ kategori }) {
       <Kartu>
         <div className="mb-4 grid gap-3 lg:grid-cols-[320px_1fr]">
           <div className="space-y-1.5">
-            <label htmlFor="jenis" className="text-sm font-medium text-slate-700">Kategori Dokumen</label>
-            <select id="jenis" value={jenis} onChange={(e) => { setJenis(e.target.value); setCari(''); }}
-                    className="h-9 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/40">
-              {GRUP.map((g) => (
-                <optgroup key={g} label={g}>
-                  {kategori.filter((k) => k.group === g).map((k) => (
-                    <option key={k.key} value={k.key}>{k.label}</option>
-                  ))}
-                </optgroup>
-              ))}
-            </select>
+            <Label htmlFor="jenis" className="text-slate-700">Kategori Dokumen</Label>
+            <Select value={jenis} onValueChange={(v) => { setJenis(v); setCari(''); }}>
+              <SelectTrigger id="jenis" className="w-full">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {GRUP.map((g) => (
+                  <SelectGroup key={g}>
+                    <SelectLabel>{g}</SelectLabel>
+                    {kategori.filter((k) => k.group === g).map((k) => (
+                      <SelectItem key={k.key} value={k.key}>{k.label}</SelectItem>
+                    ))}
+                  </SelectGroup>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           <div className="rounded-xl border border-brand/20 bg-brand/5 px-4 py-3 text-sm text-slate-700">
@@ -137,8 +147,8 @@ export default function Produk({ kategori }) {
         <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center">
           <div className="relative flex-1">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-            <input value={cari} onChange={(e) => setCari(e.target.value)} placeholder="Cari nama dokumen..."
-                   className="h-9 w-full rounded-lg border border-slate-300 pl-9 pr-3 text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/40" />
+            <Input value={cari} onChange={(e) => setCari(e.target.value)} placeholder="Cari nama dokumen..."
+                   className="pl-9" />
           </div>
           <Tombol onClick={() => { setJudul(''); setFile(''); setBuka(true); }} kelas="sm:w-auto">
             <Plus className="h-4 w-4" />Tambah Dokumen
@@ -201,10 +211,9 @@ export default function Produk({ kategori }) {
         <Modal judul={`Tambah Dokumen — ${aktif?.label ?? ''}`} onTutup={() => setBuka(false)}>
           <div className="space-y-4">
             <div className="space-y-1.5">
-              <label htmlFor="judul-dok" className="text-sm font-medium text-slate-700">Nama Dokumen</label>
-              <input id="judul-dok" value={judul} onChange={(e) => setJudul(e.target.value)}
-                     placeholder={`Contoh: ${aktif?.label ?? 'Dokumen'} ${new Date().getFullYear()}`}
-                     className="h-9 w-full rounded-lg border border-slate-300 px-3 text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/40" />
+              <Label htmlFor="judul-dok" className="text-slate-700">Nama Dokumen</Label>
+              <Input id="judul-dok" value={judul} onChange={(e) => setJudul(e.target.value)}
+                     placeholder={`Contoh: ${aktif?.label ?? 'Dokumen'} ${new Date().getFullYear()}`} />
               <p className="text-xs text-slate-400">
                 Nama ini tampil sebagai &quot;Nama Berkas&quot; di halaman publik.
               </p>

@@ -8,6 +8,12 @@ import {
   STATUS_FINAL, STATUS_PERMOHONAN, Tombol, tglJam, tglSingkat, tulisAcuan, useTunda,
 } from '@/Components/Dasbor';
 import { ambilJson, kirimJson } from '@/lib/api';
+import { Input } from '@/Components/ui/input';
+import { Label } from '@/Components/ui/label';
+import {
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
+} from '@/Components/ui/select';
+import { Textarea } from '@/Components/ui/textarea';
 
 const STATUS_URUT = ['MENUNGGU', 'DIPROSES', 'SELESAI', 'DITOLAK'];
 const PER_HALAMAN = 20;
@@ -212,9 +218,8 @@ export default function Permohonan({ sorot }) {
 
             <div className="relative flex-1">
               <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-              <input value={cari} onChange={(e) => setCari(e.target.value)}
-                     placeholder="Cari no. register / nama / NIK / HP / jenis…"
-                     className="h-9 w-full rounded-lg border border-slate-300 pl-9 pr-3 text-sm" />
+              <Input value={cari} onChange={(e) => setCari(e.target.value)}
+                     placeholder="Cari no. register / nama / NIK / HP / jenis…" className="pl-9" />
             </div>
           </div>
 
@@ -224,11 +229,16 @@ export default function Permohonan({ sorot }) {
             {daftarPetugas.length > 0 && (
               <div className="flex items-center gap-2 lg:ml-auto">
                 <span className="text-xs font-medium text-slate-400">Petugas</span>
-                <select value={petugas} onChange={(e) => setPetugas(e.target.value)}
-                        className="h-9 w-52 rounded-lg border border-slate-300 bg-white px-2 text-sm">
-                  <option value="">Semua petugas</option>
-                  {daftarPetugas.map((p) => <option key={p.id} value={p.id}>{p.nama}</option>)}
-                </select>
+                {/* Radix menolak SelectItem bernilai "" — "semua" jadi penandanya. */}
+                <Select value={petugas || 'semua'} onValueChange={(v) => setPetugas(v === 'semua' ? '' : v)}>
+                  <SelectTrigger className="w-52">
+                    <SelectValue placeholder="Semua petugas" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="semua">Semua petugas</SelectItem>
+                    {daftarPetugas.map((p) => <SelectItem key={p.id} value={String(p.id)}>{p.nama}</SelectItem>)}
+                  </SelectContent>
+                </Select>
               </div>
             )}
           </div>
@@ -322,31 +332,34 @@ export default function Permohonan({ sorot }) {
 
             {statusBaru === 'DITOLAK' ? (
               <div>
-                <label className="text-sm font-medium text-slate-700">Alasan Penolakan <span className="text-rose-600">*</span></label>
-                <select value={alasanPreset}
-                        onChange={(e) => {
-                          setAlasanPreset(e.target.value);
-                          // Preset langsung jadi catatan; "Lainnya" dikosongkan untuk diketik.
-                          setCatatan(e.target.value === 'Lainnya' ? '' : e.target.value);
-                        }}
-                        className="mt-1.5 h-9 w-full rounded-lg border border-slate-300 bg-white px-2 text-sm">
-                  <option value="">Pilih alasan penolakan…</option>
-                  {ALASAN_TOLAK.map((a) => <option key={a} value={a}>{a}</option>)}
-                </select>
+                <Label className="text-slate-700">Alasan Penolakan <span className="text-rose-600">*</span></Label>
+                <Select
+                  value={alasanPreset}
+                  onValueChange={(v) => {
+                    setAlasanPreset(v);
+                    // Preset langsung jadi catatan; "Lainnya" dikosongkan untuk diketik.
+                    setCatatan(v === 'Lainnya' ? '' : v);
+                  }}
+                >
+                  <SelectTrigger className="mt-1.5 w-full">
+                    <SelectValue placeholder="Pilih alasan penolakan…" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {ALASAN_TOLAK.map((a) => <SelectItem key={a} value={a}>{a}</SelectItem>)}
+                  </SelectContent>
+                </Select>
 
                 {alasanPreset === 'Lainnya' && (
-                  <textarea rows={3} value={catatan} onChange={(e) => setCatatan(e.target.value)} autoFocus
-                            placeholder="Tulis alasan penolakan…"
-                            className="mt-2 w-full rounded-lg border border-slate-300 p-2 text-sm" />
+                  <Textarea rows={3} value={catatan} onChange={(e) => setCatatan(e.target.value)} autoFocus
+                            placeholder="Tulis alasan penolakan…" className="mt-2" />
                 )}
                 <p className="mt-1.5 text-xs text-slate-400">Alasan ini dikirim ke pemohon sebagai catatan.</p>
               </div>
             ) : (
               <div>
-                <label className="text-sm font-medium text-slate-700">Catatan Petugas</label>
-                <textarea rows={3} value={catatan} onChange={(e) => setCatatan(e.target.value)}
-                          placeholder="Catatan untuk pemohon (opsional)…"
-                          className="mt-1.5 w-full rounded-lg border border-slate-300 p-2 text-sm" />
+                <Label htmlFor="catatan" className="text-slate-700">Catatan Petugas</Label>
+                <Textarea id="catatan" rows={3} value={catatan} onChange={(e) => setCatatan(e.target.value)}
+                          placeholder="Catatan untuk pemohon (opsional)…" className="mt-1.5" />
               </div>
             )}
 

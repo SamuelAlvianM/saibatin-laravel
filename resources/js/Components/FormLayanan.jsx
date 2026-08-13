@@ -3,7 +3,17 @@ import { router } from '@inertiajs/react';
 import {
   ArrowLeft, CheckCircle2, FileText, Loader2, Send, Upload, X, ZoomIn,
 } from 'lucide-react';
+import { Button } from '@/Components/ui/button';
+import { DatePicker } from '@/Components/ui/date-picker';
+import { Input } from '@/Components/ui/input';
+import { Label } from '@/Components/ui/label';
+import {
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
+} from '@/Components/ui/select';
+import { Textarea } from '@/Components/ui/textarea';
+import { TimePicker } from '@/Components/ui/time-picker';
 import { kirimBerkas, kirimJson } from '@/lib/api';
+import { cn } from '@/lib/utils';
 
 /**
  * SATU renderer untuk SELURUH 15 layanan permohonan.
@@ -131,10 +141,9 @@ export default function FormLayanan({
   };
 
   // ── Render satu field ────────────────────────────────────────────────────
-  const kelas = (e) =>
-    `w-full rounded-md border bg-white px-3 py-2 text-sm outline-none transition-all focus:ring-2 ${
-      e ? 'border-red-400 focus:ring-red-200' : 'border-slate-300 focus:border-brand focus:ring-brand/40'
-    }`;
+  // Hanya penanda GALAT; bentuk dasar field datang dari `Components/ui/*`,
+  // sehingga 15 layanan tidak lagi punya 15 selera gaya sendiri.
+  const kelas = (e) => (e ? 'border-destructive focus-visible:ring-destructive/20' : '');
 
   const renderField = (fd) => {
     const e = galat[fd.name];
@@ -143,9 +152,9 @@ export default function FormLayanan({
     if (fd.type === 'file') {
       return (
         <div id={`fld-${fd.name}`} className="space-y-1.5">
-          <label className="text-xs font-medium text-slate-700">
-            {fd.label} {fd.required && <span className="text-red-600">*</span>}
-          </label>
+          <Label className="text-xs text-slate-700">
+            {fd.label} {fd.required && <span className="text-destructive">*</span>}
+          </Label>
 
           {v ? (
             <div className="overflow-hidden rounded-lg border-2 border-emerald-300 bg-emerald-50/50">
@@ -173,9 +182,9 @@ export default function FormLayanan({
               onDragOver={(ev) => { ev.preventDefault(); setSeret(fd.name); }}
               onDragLeave={() => setSeret((d) => (d === fd.name ? null : d))}
               onDrop={(ev) => { ev.preventDefault(); setSeret(null); unggah(fd, ev.dataTransfer.files?.[0]); }}
-              className={`flex min-h-[7rem] cursor-pointer flex-col items-center justify-center gap-1.5 rounded-lg border-2 border-dashed py-4 text-center text-xs transition-colors hover:border-brand/40 hover:text-brand ${
-                seret === fd.name ? 'border-brand bg-brand/5 text-brand'
-                  : e ? 'border-red-300 text-red-600' : 'border-slate-200 text-slate-400'
+              className={`flex min-h-[7rem] cursor-pointer flex-col items-center justify-center gap-1.5 rounded-lg border-2 border-dashed py-4 text-center text-xs transition-colors hover:border-primary/40 hover:text-primary ${
+                seret === fd.name ? 'border-primary bg-primary/5 text-primary'
+                  : e ? 'border-destructive/40 text-destructive' : 'border-slate-200 text-slate-400'
               }`}
             >
               {mengunggah === fd.name ? <Loader2 className="h-5 w-5 animate-spin" /> : <Upload className="h-5 w-5" />}
@@ -186,7 +195,7 @@ export default function FormLayanan({
                      onChange={(ev) => unggah(fd, ev.target.files?.[0])} />
             </label>
           )}
-          {e && <p className="text-xs text-red-600">{e}</p>}
+          {e && <p className="text-xs text-destructive">{e}</p>}
         </div>
       );
     }
@@ -195,22 +204,38 @@ export default function FormLayanan({
 
     return (
       <div id={`fld-${fd.name}`} className="space-y-1.5">
-        <label htmlFor={fd.name} className="text-sm font-medium text-slate-700">
-          {fd.label} {fd.required && <span className="text-red-600">*</span>}
-        </label>
+        <Label htmlFor={fd.name} className="text-slate-700">
+          {fd.label} {fd.required && <span className="text-destructive">*</span>}
+        </Label>
 
         {fd.type === 'textarea' ? (
-          <textarea id={fd.name} rows={3} value={v} placeholder={fd.placeholder}
+          <Textarea id={fd.name} rows={3} value={v} placeholder={fd.placeholder}
                     className={kelas(e)} onChange={(ev) => set(fd.name, ev.target.value)} />
         ) : fd.type === 'select' ? (
-          <select id={fd.name} value={v} className={kelas(e)} onChange={(ev) => set(fd.name, ev.target.value)}>
-            <option value="">— Pilih —</option>
-            {(fd.options ?? []).map((o) => <option key={o} value={o}>{o}</option>)}
-          </select>
-        ) : (
-          <input
+          <Select value={v} onValueChange={(nv) => set(fd.name, nv)}>
+            <SelectTrigger id={fd.name} className={cn('w-full', kelas(e))}>
+              <SelectValue placeholder="— Pilih —" />
+            </SelectTrigger>
+            <SelectContent>
+              {(fd.options ?? []).map((o) => <SelectItem key={o} value={o}>{o}</SelectItem>)}
+            </SelectContent>
+          </Select>
+        ) : fd.type === 'date' ? (
+          /* Pemilih tanggal sendiri, bukan `input type="date"`: tampilannya
+             seragam di semua peramban dan bisa diketik "17081945" langsung. */
+          <DatePicker
             id={fd.name}
-            type={fd.type === 'date' ? 'date' : fd.type === 'time' ? 'time' : fd.type === 'number' ? 'number' : 'text'}
+            value={v}
+            onChange={(nv) => set(fd.name, nv)}
+            placeholder={fd.placeholder ?? 'Pilih tanggal'}
+            className={kelas(e)}
+          />
+        ) : fd.type === 'time' ? (
+          <TimePicker id={fd.name} value={v} onChange={(nv) => set(fd.name, nv)} className={kelas(e)} />
+        ) : (
+          <Input
+            id={fd.name}
+            type={fd.type === 'number' ? 'number' : 'text'}
             inputMode={angkaSaja ? 'numeric' : undefined}
             maxLength={fd.type === 'nik' || fd.type === 'kk' ? 16 : fd.type === 'phone' ? 13 : undefined}
             value={v}
@@ -219,7 +244,7 @@ export default function FormLayanan({
             onChange={(ev) => set(fd.name, angkaSaja ? ev.target.value.replace(/\D/g, '') : ev.target.value)}
           />
         )}
-        {e && <p className="text-xs text-red-600">{e}</p>}
+        {e && <p className="text-xs text-destructive">{e}</p>}
       </div>
     );
   };
@@ -230,10 +255,10 @@ export default function FormLayanan({
       <div className="rounded-2xl border border-amber-200 bg-amber-50 p-6 text-center">
         <h2 className="text-lg font-semibold text-amber-900">Layanan sedang tutup</h2>
         <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-amber-800">{jam.message}</p>
-        <button onClick={() => router.visit(kembaliKe)}
-                className="mt-4 inline-flex items-center gap-1.5 rounded-lg border border-amber-300 bg-white px-4 py-2 text-sm font-semibold text-amber-900 hover:bg-amber-100">
+        <Button variant="outline" onClick={() => router.visit(kembaliKe)}
+                className="mt-4 border-amber-300 bg-white font-semibold text-amber-900 hover:bg-amber-100">
           <ArrowLeft className="h-4 w-4" />Kembali
-        </button>
+        </Button>
       </div>
     );
   }
@@ -286,15 +311,13 @@ export default function FormLayanan({
       </div>
 
       <div className="mt-6 flex justify-end gap-3">
-        <button onClick={() => router.visit(kembaliKe)}
-                className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">
+        <Button variant="outline" onClick={() => router.visit(kembaliKe)}>
           Batal
-        </button>
-        <button onClick={kirim} disabled={mengirim || !!mengunggah}
-                className="inline-flex items-center gap-1.5 rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-dark disabled:opacity-50">
+        </Button>
+        <Button onClick={kirim} disabled={mengirim || !!mengunggah} className="font-semibold">
           {mengirim ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
           {mengirim ? 'Mengirim...' : 'Kirim Permohonan'}
-        </button>
+        </Button>
       </div>
 
       {lihat && (

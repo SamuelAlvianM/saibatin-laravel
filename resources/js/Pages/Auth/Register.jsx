@@ -1,11 +1,16 @@
 import { Link, useForm } from '@inertiajs/react';
 import { useRef, useState } from 'react';
 import {
-  ArrowLeft, BadgeCheck, Eye, EyeOff, Loader2, MailCheck, ScanLine, UserPlus,
+  ArrowLeft, BadgeCheck, Loader2, MailCheck, MapPin, ScanLine, UserPlus,
 } from 'lucide-react';
 import KartuAuth, { KotakGalat } from '@/Components/KartuAuth';
 import AmbilSelfie from '@/Components/AmbilSelfie';
 import UnggahGambar from '@/Components/UnggahGambar';
+import { SearchSelect } from '@/Components/SearchSelect';
+import { Button } from '@/Components/ui/button';
+import { Input } from '@/Components/ui/input';
+import { Label } from '@/Components/ui/label';
+import { PasswordInput } from '@/Components/ui/password-input';
 import { kirimJson } from '@/lib/api';
 import { tanpaAwalanDataUrl } from '@/lib/gambar';
 import { bacaKtp } from '@/lib/ocr-ktp';
@@ -68,7 +73,6 @@ function TandaOcr({ aktif }) {
  *   4. Foto KTP           — wajib, diunggah dari berkas + dibaca OCR
  */
 export default function Register({ kecamatan, otpWajib, otpKanal, prefill, perbaiki }) {
-  const [lihatSandi, setLihatSandi] = useState(false);
   const [otp, setOtp] = useState({
     dikirim: false, kode: '', challenge: '', memuat: false,
     pesan: null, galat: null, devKode: null,
@@ -113,10 +117,13 @@ export default function Register({ kecamatan, otpWajib, otpKanal, prefill, perba
   const ditandai = (k) => (perbaiki ?? []).includes(k);
   /** Cincin amber pada kolom yang baru diisi OCR dan belum diperiksa warga. */
   const cincinOcr = (k) => (ocrTerisi.includes(k) ? 'ring-2 ring-amber-400 border-amber-400' : '');
+  /**
+   * Hanya PENANDA keadaan — bentuk dasar field (tinggi, border, cincin fokus)
+   * datang dari `Components/ui/input`, jadi tidak ada lagi gaya yang ditulis
+   * ulang per halaman dan pelan-pelan menyimpang.
+   */
   const kelasField = (k) =>
-    `w-full rounded-md border bg-white px-3 py-2 text-sm outline-none transition-all focus:ring-2 focus:ring-brand/40 ${
-      ditandai(k) ? 'border-rose-400 bg-rose-50/50' : 'border-slate-300 focus:border-brand'
-    } ${cincinOcr(k)}`;
+    [ditandai(k) ? 'border-rose-400 bg-rose-50/50' : '', cincinOcr(k)].filter(Boolean).join(' ');
 
   /** Setter yang sekaligus melepas tanda OCR: kolom yang disunting warga bukan
    *  lagi "hasil pemindaian yang belum diperiksa". */
@@ -268,29 +275,43 @@ export default function Register({ kecamatan, otpWajib, otpKanal, prefill, perba
         <Bagian no={1} judul="Informasi Personal" anak={
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="space-y-1.5">
-              <label className="text-sm font-medium text-slate-700">NIK<TandaOcr aktif={ocrTerisi.includes('nik')} /></label>
-              <input value={data.nik} inputMode="numeric" placeholder="16 digit"
+              <Label htmlFor="nik" className="text-slate-700">
+                NIK<TandaOcr aktif={ocrTerisi.includes('nik')} />
+              </Label>
+              <Input id="nik" value={data.nik} inputMode="numeric" placeholder="16 digit"
                      onChange={(e) => isi('nik', e.target.value.replace(/\D/g, '').slice(0, 16))}
                      className={`${kelasField('nik')} font-mono`} />
             </div>
             <div className="space-y-1.5">
-              <label className="text-sm font-medium text-slate-700">Nomor KK<TandaOcr aktif={ocrTerisi.includes('kk')} /></label>
-              <input value={data.kk} inputMode="numeric" placeholder="16 digit"
+              <Label htmlFor="kk" className="text-slate-700">
+                Nomor KK<TandaOcr aktif={ocrTerisi.includes('kk')} />
+              </Label>
+              <Input id="kk" value={data.kk} inputMode="numeric" placeholder="16 digit"
                      onChange={(e) => isi('kk', e.target.value.replace(/\D/g, '').slice(0, 16))}
                      className={`${kelasField('kk')} font-mono`} />
             </div>
             <div className="space-y-1.5 sm:col-span-2">
-              <label className="text-sm font-medium text-slate-700">Nama Lengkap<TandaOcr aktif={ocrTerisi.includes('nama')} /></label>
-              <input value={data.nama} onChange={(e) => isi('nama', e.target.value)}
+              <Label htmlFor="nama" className="text-slate-700">
+                Nama Lengkap<TandaOcr aktif={ocrTerisi.includes('nama')} />
+              </Label>
+              <Input id="nama" value={data.nama} onChange={(e) => isi('nama', e.target.value)}
                      placeholder="Sesuai KTP" className={kelasField('nama')} />
             </div>
             <div className="space-y-1.5 sm:col-span-2">
-              <label className="text-sm font-medium text-slate-700">Kecamatan Domisili</label>
-              <select value={data.kecamatan} onChange={(e) => setData('kecamatan', e.target.value)}
-                      className={kelasField('kecamatan')}>
-                <option value="">— pilih kecamatan —</option>
-                {(kecamatan ?? []).map((k) => <option key={k} value={k}>{k}</option>)}
-              </select>
+              <Label htmlFor="kecamatan" className="text-slate-700">Kecamatan Domisili</Label>
+              {/* Daftar kecamatan panjang → dropdown yang bisa DICARI, sama
+                  seperti portal. Menggulir 11 pilihan buta itu yang bikin warga
+                  salah pilih. */}
+              <SearchSelect
+                id="kecamatan"
+                value={data.kecamatan}
+                onValueChange={(v) => setData('kecamatan', v)}
+                options={(kecamatan ?? []).map((k) => ({ value: k, label: k }))}
+                placeholder="— pilih kecamatan —"
+                searchPlaceholder="Cari kecamatan…"
+                icon={<MapPin className="h-4 w-4 shrink-0 text-muted-foreground" />}
+                className={kelasField('kecamatan')}
+              />
             </div>
           </div>
         } />
@@ -298,33 +319,27 @@ export default function Register({ kecamatan, otpWajib, otpKanal, prefill, perba
         <Bagian no={2} judul="Informasi Akun" anak={
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="space-y-1.5">
-              <label className="text-sm font-medium text-slate-700">Nomor WhatsApp</label>
-              <input value={data.hp} inputMode="tel" placeholder="08xx…"
+              <Label htmlFor="hp" className="text-slate-700">Nomor WhatsApp</Label>
+              <Input id="hp" value={data.hp} inputMode="tel" placeholder="08xx…"
                      onChange={(e) => setData('hp', e.target.value)} className={kelasField('hp')} />
             </div>
             <div className="space-y-1.5">
-              <label className="text-sm font-medium text-slate-700">Email</label>
-              <input value={data.email} type="email" placeholder="nama@contoh.com"
+              <Label htmlFor="email" className="text-slate-700">Email</Label>
+              <Input id="email" value={data.email} type="email" placeholder="nama@contoh.com"
                      onChange={(e) => setData('email', e.target.value)} className={kelasField('email')} />
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-sm font-medium text-slate-700">Password</label>
-              <div className="relative">
-                <input type={lihatSandi ? 'text' : 'password'} value={data.pass} autoComplete="new-password"
-                       onChange={(e) => setData('pass', e.target.value)}
-                       className={`${kelasField('pass')} pr-10`} />
-                <button type="button" tabIndex={-1} onClick={() => setLihatSandi(!lihatSandi)}
-                        aria-label={lihatSandi ? 'Sembunyikan sandi' : 'Tampilkan sandi'}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700">
-                  {lihatSandi ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                </button>
-              </div>
+              <Label htmlFor="pass" className="text-slate-700">Password</Label>
+              <PasswordInput id="pass" value={data.pass} autoComplete="new-password"
+                             onChange={(e) => setData('pass', e.target.value)}
+                             className={kelasField('pass')} />
             </div>
             <div className="space-y-1.5">
-              <label className="text-sm font-medium text-slate-700">Ulangi Password</label>
-              <input type={lihatSandi ? 'text' : 'password'} value={data.pass2} autoComplete="new-password"
-                     onChange={(e) => setData('pass2', e.target.value)} className={kelasField('pass2')} />
+              <Label htmlFor="pass2" className="text-slate-700">Ulangi Password</Label>
+              <PasswordInput id="pass2" value={data.pass2} autoComplete="new-password"
+                             onChange={(e) => setData('pass2', e.target.value)}
+                             className={kelasField('pass2')} />
             </div>
 
             <p className="text-xs text-slate-500 sm:col-span-2">
@@ -348,20 +363,22 @@ export default function Register({ kecamatan, otpWajib, otpKanal, prefill, perba
                 {!sudahOtp && (
                   <>
                     <div className="flex gap-2">
-                      <button type="button" onClick={kirimOtp} disabled={otp.memuat || !targetOtp}
-                              className="inline-flex items-center gap-1.5 rounded-lg border border-brand px-3 py-1.5 text-sm font-semibold text-brand transition-colors hover:bg-brand/5 disabled:opacity-50">
+                      <Button type="button" variant="outline" onClick={kirimOtp}
+                              disabled={otp.memuat || !targetOtp}
+                              className="border-primary font-semibold text-primary hover:bg-primary/5">
                         {otp.memuat ? <Loader2 className="h-4 w-4 animate-spin" /> : <MailCheck className="h-4 w-4" />}
                         {otp.dikirim ? 'Kirim Ulang' : 'Kirim Kode'}
-                      </button>
+                      </Button>
                       {otp.dikirim && (
                         <>
-                          <input value={otp.kode} inputMode="numeric" placeholder="6 digit"
+                          <Input value={otp.kode} inputMode="numeric" placeholder="6 digit"
                                  onChange={(e) => setOtp((s) => ({ ...s, kode: e.target.value.replace(/\D/g, '').slice(0, 6) }))}
-                                 className="w-28 rounded-md border border-slate-300 bg-white px-3 py-1.5 text-center font-mono text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/40" />
-                          <button type="button" onClick={verifikasiOtp} disabled={otp.memuat || otp.kode.length < 6}
-                                  className="rounded-lg bg-brand px-3 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-brand-dark disabled:opacity-50">
+                                 className="w-28 text-center font-mono" />
+                          <Button type="button" onClick={verifikasiOtp}
+                                  disabled={otp.memuat || otp.kode.length < 6}
+                                  className="font-semibold">
                             Verifikasi
-                          </button>
+                          </Button>
                         </>
                       )}
                     </div>
@@ -452,17 +469,18 @@ export default function Register({ kecamatan, otpWajib, otpKanal, prefill, perba
           </div>
         } />
 
-        <button
+        <Button
           type="submit"
+          size="lg"
           disabled={processing}
-          className="flex w-full items-center justify-center rounded-md px-4 py-2.5 font-semibold text-white shadow-lg transition-all hover:shadow-xl active:scale-[0.98] disabled:opacity-50"
+          className="w-full font-semibold text-white shadow-lg transition-all hover:shadow-xl active:scale-[0.98] disabled:opacity-50"
           style={{ background: 'linear-gradient(90deg,#2e6da4,#1b4b72)' }}
         >
           {processing ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Mengirim...</> : 'Daftar'}
-        </button>
+        </Button>
 
         <div className="flex items-center justify-center gap-4 text-sm">
-          <Link href="/login" className="inline-flex items-center gap-1.5 font-medium text-slate-600 hover:text-brand">
+          <Link href="/login" className="inline-flex items-center gap-1.5 font-medium text-slate-600 hover:text-primary">
             <ArrowLeft className="h-4 w-4" />Sudah punya akun? Login
           </Link>
         </div>

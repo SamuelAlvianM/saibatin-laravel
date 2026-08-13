@@ -6,6 +6,10 @@ import {
   FilterPeriode, Kartu, Kosong, Memuat, Paginasi, Pesan, tglJam, tulisAcuan, useTunda,
 } from '@/Components/Dasbor';
 import { ambilJson } from '@/lib/api';
+import { Input } from '@/Components/ui/input';
+import {
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
+} from '@/Components/ui/select';
 
 /**
  * Log aktivitas petugas — port `app/dashboard/log/LogAktivitasClient.tsx`.
@@ -121,15 +125,21 @@ export default function Log() {
 
           <div className="relative flex-1">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-            <input value={cari} onChange={(e) => setCari(e.target.value)} placeholder="Cari aktivitas (mis. status, berita, akun)…"
-                   className="h-9 w-full rounded-lg border border-slate-300 pl-9 pr-3 text-sm" />
+            <Input value={cari} onChange={(e) => setCari(e.target.value)} placeholder="Cari aktivitas (mis. status, berita, akun)…"
+                   className="pl-9" />
           </div>
 
-          <select value={userId} onChange={(e) => setUserId(e.target.value)}
-                  className="h-9 rounded-lg border border-slate-300 bg-white px-2 text-sm">
-            <option value="">Semua petugas</option>
-            {petugas.map((p) => <option key={p.id} value={p.id}>{p.nama}</option>)}
-          </select>
+          {/* Radix menolak SelectItem bernilai "" — "semua" dipakai sebagai
+              penanda, lalu diterjemahkan kembali ke "" untuk kueri. */}
+          <Select value={userId || 'semua'} onValueChange={(v) => setUserId(v === 'semua' ? '' : v)}>
+            <SelectTrigger className="w-full sm:w-52">
+              <SelectValue placeholder="Semua petugas" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="semua">Semua petugas</SelectItem>
+              {petugas.map((p) => <SelectItem key={p.id} value={String(p.id)}>{p.nama}</SelectItem>)}
+            </SelectContent>
+          </Select>
         </div>
 
         <div className="mb-4">

@@ -23,7 +23,7 @@ melayani warga sekarang).
 | Folder | `C:\sam\SAM-AMANDA-GALANG\saibatin-laravel` (root workspace, **bukan** di dalam `saibatin/` agar tidak mengotori working tree git-nya) |
 | Stack | Laravel **12.65.0** · PHP **8.3.28** · MySQL **8.0.36** · Inertia **v3.3.1** · React 19 · Tailwind v4 · Vite 6 · Highcharts **13** · tiptap **3** · react-advanced-cropper · react-dropzone (tiga terakhir *lazy*) |
 | DB kerja | **`saibatin_lv`** — klon dari DB dev Next.js `saibatin`. 1.386 akun · 11.902 permohonan · 1.485 berkas |
-| Dev server | **port 3303**, entri `saibatin-laravel-dev` di `../.claude/launch.json` |
+| Dev server | **port 3104** (🔴 dipaku), entri `saibatin-laravel-dev` di `../.claude/launch.json` |
 | Login uji | `admin` / `admin123` |
 | Belum di-git | folder ini belum jadi repo. Belum ada apa pun yang menyentuh server. |
 
@@ -36,7 +36,7 @@ melayani warga sekarang).
 ```bash
 cd C:/sam/SAM-AMANDA-GALANG/saibatin-laravel
 npm run build          # WAJIB setelah mengubah apa pun di resources/js atau resources/css
-php artisan serve --port=3303
+php artisan serve --port=3104
 ```
 
 Atau lewat preview: konfigurasi `saibatin-laravel-dev` sudah ada di `.claude/launch.json`.

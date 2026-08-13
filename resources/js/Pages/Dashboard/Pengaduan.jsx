@@ -3,6 +3,8 @@ import { CheckCircle2, Clock, Mail, MessageSquare, Phone, User } from 'lucide-re
 import LayoutDashboard from '@/Components/LayoutDashboard';
 import { Kartu, Kosong, Memuat, Modal, Pesan, Tombol, tglJam, tglSingkat } from '@/Components/Dasbor';
 import { ambilJson, kirimJson } from '@/lib/api';
+import { Label } from '@/Components/ui/label';
+import { Textarea } from '@/Components/ui/textarea';
 
 /**
  * Pengaduan masyarakat — port `app/dashboard/pengaduan/AdminPengaduan.tsx`.
@@ -138,10 +140,9 @@ export default function Pengaduan() {
             </div>
 
             <div>
-              <label className="text-sm font-medium text-slate-700">Balasan / Catatan</label>
-              <textarea rows={3} value={balasan} onChange={(e) => setBalasan(e.target.value)}
-                        placeholder="Tanggapan untuk pengadu (opsional)…"
-                        className="mt-1.5 w-full rounded-lg border border-slate-300 p-2 text-sm" />
+              <Label htmlFor="balasan" className="text-slate-700">Balasan / Catatan</Label>
+              <Textarea id="balasan" rows={3} value={balasan} onChange={(e) => setBalasan(e.target.value)}
+                        placeholder="Tanggapan untuk pengadu (opsional)…" className="mt-1.5" />
             </div>
 
             <p className="text-xs text-slate-400">Dibuat: {tglJam(detail.createdAt)}</p>

@@ -1,8 +1,11 @@
 import { useState } from 'react';
-import { Eye, EyeOff, KeyRound, LockOpen, ShieldAlert } from 'lucide-react';
+import { KeyRound, LockOpen, ShieldAlert } from 'lucide-react';
 import LayoutDashboard from '@/Components/LayoutDashboard';
 import { Pesan, Tombol } from '@/Components/Dasbor';
 import { kirimJson } from '@/lib/api';
+import { Input } from '@/Components/ui/input';
+import { Label } from '@/Components/ui/label';
+import { PasswordInput } from '@/Components/ui/password-input';
 
 /**
  * Halaman MASTER — port `app/dashboard/master/page.tsx`.
@@ -18,7 +21,6 @@ import { kirimJson } from '@/lib/api';
  */
 export default function Master() {
   const [sandi, setSandi] = useState('');
-  const [terlihat, setTerlihat] = useState(false);
   const [noregister, setNoregister] = useState('');
   const [sibuk, setSibuk] = useState(false);
   const [riwayat, setRiwayat] = useState([]);
@@ -65,24 +67,16 @@ export default function Master() {
           </div>
 
           <div className="space-y-1.5">
-            <label htmlFor="sandi" className="text-sm font-medium text-slate-700">Password Master *</label>
-            <div className="relative">
-              <input id="sandi" type={terlihat ? 'text' : 'password'} value={sandi} required
-                     onChange={(e) => setSandi(e.target.value)} placeholder="Password master aplikasi"
-                     className="h-9 w-full rounded-lg border border-slate-300 pl-3 pr-10 text-sm" />
-              <button type="button" tabIndex={-1} onClick={() => setTerlihat((p) => !p)}
-                      aria-label={terlihat ? 'Sembunyikan sandi' : 'Tampilkan sandi'}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
-                {terlihat ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-              </button>
-            </div>
+            <Label htmlFor="sandi" className="text-slate-700">Password Master *</Label>
+            <PasswordInput id="sandi" value={sandi} required
+                           onChange={(e) => setSandi(e.target.value)}
+                           placeholder="Password master aplikasi" />
           </div>
 
           <div className="space-y-1.5">
-            <label htmlFor="noreg" className="text-sm font-medium text-slate-700">No. Register Permohonan *</label>
-            <input id="noreg" value={noregister} required onChange={(e) => setNoregister(e.target.value)}
-                   placeholder="No. register permohonan yang terkunci"
-                   className="h-9 w-full rounded-lg border border-slate-300 px-3 font-mono text-sm" />
+            <Label htmlFor="noreg" className="text-slate-700">No. Register Permohonan *</Label>
+            <Input id="noreg" value={noregister} required onChange={(e) => setNoregister(e.target.value)}
+                   placeholder="No. register permohonan yang terkunci" className="font-mono" />
             <p className="text-xs text-slate-400">
               Lihat kolom No. Register di menu Permohonan (baris bergembok).
             </p>

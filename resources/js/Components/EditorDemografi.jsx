@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { Pesan, Tombol } from '@/Components/Dasbor';
 import { ambilJson, kirimBerkas, kirimJson } from '@/lib/api';
+import { Input } from '@/Components/ui/input';
 
 /**
  * 🔴 Di TINGKAT MODUL, bukan di dalam `EditorDemografi`.
@@ -206,25 +207,27 @@ export default function EditorDemografi({ kategori, label, onTutup, onTersimpan 
     muat();
   };
 
-  const kelasSel = 'w-full rounded border border-transparent bg-transparent px-1.5 py-1 text-sm outline-none hover:border-slate-200 focus:border-brand focus:bg-white';
+  // Sel tabel: bentuk dasarnya dari `Components/ui/input`, di sini hanya
+  // penyesuaian kepadatan supaya barisnya tetap muat di layar.
+  const kelasSel = 'h-8 w-full border-slate-300 bg-white px-2 text-sm';
 
   const barisTabel = (r, aksiTambahan) => (
     <tr key={r.kode || `baru-${r.level}-${rows.indexOf(r)}`} className="border-b border-slate-100">
       <td className="px-3 py-1.5">
-        <input value={r.kode} inputMode="numeric" placeholder={r.level === 5 ? '10 digit' : '6 digit'}
+        <Input value={r.kode} inputMode="numeric" placeholder={r.level === 5 ? '10 digit' : '6 digit'}
                onChange={(e) => ubahKolomTeks(r.kode, 'kode', digit(e.target.value))}
                className={`${kelasSel} font-mono`} aria-label="Kode wilayah" />
       </td>
       <td className="px-3 py-1.5">
-        <input value={r.wilayah} onChange={(e) => ubahKolomTeks(r.kode, 'wilayah', e.target.value)}
-               className={kelasSel} aria-label="Nama wilayah" />
+        <Input value={r.wilayah} onChange={(e) => ubahKolomTeks(r.kode, 'wilayah', e.target.value)}
+               className={`${kelasSel} min-w-44`} aria-label="Nama wilayah" />
       </td>
       {kolom.map((k) => (
         <td key={k} className="px-3 py-1.5 text-right">
-          <input value={r.data?.[k] ?? 0} inputMode="numeric"
+          <Input value={r.data?.[k] ?? 0} inputMode="numeric"
                  readOnly={jkOtomatis && k === 'JML'}
                  onChange={(e) => ubahSel(r.kode, k, e.target.value)}
-                 className={`${kelasSel} text-right tabular-nums ${jkOtomatis && k === 'JML' ? 'text-slate-400' : ''}`}
+                 className={`${kelasSel} min-w-[5.5rem] text-right tabular-nums ${jkOtomatis && k === 'JML' ? 'bg-slate-100 text-slate-400' : ''}`}
                  aria-label={`${k} ${r.wilayah}`} />
         </td>
       ))}
@@ -379,7 +382,7 @@ export default function EditorDemografi({ kategori, label, onTutup, onTersimpan 
                       }`}>
                         <input type="radio" name={`konflik-${c.kode}`} checked={(konflik.pilihan[c.kode] ?? 0) === i}
                                onChange={() => setKonflik((p) => ({ ...p, pilihan: { ...p.pilihan, [c.kode]: i } }))}
-                               className="mt-0.5 h-4 w-4 text-brand focus:ring-brand/40" />
+                               className="mt-0.5 h-4 w-4 accent-primary" />
                         <span className="min-w-0">
                           <span className="block font-medium text-slate-700">{o.label}</span>
                           <span className="mt-0.5 block text-xs text-slate-500">

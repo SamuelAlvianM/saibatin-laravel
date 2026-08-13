@@ -5,6 +5,7 @@ import {
 import MediaUnggah from '@/Components/MediaUnggah';
 import { Modal, Tombol, useTunda } from '@/Components/Dasbor';
 import { ambilJson, kirimJson } from '@/lib/api';
+import { Input } from '@/Components/ui/input';
 
 /**
  * Dialog pemilih media — port `components/media/media-picker.tsx`.
@@ -81,9 +82,8 @@ export default function PemilihMedia({
         <div className="flex min-h-0 flex-col gap-3 pt-3">
           <div className="relative">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-            <input value={cari} onChange={(e) => { setCari(e.target.value); setPage(1); }}
-                   placeholder="Cari nama file..."
-                   className="h-9 w-full rounded-lg border border-slate-300 pl-9 pr-3 text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/40" />
+            <Input value={cari} onChange={(e) => { setCari(e.target.value); setPage(1); }}
+                   placeholder="Cari nama file..." className="pl-9" />
           </div>
 
           <div className="min-h-[200px] flex-1 overflow-y-auto">

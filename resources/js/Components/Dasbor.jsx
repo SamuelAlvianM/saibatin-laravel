@@ -4,13 +4,18 @@ import {
   XCircle, X,
 } from 'lucide-react';
 
+import {
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
+} from '@/Components/ui/select';
+
 /**
- * Potongan UI yang dipakai berulang di seluruh halaman dashboard petugas.
+ * Potongan UI yang dipakai berulang di seluruh halaman dashboard petugas —
+ * badge status, paginasi, kartu, pesan, dan pembantu tanggal.
  *
- * Dikumpulkan di satu berkas dengan sengaja: aslinya tersebar di
- * `components/ui/**` (shadcn/Radix) + `components/shared/**`, dan menariknya
- * masuk berarti menambahkan Radix ke bundel demi tombol, badge, dan paginasi.
- * Lihat jebakan #10 di HANDOFF — ukuran bundel di sini bukan urusan sepele.
+ * Dulu berkas ini juga memuat Tombol/Modal sendiri demi menghindari Radix.
+ * Sejak user memilih memakai kit (14 Agu 2026), KONTROL FORMULIR datang dari
+ * `Components/ui/*` — yang tinggal di sini adalah potongan yang memang tidak
+ * ada padanannya di kit, bukan tiruan komponennya.
  */
 
 // ── Status permohonan ──────────────────────────────────────────────────────
@@ -331,10 +336,18 @@ function labelAcuan(kode, acuan) {
 export function FilterPeriode({ periode, acuan, onPeriode, onAcuan, nonaktif }) {
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <select value={periode} onChange={(e) => onPeriode(e.target.value)} disabled={nonaktif}
-              className="h-9 rounded-lg border border-slate-300 bg-white px-2 text-sm text-slate-700">
-        {PERIODE.map((p) => <option key={p.kode} value={p.kode}>{p.label}</option>)}
-      </select>
+      {/* Radix menolak SelectItem bernilai "" — periode "Semua waktu" memakai
+          penanda "semua", lalu diterjemahkan kembali ke "" untuk pemanggilnya. */}
+      <Select value={periode || 'semua'} onValueChange={(v) => onPeriode(v === 'semua' ? '' : v)} disabled={nonaktif}>
+        <SelectTrigger className="w-40">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          {PERIODE.map((p) => (
+            <SelectItem key={p.kode} value={p.kode || 'semua'}>{p.label}</SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
 
       {periode && (
         <div className="flex items-center gap-1">

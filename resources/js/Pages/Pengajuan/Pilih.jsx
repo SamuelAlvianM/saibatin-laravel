@@ -2,6 +2,7 @@ import { Link } from '@inertiajs/react';
 import { useState } from 'react';
 import LayoutPengguna from '@/Components/LayoutPengguna';
 import { ikon as ikonDari } from '@/lib/ikon';
+import { Input } from '@/Components/ui/input';
 
 export default function Pilih({ daftar, kategori }) {
   const [aktif, setAktif] = useState('all');
@@ -26,11 +27,10 @@ export default function Pilih({ daftar, kategori }) {
       </div>
 
       <div className="mb-5 space-y-3">
-        <input
+        <Input
           value={cari}
           onChange={(e) => setCari(e.target.value)}
           placeholder="Cari layanan…"
-          className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/40"
         />
         <div className="flex flex-wrap gap-2">
           {kategori.map((k) => {

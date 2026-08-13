@@ -5,6 +5,13 @@ import {
   KeyRound, Loader2, UserPlus,
 } from 'lucide-react';
 
+import { Alert, AlertDescription } from '@/Components/ui/alert';
+import { Button } from '@/Components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/Components/ui/card';
+import { Checkbox } from '@/Components/ui/checkbox';
+import { Input } from '@/Components/ui/input';
+import { Label } from '@/Components/ui/label';
+
 /**
  * Halaman login — port dari `app/login/LoginContent.tsx` (portal Next.js).
  *
@@ -12,6 +19,9 @@ import {
  * cara datanya mengalir: dulu `fetch` → thunk Redux → state; sekarang
  * `useForm` Inertia → POST biasa → Laravel membalas redirect atau errors.
  * Tidak ada store, tidak ada permintaan sesi terpisah.
+ *
+ * Kontrol formulirnya memakai kit `Components/ui/*` yang sama dengan portal,
+ * jadi tinggi field, cincin fokus, dan warnanya tidak lagi ditebak per halaman.
  */
 export default function Login({ redirect }) {
   const { cekStatus, situs } = usePage().props;
@@ -37,6 +47,17 @@ export default function Login({ redirect }) {
 
   const daftarGalat = Object.values(errors).filter(Boolean);
 
+  // Sorotan field yang sedang difokus — cincin biru + latar tipis, persis
+  // seperti portal. Ditulis sekali supaya kedua field tidak berbeda diam-diam.
+  const kelasField = (nama, isi) =>
+    [
+      'w-full transition-all duration-300',
+      fokus === nama ? 'ring-2 ring-primary border-primary shadow-lg shadow-primary/20' : '',
+      isi ? 'bg-primary/5' : '',
+    ]
+      .filter(Boolean)
+      .join(' ');
+
   return (
     <div
       className="relative flex min-h-screen items-center justify-center overflow-hidden p-4"
@@ -52,47 +73,55 @@ export default function Login({ redirect }) {
              style={{ background: 'rgba(33,118,189,0.08)' }} />
       </div>
 
-      <div className="kartu-kaca relative z-10 w-full max-w-[420px] overflow-hidden rounded-xl border-0"
-           style={{ boxShadow: '0 8px 40px rgba(27,75,114,0.18)' }}>
+      <Card
+        className="kartu-kaca relative z-10 w-full max-w-[420px] gap-0 overflow-hidden rounded-xl border-0 py-0"
+        style={{ boxShadow: '0 8px 40px rgba(27,75,114,0.18)' }}
+      >
         {/* Garis aksen biru di tepi atas */}
         <div className="absolute inset-x-0 top-0 h-[3px] rounded-t-xl"
              style={{ background: '#2176bd', boxShadow: '0 2px 12px rgba(33,118,189,0.45)' }} />
 
-        <div className="space-y-3 px-8 pb-5 pt-8 text-center">
+        <CardHeader className="space-y-3 px-8 pb-5 pt-8 text-center">
           <div className="flex justify-center">
-            <div className="flex h-16 w-16 items-center justify-center rounded-full text-xl font-bold text-white shadow-md"
-                 style={{ background: 'linear-gradient(135deg,#2176bd,#1b4b72)' }}>
-              SB
+            {/* Lambang dinas, bukan lingkaran berinisial: halaman ini pintu masuk
+                warga dan logo resmilah yang menandakan situsnya benar. */}
+            <div className="h-16 w-16 drop-shadow-md">
+              <img
+                src="/logo-saibatin.png"
+                alt="Logo Disdukcapil Pesisir Barat"
+                className="h-full w-full object-contain"
+              />
             </div>
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-slate-800">Selamat Datang</h1>
-            <p className="mt-1 text-sm text-slate-500">
+            <CardTitle className="text-2xl font-bold text-slate-800">Selamat Datang</CardTitle>
+            <CardDescription className="mt-1 text-sm text-slate-500">
               Portal SAIBATIN — Disdukcapil Kab. Pesisir Barat
-            </p>
+            </CardDescription>
           </div>
-        </div>
+        </CardHeader>
 
         <form onSubmit={kirim}>
-          <div className="space-y-4 px-8">
+          <CardContent className="space-y-4 px-8">
             {daftarGalat.length > 0 && (
-              <div className="flex gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
-                <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
-                <ul className="list-inside list-disc space-y-1">
-                  {daftarGalat.map((g, i) => <li key={i}>{g}</li>)}
-                </ul>
-              </div>
+              <Alert variant="destructive" className="animate-in fade-in slide-in-from-top-2 duration-300">
+                <AlertCircle className="h-4 w-4" />
+                <AlertDescription>
+                  <ul className="list-inside list-disc space-y-1">
+                    {daftarGalat.map((g, i) => <li key={i}>{g}</li>)}
+                  </ul>
+                </AlertDescription>
+              </Alert>
             )}
 
             {/* Ajakan ke Cek Status — muncul saat login ditolak karena keadaan
                 akun (menunggu/ditolak/nonaktif), bukan karena sandi salah. */}
             {cekStatus && (
-              <div className="space-y-2.5 rounded-xl border-2 p-4"
-                   style={{ borderColor: 'rgba(33,118,189,0.4)', background: 'rgba(33,118,189,0.05)' }}>
+              <div className="animate-in fade-in slide-in-from-top-2 space-y-2.5 rounded-xl border-2 border-primary/40 bg-primary/5 p-4 duration-300">
                 <div className="flex items-start gap-2.5">
-                  <ClipboardList className="mt-0.5 h-5 w-5 shrink-0 text-brand" />
+                  <ClipboardList className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                   <div className="min-w-0">
-                    <p className="text-sm font-semibold text-brand">
+                    <p className="text-sm font-semibold text-primary">
                       {cekStatus.status === 2
                         ? 'Pendaftaran Anda ditolak'
                         : cekStatus.status === 3
@@ -110,7 +139,7 @@ export default function Login({ redirect }) {
                 </div>
                 <Link
                   href={`/cek-status${cekStatus.nik ? `?nik=${cekStatus.nik}` : ''}`}
-                  className="flex w-full items-center justify-center gap-1.5 rounded-lg bg-brand px-3 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-dark"
+                  className="flex w-full items-center justify-center gap-1.5 rounded-lg bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
                 >
                   <ClipboardList className="h-4 w-4" />
                   Cek Status Pendaftaran
@@ -120,11 +149,13 @@ export default function Login({ redirect }) {
             )}
 
             <div className="space-y-2">
-              <label htmlFor="user_id"
-                     className={`text-sm font-medium transition-colors ${fokus === 'user_id' ? 'text-brand' : 'text-slate-700'}`}>
+              <Label
+                htmlFor="user_id"
+                className={`transition-colors duration-200 ${fokus === 'user_id' ? 'text-primary' : ''}`}
+              >
                 NIK / User ID
-              </label>
-              <input
+              </Label>
+              <Input
                 id="user_id"
                 name="user_id"
                 type="text"
@@ -135,17 +166,19 @@ export default function Login({ redirect }) {
                 onFocus={() => setFokus('user_id')}
                 onBlur={() => setFokus(null)}
                 disabled={processing}
-                className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm outline-none transition-all focus:border-brand focus:ring-2 focus:ring-brand/40 disabled:opacity-50"
+                className={kelasField('user_id', data.user_id)}
               />
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="password"
-                     className={`text-sm font-medium transition-colors ${fokus === 'password' ? 'text-brand' : 'text-slate-700'}`}>
+              <Label
+                htmlFor="password"
+                className={`transition-colors duration-200 ${fokus === 'password' ? 'text-primary' : ''}`}
+              >
                 Password
-              </label>
+              </Label>
               <div className="relative">
-                <input
+                <Input
                   id="password"
                   name="password"
                   type={lihatSandi ? 'text' : 'password'}
@@ -156,36 +189,37 @@ export default function Login({ redirect }) {
                   onFocus={() => setFokus('password')}
                   onBlur={() => setFokus(null)}
                   disabled={processing}
-                  className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 pr-10 text-sm outline-none transition-all focus:border-brand focus:ring-2 focus:ring-brand/40 disabled:opacity-50"
+                  className={`pr-10 ${kelasField('password', data.password)}`}
                 />
                 <button
                   type="button"
                   tabIndex={-1}
                   aria-label={lihatSandi ? 'Sembunyikan sandi' : 'Tampilkan sandi'}
                   onClick={() => setLihatSandi(!lihatSandi)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 transition-colors hover:text-slate-700"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 transition-colors duration-200 hover:text-slate-700 focus:outline-none"
                 >
                   {lihatSandi ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
             </div>
 
-            <label className="flex cursor-pointer select-none items-center gap-2 text-sm text-slate-700">
-              <input
-                type="checkbox"
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="remember"
                 checked={data.remember}
-                onChange={(e) => setData('remember', e.target.checked)}
-                className="h-4 w-4 rounded border-slate-300 accent-[#2176bd]"
+                onCheckedChange={(v) => setData('remember', v === true)}
               />
-              Remember Me
-            </label>
-          </div>
+              <Label htmlFor="remember" className="cursor-pointer text-sm font-normal select-none">
+                Remember Me
+              </Label>
+            </div>
+          </CardContent>
 
-          <div className="flex flex-col space-y-4 px-8 pb-8 pt-4">
-            <button
+          <CardFooter className="flex flex-col space-y-4 px-8 pb-8 pt-4">
+            <Button
               type="submit"
               disabled={processing}
-              className="flex w-full items-center justify-center rounded-md px-4 py-2.5 font-semibold text-white shadow-lg transition-all hover:shadow-xl active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+              className="w-full font-semibold text-white shadow-lg transition-all duration-300 hover:shadow-xl active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
               style={{ background: 'linear-gradient(90deg,#2e6da4,#1b4b72)' }}
             >
               {processing ? (
@@ -193,31 +227,30 @@ export default function Login({ redirect }) {
               ) : (
                 <>Login<ArrowRight className="ml-2 h-4 w-4" /></>
               )}
-            </button>
+            </Button>
 
             <div className="flex items-center justify-center gap-4 text-sm">
               <Link href="/register"
-                    className="inline-flex items-center gap-1 font-medium text-brand transition-colors hover:underline">
+                    className="inline-flex items-center gap-1 font-medium text-primary transition-colors hover:text-primary/80 hover:underline">
                 <UserPlus className="h-4 w-4" />DAFTAR
               </Link>
               <span className="text-slate-300">|</span>
               <Link href="/forgot-password"
-                    className="inline-flex items-center gap-1 font-medium text-red-600 transition-colors hover:underline">
+                    className="inline-flex items-center gap-1 font-medium text-destructive transition-colors hover:text-destructive/80 hover:underline">
                 <KeyRound className="h-4 w-4" />LUPA PASSWORD
               </Link>
             </div>
 
             <div className="flex justify-center">
               <Link href="/cek-status"
-                    className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-600 transition-colors hover:border-brand/40 hover:text-brand">
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-600 transition-colors hover:border-primary/40 hover:text-primary">
                 <ClipboardList className="h-4 w-4" />
                 Cek Status Pendaftaran (Akun Baru)
               </Link>
             </div>
 
-            <div className="space-y-2.5 rounded-xl border p-4"
-                 style={{ background: 'rgba(33,118,189,0.04)', borderColor: 'rgba(33,118,189,0.15)' }}>
-              <h3 className="text-xs font-semibold uppercase tracking-wide text-brand">Catatan</h3>
+            <div className="w-full space-y-2.5 rounded-xl border border-primary/15 bg-primary/[0.04] p-4">
+              <h3 className="text-xs font-semibold uppercase tracking-wide text-primary">Catatan</h3>
               <div className="space-y-1.5 text-xs leading-relaxed text-slate-600">
                 <p>- Kode Aktivasi (Password Sementara) dan notifikasi Pengajuan Online dikirim melalui WhatsApp dan E-Mail</p>
                 <p>- Gunakan nomor WhatsApp &amp; E-Mail aktif saat pendaftaran. Jika belum, silahkan lengkapi akun profil pendaftaran anda dengan nomor WhatsApp dan E-Mail aktif.</p>
@@ -229,9 +262,9 @@ export default function Login({ redirect }) {
                 reCAPTCHA nonaktif (kunci belum diisi) — hanya untuk pengembangan.
               </p>
             )}
-          </div>
+          </CardFooter>
         </form>
-      </div>
+      </Card>
 
       <div className="absolute inset-x-0 bottom-4 text-center text-xs text-slate-400">
         <p>SAIBATIN — Disdukcapil Kabupaten Pesisir Barat &copy; {situs?.tahun ?? '2024'}</p>

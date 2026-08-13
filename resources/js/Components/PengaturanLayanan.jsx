@@ -5,6 +5,9 @@ import {
 } from 'lucide-react';
 import { ambilJson, kirimJson } from '@/lib/api';
 import { Tombol } from '@/Components/Dasbor';
+import { Checkbox } from '@/Components/ui/checkbox';
+import { DatePicker } from '@/Components/ui/date-picker';
+import { TimePicker } from '@/Components/ui/time-picker';
 
 /**
  * Drawer "Kelola Layanan" — port `components/dashboard/jam-layanan-editor.tsx`
@@ -47,7 +50,7 @@ function StatusSimpan({ status }) {
   );
 }
 
-const kelasJam = 'w-[104px] rounded-md border border-slate-300 bg-white px-2.5 py-1.5 text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/40';
+const kelasJam = 'w-[116px]';
 
 // ── Tab 1: jam kerja ────────────────────────────────────────────────────────
 
@@ -143,11 +146,9 @@ function EditorJamLayanan({ onGalat }) {
                 <span className="w-16 text-sm font-medium text-slate-800">{HARI_LABEL[i]}</span>
                 {d.buka ? (
                   <div className="flex items-center gap-2">
-                    <input type="time" value={d.mulai} onChange={(e) => setHari(i, { mulai: e.target.value })}
-                           className={kelasJam} />
+                    <TimePicker value={d.mulai} onChange={(v) => setHari(i, { mulai: v })} className={kelasJam} />
                     <span className="text-xs text-slate-400">s/d</span>
-                    <input type="time" value={d.selesai} onChange={(e) => setHari(i, { selesai: e.target.value })}
-                           className={kelasJam} />
+                    <TimePicker value={d.selesai} onChange={(v) => setHari(i, { selesai: v })} className={kelasJam} />
                   </div>
                 ) : (
                   <span className="text-sm text-slate-400">Tutup</span>
@@ -179,9 +180,9 @@ function EditorJamLayanan({ onGalat }) {
             ))}
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            <input type="time" value={massalMulai} onChange={(e) => setMassalMulai(e.target.value)} className={kelasJam} />
+            <TimePicker value={massalMulai} onChange={setMassalMulai} className={kelasJam} />
             <span className="text-xs text-slate-400">s/d</span>
-            <input type="time" value={massalSelesai} onChange={(e) => setMassalSelesai(e.target.value)} className={kelasJam} />
+            <TimePicker value={massalSelesai} onChange={setMassalSelesai} className={kelasJam} />
             <Tombol varian="garis" onClick={terapkanMassal}>Terapkan</Tombol>
           </div>
         </div>
@@ -191,8 +192,8 @@ function EditorJamLayanan({ onGalat }) {
             <CalendarX2 className="h-3.5 w-3.5" /> Tanggal libur khusus
           </p>
           <div className="mb-3 flex items-center gap-2">
-            <input type="date" value={liburBaru} onChange={(e) => setLiburBaru(e.target.value)}
-                   className="w-48 rounded-md border border-slate-300 bg-white px-2.5 py-1.5 text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/40" />
+            <DatePicker value={liburBaru} onChange={setLiburBaru} placeholder="Pilih tanggal libur"
+                        className="w-48" />
             <Tombol varian="garis" onClick={tambahLibur} disabled={!liburBaru}>Tambah</Tombol>
           </div>
           {cfg.holidays.length === 0 ? (
@@ -301,13 +302,12 @@ function EditorVisibilitas({ onGalat }) {
                            terlihat ? 'border-slate-200 hover:border-brand/40'
                                     : 'border-dashed border-slate-200 bg-slate-50 opacity-70'
                          }`}>
-                    <input type="checkbox" checked={terlihat}
-                           onChange={() => setHidden((p) => {
-                             const n = new Set(p);
-                             if (n.has(l.kunci)) n.delete(l.kunci); else n.add(l.kunci);
-                             return n;
-                           })}
-                           className="h-4 w-4 rounded border-slate-300 text-brand focus:ring-brand/40" />
+                    <Checkbox checked={terlihat}
+                              onCheckedChange={() => setHidden((p) => {
+                                const n = new Set(p);
+                                if (n.has(l.kunci)) n.delete(l.kunci); else n.add(l.kunci);
+                                return n;
+                              })} />
                     <span className={`text-sm font-medium ${terlihat ? 'text-slate-800' : 'text-slate-400 line-through'}`}>
                       {l.title}
                     </span>

@@ -12,7 +12,7 @@
 | Apa ini | **port SAIBATIN kembali ke PHP** — Laravel 12.65 + Inertia + React, MySQL |
 | Tujuan | **mengganti total** portal SAIBATIN Next.js |
 | Umur | baru — dimulai **7 Agustus 2026** |
-| Port dev | **3303** (`saibatin-laravel-dev`) · login uji `admin`/`admin123` |
+| Port dev | **3104** (`saibatin-laravel-dev`) — 🔴 DIPATENKAN · login uji `admin`/`admin123` |
 | Git | **belum di-git** |
 | Server | **belum menyentuh server sama sekali** |
 

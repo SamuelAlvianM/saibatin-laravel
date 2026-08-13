@@ -5,6 +5,7 @@ import LayoutDashboard from '@/Components/LayoutDashboard';
 import PengaturanLayanan from '@/Components/PengaturanLayanan';
 import { Pesan, Tombol } from '@/Components/Dasbor';
 import { ikon as ikonDari } from '@/lib/ikon';
+import { Input } from '@/Components/ui/input';
 
 /**
  * Pemilih layanan untuk PETUGAS — mengisikan permohonan atas nama warga yang
@@ -56,8 +57,8 @@ export default function PengajuanBaru({ daftar, jam }) {
         <div className="flex items-center gap-2">
           <div className="relative w-full sm:w-64">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-            <input value={cari} onChange={(e) => setCari(e.target.value)} placeholder="Cari layanan..."
-                   className="w-full rounded-lg border border-slate-300 bg-white py-2 pl-9 pr-3 text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/40" />
+            <Input value={cari} onChange={(e) => setCari(e.target.value)} placeholder="Cari layanan..."
+                   className="pl-9" />
           </div>
           {admin && (
             <Tombol varian="garis" onClick={() => setPengaturan(true)} kelas="shrink-0"

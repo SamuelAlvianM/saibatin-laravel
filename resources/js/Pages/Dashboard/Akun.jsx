@@ -8,6 +8,9 @@ import LayoutDashboard from '@/Components/LayoutDashboard';
 import AmbilSelfie from '@/Components/AmbilSelfie';
 import UnggahGambar from '@/Components/UnggahGambar';
 import PenampilGambar from '@/Components/PenampilGambar';
+import { SearchSelect } from '@/Components/SearchSelect';
+import { Input } from '@/Components/ui/input';
+import { Textarea } from '@/Components/ui/textarea';
 import {
   Kartu, Kosong, Memuat, Modal, Pesan, Tombol, tglJam, useTunda,
 } from '@/Components/Dasbor';
@@ -78,7 +81,6 @@ function Isian({ label, ket, wajib, children }) {
   );
 }
 
-const kelasInput = 'h-9 w-full rounded-lg border border-slate-300 px-3 text-sm';
 
 // ── Panel detail ───────────────────────────────────────────────────────────
 
@@ -439,8 +441,8 @@ export default function Akun({ kecamatan }) {
               </div>
               <div className="relative flex-1">
                 <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                <input value={cari} onChange={(e) => setCari(e.target.value)}
-                       placeholder="Cari NIK / nama / email…" className={`${kelasInput} pl-9`} />
+                <Input value={cari} onChange={(e) => setCari(e.target.value)}
+                       placeholder="Cari NIK / nama / email…" className="pl-9" />
               </div>
             </div>
 
@@ -569,9 +571,8 @@ export default function Akun({ kecamatan }) {
                      ket={tolak
                        ? 'Wajib diisi. Ditampilkan ke pemohon & dikirim ke emailnya.'
                        : 'Opsional. Akun dinonaktifkan sementara karena alasan keamanan.'}>
-                <textarea rows={3} value={alasan} onChange={(e) => setAlasan(e.target.value)}
-                          placeholder="mis. Foto selfie buram, nama tidak sesuai Kartu Keluarga"
-                          className="w-full rounded-lg border border-slate-300 p-2 text-sm" />
+                <Textarea rows={3} value={alasan} onChange={(e) => setAlasan(e.target.value)}
+                          placeholder="mis. Foto selfie buram, nama tidak sesuai Kartu Keluarga" />
               </Isian>
 
               <div className="flex justify-end gap-2">
@@ -660,28 +661,30 @@ export default function Akun({ kecamatan }) {
 
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <Isian label="NIK" wajib ket="16 digit angka sesuai KTP — dipakai sebagai identitas login.">
-                      <input value={form.userId} maxLength={16} inputMode="numeric" placeholder="Nomor Induk Kependudukan"
+                      <Input value={form.userId} maxLength={16} inputMode="numeric" placeholder="Nomor Induk Kependudukan"
                              onChange={(e) => setForm((f) => ({ ...f, userId: e.target.value.replace(/\D/g, '') }))}
-                             className={kelasInput} />
+                             />
                     </Isian>
                     <Isian label="Nomor Kartu Keluarga" ket="16 digit angka sesuai Kartu Keluarga.">
-                      <input value={form.kk} maxLength={16} inputMode="numeric" placeholder="Nomor Kartu Keluarga"
+                      <Input value={form.kk} maxLength={16} inputMode="numeric" placeholder="Nomor Kartu Keluarga"
                              onChange={(e) => setForm((f) => ({ ...f, kk: e.target.value.replace(/\D/g, '') }))}
-                             className={kelasInput} />
+                             />
                     </Isian>
                   </div>
 
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <Isian label="Nama Lengkap" wajib ket="Sesuai KTP, tanpa gelar, tulis dengan huruf kapital.">
-                      <input value={form.nama} placeholder="NAMA LENGKAP"
-                             onChange={(e) => setForm((f) => ({ ...f, nama: e.target.value }))} className={kelasInput} />
+                      <Input value={form.nama} placeholder="NAMA LENGKAP"
+                             onChange={(e) => setForm((f) => ({ ...f, nama: e.target.value }))} />
                     </Isian>
                     <Isian label="Kecamatan" wajib ket="Sesuai domisili dan alamat pada Kartu Keluarga.">
-                      <select value={form.kecamatan} onChange={(e) => setForm((f) => ({ ...f, kecamatan: e.target.value }))}
-                              className={`${kelasInput} bg-white`}>
-                        <option value="">Pilih Kecamatan</option>
-                        {kecamatan.map((k) => <option key={k} value={k}>{k}</option>)}
-                      </select>
+                      <SearchSelect
+                        value={form.kecamatan}
+                        onValueChange={(v) => setForm((f) => ({ ...f, kecamatan: v }))}
+                        options={kecamatan.map((k) => ({ value: k, label: k }))}
+                        placeholder="Pilih Kecamatan"
+                        searchPlaceholder="Cari kecamatan…"
+                      />
                     </Isian>
                   </div>
                 </section>
@@ -693,19 +696,19 @@ export default function Akun({ kecamatan }) {
 
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <Isian label="Nomor WhatsApp" ket="Dimulai angka 0, pastikan nomor aktif.">
-                      <input value={form.hp} placeholder="08xxxxxxxxxx"
-                             onChange={(e) => setForm((f) => ({ ...f, hp: e.target.value }))} className={kelasInput} />
+                      <Input value={form.hp} placeholder="08xxxxxxxxxx"
+                             onChange={(e) => setForm((f) => ({ ...f, hp: e.target.value }))} />
                     </Isian>
                     <Isian label="Alamat Email" ket="Dipakai untuk notifikasi dan pengiriman dokumen jadi.">
-                      <input type="email" value={form.email} placeholder="nama@email.com"
-                             onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))} className={kelasInput} />
+                      <Input type="email" value={form.email} placeholder="nama@email.com"
+                             onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))} />
                     </Isian>
                   </div>
 
                   <Isian label="Kata Sandi Awal" wajib
                          ket="Sampaikan kata sandi ini ke pemilik akun; sarankan segera diganti lewat pengaturan akun.">
-                    <input value={form.password} placeholder="Minimal 6 karakter, bukan angka semua"
-                           onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))} className={kelasInput} />
+                    <Input value={form.password} placeholder="Minimal 6 karakter, bukan angka semua"
+                           onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))} />
                   </Isian>
                 </section>
 
@@ -738,42 +741,42 @@ export default function Akun({ kecamatan }) {
             ) : (
               <>
                 <Isian label={`Nama Lengkap${form.level === 4 ? ' / Nama Instansi' : ''}`} wajib>
-                  <input value={form.nama} onChange={(e) => setForm((f) => ({ ...f, nama: e.target.value }))}
+                  <Input value={form.nama} onChange={(e) => setForm((f) => ({ ...f, nama: e.target.value }))}
                          placeholder={form.level === 4 ? 'mis. Dinas Kesehatan Pesisir Barat' : 'Nama sesuai KTP'}
-                         className={kelasInput} />
+                         />
                 </Isian>
 
                 <Isian label={form.level === 4 ? 'Username Instansi' : 'Username'} wajib
                        ket={form.level === 4
                          ? 'Username ini yang dipakai instansi untuk login (4-30 karakter, huruf/angka/titik/underscore/strip).'
                          : undefined}>
-                  <input value={form.userId} maxLength={30}
+                  <Input value={form.userId} maxLength={30}
                          onChange={(e) => setForm((f) => ({ ...f, userId: e.target.value }))}
-                         placeholder={form.level === 4 ? 'mis. rs.saibatin' : 'mis. staff_dinas'} className={kelasInput} />
+                         placeholder={form.level === 4 ? 'mis. rs.saibatin' : 'mis. staff_dinas'} />
                 </Isian>
 
                 {form.level === 4 && (
                   <Isian label="NIK Perwakilan (16 digit)" wajib ket="Dipakai untuk fitur lupa password akun instansi.">
-                    <input value={form.nik} maxLength={16}
+                    <Input value={form.nik} maxLength={16}
                            onChange={(e) => setForm((f) => ({ ...f, nik: e.target.value.replace(/\D/g, '') }))}
-                           placeholder="16 digit NIK perwakilan/penanggung jawab instansi" className={kelasInput} />
+                           placeholder="16 digit NIK perwakilan/penanggung jawab instansi" />
                   </Isian>
                 )}
 
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <Isian label="No. HP">
-                    <input value={form.hp} placeholder="08xxxxxxxxxx"
-                           onChange={(e) => setForm((f) => ({ ...f, hp: e.target.value }))} className={kelasInput} />
+                    <Input value={form.hp} placeholder="08xxxxxxxxxx"
+                           onChange={(e) => setForm((f) => ({ ...f, hp: e.target.value }))} />
                   </Isian>
                   <Isian label="Email">
-                    <input type="email" value={form.email} placeholder="nama@email.com"
-                           onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))} className={kelasInput} />
+                    <Input type="email" value={form.email} placeholder="nama@email.com"
+                           onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))} />
                   </Isian>
                 </div>
 
                 <Isian label="Password Awal" wajib ket="Sampaikan password ini ke pemilik akun; sarankan segera diganti.">
-                  <input value={form.password} placeholder="Minimal 6 karakter, bukan angka semua"
-                         onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))} className={kelasInput} />
+                  <Input value={form.password} placeholder="Minimal 6 karakter, bukan angka semua"
+                         onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))} />
                 </Isian>
               </>
             )}
