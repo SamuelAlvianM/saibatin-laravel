@@ -32,6 +32,7 @@ return [
         // deskripsi halamannya) supaya petugas bisa menambah pertanyaan tanpa
         // ikut menyunting teks pengantarnya.
         'pusat-bantuan.faq' => 'Pusat Bantuan — Daftar FAQ',
+        'produk.disdukcapil' => 'Produk Disdukcapil',
     ],
 
     /*
@@ -147,6 +148,41 @@ return [
                     'pertanyaan' => 'Apakah Disdukcapil menelepon warga untuk aktivasi IKD?',
                     'jawaban' => 'Tidak pernah. Disdukcapil tidak melakukan panggilan telepon maupun video call untuk aktivasi Identitas Kependudukan Digital, dan tidak pernah meminta PIN, kata sandi, atau data perbankan. Lihat halaman "Penipuan IKD" untuk ciri-ciri lengkapnya.',
                 ],
+            ],
+        ],
+
+        /*
+        | Produk Disdukcapil — halaman ini punya TAMPILAN SENDIRI (akordeon
+        | bergambar), bukan view informasi generik. Karena itu isinya di blok
+        | tersendiri, bukan di `config/info-halaman.php`.
+        |
+        | Ilustrasinya (`public/produk-layanan/*.png`) disalin dari portal
+        | SAIBATIN Next.js — aset milik project yang sama, bukan pinjaman.
+        |
+        | 🔴 Kunci gambarnya `image`, BUKAN `gambar`. Blok ini SUDAH ADA di
+        | database produksi dengan kunci itu (beserta isi yang jauh lebih
+        | lengkap: persyaratan per produk dalam bentuk HTML). Memakai nama lain
+        | membuat gambarnya hilang diam-diam — halamannya tetap 200, akordeonnya
+        | tetap terbuka, cuma tanpa satu pun ilustrasi.
+        |
+        | `desc` boleh berisi HTML karena begitulah bentuknya di produksi.
+        */
+        'produk.disdukcapil' => [
+            'intro' => 'Layanan Disdukcapil Pesisir Barat terdiri atas Layanan Pencatatan Sipil (Capil) dan Layanan Pendaftaran Penduduk (Dafduk). Pencatatan Sipil adalah pencatatan peristiwa penting yang dialami oleh seseorang dalam register pencatatan sipil pada Instansi Pelaksana; dokumen yang dicatat meliputi akta-akta serta catatan pinggir. Pendaftaran Penduduk adalah pencatatan biodata penduduk, pencatatan atas pelaporan peristiwa kependudukan dan pendataan penduduk rentan administrasi kependudukan, serta penerbitan dokumen penduduk berupa kartu identitas atau surat keterangan kependudukan.',
+
+            'produk' => [
+                ['image' => '/produk-layanan/kelahiran.png', 'nama' => 'Akta Kelahiran', 'desc' => 'Dokumen pencatatan resmi atas peristiwa kelahiran seseorang. Menjadi bukti sah identitas dan kewarganegaraan anak sejak lahir.'],
+                ['image' => '/produk-layanan/kematian.png', 'nama' => 'Akta Kematian', 'desc' => 'Dokumen pencatatan resmi atas peristiwa kematian seseorang, diperlukan antara lain untuk pengurusan waris, asuransi, dan penataan data keluarga.'],
+                ['image' => '/produk-layanan/perkawinan.png', 'nama' => 'Akta Perkawinan', 'desc' => 'Dokumen pencatatan perkawinan bagi penduduk non-muslim yang telah melangsungkan perkawinan sah menurut agama/kepercayaannya.'],
+                ['image' => '/produk-layanan/perceraian.png', 'nama' => 'Akta Perceraian', 'desc' => 'Dokumen pencatatan perceraian berdasarkan putusan pengadilan yang telah berkekuatan hukum tetap.'],
+                ['image' => '/produk-layanan/pengakuananak.png', 'nama' => 'Pengakuan & Pengesahan Anak', 'desc' => 'Pencatatan pengakuan anak oleh ayah biologis dan pengesahan anak setelah perkawinan sah orang tuanya.'],
+                ['image' => '/produk-layanan/kutipankedua.png', 'nama' => 'Kutipan Kedua Akta', 'desc' => 'Penerbitan ulang kutipan akta pencatatan sipil (kelahiran, kematian, perkawinan, perceraian) yang hilang atau rusak.'],
+                ['image' => '/produk-layanan/legalisasidokumen.png', 'nama' => 'Legalisasi Dokumen', 'desc' => 'Pengesahan fotokopi dokumen kependudukan dan akta pencatatan sipil agar sah digunakan untuk berbagai keperluan.'],
+                ['image' => '/produk-layanan/suratketerangan.png', 'nama' => 'Surat Keterangan Kependudukan', 'desc' => 'Berbagai surat keterangan resmi terkait data kependudukan, misalnya surat keterangan pindah, domisili, atau pengganti identitas.'],
+                ['image' => '/produk-layanan/catatanpinggir.png', 'nama' => 'Catatan Pinggir', 'desc' => 'Catatan resmi pada register dan kutipan akta atas perubahan peristiwa penting setelah akta diterbitkan.'],
+                ['image' => '/produk-layanan/catatanpinggirperubahannama.png', 'nama' => 'Catatan Pinggir Perubahan Nama', 'desc' => 'Pencatatan perubahan nama berdasarkan penetapan pengadilan negeri pada register dan kutipan akta pencatatan sipil.'],
+                ['image' => '/produk-layanan/catatanpinggirkewarganegaraan.png', 'nama' => 'Catatan Pinggir Perubahan Kewarganegaraan', 'desc' => 'Pencatatan perubahan status kewarganegaraan pada register dan kutipan akta pencatatan sipil.'],
+                ['image' => '/produk-layanan/catatanpinggirpengangkatananak.png', 'nama' => 'Catatan Pinggir Pengangkatan Anak', 'desc' => 'Pencatatan pengangkatan anak berdasarkan penetapan pengadilan pada register dan kutipan akta kelahiran.'],
             ],
         ],
 

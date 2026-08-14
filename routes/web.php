@@ -148,6 +148,11 @@ Route::get('/galeri', [App\Http\Controllers\PublikController::class, 'galeri'])-
 //
 // 🔴 Ditulis sebagai aksi controller, BUKAN closure: closure tidak bisa
 // di-`route:cache`, dan cache rute itu justru yang dipakai di cPanel.
+// 🔴 HARUS di atas `/produk/{slug}`: halaman ini punya tampilan sendiri
+// (akordeon bergambar), dan catch-all di bawah akan menelannya diam-diam —
+// halamannya tetap 200, cuma kembali jadi view informasi generik.
+Route::get('/produk/produk-disdukcapil', [App\Http\Controllers\PublikController::class, 'produkDisdukcapil']);
+
 Route::get('/produk/{slug}', [App\Http\Controllers\PublikController::class, 'produk'])->name('produk');
 Route::get('/ppid/{slug}', [App\Http\Controllers\PublikController::class, 'ppid'])->name('ppid');
 

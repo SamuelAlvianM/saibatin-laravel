@@ -119,6 +119,31 @@ class PublikController extends Controller
     }
 
     /**
+     * Produk Disdukcapil — `/produk/produk-disdukcapil`.
+     *
+     * 🔴 Satu-satunya alamat `/produk/*` yang punya TAMPILAN SENDIRI (akordeon
+     * bergambar), jadi tidak lewat `info()`. Rutenya harus didaftarkan SEBELUM
+     * `/produk/{slug}` — kalau tidak, catch-all itu menelannya dan halamannya
+     * kembali jadi view informasi generik tanpa satu pun galat.
+     */
+    public function produkDisdukcapil()
+    {
+        $bawaan = config('konten.bawaan', [])['produk.disdukcapil'] ?? [];
+
+        return view('publik.produk-disdukcapil', [
+            'isi' => array_merge($bawaan, Konten::satu('produk.disdukcapil')),
+            // Dokumen yang dipetakan ke alamat ini tetap ikut, sama seperti
+            // halaman produk lainnya.
+            'berkas' => ($jenis = self::jenisDokumen('/produk/produk-disdukcapil')) === []
+                ? collect()
+                : Produk::whereIn('jenis', $jenis)
+                    ->whereNotNull('file')
+                    ->orderByDesc('created_at')
+                    ->get(['id', 'judul', 'file', 'created_at']),
+        ]);
+    }
+
+    /**
      * Pusat Bantuan — `/pusat-bantuan/{slug}`.
      *
      * Menu baru mengikuti SIDAKO (permintaan dinas): FAQ, Pengaduan &

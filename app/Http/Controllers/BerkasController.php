@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Berkas;
 use App\Services\FotoProfil;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -69,11 +70,8 @@ class BerkasController extends Controller
                 abort(404);
             }
 
-            if (! $user->isPetugas()) {
-                $pemilik = filter_var(explode('_', $namaFile)[0] ?? '', FILTER_VALIDATE_INT);
-                if ($pemilik === false || $pemilik !== $user->id) {
-                    abort(404);
-                }
+            if (! $user->isPetugas() && ! self::miliknya($user->id, $namaFile, $jalur)) {
+                abort(404);
             }
         }
 
@@ -93,5 +91,44 @@ class BerkasController extends Controller
             // Berkas pribadi TIDAK boleh singgah di cache bersama/CDN.
             'Cache-Control' => $publik ? 'public, max-age=31536000, immutable' : 'private, no-store',
         ]);
+    }
+
+    /**
+     * Apakah berkas ini milik warga tersebut?
+     *
+     * DUA konvensi penamaan hidup berdampingan, dan itu yang membuat versi
+     * pertama fungsi ini salah:
+     *
+     * 1. **Port ini** menulis `<uid>_<timestamp>.<ext>` — pemiliknya terbaca
+     *    langsung dari nama berkas, tanpa menyentuh database.
+     * 2. **1.485 berkas WARISAN** berbentuk lain sama sekali:
+     *    `/uploads/kkpisahkk/KKP01001.1778552208/1778552123_ngm.desa_KKP01_….jpg`
+     *    Segmen pertamanya **timestamp**, bukan id. Memperlakukannya sebagai id
+     *    berarti setiap warga mendapat **404 untuk berkasnya sendiri** —
+     *    menolak, bukan membocorkan, tapi tetap salah dan wajib ditutup
+     *    sebelum cutover (HANDOFF §7 no. 4).
+     *
+     * Karena itu prefix dicoba lebih dulu (jalur cepat, tanpa kueri), lalu
+     * jatuh ke `t_berkas.path` → `t_permohonan.user_id` untuk yang warisan.
+     *
+     * ⚠️ Prefix hanya boleh dipercaya karena rentang angkanya tidak mungkin
+     * bertabrakan: timestamp warisan 10 digit, id pengguna paling banyak 4–5
+     * digit. Kalau suatu saat id tumbuh sampai 10 digit, jalur cepat ini harus
+     * dibuang dan semuanya lewat database.
+     */
+    private static function miliknya(int $uid, string $namaFile, string $jalur): bool
+    {
+        $prefix = filter_var(explode('_', $namaFile)[0] ?? '', FILTER_VALIDATE_INT);
+
+        if ($prefix !== false && $prefix === $uid) {
+            return true;
+        }
+
+        // Berkas warisan: kepemilikannya hanya diketahui database. Dicocokkan
+        // dengan path LENGKAP seperti tersimpan, bukan nama berkasnya saja —
+        // nama berkas warisan tidak dijamin unik antar-folder layanan.
+        return Berkas::where('path', '/uploads/'.$jalur)
+            ->whereHas('permohonan', fn ($q) => $q->where('user_id', $uid))
+            ->exists();
     }
 }
