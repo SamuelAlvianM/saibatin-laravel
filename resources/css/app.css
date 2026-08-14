@@ -375,3 +375,113 @@
     opacity: 1;
   }
 }
+
+/* ==========================================================================
+   Aksesibilitas — widget 14 kontrol
+   ==========================================================================
+   Port blok `a11y-*` di `app/globals.css`. Efek visualnya SELURUHNYA di sini;
+   JS (`lib/a11y.js`) hanya memasang/melepas kelas di <html> dan menyetel satu
+   custom property. Pemisahan itu yang membuat skrip anti-kedip di Blade cukup
+   beberapa baris dan tetap menghasilkan tampilan yang sama persis.
+*/
+
+/* 🔴 Filter dipasang di <html>, BUKAN <body>. `filter` pada elemen biasa
+   membuat containing block baru untuk keturunan `position: fixed` — navbar
+   lengket, tombol widget, dan dialog akan ikut menggulung bersama halaman.
+   Elemen root dikecualikan dari aturan itu. */
+:root {
+  filter: var(--a11y-filter, none);
+}
+
+html.a11y-contrast a,
+html.a11y-contrast button {
+  text-decoration-thickness: 2px;
+}
+
+/* Saat invert aktif, media & peta di-invert BALIK supaya foto tidak jadi
+   negatif dan peta tidak berubah jadi warna yang tak dikenali. */
+html.a11y-invert img,
+html.a11y-invert video,
+html.a11y-invert svg image,
+html.a11y-invert .leaflet-container {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+/* Sorot tautan: garis bawah tebal + latar stabilo. */
+html.a11y-underline a {
+  text-decoration: underline !important;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 2px !important;
+  background-color: rgba(250, 204, 21, 0.3);
+  outline: 1px solid rgba(180, 83, 9, 0.45);
+  outline-offset: 1px;
+}
+
+/* Spasi teks bertingkat (keterbacaan disleksia / low vision).
+   `:not(svg):not(path)` wajib — letter-spacing pada elemen SVG menggeser
+   posisi teks di dalam grafik dan merusak ikon. */
+html.a11y-spacing-1 body *:not(svg):not(path) {
+  letter-spacing: 0.05em !important;
+  word-spacing: 0.1em !important;
+  line-height: 1.7 !important;
+}
+html.a11y-spacing-2 body *:not(svg):not(path) {
+  letter-spacing: 0.1em !important;
+  word-spacing: 0.22em !important;
+  line-height: 2 !important;
+}
+
+/* Font ramah disleksia: sans legible yang MEMANG SUDAH DIMUAT (Montserrat),
+   bukan font baru yang harus diunduh saat kontrolnya dinyalakan. */
+html.a11y-dyslexia body,
+html.a11y-dyslexia body *:not(svg):not(path) {
+  font-family: 'Montserrat', Verdana, Arial, sans-serif !important;
+}
+
+/* Latar terang penuh — untuk yang silau pada latar berwarna. */
+html.a11y-lightbg {
+  color-scheme: light;
+}
+html.a11y-lightbg body {
+  background: #ffffff !important;
+}
+
+/* Kursor besar (SVG inline, hotspot 5,4). */
+html.a11y-cursor,
+html.a11y-cursor * {
+  cursor:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 24 24'%3E%3Cpath d='M5.5 3.2 19 12.7l-6.4.9 3.6 6.6-3.1 1.7-3.6-6.6-4 3.2z' fill='%23111' stroke='%23fff' stroke-width='1.4'/%3E%3C/svg%3E")
+      5 4,
+    auto !important;
+}
+
+/* Sorotan blok teks yang sedang dibacakan (mode "Baca Saat Diarahkan"). */
+.a11y-tts-hover {
+  outline: 2px solid #d97706 !important;
+  outline-offset: 2px;
+  background-color: rgba(245, 158, 11, 0.12) !important;
+  border-radius: 4px;
+}
+
+/* Garis bantu baca yang mengikuti kursor. */
+.a11y-reading-guide {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 4px;
+  background: #f59e0b;
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.25);
+  z-index: 68;
+  pointer-events: none;
+}
+
+/* Hentikan seluruh animasi & transisi (vestibular / gangguan fokus). */
+html.a11y-no-motion *,
+html.a11y-no-motion *::before,
+html.a11y-no-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}

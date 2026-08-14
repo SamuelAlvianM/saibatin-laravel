@@ -49,6 +49,45 @@
 
     @yield('kepala')
 
+    {{-- 🔴 Preferensi aksesibilitas diterapkan SEBELUM body dirender.
+         Kalau menunggu widget React-nya dimuat, halaman tampil sekejap dengan
+         gaya normal lalu berubah — tepat pada pengguna yang paling terganggu
+         oleh perubahan mendadak, dan pada perangkat lambat kedipannya lama.
+         Logikanya kembar dengan `terapkanPrefs()` di `lib/a11y.js`; kalau yang
+         satu diubah, ubah juga yang lain. --}}
+    <script>
+        (function () {
+            try {
+                var r = document.documentElement;
+                var mentah = localStorage.getItem('saibatin-a11y');
+                if (!mentah) return;
+
+                var s = JSON.parse(mentah);
+                if (!s || typeof s !== 'object') return;
+
+                var F = [90, 100, 110, 125, 150, 175, 200];
+                var i = Math.min(Math.max(s.fontIdx || 0, 0), F.length - 1);
+                if (i !== 1) r.style.fontSize = F[i] + '%';
+
+                var f = [];
+                if (s.contrast) f.push('contrast(1.2)');
+                if (s.grayscale) f.push('grayscale(1)');
+                if (s.invert) f.push('invert(1) hue-rotate(180deg)');
+                if (f.length) r.style.setProperty('--a11y-filter', f.join(' '));
+
+                var c = {
+                    'a11y-contrast': s.contrast, 'a11y-invert': s.invert,
+                    'a11y-underline': s.highlightLinks, 'a11y-dyslexia': s.dyslexia,
+                    'a11y-lightbg': s.lightBg, 'a11y-cursor': s.bigCursor,
+                    'a11y-no-motion': s.noMotion,
+                };
+                for (var k in c) if (c[k]) r.classList.add(k);
+
+                if (s.spacing > 0) r.classList.add('a11y-spacing-' + Math.min(s.spacing, 2));
+            } catch (e) { /* preferensi rusak — pakai tampilan bawaan */ }
+        })();
+    </script>
+
     @viteReactRefresh
     @vite(['resources/css/app.css', 'resources/js/publik.jsx'])
 </head>
@@ -62,6 +101,12 @@
     </main>
 
     @include('publik.partials.footer')
+
+    {{-- Widget aksesibilitas (14 kontrol). Island terakhir supaya tombolnya
+         tidak pernah menutupi konten saat halaman masih dimuat. Sengaja hanya
+         di situs publik — dashboard petugas punya UI padat yang akan tertimpa
+         tombol melayangnya. --}}
+    <div data-island="WidgetAksesibilitas"></div>
 
     {{-- Pencatat kunjungan. Sengaja skrip kecil, bukan island: tidak punya
          tampilan sama sekali, jadi memuat React untuknya cuma pemborosan.
