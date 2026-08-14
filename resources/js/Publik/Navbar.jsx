@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import {
   Building2, ChevronDown, ChevronRight, FileText, Home, Landmark,
-  LayoutDashboard, LogOut, Menu, Newspaper, Phone, ShieldAlert,
-  User as UserIcon, X,
+  LayoutDashboard, LifeBuoy, LogOut, Menu, Newspaper, Phone, ShieldAlert,
+  Smile, User as UserIcon, X,
 } from 'lucide-react';
 
 import { Button } from '@/Components/ui/button';
@@ -24,14 +24,21 @@ import { cn } from '@/lib/utils';
  * 3. **Logout lewat form POST ber-CSRF**, bukan thunk.
  */
 
+/**
+ * 🔴 Kuncinya adalah LABEL menu di `lib/navigasi.js`. Mengganti label di sana
+ * tanpa mengganti kunci di sini membuat ikonnya hilang diam-diam — tidak ada
+ * galat, menunya cuma jadi teks polos di antara menu lain yang berikon.
+ */
 const IKON_MENU = {
   Permohonan: FileText,
   'Pelayanan Online': Building2,
-  Pengaduan: ShieldAlert,
-  Produk: FileText,
+  'Informasi Produk': FileText,
   'Media Informasi': Newspaper,
-  'Hubungi Kami': Phone,
   PPID: Landmark,
+  WBS: ShieldAlert,
+  'Pusat Bantuan': LifeBuoy,
+  'Survei Kepuasan': Smile,
+  'Hubungi Kami': Phone,
 };
 
 const KELAS_MENU_ATAS = cn(

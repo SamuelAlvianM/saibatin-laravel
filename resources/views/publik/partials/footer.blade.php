@@ -32,10 +32,10 @@
                     <h4 class="mb-4 text-sm font-semibold uppercase tracking-wider text-white">Layanan</h4>
                     <ul class="space-y-2.5">
                         @foreach ([
-                            ['Permohonan Online', '/permohonan-online'],
-                            ['Riwayat Permohonan', '/riwayat'],
-                            ['Pengaduan Masyarakat', '/pengaduan'],
-                            ['Survei Kepuasan', '/hubungi-kami#survei'],
+                            ['Ajukan Permohonan', '/user/pengajuan/baru'],
+                            ['Riwayat Permohonan', '/user/pengajuan'],
+                            ['Pengaduan & Konsultasi', '/pusat-bantuan/pengaduan-konsultasi'],
+                            ['Survei Kepuasan', '/survei-kepuasan'],
                         ] as [$label, $href])
                             <li>
                                 <a href="{{ $href }}" class="text-sm transition-colors hover:text-white">{{ $label }}</a>
@@ -46,11 +46,14 @@
                 <div>
                     <h4 class="mb-4 text-sm font-semibold uppercase tracking-wider text-white">Informasi</h4>
                     <ul class="space-y-2.5">
+                        {{-- "Hubungi Kami" tidak lagi di navbar (mengikuti SIDAKO),
+                             jadi footer inilah satu-satunya jalan masuk tetapnya. --}}
                         @foreach ([
                             ['Berita', '/media/berita'],
                             ['Galeri', '/galeri'],
-                            ['Produk & Layanan', '/produk/produk-disdukcapil'],
+                            ['Informasi Produk', '/produk/produk-disdukcapil'],
                             ['PPID', '/ppid/profil-ppid'],
+                            ['Hubungi Kami', '/hubungi-kami'],
                         ] as [$label, $href])
                             <li>
                                 <a href="{{ $href }}" class="text-sm transition-colors hover:text-white">{{ $label }}</a>

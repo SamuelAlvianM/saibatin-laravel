@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\SandiController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PengajuanPetugasController;
 use App\Models\Wilayah;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -54,6 +55,11 @@ Route::post('/ajukan-ulang', [CekStatusController::class, 'ajukanUlang'])->middl
 // ── Area berizin ────────────────────────────────────────────────────────────
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [LoginController::class, 'keluar'])->name('logout');
+
+    // 🔴 Wajib ada: LoginController mengantar warga ke `/profil?lengkapi=foto`
+    // pada login pertama. Selama rute ini belum dibuat, login yang BERHASIL
+    // berakhir di 404.
+    Route::get('/profil', App\Http\Controllers\ProfilPageController::class)->name('profil');
 
     // ── Pengajuan permohonan (warga/OPD) ────────────────────────────────────
     Route::get('/user/pengajuan', [App\Http\Controllers\PengajuanController::class, 'riwayat']);
@@ -137,5 +143,72 @@ Route::get('/', [App\Http\Controllers\PublikController::class, 'beranda'])->name
 
 Route::get('/galeri', [App\Http\Controllers\PublikController::class, 'galeri'])->name('galeri');
 
+// Halaman informasi statis. Slug yang tidak terdaftar di `config/info-halaman.php`
+// dijawab 404 oleh controller — bukan halaman kosong.
+//
+// 🔴 Ditulis sebagai aksi controller, BUKAN closure: closure tidak bisa
+// di-`route:cache`, dan cache rute itu justru yang dipakai di cPanel.
+Route::get('/produk/{slug}', [App\Http\Controllers\PublikController::class, 'produk'])->name('produk');
+Route::get('/ppid/{slug}', [App\Http\Controllers\PublikController::class, 'ppid'])->name('ppid');
+
 Route::get('/media/berita', [App\Http\Controllers\PublikController::class, 'beritaIndeks'])->name('berita.indeks');
 Route::get('/media/berita/{slug}', [App\Http\Controllers\PublikController::class, 'beritaDetail'])->name('berita.detail');
+
+// ── Pusat Bantuan & WBS (susunan mengikuti SIDAKO) ──────────────────────────
+Route::get('/pusat-bantuan/{slug}', [App\Http\Controllers\PublikController::class, 'pusatBantuan'])
+    ->name('pusat-bantuan');
+Route::get('/wbs/{slug}', [App\Http\Controllers\PublikController::class, 'wbs'])->name('wbs');
+
+// Kanal Pengaduan Masyarakat & WBS disatukan: isinya sama dan keduanya menyimpan
+// ke endpoint yang sama. Tautan `/pengaduan` lama tetap hidup lewat redirect ini
+// — footer, hasil pencarian, dan tautan yang sudah dibagikan warga menunjuk ke
+// sana. 301, bukan 302: alamatnya memang pindah permanen.
+Route::redirect('/pengaduan', '/wbs/tentang-wbs', 301);
+
+// ── Hubungi Kami ────────────────────────────────────────────────────────────
+// Tidak lagi di navbar (mengikuti SIDAKO) — ditautkan dari footer.
+Route::get('/hubungi-kami', [App\Http\Controllers\PublikController::class, 'hubungiKami'])
+    ->name('hubungi-kami');
+Route::get('/hubungi-kami/{slug}', [App\Http\Controllers\PublikController::class, 'hubungiSlug']);
+
+// ── Survei Kepuasan Masyarakat ──────────────────────────────────────────────
+Route::get('/survei-kepuasan', [App\Http\Controllers\PublikController::class, 'survei'])
+    ->name('survei-kepuasan');
+
+// ── Media: GIS, demografi, peta ─────────────────────────────────────────────
+// 🔴 Ketiganya HARUS di bawah `/media/berita` di atas — `/media/{slug}` tidak
+// dipakai justru supaya tidak menelan alamat berita.
+Route::get('/media/gis', [App\Http\Controllers\PublikController::class, 'gis'])->name('gis');
+Route::get('/media/demografi', [App\Http\Controllers\PublikController::class, 'demografi'])
+    ->name('demografi');
+Route::redirect('/media/peta', '/media/gis', 301);
+Route::redirect('/media/laporan-demografi', '/media/demografi', 301);
+Route::redirect('/media/survey-kepuasan', '/survei-kepuasan', 301);
+
+// ── Halaman ketentuan ───────────────────────────────────────────────────────
+// Ditautkan dari footer setiap halaman, jadi keduanya wajib ada sejak awal —
+// tautan footer yang 404 muncul di SELURUH situs sekaligus.
+Route::get('/kebijakan-privasi', fn () => app(App\Http\Controllers\PublikController::class)
+    ->ketentuan('kebijakan-privasi'))->name('kebijakan-privasi');
+Route::get('/syarat', fn () => app(App\Http\Controllers\PublikController::class)
+    ->ketentuan('syarat'))->name('syarat');
+// Alamat lama yang masih beredar.
+Route::redirect('/privasi', '/kebijakan-privasi', 301);
+
+// ── Alamat lama portal Next.js ──────────────────────────────────────────────
+// Halaman "Pelayanan Online" (grid layanan + 15 form berupa MODAL) sudah
+// dipensiunkan: permohonan kini lewat dashboard sebagai halaman penuh. URL
+// lamanya dipertahankan sebagai pengalihan supaya tautan & bookmark yang sudah
+// beredar tidak mati — termasuk `?q=` dari kotak pencarian beranda.
+Route::get('/permohonan-online', fn (Request $r) => redirect(
+    filled($r->query('q'))
+        ? '/user/pengajuan/baru?q='.urlencode((string) $r->query('q'))
+        : '/user/pengajuan/baru'
+));
+Route::redirect('/riwayat', '/user/pengajuan', 301);
+
+// ── Peta situs ──────────────────────────────────────────────────────────────
+// Versi untuk MANUSIA (bukan `sitemap.xml`): daftar seluruh alamat publik dalam
+// satu halaman, dipakai warga yang tidak menemukan menunya dan mesin pencari
+// sebagai jaring tautan internal.
+Route::get('/sitemap', [App\Http\Controllers\PublikController::class, 'petaSitus'])->name('sitemap');

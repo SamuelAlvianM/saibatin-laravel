@@ -28,7 +28,7 @@ class PengajuanController extends Controller
     }
 
     /** Pemilih layanan. */
-    public function pilih()
+    public function pilih(Request $request)
     {
         // Layanan yang disembunyikan petugas (halaman Pengaturan) tidak
         // ditawarkan di sini. Penyaringannya di server, bukan CSS: kartu yang
@@ -41,6 +41,11 @@ class PengajuanController extends Controller
                 fn ($l) => ! in_array($l['kunci'], $hidden, true),
             )),
             'kategori' => config('layanan.kategori'),
+            // Kotak pencarian & tombol pintasan di beranda mengirim `?q=` ke
+            // sini. Tanpa baris ini kata kuncinya hilang diam-diam: warga
+            // mengetik "akta kelahiran" di hero lalu mendarat di daftar penuh
+            // dengan kotak pencarian kosong.
+            'kataKunciAwal' => (string) $request->query('q', ''),
         ]);
     }
 

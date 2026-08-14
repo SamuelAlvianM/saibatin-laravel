@@ -4,6 +4,7 @@ import {
   BarChart3, ClipboardList, FilePlus2, FolderOpen, Gauge, Home, Images, LayoutDashboard as IkonDasbor, LayoutGrid, LogOut,
   MessageSquare, MessagesSquare, Newspaper, ScrollText, Users, X,
 } from 'lucide-react';
+import LoncengNotifikasi from '@/Components/LoncengNotifikasi';
 
 /**
  * Kerangka dashboard petugas — port `components/shared/dashboard-sidebar.tsx`
@@ -131,13 +132,15 @@ export default function LayoutDashboard({ judul, children, lebar = 'max-w-7xl' }
         </nav>
 
         <div className="flex items-center gap-2 border-t border-slate-200 p-3">
-          <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-brand/10 text-sm font-bold text-brand">
+          <Link href="/profil" title="Profil Saya"
+                className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-brand/10 text-sm font-bold text-brand transition-colors hover:bg-brand hover:text-white">
             {nama.charAt(0).toUpperCase()}
-          </span>
-          <div className="min-w-0 flex-1">
+          </Link>
+          <Link href="/profil" className="min-w-0 flex-1">
             <p className="truncate text-sm font-medium text-slate-700">{nama}</p>
             <p className="text-[0.65rem] text-slate-400">{level === 1 ? 'Super Admin' : 'Operator'}</p>
-          </div>
+          </Link>
+          <LoncengNotifikasi nada="terang" sisi="kiri" />
           <button onClick={keluar} title="Keluar" aria-label="Keluar"
                   className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg text-rose-600 transition-colors hover:bg-rose-50">
             <LogOut className="h-4 w-4" />
@@ -160,10 +163,13 @@ export default function LayoutDashboard({ judul, children, lebar = 'max-w-7xl' }
               <p className="truncate text-[0.68rem] leading-tight text-white/70">{nama}</p>
             </div>
           </div>
-          <button onClick={keluar} aria-label="Keluar"
-                  className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/20 bg-white/10">
-            <LogOut className="h-4 w-4" />
-          </button>
+          <div className="flex items-center gap-1.5">
+            <LoncengNotifikasi nada="gelap" />
+            <button onClick={keluar} aria-label="Keluar"
+                    className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/20 bg-white/10">
+              <LogOut className="h-4 w-4" />
+            </button>
+          </div>
         </header>
 
         <main className={`mx-auto ${lebar} px-4 py-6 md:px-6`}>{children}</main>

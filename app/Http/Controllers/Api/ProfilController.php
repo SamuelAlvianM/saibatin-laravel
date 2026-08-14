@@ -77,28 +77,48 @@ class ProfilController extends Controller
     {
         $u = $request->user();
 
+        // 🔴 Nama field mengikuti kontrak portal Next.js
+        // (`app/api/profil/change-password/route.ts`): passwordLama /
+        // passwordBaru / konfirmasi. Versi pertama di sini memakai
+        // `lama`/`baru`/`baru2` — nama karangan sendiri yang tidak cocok
+        // dengan klien mana pun, dan endpointnya memang belum pernah dipanggil
+        // sampai halaman /profil dibuat. Nama lama tetap diterima sebagai
+        // cadangan supaya tidak ada yang patah diam-diam.
+        $request->merge(array_filter([
+            'passwordLama' => $request->input('passwordLama') ?? $request->input('lama'),
+            'passwordBaru' => $request->input('passwordBaru') ?? $request->input('baru'),
+            'konfirmasi' => $request->input('konfirmasi') ?? $request->input('baru2'),
+        ], fn ($v) => $v !== null));
+
         $data = $request->validate([
-            'lama' => ['required', 'string'],
-            'baru' => ['required', 'string', 'min:6'],
-            'baru2' => ['required', 'string'],
+            'passwordLama' => ['required', 'string'],
+            'passwordBaru' => ['required', 'string', 'min:6'],
+            'konfirmasi' => ['required', 'string'],
         ], [
-            'lama.required' => 'Info: Password lama wajib diisi',
-            'baru.min' => 'Info: Password minimal 6 karakter',
+            'passwordLama.required' => 'Info: Semua field wajib diisi',
+            'passwordBaru.required' => 'Info: Semua field wajib diisi',
+            'konfirmasi.required' => 'Info: Semua field wajib diisi',
+            'passwordBaru.min' => 'Info: Password baru minimal 6 karakter',
         ]);
 
         // Sandi lama diperiksa lagi meski sesi sudah sah — mencegah orang yang
         // menemukan perangkat tak terkunci mengambil alih akunnya.
-        if (! Hash::check($data['lama'], $u->password)) {
-            return Balasan::gagal(['Info: Password lama tidak cocok']);
+        if (! Hash::check($data['passwordLama'], $u->password)) {
+            return Balasan::gagal(['Info: Password lama salah']);
         }
-        if (preg_match('/^\d+$/', $data['baru'])) {
-            return Balasan::gagal(['Info: Password tidak boleh angka semua']);
+        if (preg_match('/^\d+$/', $data['passwordBaru'])) {
+            return Balasan::gagal(['Info: Password baru tidak boleh angka semua']);
         }
-        if ($data['baru'] !== $data['baru2']) {
+        if ($data['passwordBaru'] !== $data['konfirmasi']) {
             return Balasan::gagal(['Info: Konfirmasi password tidak sama']);
         }
+        // Ada di portal lama dan sempat hilang di port ini: mengganti sandi
+        // dengan sandi yang sama persis bukan penggantian.
+        if (Hash::check($data['passwordBaru'], $u->password)) {
+            return Balasan::gagal(['Info: Password baru tidak boleh sama dengan password lama']);
+        }
 
-        $u->forceFill(['password' => Hash::make($data['baru'])])->save();
+        $u->forceFill(['password' => Hash::make($data['passwordBaru'])])->save();
 
         return Balasan::ok(null, ['Info: Password berhasil diubah']);
     }

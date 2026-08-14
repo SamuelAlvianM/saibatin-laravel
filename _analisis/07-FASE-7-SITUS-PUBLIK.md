@@ -1,7 +1,7 @@
 # Fase 7 — Situs publik
 
-> **14 Agustus 2026.** Status: **kerangka, beranda, berita, dan galeri jadi &
-> diuji di browser.** Halaman publik lainnya belum dibangun — antreannya di §6,
+> **14 Agustus 2026.** Status: **kerangka, beranda, berita, galeri, serta
+> Produk & PPID jadi & diuji di browser.** Halaman publik lainnya belum dibangun — antreannya di §6,
 > temuan yang butuh keputusan user di §5.
 
 ## 1. Bentuk yang dipilih: Blade + React island
@@ -122,7 +122,47 @@ layar penuh.
   halaman dikunci selama terbuka.
 - 🔴 **Memperbaiki galeri yang terpotong di portal live** — lihat §5.3.
 
-### 3.6 Pendukung baru
+### 3.6 Produk & PPID — 22 halaman informasi + 2 halaman indeks
+
+Port `app/produk/[...slug]`, `app/ppid/[...slug]`,
+`components/shared/info-page.tsx` (337), dan `components/ppid/informasi-index.tsx`.
+
+- **SATU view (`publik/info.blade.php`) melayani 22 alamat.** Isinya dari
+  `config/info-halaman.php` (4 produk + 18 PPID), ditimpa blok CMS
+  `info.<grup>.<slug>` per-kunci bila petugas menyuntingnya. Menambah halaman
+  informasi baru = menambah satu entri config, tanpa menyentuh view atau rute.
+- **Berkasnya menempel sendiri.** Kategori dokumen dipetakan ke ALAMAT halaman
+  lewat `config/dokumen.php` (`halaman[].href`), bukan ditebak dari slug —
+  karena satu halaman bisa menampilkan beberapa kategori dan satu kategori bisa
+  muncul di beberapa halaman (SOP ada di Produk maupun PPID). Petugas cukup
+  mengunggah PDF dengan kategori yang benar.
+- **Dua halaman indeks PPID** (`informasi-setiap-saat` 9 kartu,
+  `informasi-berkala` 8 kartu) dari `config/ppid.php`. Tiap kartu menampilkan
+  **jumlah dokumen** yang sudah terunggah di halaman tujuannya — itulah yang
+  membedakan kategori terisi dari yang kosong tanpa warga membuka satu per satu.
+  Keduanya ditautkan dari navbar; sebelum ini tautannya **404**.
+- Rutenya aksi controller, bukan closure — closure tidak bisa `route:cache`,
+  dan cache rute itu yang dipakai di cPanel.
+- ⛔ Panel unggah dokumen dari halaman publik (mode edit) tidak ikut — bagian
+  "Konten Halaman".
+- 🟡 `/produk/produk-disdukcapil` memakai view informasi generik; portal
+  Next.js punya tampilan khusus (`produk-disdukcapil-view.tsx`, 153 baris).
+  Isinya sama, tata letaknya belum.
+
+### 3.7 Ikon Blade dibangkitkan dari lucide
+
+`config/ikon.php` (29 ikon) **dibangkitkan dari paket `lucide-react` yang
+terpasang** — bentuknya identik dengan ikon React di dashboard, tanpa memuat
+React di halaman publik. Sebelumnya path SVG ditulis tangan; itu tidak
+terskala begitu kartu PPID butuh 16 ikon sekaligus.
+
+⚠️ Sebagian nama lucide hanya **alias** (`smile.mjs` → `face-slightly-smiling.mjs`),
+jadi pembangkitnya harus mengikuti re-export, bukan langsung membaca berkasnya.
+
+Nama ikon yang tidak dikenal digambar sebagai lingkaran putus-putus, bukan SVG
+kosong — kotak yang hilang diam-diam jauh lebih sulit disadari.
+
+### 3.8 Pendukung baru
 - `config/konten.php` → bagian **`bawaan`**: isi default 7 blok CMS. Selama blok
   belum pernah disunting, isi inilah yang tampil — situs tidak perlu di-seed dan
   tidak pernah tampil kosong.
@@ -222,7 +262,7 @@ Yang dipakai sekarang: lariknya dirakit di **controller**, view hanya
 
 | | Bagian | Catatan |
 |---|---|---|
-| | `/produk/{slug}` (4) · `/ppid/{slug}` (3) | halaman indeks + konten |
+| 🟡 | `/produk/produk-disdukcapil` | tampilan khususnya (153 baris) belum; sekarang memakai view informasi generik |
 | | `/media/gis` · `/media/demografi` | peta sebaran & laporan demografi |
 | | `/pengaduan` · `/hubungi-kami` (+ kritik-saran, SKM) | formulir publik — endpointnya sudah ada sejak Fase 3 |
 | | Widget aksesibilitas | spek 14 kontrol di `PROMPT-DISABILITAS.md` |
@@ -247,6 +287,8 @@ Yang dipakai sekarang: lariknya dirakit di **controller**, view hanya
 | Slug tak dikenal | **404** |
 | `/galeri` | **94 foto · 4 halaman** (24/halaman, terakhir 22); tidak ada gambar gagal muat |
 | Penampil galeri | buka dari kartu, judul & tanggal benar, tutup lewat Esc, gulir halaman terkunci lalu lepas |
+| Produk & PPID | 15 alamat diuji **200**, slug tak dikenal **404**; `/produk/hukum` menampilkan dokumen HUKUM asli dari `t_produk`, `/ppid/lhkpn` menampilkan 2 paragraf + 4 butir + tautan e-LHKPN + 1 dokumen |
+| Indeks PPID | 9 & 8 kartu; LHKPN berlencana **"1 dokumen"**, sisanya "belum ada"; **0 ikon jatuh ke penanda cadangan** |
 | Lebar 1280 & 375 | tidak ada gulir horizontal |
 
 Screenshot tidak diambil — tab peramban yang tidak ditampilkan berhenti

@@ -7,7 +7,7 @@
 > (§4 "Sinkronisasi", `_analisis/06` §2.9–2.10).
 > **Fase 7 sedang berjalan:** kerangka situs publik + **beranda lengkap**
 > (hero, carousel, statistik + peta Leaflet, alur, berita, profil, relasi) dan
-> **halaman berita & galeri** sudah jadi & diuji di browser — `_analisis/07-FASE-7-SITUS-PUBLIK.md`
+> **berita, galeri, Produk & PPID** sudah jadi & diuji di browser — `_analisis/07-FASE-7-SITUS-PUBLIK.md`
 > (antrean di §6, temuan yang butuh keputusan user di §5).
 > Riwayat langkahnya: [`../HISTORY.md` §L & §O](../HISTORY.md) · ringkasan: [`../journal.md` §3.5](../journal.md)
 
@@ -211,7 +211,7 @@ di `resources/css/app.css`.
 ### Berikutnya
 | Fase | Isi |
 |---|---|
-| 7 | **Situs publik** — kerangka + **beranda lengkap** + **berita (daftar & artikel)** + **galeri** SUDAH jadi (`_analisis/07`). Sisanya: produk/PPID, GIS & demografi, pengaduan/hubungi-kami, widget aksesibilitas |
+| 7 | **Situs publik** — kerangka + **beranda lengkap** + **berita (daftar & artikel)** + **galeri** + **Produk/PPID (24 halaman)** SUDAH jadi (`_analisis/07`). Sisanya: GIS & demografi, pengaduan/hubungi-kami, widget aksesibilitas |
 | ⛔ | **Konten Halaman** BUKAN halaman formulir: ia me-render halaman publik di dalam iframe (`?editmode=1`) dan disunting di sana. **Baru bisa dibuat setelah situs publik ada** — lihat `_analisis/06` §3.4 |
 | 8 (sebagian) | Unduh PDF permohonan — satu-satunya fungsi yang kurang di halaman yang sudah jadi |
 | 9 | OCR sisi browser (tesseract.js) |

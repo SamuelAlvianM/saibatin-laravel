@@ -16,8 +16,22 @@ class NotifikasiController extends Controller
         $u = $request->user();
 
         return Balasan::ok([
+            // Dipetakan ke camelCase mengikuti kontrak portal Next.js
+            // (`components/shared/notification-bell.tsx` membaca `refType`,
+            // `refId`, `createdAt`) — bukan model mentah yang snake_case.
             'items' => Notifikasi::where('user_id', $u->id)
-                ->latest('created_at')->take($limit)->get(),
+                ->latest('created_at')->take($limit)->get()
+                ->map(fn ($n) => [
+                    'id' => $n->id,
+                    'tipe' => $n->tipe,
+                    'judul' => $n->judul,
+                    'isi' => $n->isi,
+                    'link' => $n->link,
+                    'refType' => $n->ref_type,
+                    'refId' => $n->ref_id,
+                    'dibaca' => $n->dibaca,
+                    'createdAt' => $n->created_at,
+                ]),
             'unread' => Notifikasi::where('user_id', $u->id)->belumDibaca()->count(),
         ]);
     }

@@ -71,6 +71,11 @@ Route::get('/skm/unsur', [AspirasiController::class, 'unsurSkm']);
 // plus pembatas laju di sini karena tidak ada sesi yang bisa dijadikan pegangan.
 Route::middleware('throttle:10,1')->group(function () {
     Route::post('/pengaduan', [AspirasiController::class, 'kirimPengaduan']);
+    // 🔴 HARUS di atas catch-all `{layanan}/{aksi}` di bawah — polanya cocok
+    // dengan `pengaduan/upload` dan akan menelannya kalau urutannya terbalik.
+    // Publik (tanpa sesi) karena pelapor WBS boleh anonim; berkasnya tetap
+    // masuk storage privat dan hanya petugas yang bisa membukanya.
+    Route::post('/pengaduan/upload', App\Http\Controllers\Api\BuktiPengaduanController::class);
     Route::post('/kritik-saran', [AspirasiController::class, 'kirimKritik']);
     Route::post('/skm', [AspirasiController::class, 'kirimSkm']);
     Route::post('/auth/check-nik', [PendudukController::class, 'cekNikKk']);

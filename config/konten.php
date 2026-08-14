@@ -28,6 +28,10 @@ return [
         'profil.struktur' => 'Profil — Struktur Organisasi',
         'pelayanan.jam' => 'Jam Layanan Permohonan Online',
         'pelayanan.visibilitas' => 'Visibilitas Layanan Permohonan Online',
+        // Dipisah dari blok `info.pusat-bantuan.faq` (yang mengatur judul &
+        // deskripsi halamannya) supaya petugas bisa menambah pertanyaan tanpa
+        // ikut menyunting teks pengantarnya.
+        'pusat-bantuan.faq' => 'Pusat Bantuan — Daftar FAQ',
     ],
 
     /*
@@ -107,6 +111,42 @@ return [
                 ['jabatan' => 'Kabid Pelayanan Pendaftaran Penduduk', 'nama' => '-', 'status' => 'Pelaksana', 'parent' => 'Kepala Dinas'],
                 ['jabatan' => 'Kabid Pelayanan Pencatatan Sipil', 'nama' => '-', 'status' => 'Pelaksana', 'parent' => 'Kepala Dinas'],
                 ['jabatan' => 'Kabid Pengelolaan Informasi Administrasi Kependudukan', 'nama' => '-', 'status' => 'Pelaksana', 'parent' => 'Kepala Dinas'],
+            ],
+        ],
+
+        /*
+        | Daftar tanya-jawab `/pusat-bantuan/faq`.
+        |
+        | Isi awal ini menjawab pertanyaan yang paling sering masuk lewat
+        | pengaduan portal. Petugas menggantinya lewat Konten Halaman; begitu
+        | blok ini pernah disimpan, isi di bawah tidak lagi terpakai.
+        */
+        'pusat-bantuan.faq' => [
+            'daftar' => [
+                [
+                    'pertanyaan' => 'Apakah pengurusan dokumen kependudukan dipungut biaya?',
+                    'jawaban' => 'Tidak. Seluruh layanan administrasi kependudukan dan pencatatan sipil GRATIS, sesuai UU No. 24 Tahun 2013. Bila ada pihak yang meminta biaya, laporkan melalui menu WBS.',
+                ],
+                [
+                    'pertanyaan' => 'Berapa lama dokumen selesai setelah permohonan dikirim?',
+                    'jawaban' => 'Permohonan yang berkasnya lengkap dan benar umumnya selesai dalam beberapa hari kerja. Anda dapat memantau statusnya kapan saja lewat menu "Pengajuan Saya" setelah masuk ke akun.',
+                ],
+                [
+                    'pertanyaan' => 'Saya sudah mendaftar, tetapi belum bisa masuk. Kenapa?',
+                    'jawaban' => 'Akun baru harus diverifikasi petugas lebih dulu. Gunakan halaman "Cek Status Pendaftaran" di bawah formulir login untuk melihat status akun Anda beserta alasannya bila ditolak.',
+                ],
+                [
+                    'pertanyaan' => 'Permohonan saya ditolak. Apa yang harus dilakukan?',
+                    'jawaban' => 'Buka permohonan tersebut untuk membaca catatan petugas. Perbaiki bagian yang ditandai, lalu ajukan ulang — Anda tidak perlu mengisi seluruh formulir dari awal.',
+                ],
+                [
+                    'pertanyaan' => 'Berkas seperti apa yang harus diunggah?',
+                    'jawaban' => 'Setiap layanan meminta berkas yang berbeda dan daftarnya tampil langsung di formulirnya. Unggah hasil foto atau pindaian yang terbaca jelas, berformat JPG, PNG, atau PDF.',
+                ],
+                [
+                    'pertanyaan' => 'Apakah Disdukcapil menelepon warga untuk aktivasi IKD?',
+                    'jawaban' => 'Tidak pernah. Disdukcapil tidak melakukan panggilan telepon maupun video call untuk aktivasi Identitas Kependudukan Digital, dan tidak pernah meminta PIN, kata sandi, atau data perbankan. Lihat halaman "Penipuan IKD" untuk ciri-ciri lengkapnya.',
+                ],
             ],
         ],
 

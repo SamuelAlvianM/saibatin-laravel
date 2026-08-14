@@ -4,9 +4,11 @@ import LayoutPengguna from '@/Components/LayoutPengguna';
 import { ikon as ikonDari } from '@/lib/ikon';
 import { Input } from '@/Components/ui/input';
 
-export default function Pilih({ daftar, kategori }) {
+export default function Pilih({ daftar, kategori, kataKunciAwal = '' }) {
   const [aktif, setAktif] = useState('all');
-  const [cari, setCari] = useState('');
+  // Kata kunci dari beranda (`/user/pengajuan/baru?q=…`) dipakai sebagai nilai
+  // AWAL saja — sesudah itu kotaknya milik pengguna sepenuhnya.
+  const [cari, setCari] = useState(kataKunciAwal);
 
   const tampil = daftar.filter((l) => {
     const cocokKategori = aktif === 'all' || l.category === aktif;

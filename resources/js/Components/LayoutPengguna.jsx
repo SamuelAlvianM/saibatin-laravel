@@ -1,5 +1,6 @@
 import { Head, Link, router, usePage } from '@inertiajs/react';
-import { ClipboardList, FilePlus2, LayoutDashboard, LogOut } from 'lucide-react';
+import { ClipboardList, FilePlus2, LayoutDashboard, LogOut, UserRound } from 'lucide-react';
+import LoncengNotifikasi from '@/Components/LoncengNotifikasi';
 
 /** Kerangka halaman area berizin (warga/OPD/petugas). */
 export default function LayoutPengguna({ judul, children, lebar = 'max-w-5xl' }) {
@@ -10,6 +11,7 @@ export default function LayoutPengguna({ judul, children, lebar = 'max-w-5xl' })
     { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/user/pengajuan', label: 'Pengajuan Saya', icon: ClipboardList },
     { href: '/user/pengajuan/baru', label: 'Ajukan Baru', icon: FilePlus2 },
+    { href: '/profil', label: 'Profil Saya', icon: UserRound },
   ];
 
   return (
@@ -27,10 +29,13 @@ export default function LayoutPengguna({ judul, children, lebar = 'max-w-5xl' })
               <p className="text-xs opacity-80">{auth.user?.nama ?? auth.user?.user_id}</p>
             </div>
           </Link>
-          <button onClick={() => router.post('/logout')}
-                  className="inline-flex items-center gap-1.5 rounded-lg bg-white/15 px-3 py-1.5 text-sm font-medium transition-colors hover:bg-white/25">
-            <LogOut className="h-4 w-4" />Keluar
-          </button>
+          <div className="flex items-center gap-2">
+            <LoncengNotifikasi nada="gelap" />
+            <button onClick={() => router.post('/logout')}
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-white/15 px-3 py-1.5 text-sm font-medium transition-colors hover:bg-white/25">
+              <LogOut className="h-4 w-4" />Keluar
+            </button>
+          </div>
         </div>
 
         <nav className={`mx-auto flex ${lebar} gap-1 px-3`}>
