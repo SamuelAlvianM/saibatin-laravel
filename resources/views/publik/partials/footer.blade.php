@@ -5,6 +5,10 @@
   alamat kantor termasuk yang paling berguna dibaca mesin pencari, dan tidak
   ada alasan mengirim React untuk menampilkannya. Satu-satunya bagian yang
   hidup adalah penghitung pengunjung di bawah.
+
+  🔴 Kembarannya untuk halaman Inertia ada di `Components/FooterPublik.jsx`.
+  Markup-nya memang dua (Blade tidak bisa mengimpor JS), tapi ISINYA satu:
+  `config/footer.php`. Menambah tautan atau mengganti alamat cukup di sana.
 --}}
 <footer class="bg-gradient-to-b from-slate-900 to-[#0d1b2a] text-slate-400">
     <div class="container mx-auto px-4 py-14 md:px-8 lg:px-16 lg:py-16">
@@ -28,39 +32,18 @@
 
             {{-- Kelompok tautan --}}
             <div class="grid grid-cols-2 gap-8 lg:col-span-3">
-                <div>
-                    <h4 class="mb-4 text-sm font-semibold uppercase tracking-wider text-white">Layanan</h4>
-                    <ul class="space-y-2.5">
-                        @foreach ([
-                            ['Ajukan Permohonan', '/user/pengajuan/baru'],
-                            ['Riwayat Permohonan', '/user/pengajuan'],
-                            ['Pengaduan & Konsultasi', '/pusat-bantuan/pengaduan-konsultasi'],
-                            ['Survei Kepuasan', '/survei-kepuasan'],
-                        ] as [$label, $href])
-                            <li>
-                                <a href="{{ $href }}" class="text-sm transition-colors hover:text-white">{{ $label }}</a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="mb-4 text-sm font-semibold uppercase tracking-wider text-white">Informasi</h4>
-                    <ul class="space-y-2.5">
-                        {{-- "Hubungi Kami" tidak lagi di navbar (mengikuti SIDAKO),
-                             jadi footer inilah satu-satunya jalan masuk tetapnya. --}}
-                        @foreach ([
-                            ['Berita', '/media/berita'],
-                            ['Galeri', '/galeri'],
-                            ['Informasi Produk', '/produk/produk-disdukcapil'],
-                            ['PPID', '/ppid/profil-ppid'],
-                            ['Hubungi Kami', '/hubungi-kami'],
-                        ] as [$label, $href])
-                            <li>
-                                <a href="{{ $href }}" class="text-sm transition-colors hover:text-white">{{ $label }}</a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
+                @foreach (config('footer.tautan') as $grup)
+                    <div>
+                        <h4 class="mb-4 text-sm font-semibold uppercase tracking-wider text-white">{{ $grup['judul'] }}</h4>
+                        <ul class="space-y-2.5">
+                            @foreach ($grup['items'] as $item)
+                                <li>
+                                    <a href="{{ $item['href'] }}" class="text-sm transition-colors hover:text-white">{{ $item['label'] }}</a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endforeach
             </div>
 
             {{-- Kantor Kami --}}
@@ -68,30 +51,12 @@
                 <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
                     <h4 class="mb-4 text-sm font-semibold uppercase tracking-wider text-white">Kantor Kami</h4>
                     <ul class="space-y-3 text-sm">
-                        <li class="flex items-start gap-3">
-                            <svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-yellow-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1116 0z"/>
-                                <circle cx="12" cy="10" r="3"/>
-                            </svg>
-                            <span>
-                                Komplek Perkantoran Pemda Kabupaten Pesisir Barat,<br>
-                                Kec. Pesisir Tengah, Kabupaten Pesisir Barat, Lampung
-                            </span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <svg class="h-4 w-4 flex-shrink-0 text-yellow-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-                                <rect x="2" y="4" width="20" height="16" rx="2"/>
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m22 7-10 6L2 7"/>
-                            </svg>
-                            <span>disdukcapil@pesisirbaratkab.go.id</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <svg class="h-4 w-4 flex-shrink-0 text-yellow-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-                                <circle cx="12" cy="12" r="10"/>
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2"/>
-                            </svg>
-                            <span>Senin – Jumat: 08.00 – 16.00 WIB</span>
-                        </li>
+                        @foreach (config('footer.kantor') as $baris)
+                            <li class="flex items-start gap-3">
+                                <x-ikon :nama="$baris['ikon']" class="mt-0.5 h-4 w-4 flex-shrink-0 text-yellow-400" />
+                                <span>{!! nl2br(e($baris['teks'])) !!}</span>
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>
@@ -111,11 +76,12 @@
                     Disdukcapil Kabupaten Pesisir Barat
                 </p>
                 <div class="flex items-center gap-4">
-                    <a href="/kebijakan-privasi" class="transition-colors hover:text-white">Kebijakan Privasi</a>
-                    <span class="text-slate-700">|</span>
-                    <a href="/syarat" class="transition-colors hover:text-white">Syarat &amp; Ketentuan</a>
-                    <span class="text-slate-700">|</span>
-                    <a href="/sitemap" class="transition-colors hover:text-white">Sitemap</a>
+                    @foreach (config('footer.legal') as $i => $item)
+                        @if ($i > 0)
+                            <span class="text-slate-700">|</span>
+                        @endif
+                        <a href="{{ $item['href'] }}" class="transition-colors hover:text-white">{{ $item['label'] }}</a>
+                    @endforeach
                 </div>
             </div>
         </div>

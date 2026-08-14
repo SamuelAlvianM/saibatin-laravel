@@ -44,6 +44,11 @@ class HandleInertiaRequests extends Middleware
                 'tahun' => config('situs.tahun_copyright'),
                 'recaptcha_site_key' => config('services.recaptcha.site_key'),
             ],
+            // Isi footer — SATU sumber dengan versi Blade-nya
+            // (`publik/partials/footer.blade.php` membaca config yang sama).
+            // Ditutup closure supaya hanya ikut pada permintaan yang benar-benar
+            // merender halaman penuh, bukan pada kunjungan parsial Inertia.
+            'footer' => fn () => config('footer'),
             // Petunjuk "Cek Status" saat login ditolak karena keadaan akun.
             'cekStatus' => fn () => $request->session()->get('cekStatus'),
             'flash' => [

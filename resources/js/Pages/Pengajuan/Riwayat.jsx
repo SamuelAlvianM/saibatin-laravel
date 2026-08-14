@@ -1,4 +1,4 @@
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import { CheckCircle2, ClipboardList, FilePlus2, Loader2 } from 'lucide-react';
 import LayoutPengguna from '@/Components/LayoutPengguna';
@@ -14,11 +14,51 @@ const WARNA = {
 const TAB = ['semua', 'MENUNGGU', 'DIPROSES', 'SELESAI', 'DITOLAK'];
 
 /**
+ * Header biru — port `app/user/pengajuan/page.tsx` portal asli.
+ *
+ * Hanya SATU tombol di sini ("Ajukan Permohonan"). "Pengaturan Akun" sengaja
+ * tidak ikut: ia sudah ada di dropdown akun navbar, dan menduplikasinya cuma
+ * menambah tombol yang harus dipindai mata tanpa menambah jalan baru.
+ * Dideklarasikan di tingkat modul, bukan di dalam `Riwayat` — komponen yang
+ * lahir di dalam komponen lain dipasang ulang tiap render (HANDOFF §5 no. 17).
+ */
+function Hero({ nama }) {
+  return (
+    <div className="relative overflow-hidden py-12"
+         style={{ background: 'linear-gradient(135deg, #1b4b72 0%, #2176bd 100%)' }}>
+      <div className="absolute inset-0 opacity-10"
+           style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, white 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+      <div className="container relative z-10 mx-auto max-w-4xl px-4 md:px-8">
+        <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-center">
+          <div className="flex items-center gap-4">
+            <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/20 bg-white/15 backdrop-blur-sm">
+              <ClipboardList className="h-7 w-7 text-white" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold text-white md:text-3xl">Pengajuan Saya</h1>
+              <p className="mt-0.5 text-sm text-white/80">
+                Halo, {nama} — pantau semua permohonan Anda di sini.
+              </p>
+            </div>
+          </div>
+          <Link href="/user/pengajuan/baru"
+                className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-[#1b4b72] shadow-lg transition-colors hover:bg-slate-100">
+            <FilePlus2 className="h-4 w-4" />Ajukan Permohonan
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/**
  * Riwayat permohonan warga — paginasi **cursor** (load-on-scroll), sama seperti
  * endpointnya. Bukan halaman bernomor: daftar ini bertambah dari atas, dan
  * halaman bernomor akan menggeser isi tiap kali ada permohonan baru masuk.
  */
 export default function Riwayat({ baru }) {
+  const { auth } = usePage().props;
+  const nama = auth.user?.nama || auth.user?.user_id || 'Warga';
   const [tab, setTab] = useState('semua');
   const [items, setItems] = useState([]);
   const [counts, setCounts] = useState(null);
@@ -45,18 +85,7 @@ export default function Riwayat({ baru }) {
   useEffect(() => { muat(tab); }, [tab]); // eslint-disable-line
 
   return (
-    <LayoutPengguna judul="Pengajuan Saya">
-      <div className="mb-6 flex flex-wrap items-start justify-between gap-3">
-        <div>
-          <h1 className="text-xl font-bold text-slate-900">Pengajuan Saya</h1>
-          <p className="mt-1 text-sm text-slate-500">Pantau status permohonan yang Anda ajukan.</p>
-        </div>
-        <Link href="/user/pengajuan/baru"
-              className="inline-flex items-center gap-1.5 rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-dark">
-          <FilePlus2 className="h-4 w-4" />Ajukan Baru
-        </Link>
-      </div>
-
+    <LayoutPengguna judul="Pengajuan Saya" hero={<Hero nama={nama} />}>
       {baru && (
         <div className="mb-4 flex items-start gap-2 rounded-lg border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-800">
           <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />

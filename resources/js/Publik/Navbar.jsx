@@ -248,7 +248,7 @@ function ItemMenuMobile({ title, href, items, onTutup, icon: Ikon }) {
  * Logout memakai form POST sungguhan (Laravel menolak GET untuk ini, dan
  * benar begitu — logout lewat GET bisa dipicu tag <img> di situs lain).
  */
-function AreaAkun({ user, mobile, onNavigasi }) {
+function AreaAkun({ user, mobile, onNavigasi, onKeluar }) {
   const [buka, setBuka] = useState(false);
   const akarRef = useRef(null);
   const formRef = useRef(null);
@@ -261,10 +261,23 @@ function AreaAkun({ user, mobile, onNavigasi }) {
     return () => document.removeEventListener('mousedown', klikLuar);
   }, [buka]);
 
-  const keluar = () => formRef.current?.submit();
+  /**
+   * 🔴 DUA jalur keluar, dan memilih yang salah berarti 419 tanpa penjelasan.
+   *
+   * Di halaman **Blade** tidak ada Inertia, jadi keluar lewat form POST biasa
+   * dengan token dari `<meta name="csrf-token">` — meta itu selalu segar
+   * karena halamannya memang dirender ulang penuh setiap kali.
+   *
+   * Di halaman **Inertia** meta itu BASI: `<head>` tidak pernah dirender ulang,
+   * sementara login memanggil `session()->regenerate()`. Karena itu pemanggil
+   * Inertia mengirim `onKeluar` sendiri (`router.post('/logout')`), yang
+   * memakai cookie XSRF-TOKEN yang disegarkan tiap respons.
+   * Lihat HANDOFF §5 no. 9.
+   */
+  const keluar = () => (onKeluar ? onKeluar() : formRef.current?.submit());
   const csrf = document.querySelector('meta[name="csrf-token"]')?.content ?? '';
 
-  const FormKeluar = (
+  const FormKeluar = onKeluar ? null : (
     <form ref={formRef} method="POST" action="/logout" className="hidden">
       <input type="hidden" name="_token" value={csrf} />
     </form>
@@ -362,7 +375,7 @@ function AreaAkun({ user, mobile, onNavigasi }) {
   );
 }
 
-export default function Navbar({ user = null }) {
+export default function Navbar({ user = null, onKeluar = null }) {
   const [tergulir, setTergulir] = useState(false);
   const [mobileBuka, setMobileBuka] = useState(false);
   const [logoDitunjuk, setLogoDitunjuk] = useState(false);
@@ -419,7 +432,7 @@ export default function Navbar({ user = null }) {
 
           {/* Akun (desktop) */}
           <div className="hidden flex-shrink-0 items-center gap-1.5 lg:flex">
-            <AreaAkun user={user} />
+            <AreaAkun user={user} onKeluar={onKeluar} />
           </div>
 
           {/* Mobile: hamburger */}
@@ -465,7 +478,7 @@ export default function Navbar({ user = null }) {
                 </nav>
 
                 <div className="border-t border-slate-100 bg-slate-50/80 p-4">
-                  <AreaAkun user={user} mobile onNavigasi={() => setMobileBuka(false)} />
+                  <AreaAkun user={user} mobile onKeluar={onKeluar} onNavigasi={() => setMobileBuka(false)} />
                 </div>
               </SheetContent>
             </Sheet>

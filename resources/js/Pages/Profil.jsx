@@ -301,7 +301,10 @@ export default function Profil({ awal, dimintaFoto }) {
   const [pesan, setPesan] = useState(null);
 
   return (
-    <LayoutPengguna judul="Profil Saya" lebar="max-w-2xl">
+    // Tautan "← Kembali" ke /dashboard persis `BackButton href="/dashboard"`
+    // di `app/profil/page.tsx` portal asli.
+    <LayoutPengguna judul="Profil Saya" lebar="max-w-2xl"
+                    kembali={{ href: '/dashboard', label: 'Kembali' }}>
       <Pesan pesan={pesan} onTutup={() => setPesan(null)} />
 
       <div className="mb-6">

@@ -20,7 +20,8 @@ export default function Pilih({ daftar, kategori, kataKunciAwal = '' }) {
   });
 
   return (
-    <LayoutPengguna judul="Ajukan Permohonan">
+    <LayoutPengguna judul="Ajukan Permohonan" lebar="max-w-5xl"
+                    kembali={{ href: '/user/pengajuan' }}>
       <div className="mb-6">
         <h1 className="text-xl font-bold text-slate-900">Ajukan Permohonan Baru</h1>
         <p className="mt-1 text-sm text-slate-500">
