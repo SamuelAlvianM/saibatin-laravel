@@ -6,6 +6,7 @@ import {
   ShieldCheck, TrendingUp, UserCheck, Users, Wifi,
 } from 'lucide-react';
 import LayoutDashboard from '@/Components/LayoutDashboard';
+import GrafikTampak from '@/Components/GrafikTampak';
 import { Kartu, TombolEksporStatistik, angka, tglJam } from '@/Components/Dasbor';
 
 // Highcharts ± 300 KB — dipisah jadi chunk sendiri supaya hanya terunduh saat
@@ -82,8 +83,8 @@ export default function Beranda({ permohonan, aspirasi, akun, kunjungan, konten,
   const berjalan = permohonan.perStatus.MENUNGGU + permohonan.perStatus.DIPROSES;
   const totalPengaduan = Object.values(aspirasi.pengaduan).reduce((a, b) => a + b, 0);
 
-  const maksTren = Math.max(1, ...permohonan.tren.map((t) => t.count));
-  const maksJenis = Math.max(1, ...permohonan.terpopuler.map((t) => t.count));
+  // `maksTren`/`maksJenis` dibuang bersama batang CSS-nya — Highcharts
+  // menghitung skalanya sendiri.
   const totalHarian = permohonan.harian.reduce((a, t) => a + t.count, 0);
 
   const kpi = [
@@ -147,26 +148,16 @@ export default function Beranda({ permohonan, aspirasi, akun, kunjungan, konten,
           )}
         </Kartu>
 
+        {/*
+          🔴 Dulu batang CSS buatan tangan, dan RUSAK: batangnya bersarang di
+          dalam flex `h-full` yang tingginya runtuh ke 0, jadi kartunya tampil
+          sebagai deretan angka melayang di atas ruang kosong. Highcharts
+          mengukur wadahnya sendiri, jadi tinggi yang runtuh tidak lagi
+          menghapus grafiknya — sekaligus memenuhi keputusan user bahwa grafik
+          memakai Highcharts.
+        */}
         <Kartu judul="Tren Permohonan · 6 Bulan" ikon={TrendingUp} ekspor="tren">
-          <div className="flex h-36 items-end justify-between gap-2 pt-2">
-            {permohonan.tren.map((t, i) => {
-              const kini = i === permohonan.tren.length - 1;   // bulan berjalan ditonjolkan
-              return (
-                <div key={i} className="flex flex-1 flex-col items-center gap-1.5">
-                  <span className={`text-[0.68rem] font-bold tabular-nums ${kini ? 'text-brand' : 'text-slate-600'}`}>{t.count}</span>
-                  {/* Track samar setinggi penuh → bar pendek tetap punya konteks. */}
-                  <div className="flex w-full flex-1 items-end justify-center">
-                    <div className="flex h-full w-full max-w-[30px] items-end justify-center overflow-hidden rounded-md bg-slate-100/70">
-                      <div className={`w-full rounded-md ${kini ? 'bg-brand-dark' : 'bg-brand'}`}
-                           style={{ height: `${Math.max(6, (t.count / maksTren) * 100)}%` }}
-                           title={`${t.label}: ${t.count} permohonan`} />
-                    </div>
-                  </div>
-                  <span className={`text-[0.62rem] font-medium ${kini ? 'text-brand' : 'text-slate-400'}`}>{t.label}</span>
-                </div>
-              );
-            })}
-          </div>
+          <GrafikTampak jenis="tren" data={permohonan.tren} tinggi={168} />
         </Kartu>
 
         {/* Kartunya hanya memuat 5 teratas; ekspornya SELURUH jenis layanan. */}
@@ -174,19 +165,7 @@ export default function Beranda({ permohonan, aspirasi, akun, kunjungan, konten,
           {permohonan.terpopuler.length === 0 ? (
             <p className="py-6 text-center text-sm text-slate-400">Belum ada data.</p>
           ) : (
-            <div className="space-y-3">
-              {permohonan.terpopuler.map((t) => (
-                <div key={t.nama} className="space-y-1">
-                  <div className="flex items-center justify-between gap-2 text-xs">
-                    <span className="truncate font-medium text-slate-600">{t.nama}</span>
-                    <span className="shrink-0 font-bold tabular-nums text-slate-900">{angka(t.count)}</span>
-                  </div>
-                  <div className="h-2 w-full overflow-hidden rounded-full bg-slate-100">
-                    <div className="h-full rounded-full bg-brand" style={{ width: `${(t.count / maksJenis) * 100}%` }} />
-                  </div>
-                </div>
-              ))}
-            </div>
+            <GrafikTampak jenis="peringkat" data={permohonan.terpopuler} tinggi={190} />
           )}
         </Kartu>
       </div>

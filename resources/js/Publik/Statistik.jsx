@@ -6,6 +6,7 @@ import {
 import {
   Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle,
 } from '@/Components/ui/dialog';
+import GrafikTampak from '@/Components/GrafikTampak';
 import { ikon } from '@/lib/ikon';
 import { KARTU_BAWAAN, warnaPreset } from '@/lib/statistik-kartu';
 import { ambilJson } from '@/lib/api';
@@ -40,34 +41,88 @@ const angka = (n) => Number(n ?? 0).toLocaleString('id-ID');
  * Memakai IntersectionObserver + requestAnimationFrame, bukan framer-motion:
  * yang dibutuhkan cuma satu nilai yang bertambah, sekali per kartu.
  *
- * 🔴 `requestAnimationFrame` TIDAK PERNAH JALAN di tab yang tersembunyi.
- * Tanpa penjaga di bawah, pengunjung yang membuka portal di tab latar
- * (ctrl-klik, "buka di tab baru", pemulihan sesi) mendapat kartu bernilai
- * **0 selamanya**: pengamat sempat memicu animasi, menandainya "sudah
- * berjalan", lalu animasinya tidak pernah benar-benar dieksekusi. Karena itu
- * saat halaman tidak terlihat — atau pengguna mematikan animasi di
- * sistemnya — angkanya langsung dipasang tanpa dianimasikan.
+ * 🔴 DUA cara komponen ini pernah macet di 0, dan keduanya diam-diam:
+ *
+ * 1. **`requestAnimationFrame` tidak jalan di tab tersembunyi.** Pengunjung
+ *    yang membuka portal di tab latar (ctrl-klik, "buka di tab baru",
+ *    pemulihan sesi) mendapat kartu bernilai 0 selamanya: pengamat memicu
+ *    animasi dan menandainya "sudah berjalan", lalu animasinya tidak pernah
+ *    dieksekusi. → dijaga jalur `langsung()`.
+ *
+ * 2. **Animasi berjalan menuju sasaran yang sudah basi.** Kartu yang SUDAH di
+ *    layar saat halaman dibuka memulai animasi ketika `/api/stats` belum tiba,
+ *    jadi sasarannya masih 0. Data datang beberapa ratus milidetik kemudian,
+ *    nilai barunya sempat terpasang — lalu **ditimpa lagi** oleh loop rAF yang
+ *    masih berjalan menuju 0, sampai bingkai terakhirnya memakukan 0. Kartu
+ *    yang baru terlihat setelah data tiba tampil benar, jadi gejalanya
+ *    campur-campur: sebagian kartu berangka, sebagian 0. Persis itu yang
+ *    terlihat di beranda: `0, 0, 0, 85.504, 121.739, 0, 11.902, 0`.
+ *
+ *    Perbaikannya dua lapis: sasaran dibaca dari **ref** tiap bingkai (jadi
+ *    data yang datang di tengah animasi mengarahkan ulang, bukan dibuang), dan
+ *    bingkai yang tertunda **dibatalkan** saat efeknya dibersihkan.
+ *
+ * 3. **Kartu yang tidak pernah masuk layar tidak pernah dianimasikan** — dan
+ *    angka yang tertinggal bukan sekadar kosong, melainkan **0**, yang terbaca
+ *    warga sebagai "tidak ada penduduk". Terjadi saat pengunjung melompat jauh
+ *    ke bawah, mendarat lewat tautan berjangkar, atau peramban memulihkan
+ *    posisi gulir.
+ *
+ *    🔴 Jangan menebaknya dari geometri (`boundingClientRect`): kombinasi
+ *    `rootMargin` negatif, kartu yang tersangkut di tepi, dan panggilan balik
+ *    pertama yang datang sebelum gulirannya selesai membuatnya meleset — sudah
+ *    dicoba dan tetap 0. Yang dipakai sekarang **jaring pengaman berbasis
+ *    waktu**: begitu datanya tiba, kartu yang belum juga mulai beranimasi
+ *    setelah sesaat langsung dipasangi angkanya. Animasinya hiasan; angka yang
+ *    benar tidak boleh bergantung padanya.
  */
+
+/** Jeda sebelum angka dipasang paksa, dihitung sejak datanya tiba. */
+const TENGGAT_ANIMASI = 1200;
+
 function AngkaNaik({ nilai, durasi = 1600 }) {
   const ref = useRef(null);
   const [tampil, setTampil] = useState(0);
-  const sudah = useRef(false);
 
+  // Sasaran animasi dibaca dari ref, bukan dari closure — data yang tiba di
+  // tengah animasi mengarahkan ulang alih-alih terbuang.
+  const sasaran = useRef(nilai);
+  sasaran.current = nilai;
+  const selesai = useRef(false);
+  const berjalan = useRef(false);
+  /** Diisi efek utama supaya efek `nilai` di bawah bisa memanggilnya. */
+  const pasangLangsung = useRef(() => {});
+
+  // Dua tugas: memasang nilai yang datang setelah animasi beres, DAN memasang
+  // jaring pengaman untuk kartu yang tidak pernah masuk layar.
+  useEffect(() => {
+    if (selesai.current) {
+      setTampil(nilai);
+      return undefined;
+    }
+    if (berjalan.current || nilai === 0) return undefined;
+
+    const timer = setTimeout(() => {
+      if (!berjalan.current && !selesai.current) pasangLangsung.current();
+    }, TENGGAT_ANIMASI);
+
+    return () => clearTimeout(timer);
+  }, [nilai]);
+
+  // Dipasang SEKALI. Sengaja tidak bergantung pada `nilai`: kalau efek ini
+  // ikut dijalankan ulang tiap data berubah, animasinya melompat balik ke nol
+  // lalu naik lagi tepat saat pengguna sedang membacanya.
   useEffect(() => {
     const el = ref.current;
     if (!el) return undefined;
 
-    // Nilai berubah setelah animasi pernah jalan (mis. data baru tiba) →
-    // langsung pakai angkanya, jangan menghitung ulang dari nol.
-    if (sudah.current) {
-      setTampil(nilai);
-      return undefined;
-    }
+    let frame = 0;
 
     const langsung = () => {
-      sudah.current = true;
-      setTampil(nilai);
+      selesai.current = true;
+      setTampil(sasaran.current);
     };
+    pasangLangsung.current = langsung;
 
     if (document.hidden || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       langsung();
@@ -75,7 +130,7 @@ function AngkaNaik({ nilai, durasi = 1600 }) {
     }
 
     const pengamat = new IntersectionObserver(([masuk]) => {
-      if (!masuk.isIntersecting || sudah.current) return;
+      if (!masuk.isIntersecting || selesai.current) return;
       pengamat.disconnect();
 
       // Tab sempat disembunyikan setelah pengamat dipasang.
@@ -84,23 +139,31 @@ function AngkaNaik({ nilai, durasi = 1600 }) {
         return;
       }
 
-      sudah.current = true;
+      berjalan.current = true;
       const mulai = performance.now();
 
       const langkah = (kini) => {
         const t = Math.min(1, (kini - mulai) / durasi);
+        const tujuan = sasaran.current;
+
         // easeOutCubic — cepat di awal, melambat di akhir. Bingkai terakhir
         // memakai nilai persisnya, bukan hasil pembulatan.
-        setTampil(t >= 1 ? nilai : Math.floor((1 - (1 - t) ** 3) * nilai));
-        if (t < 1) requestAnimationFrame(langkah);
+        setTampil(t >= 1 ? tujuan : Math.floor((1 - (1 - t) ** 3) * tujuan));
+
+        if (t < 1) frame = requestAnimationFrame(langkah);
+        else selesai.current = true;   // ditandai SESUDAH beres, bukan sebelum
       };
 
-      requestAnimationFrame(langkah);
+      frame = requestAnimationFrame(langkah);
     }, { rootMargin: '-60px' });
 
     pengamat.observe(el);
-    return () => pengamat.disconnect();
-  }, [nilai, durasi]);
+
+    return () => {
+      pengamat.disconnect();
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, [durasi]);
 
   return <span ref={ref}>{angka(tampil)}</span>;
 }
@@ -139,28 +202,7 @@ function KartuDemografi({ kartu, onKlik }) {
   );
 }
 
-function TrenMini({ data }) {
-  const maks = Math.max(1, ...data.map((d) => d.count));
-
-  return (
-    <div className="flex h-16 items-end justify-between gap-1.5">
-      {data.map((d, i) => (
-        <div key={i} className="flex flex-1 flex-col items-center gap-1">
-          <div className="relative flex h-12 w-full items-end justify-center">
-            <div className="w-full max-w-[22px] rounded-md bg-gradient-to-t from-[#1b4b72] to-[#7db8e8]"
-                 style={{ height: `${Math.max(6, (d.count / maks) * 100)}%` }}
-                 title={`${d.label}: ${d.count}`} />
-          </div>
-          <span className="text-[0.6rem] font-medium text-slate-400">{d.label}</span>
-        </div>
-      ))}
-    </div>
-  );
-}
-
 function KartuPelayanan({ pelayanan }) {
-  const maksJenis = Math.max(1, ...pelayanan.topJenis.map((t) => t.count));
-
   const metrik = [
     { label: 'Bulan Ini', nilai: pelayanan.bulanIni, Ikon: CalendarDays, warna: 'text-brand bg-brand/10' },
     { label: 'Selesai', nilai: pelayanan.selesai, Ikon: CheckCircle2, warna: 'text-emerald-600 bg-emerald-50' },
@@ -195,9 +237,14 @@ function KartuPelayanan({ pelayanan }) {
 
       <Garis />
 
+      {/*
+        Grafiknya Highcharts (keputusan user), dan SELALU lewat gerbang
+        tampilan: kartu ini jauh di bawah layar beranda, jadi 300 KB Highcharts
+        tidak boleh ikut pemuatan awal setiap pengunjung.
+      */}
       <div className="px-5 pb-3 pt-4">
         <p className="mb-3 text-[0.62rem] font-bold uppercase tracking-widest text-slate-400">Tren Permohonan · 6 Bulan</p>
-        <TrenMini data={pelayanan.trend6} />
+        <GrafikTampak jenis="tren" data={pelayanan.trend6} tinggi={110} kecil />
       </div>
 
       <Garis />
@@ -207,20 +254,7 @@ function KartuPelayanan({ pelayanan }) {
         {pelayanan.topJenis.length === 0 ? (
           <p className="py-2 text-xs text-slate-400">Belum ada data permohonan.</p>
         ) : (
-          <div className="space-y-2.5">
-            {pelayanan.topJenis.map((t) => (
-              <div key={t.nama} className="space-y-1">
-                <div className="flex items-center justify-between gap-2">
-                  <span className="truncate text-xs text-slate-600">{t.nama}</span>
-                  <span className="shrink-0 text-xs font-bold text-slate-900">{angka(t.count)}</span>
-                </div>
-                <div className="h-1.5 w-full overflow-hidden rounded-full bg-brand/10">
-                  <div className="h-full rounded-full bg-gradient-to-r from-[#1b4b72] to-[#7db8e8]"
-                       style={{ width: `${(t.count / maksJenis) * 100}%` }} />
-                </div>
-              </div>
-            ))}
-          </div>
+          <GrafikTampak jenis="peringkat" data={pelayanan.topJenis} tinggi={140} kecil />
         )}
       </div>
 
