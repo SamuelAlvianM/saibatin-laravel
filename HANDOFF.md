@@ -5,10 +5,16 @@
 > jadi & diuji; hanya `konten` yang menunggu situs publik) — lihat §4,
 > `_analisis/05-…` & `06-…`. Perubahan baru portal Next.js sudah disusul
 > (§4 "Sinkronisasi", `_analisis/06` §2.9–2.10).
-> **Fase 7 sedang berjalan:** kerangka situs publik + **beranda lengkap**
-> (hero, carousel, statistik + peta Leaflet, alur, berita, profil, relasi) dan
-> **berita, galeri, Produk & PPID** sudah jadi & diuji di browser — `_analisis/07-FASE-7-SITUS-PUBLIK.md`
-> (antrean di §6, temuan yang butuh keputusan user di §5).
+>
+> 🟢 **Fase 7 (situs publik) SELESAI.** Beranda, berita, galeri, Produk & PPID
+> lengkap ber-sub-tab, Pusat Bantuan, WBS, Hubungi Kami, Survei Kepuasan, GIS &
+> demografi, halaman ketentuan, peta situs, dan **widget aksesibilitas** —
+> semuanya diuji di browser. Sisa satu: tampilan khusus
+> `/produk/produk-disdukcapil`. Detail: `_analisis/07-FASE-7-SITUS-PUBLIK.md`.
+>
+> 🔴 **Situs publik mengikuti SIDAKO, bukan SAIBATIN** (keputusan user 14 Agu) —
+> lihat §3 no. 6. **Dashboard tetap mengacu ke SAIBATIN.**
+>
 > Riwayat langkahnya: [`../HISTORY.md` §L & §O](../HISTORY.md) · ringkasan: [`../journal.md` §3.5](../journal.md)
 
 ---
@@ -29,7 +35,7 @@ melayani warga sekarang).
 | DB kerja | **`saibatin_lv`** — klon dari DB dev Next.js `saibatin`. 1.386 akun · 11.902 permohonan · 1.485 berkas |
 | Dev server | **port 3104** (🔴 dipaku), entri `saibatin-laravel-dev` di `../.claude/launch.json` |
 | Login uji | `admin` / `admin123` |
-| Git | ✅ sudah jadi repo — `a992920` (port Fase 1–5) · `7fc49f6` (fokus input) · `df76489` (kit shadcn/ui). Belum ada remote. |
+| Git | ✅ sudah jadi repo — 6 commit, terakhir `3d6f6e6` (widget aksesibilitas). Belum ada remote. |
 | Kit UI | **shadcn/ui**, 17 komponen di `resources/js/Components/ui/` + `Components/SearchSelect.jsx` — disalin dari portal Next.js, lihat §4 "Kit UI" |
 
 **Bukan** di-deploy, **tidak** menyentuh produksi.
@@ -69,6 +75,21 @@ Diputuskan user, jangan diubah tanpa membicarakannya lagi:
 4. **DB dev sendiri** (`saibatin_lv`). Produksi tidak disentuh.
 5. **User yang mengunggah manual ke cPanel.** Jangan bahas deployment sampai
    memang siap di-deploy — permintaan eksplisit user.
+
+6. 🔴 **Situs publik mengikuti SIDAKO, dashboard mengikuti SAIBATIN**
+   (keputusan user, 14 Agu). Portal SAIBATIN Next.js yang jadi sumber port
+   **tertinggal**: SIDAKO sudah menerima permintaan dinas dan susunan menunya
+   satu generasi lebih maju. Karena itu target lama *"100% sama dengan portal
+   Next.js"* (§4) **hanya berlaku untuk dashboard**; situs publik mengacu ke
+   `../sidako-platform`.
+
+   Yang boleh disalin dari SIDAKO **hanya susunan & fitur** — bukan branding,
+   geo, nama daerah, atau zona waktu (aturan journal induk §2 no. 2). Dua hal
+   yang SENGAJA tidak ikut karena melanggarnya:
+   - iframe **skm.go.id** di `/survei-kepuasan` menunjuk instansi **Tana
+     Tidung**; menyalinnya berarti jawaban warga Pesisir Barat masuk ke rekap
+     dinas lain. Port ini memakai kuesioner 9 unsurnya sendiri.
+   - label **WITA** pada jam layanan. Pesisir Barat = **WIB**.
 
 ---
 
@@ -211,15 +232,16 @@ di `resources/css/app.css`.
 ### Berikutnya
 | Fase | Isi |
 |---|---|
-| 7 | **Situs publik** — kerangka + **beranda lengkap** + **berita (daftar & artikel)** + **galeri** + **Produk/PPID (24 halaman)** SUDAH jadi (`_analisis/07`). Sisanya: GIS & demografi, pengaduan/hubungi-kami, widget aksesibilitas |
-| ⛔ | **Konten Halaman** BUKAN halaman formulir: ia me-render halaman publik di dalam iframe (`?editmode=1`) dan disunting di sana. **Baru bisa dibuat setelah situs publik ada** — lihat `_analisis/06` §3.4 |
+| ✅ 7 | **Situs publik SELESAI** — beranda, berita, galeri, Produk & PPID ber-sub-tab, Pusat Bantuan, WBS, Hubungi Kami, Survei Kepuasan, GIS & demografi, halaman ketentuan, peta situs, widget aksesibilitas (`_analisis/07` §8) |
+| 🟡 | `/produk/produk-disdukcapil` — tampilan khususnya (153 baris) belum; sekarang view informasi generik. **Satu-satunya sisa Fase 7.** |
+| ⛔ → **berikutnya** | **Konten Halaman** BUKAN halaman formulir: ia me-render halaman publik di dalam iframe (`?editmode=1`) dan disunting di sana. Prasyaratnya (situs publik) **kini sudah ada** — lihat `_analisis/06` §3.4 |
 | 8 (sebagian) | Unduh PDF permohonan — satu-satunya fungsi yang kurang di halaman yang sudah jadi |
-| 9 | OCR sisi browser (tesseract.js) |
+| 9 | ✅ OCR sisi browser (tesseract.js) — sudah masuk lewat sinkronisasi 13 Agu |
 | 10 | Paket unggah manual cPanel |
 
 ---
 
-## 5. 🔴 Dua puluh satu jebakan yang SUDAH memakan waktu — jangan diulang
+## 5. 🔴 Dua puluh lima jebakan yang SUDAH memakan waktu — jangan diulang
 
 ### Laravel / PHP
 
@@ -380,6 +402,31 @@ di `resources/css/app.css`.
     **controller**, view cukup `{!! $sudahJadi !!}`.
 
 ---
+
+22. 🔴 **`filter` CSS di `<body>` MEMATIKAN `position: fixed` keturunannya.**
+    Widget aksesibilitas menyusun kontras/invert/skala-abu jadi satu
+    `--a11y-filter`. Dipasang di `<body>`, elemen itu jadi *containing block*
+    baru untuk seluruh keturunan `fixed` — navbar lengket, tombol widget, dan
+    dialog ikut menggulung bersama halaman alih-alih menempel di layar.
+    Elemen **root (`<html>`) dikecualikan** dari aturan itu, jadi di sanalah
+    filternya dipasang.
+
+23. 🔴 **`speechSynthesis.getVoices()` KOSONG pada panggilan pertama.**
+    Daftar suara peramban datang asinkron. Memilihnya sekali saja berarti suara
+    Bahasa Indonesia tidak pernah terpakai dan teks dibacakan dengan pelafalan
+    Inggris — tanpa galat apa pun. Wajib mendengarkan `voiceschanged`.
+
+24. ⚠️ **`IKON_MENU` di `Publik/Navbar.jsx` dikunci LABEL menu.** Mengganti
+    label di `lib/navigasi.js` tanpa mengganti kuncinya membuat ikon menu itu
+    hilang diam-diam: tidak ada galat, menunya cuma jadi teks polos di antara
+    menu lain yang berikon.
+
+25. 🔴 **Nama wilayah rekap DKB ≠ daftar koordinat.** Data asli menulis
+    `PULAUPISANG` (tanpa spasi) dan `BENGKUNAT BELIMBING` (nama LAMA kecamatan
+    Ngaras). Pencocokan yang cuma merapikan spasi menjatuhkan keduanya, dan
+    petanya tetap tampil rapi — hanya **kurang 31.604 jiwa**, tanpa tanda apa
+    pun. `lib/geo.js` kini membuang spasi + punya peta alias.
+    ⚠️ Bug yang sama **masih ada** di portal Next.js (`lib/pesisir-barat-geo.ts`).
 
 ## 6. Aturan keras (warisan journal workspace)
 

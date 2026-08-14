@@ -1,8 +1,8 @@
 # Fase 7 — Situs publik
 
-> **14 Agustus 2026.** Status: **kerangka, beranda, berita, galeri, serta
-> Produk & PPID jadi & diuji di browser.** Halaman publik lainnya belum dibangun — antreannya di §6,
-> temuan yang butuh keputusan user di §5.
+> **14 Agustus 2026.** Status: **SELESAI.** Seluruh halaman publik sudah ada dan
+> diuji di browser; susunan & isinya **mengikuti SIDAKO** (keputusan user, §8).
+> Temuan yang butuh keputusan user di §5, sisa pekerjaan di §6.
 
 ## 1. Bentuk yang dipilih: Blade + React island
 
@@ -262,11 +262,12 @@ Yang dipakai sekarang: lariknya dirakit di **controller**, view hanya
 
 | | Bagian | Catatan |
 |---|---|---|
-| 🟡 | `/produk/produk-disdukcapil` | tampilan khususnya (153 baris) belum; sekarang memakai view informasi generik |
-| | `/media/gis` · `/media/demografi` | peta sebaran & laporan demografi |
-| | `/pengaduan` · `/hubungi-kami` (+ kritik-saran, SKM) | formulir publik — endpointnya sudah ada sejak Fase 3 |
-| | Widget aksesibilitas | spek 14 kontrol di `PROMPT-DISABILITAS.md` |
-| ⛔ | **Konten Halaman** (dashboard) | merender halaman publik di iframe `?editmode=1` — baru bisa setelah halaman publiknya ada |
+| 🟡 | `/produk/produk-disdukcapil` | tampilan khususnya (153 baris) belum; sekarang memakai view informasi generik. **Satu-satunya sisa Fase 7.** |
+| ⛔ | **Konten Halaman** (dashboard) | merender halaman publik di iframe `?editmode=1` — prasyaratnya (situs publik) kini SUDAH ADA, jadi ini yang berikutnya |
+
+Sisanya sudah beres: GIS & demografi, pengaduan/WBS/kritik-saran/SKM,
+Hubungi Kami, Pusat Bantuan, sisa PPID, halaman ketentuan, peta situs, dan
+widget aksesibilitas — lihat §8.
 
 ## 7. Hasil uji (browser, data asli)
 
@@ -294,3 +295,129 @@ Yang dipakai sekarang: lariknya dirakit di **controller**, view hanya
 Screenshot tidak diambil — tab peramban yang tidak ditampilkan berhenti
 meng-*compositing* (jebakan lama di HANDOFF §6.5); verifikasi lewat `read_page`
 dan `javascript_tool`.
+
+---
+
+## 8. Lanjutan 14 Agu — susunan & isi mengikuti SIDAKO
+
+🔴 **Keputusan user:** portal SAIBATIN Next.js yang jadi sumber port **tertinggal**
+dari SIDAKO, jadi isi & fitur situs publik mengikuti **`sidako-platform` dulu**,
+bukan SAIBATIN. Ini **mengubah** target "100% sama dengan portal Next.js"
+(`_analisis/06` §4) khusus untuk **situs publik** — dashboard tetap mengacu ke
+SAIBATIN. Yang disalin hanya **susunan & fitur**; branding, geo, nama daerah,
+dan zona waktu tetap Pesisir Barat/WIB (aturan journal induk §2 no. 2).
+
+### 8.1 Navbar disusun ulang
+
+| Sebelum (SAIBATIN) | Sesudah (ala SIDAKO) |
+|---|---|
+| Produk | **Informasi Produk** (+ SP, Alur Pelayanan, Inovasi) |
+| Media Informasi | tetap |
+| PPID — 3 halaman datar | **PPID — 3 grup ber-sub-tab** (Tentang 6 tab · Informasi Publik 2 tab · Layanan & Formulir 6 tab) |
+| Pengaduan (dropdown 2) | **WBS** (tautan langsung) |
+| — | **Pusat Bantuan** (FAQ · Pengaduan & Konsultasi · Penipuan IKD) |
+| — | **Survei Kepuasan** |
+| Hubungi Kami | dipindah ke **footer** |
+
+⚠️ `Publik/Navbar.jsx` punya `IKON_MENU` yang dikunci **label** menu. Mengganti
+label di `lib/navigasi.js` tanpa mengganti kunci di sana membuat ikonnya hilang
+diam-diam — tidak ada galat, menunya cuma jadi teks polos di antara yang berikon.
+
+### 8.2 Halaman baru
+
+Semuanya lewat renderer yang sudah ada, ditambah tiga kemampuan opsional pada
+`publik/info.blade.php` (`subnav`, `faq`, `formulir`):
+
+- **Pusat Bantuan** — FAQ (buka-tutup `<details>`, isi dari blok CMS
+  `pusat-bantuan.faq`), Pengaduan & Konsultasi, Penipuan IKD.
+- **WBS** — Tentang WBS & Form Pengaduan, keduanya berformulir.
+- **Hubungi Kami** — alamat, kontak, + tiga kartu kanal aspirasi.
+- **PPID** — 5 tab "Tentang", 13 kategori Setiap Saat & 1 Berkala baru, 4 halaman
+  grup "Layanan & Formulir", plus **Formulir & Register PPID** yang berbentuk
+  **dua-seksi** (`config/ppid-layanan.php` + `publik/ppid-layanan.blade.php`).
+- **Media** — `/media/gis` (peta sebaran) & `/media/demografi` (tabel ber-tab).
+- **Ketentuan** — `/kebijakan-privasi` & `/syarat`, naskahnya dari Laravel 9 asli
+  lewat registry SIDAKO (`config/ketentuan.php`).
+- **`/sitemap`** — peta situs untuk manusia, **dirakit dari config yang sama**
+  dengan navbar & halaman informasi. Versi tulis-tangan pasti basi.
+- Pengalihan 301 untuk alamat lama: `/pengaduan`, `/privasi`, `/media/peta`,
+  `/media/laporan-demografi`, `/media/survey-kepuasan`, `/riwayat`,
+  `/permohonan-online` (yang terakhir meneruskan `?q=`).
+
+### 8.3 Formulir publik
+
+`Publik/FormAspirasi.jsx` — **satu komponen, tiga varian** (`wbs`, `pengaduan`,
+`kritik-saran`). Memecahnya jadi tiga berkas berarti tiga tempat yang pelan-pelan
+menyimpang padahal endpoint & tabelnya sama. Yang berbeda hanya label, subjek,
+dan dua field khusus WBS.
+
+🔴 **Bukti foto WBS** lewat `POST /api/pengaduan/upload` yang **publik tanpa
+sesi** — pelapor WBS boleh anonim, dan memaksanya login meniadakan inti kanalnya.
+Berkasnya masuk `storage/app/private/permohonan/pengaduan/` dengan nama berawalan
+**`wbs_`**, bukan id pengunggah: `BerkasController` membaca kepemilikan dari
+prefix itu, `wbs` bukan bilangan, jadi pemeriksaannya gagal untuk semua warga dan
+hanya petugas yang bisa membukanya. **Terverifikasi: 404 tanpa sesi, 200 sebagai petugas.**
+
+`Publik/FormSkm.jsx` — kuesioner 9 unsur skala 1–4.
+🔴 **Tidak** menyematkan iframe skm.go.id seperti SIDAKO: alamat iframe di sana
+menunjuk **instansi Tana Tidung**, jadi menyalinnya berarti jawaban warga Pesisir
+Barat masuk ke rekap dinas lain. Endpoint & rekap IKM-nya sudah ada sejak Fase 3.
+
+### 8.4 Widget aksesibilitas (14 kontrol)
+
+Port `accessibility-widget.tsx` + `lib/a11y.ts` + blok CSS `a11y-*`.
+
+🔴 **Filter dipasang di `<html>`, bukan `<body>`.** `filter` pada elemen biasa
+membuat containing block baru untuk keturunan `position: fixed` — navbar lengket,
+tombol widget, dan dialog akan ikut menggulung bersama halaman. Elemen root
+dikecualikan dari aturan itu.
+
+🔴 **Preferensi diterapkan skrip inline SEBELUM body dirender.** Menunggu React
+membuat halaman berkedip dari tampilan normal ke pilihan pengguna — tepat pada
+orang yang paling terganggu oleh perubahan mendadak. Logika skrip itu **kembar**
+dengan `terapkanPrefs()`; kalau satu diubah, ubah juga yang lain.
+
+⚠️ Daftar suara peramban datang **asinkron**. Memilih suara sekali saja berarti
+suara Bahasa Indonesia tidak pernah terpakai — wajib mendengarkan `voiceschanged`.
+
+## 9. Temuan baru dari sesi ini
+
+1. 🔴 **`/profil` tidak pernah dibuat**, padahal `LoginController:110` mengarahkan
+   ke `/profil?lengkapi=foto` pada login pertama warga → **login yang berhasil
+   berakhir 404**, dan `/api/profil*` tidak punya pemanggil sama sekali.
+   Sudah dibuat (`Pages/Profil.jsx`).
+2. 🔴 **Lonceng notifikasi tidak pernah dibuat.** Backend rajin membuat notifikasi
+   (permohonan, pengaduan, kritik, akun) tapi tak satu pun bisa dilihat siapa pun.
+   Sudah dibuat (`Components/LoncengNotifikasi.jsx`, dipasang di dua layout).
+3. **Kontrak `POST /api/profil/change-password` menyimpang** dari portal Next.js:
+   memakai `lama`/`baru`/`baru2` alih-alih `passwordLama`/`passwordBaru`/
+   `konfirmasi`, dan kehilangan penjaga "sandi baru tidak boleh sama dengan yang
+   lama". Diluruskan; nama lama tetap diterima sebagai cadangan.
+4. **`?q=` dari beranda hilang diam-diam** — `PengajuanController::pilih()` tidak
+   membacanya, jadi warga yang mengetik "akta kelahiran" di hero mendarat di
+   daftar penuh dengan kotak pencarian kosong. Diperbaiki.
+5. 🔴 **Peta sebaran kehilangan 2 kecamatan tanpa tanda apa pun.** Rekap DKB
+   menulis `PULAUPISANG` (tanpa spasi) dan `BENGKUNAT BELIMBING` (nama LAMA
+   kecamatan Ngaras), sementara daftar koordinat memakai ejaan lain. Petanya
+   tetap tampil rapi dengan 9 lingkaran — hanya **kurang 31.604 jiwa**. Setelah
+   ditambal: **11 kecamatan · 177.430 jiwa**, cocok dengan angka beranda.
+   ⚠️ **Bug yang sama masih ada di portal Next.js** (`lib/pesisir-barat-geo.ts`).
+
+## 10. Hasil uji lanjutan (browser, data asli)
+
+| Uji | Hasil |
+|---|---|
+| 40 tautan internal (navbar + footer + isi halaman) | **semuanya hidup**, 0 rusak |
+| 76 tautan di `/sitemap` | **semuanya hidup**, 0 rusak |
+| Sub-tab PPID | tab aktif tepat di 3 grup; label pendek dipakai di layar sempit |
+| FAQ | 6 pertanyaan, yang pertama terbuka, **jawabannya ada di HTML** (bukan hasil fetch) |
+| `POST /api/pengaduan` · `/api/kritik-saran` · `/api/skm` | ketiganya **200**, datanya masuk lalu dibersihkan |
+| SKM setengah terisi | ditolak **422** dengan daftar unsur yang belum dinilai |
+| `POST /api/pengaduan/upload` | **200**; berkasnya **404 tanpa sesi**, **200 sebagai petugas** |
+| `/media/gis` | 11 lingkaran · **177.430 jiwa** (cocok dengan beranda) |
+| `/media/demografi?kategori=agama` | 8 tab, 11 baris, total **177.430** |
+| `/survei-kepuasan` | 9 unsur × 4 skala, penghitung "0/9 terisi" |
+| Widget aksesibilitas | 14 kontrol; efek masuk ke `<html>`; **bertahan lintas halaman tanpa kedip**; reset membersihkan kelas + style + localStorage |
+| Lebar 375 px | **tidak ada gulir horizontal** di halaman mana pun; tabel demografi menggulir di wadahnya sendiri |
+| `/profil?lengkapi=foto` | 200, tiga kartu tampil, lonceng notifikasi hadir |
+| `/user/pengajuan/baru?q=akta kelahiran` | kotak pencarian **terisi**, hasil menyempit ke 1 layanan |

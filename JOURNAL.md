@@ -13,7 +13,7 @@
 | Tujuan | **mengganti total** portal SAIBATIN Next.js |
 | Umur | baru — dimulai **7 Agustus 2026** |
 | Port dev | **3104** (`saibatin-laravel-dev`) — 🔴 DIPATENKAN · login uji `admin`/`admin123` |
-| Git | ✅ **sudah di-git** — `a992920` (port Fase 1–5) · `7fc49f6` (fokus input lepas) · `df76489` (kit shadcn/ui) |
+| Git | ✅ **sudah di-git** — `a992920` (port Fase 1–5) · `7fc49f6` (fokus input lepas) · `df76489` (kit shadcn/ui) · `a02cb7e` (Fase 7: kerangka, beranda, berita, galeri) · `db70038` (`/profil`, lonceng, situs publik ala SIDAKO) · `3d6f6e6` (widget aksesibilitas) |
 | Server | **belum menyentuh server sama sekali** |
 
 Ini **bukan** fork codebase Next.js. Project terpisah. Jebakan keluarga Next.js
@@ -54,6 +54,28 @@ di `resources/css/app.css`.
 | **3** | endpoint JSON lapisan publik & warga (36 rute), kontrak `{error, success, data, html}` **dipertahankan** | ✅ selesai |
 | **4** | 15 layanan permohonan: `config/layanan.php` + **satu** renderer `FormLayanan.jsx` + catch-all `LayananController` | ✅ selesai — diuji end-to-end |
 | **5** | **dashboard petugas** — 15 halaman + rute `/api/admin/*`, `/api/media/*`, `/api/demografi` di 14 controller | 🟢 **selesai kecuali `konten`**, yang memang menunggu situs publik |
+| **7** | **situs publik** — beranda, berita, galeri, Produk/PPID, Pusat Bantuan, WBS, Hubungi Kami, SKM, GIS & demografi, halaman ketentuan, peta situs, widget aksesibilitas | 🟢 **selesai** kecuali tampilan khusus `/produk/produk-disdukcapil` |
+
+🔴 **Situs publik mengikuti SIDAKO, bukan SAIBATIN** (keputusan user 14 Agu).
+Portal SAIBATIN Next.js yang jadi sumber port tertinggal; SIDAKO sudah menerima
+permintaan dinas dan susunan menunya satu generasi lebih maju. Ini **mengubah**
+target "100% sama dengan portal Next.js" **khusus situs publik** — dashboard
+tetap mengacu ke SAIBATIN. Yang disalin hanya susunan & fitur; branding, geo,
+nama daerah, dan zona waktu tetap Pesisir Barat/WIB. Peta lengkapnya:
+[`_analisis/07`](_analisis/07-FASE-7-SITUS-PUBLIK.md) §8.
+
+**Sanity check input → backend (14 Agu).** Seluruh panggilan `lib/api.js` +
+formulir Inertia ditelusuri dan dicocokkan dengan rute & pembacaan controller.
+Lima puluh lebih panggilan cocok; **empat tidak**, dan keempatnya sudah ditutup:
+
+1. 🔴 **`/profil` tidak pernah dibuat** padahal `LoginController` mengarahkan ke
+   sana pada login pertama warga → **login yang berhasil berakhir 404**, dan
+   `/api/profil*` tidak punya pemanggil sama sekali.
+2. 🔴 **Lonceng notifikasi tidak pernah dibuat** — backend rajin membuat
+   notifikasi, tapi tak satu pun bisa dilihat.
+3. Kontrak `change-password` menyimpang dari portal Next.js (nama field) dan
+   kehilangan penjaga "sandi baru ≠ sandi lama".
+4. `?q=` dari pencarian beranda hilang diam-diam di pemilih layanan.
 
 🔴 Fase 5 dibangun dalam sesi 12 Agu yang **terputus sebelum sempat di-build atau
 diuji**: `npm run build` tak pernah jalan (bundel tertinggal 4 hari), 2 halaman
@@ -81,9 +103,16 @@ yang masih di working tree-nya sudah disusul: OTP dimatikan, **Foto KTP wajib**
 di pendaftaran, **OCR KTP** yang mengisi NIK/No.KK/Nama otomatis, gambar dikirim
 **base64 polos** (WAF cPanel memblokir data URI), **ekspor Excel statistik
 dashboard** berkop surat, dan penampil foto layar penuh di detail akun.
-Dua perubahan tidak bisa disusul karena menyunting **halaman publik** yang di
-port ini belum ada — data kontak Pengaduan & posisi tombol edit profil; keduanya
-dicatat untuk Fase 7 di [`_analisis/06`](_analisis/06-PARITAS-NEXTJS.md) §2.9.
+Dua perubahan sempat tertunda karena menyunting **halaman publik** yang waktu itu
+belum ada ([`_analisis/06`](_analisis/06-PARITAS-NEXTJS.md) §2.9). Keadaannya
+sekarang, sesudah Fase 7:
+
+- **Data kontak & zona waktu Pengaduan — sudah beres.** Alamat, email, dan jam
+  layanan ada di `config/info-halaman.php` grup `hubungi-kami`, memakai data
+  Pesisir Barat dan **WIB**. (Portal Next.js sempat menulis **WITA** karena
+  disalin mentah dari SIDAKO — kesalahan itu tidak ikut ke sini.)
+- **Posisi tombol edit `profile-tabs` — masih tertunda**, dan memang belum bisa:
+  tombol itu bagian dari **mode edit**, yang lahir bersama halaman **Konten**.
 
 🔴 OCR-nya **di browser**, bukan di server (keputusan user sejak awal: cPanel
 hanya PHP). Mesin tesseract + data bahasa Indonesia dilayani sendiri dari
@@ -97,12 +126,14 @@ bergantung padanya dan produksi masih menyimpan tiket warga. Rincian:
 
 ## 5. Antrean
 
-1. **Fase 7 — situs publik.** Belum ada satu halaman publik pun, dan ini
-   prasyarat halaman **Konten** (yang me-render halaman publik di dalam iframe,
-   bukan formulir tersendiri). Sisa Fase 5 sudah habis 12–13 Agu: Pengaturan,
-   berita, pustaka media, galeri, dokumen publikasi, tiket & chat, demografi.
-2. ~~Belum di-git~~ — **beres 14 Agu.** Tiga commit, ada titik pulih.
-3. **Menunggu keputusan user:** berkas warisan tidak terbuka untuk warga
+1. **Halaman Konten (dashboard)** — satu-satunya halaman dashboard yang belum
+   ada. Prasyaratnya (situs publik) kini **sudah terpenuhi**: ia me-render
+   halaman publik di dalam iframe `?editmode=1`, bukan formulir tersendiri.
+2. 🟡 **`/produk/produk-disdukcapil`** masih memakai view informasi generik;
+   portal Next.js punya tampilan khusus (153 baris). Isinya sama, tata letaknya
+   belum. Satu-satunya sisa Fase 7.
+3. ~~Belum di-git~~ — **beres 14 Agu.** Lima commit, ada titik pulih.
+4. **Menunggu keputusan user:** berkas warisan tidak terbuka untuk warga
    pemiliknya (HANDOFF §7 no. 4) — wajib ditutup sebelum cutover.
 4. Deployment: **sengaja ditunda** atas keputusan user. Dua syarat baru yang
    muncul 13 Agu dan harus dicek saat deployment dibahas: cPanel harus
