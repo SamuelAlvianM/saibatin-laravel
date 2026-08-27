@@ -17,6 +17,15 @@ import { cn } from '@/lib/utils';
  * memanggilnya. Petugas kehilangan satu-satunya pemberitahuan permohonan masuk.
  *
  * `nada`: 'gelap' (ikon putih, di header biru) atau 'terang' (ikon abu).
+ * `sisi`: tepi mana panel disejajarkan — 'kanan' | 'kiri'.
+ * `arah`: panel membuka ke 'bawah' (bawaan) atau 'atas'.
+ *
+ * 🔴 `arah` ADA KARENA PANELNYA PERNAH TAK PERNAH TERLIHAT. Di portal Next.js
+ * lonceng duduk di navbar atas, jadi `top-full` selalu benar. Port ini
+ * memindahkannya ke KAKI SIDEBAR — dan di sana `top-full` berarti panel
+ * digambar mulai dari bawah layar, di luar viewport. Ia terbuka, hanya tidak
+ * bisa dilihat siapa pun. Karena itu pemanggil yang menaruhnya di bawah wajib
+ * meminta `arah="atas"`.
  */
 
 const KUNCI_SUARA = 'saibatin-notif-sound'; // '1' = nyala (bawaan), '0' = bisu
@@ -102,7 +111,7 @@ function bunyikan() {
   }
 }
 
-export default function LoncengNotifikasi({ nada = 'gelap', sisi = 'kanan' }) {
+export default function LoncengNotifikasi({ nada = 'gelap', sisi = 'kanan', arah = 'bawah' }) {
   const [buka, setBuka] = useState(false);
   const [items, setItems] = useState([]);
   const [belum, setBelum] = useState(0);
@@ -191,7 +200,15 @@ export default function LoncengNotifikasi({ nada = 'gelap', sisi = 'kanan' }) {
     // Bawa id data yang dirujuk supaya halaman tujuan bisa langsung membuka
     // halaman yang memuatnya lalu menyorot barisnya — tanpa ini petugas
     // mendarat di halaman 1 dan harus mencari sendiri.
-    router.visit(n.refId && !n.link.includes('?') ? `${n.link}?sorot=${n.refId}` : n.link);
+    const tujuan = n.refId && !n.link.includes('?') ? `${n.link}?sorot=${n.refId}` : n.link;
+
+    // 🔴 `router.visit` hanya sah di halaman Inertia. Komponen ini dipasang di
+    // navbar, dan navbar yang sama dirender sebagai React island di halaman
+    // **Blade** publik — di sana tidak ada konteks Inertia, dan kunjungannya
+    // gagal diam-diam (server membalas HTML biasa, bukan respons Inertia).
+    // Pemuatan halaman penuh selalu benar; hanya lebih lambat.
+    if (document.getElementById('app')?.dataset.page) router.visit(tujuan);
+    else window.location.href = tujuan;
   };
 
   const warnaIkon = nada === 'gelap' ? 'text-white' : 'text-slate-600';
@@ -217,8 +234,9 @@ export default function LoncengNotifikasi({ nada = 'gelap', sisi = 'kanan' }) {
       {buka && (
         <div role="dialog" aria-label="Daftar notifikasi"
              className={cn(
-               'absolute top-full z-[60] mt-2 w-80 max-w-[calc(100vw-1.5rem)] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl',
+               'absolute z-[60] w-80 max-w-[calc(100vw-1.5rem)] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl',
                sisi === 'kanan' ? 'right-0' : 'left-0',
+               arah === 'atas' ? 'bottom-full mb-2' : 'top-full mt-2',
              )}>
           <div className="flex items-center justify-between border-b border-slate-100 px-4 py-3">
             <p className="text-sm font-semibold text-slate-900">Notifikasi</p>

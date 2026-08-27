@@ -25,3 +25,6 @@ yarn-error.log
 /.vscode
 /.zed
 /public/uploads
+
+# Paket unggahan cPanel — dihasilkan deploy/buat-paket.ps1, jangan di-commit
+/deploy/dist

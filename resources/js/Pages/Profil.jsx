@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import LayoutPengguna from '@/Components/LayoutPengguna';
 import AmbilSelfie from '@/Components/AmbilSelfie';
+import PenampilGambar from '@/Components/PenampilGambar';
 import { Pesan } from '@/Components/Dasbor';
 import { Button } from '@/Components/ui/button';
 import { Input } from '@/Components/ui/input';
@@ -36,6 +37,7 @@ function KartuFoto({ foto, diminta, onPesan }) {
   const [ambil, setAmbil] = useState(diminta && !foto);
   const [baru, setBaru] = useState('');
   const [sibuk, setSibuk] = useState(false);
+  const [lihatFoto, setLihatFoto] = useState(false);
 
   const simpan = async () => {
     if (!baru) return;
@@ -101,8 +103,12 @@ function KartuFoto({ foto, diminta, onPesan }) {
       ) : (
         <div className="flex flex-wrap items-center gap-5">
           {foto ? (
-            <img src={foto} alt="Foto profil Anda"
-                 className="h-24 w-24 rounded-xl border border-slate-200 object-cover" />
+            <button type="button" onClick={() => setLihatFoto(true)}
+                    title="Klik untuk memperbesar, memutar, atau mengunduh"
+                    className="cursor-zoom-in">
+              <img src={foto} alt="Foto profil Anda"
+                   className="h-24 w-24 rounded-xl border border-slate-200 object-cover" />
+            </button>
           ) : (
             <div className="flex h-24 w-24 items-center justify-center rounded-xl border border-dashed border-slate-300 bg-slate-50 text-slate-300">
               <UserRound className="h-10 w-10" />
@@ -131,6 +137,11 @@ function KartuFoto({ foto, diminta, onPesan }) {
             </div>
           </div>
         </div>
+      )}
+
+      {lihatFoto && foto && (
+        <PenampilGambar daftar={[{ src: foto, judul: 'Foto profil' }]}
+                        onTutup={() => setLihatFoto(false)} />
       )}
     </div>
   );

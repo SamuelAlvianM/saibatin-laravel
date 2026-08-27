@@ -19,8 +19,10 @@
     • `faq`      → daftar tanya-jawab dari blok CMS `pusat-bantuan.faq`
     • `formulir` → formulir publik (pengaduan / kritik-saran) di bawah isinya
 
-  ⛔ Panel unggah dokumen dari halaman publik (mode edit) TIDAK ikut — itu
-  bagian "Konten Halaman" yang dibangun setelah situs publiknya jadi.
+  MODE EDIT: kartu isinya ditandai `data-blok` dengan kunci `info.<grup>.<slug>`
+  (dikirim controller sebagai `$kunci`), jadi Super Admin menyuntingnya langsung
+  dari halaman ini lewat pensil. Daftar FAQ punya blok TERSENDIRI — pensilnya
+  ada di partial-nya sendiri.
 --}}
 
 <div class="relative flex min-h-screen flex-col bg-slate-50/30">
@@ -41,7 +43,8 @@
         </div>
 
         <div class="masuk-naik space-y-4 rounded-2xl border border-slate-200/60 bg-white p-6 shadow-sm md:p-8"
-             style="animation-delay: 100ms">
+             style="animation-delay: 100ms"
+             @isset($kunciBlok) data-blok="{{ $kunciBlok }}" data-blok-label="Isi Halaman" @endisset>
             @include('publik.partials.blok-isi', ['isi' => $isi])
 
             @if (! empty($isi['faq']))
@@ -49,6 +52,8 @@
             @endif
 
             @include('publik.partials.berkas', ['berkas' => $berkas, 'judul' => 'Berkas'])
+
+            @include('publik.partials.dokumen-edit', ['jenis' => $jenisDokumen ?? []])
         </div>
 
         @if (! empty($isi['formulir']))

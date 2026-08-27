@@ -36,9 +36,16 @@ class UserAdminController extends Controller
     ) {}
 
     /**
-     * Daftar akun. Batas 200 baris dipertahankan dari portal Next.js —
-     * penyaringannya (status/kelompok/pencarian) dijalankan di database, jadi
-     * batas itu berlaku pada hasil yang sudah tersaring, bukan pada 1.386 akun.
+     * Daftar akun, berhalaman.
+     *
+     * 🔴 Dulu `take(200)` tanpa penanda apa pun — warisan portal Next.js. Pada
+     * tab "Warga" (1.234 akun) itu berarti seribu akun lebih tidak pernah bisa
+     * dibuka petugas, dan tabelnya tidak memberi tahu bahwa daftarnya dipotong.
+     * Sekarang seluruh hasil terjangkau lewat nomor halaman; penyaringan tetap
+     * dijalankan di database, jadi `total` menghitung hasil tersaring.
+     *
+     * Bentuk balasannya sengaja sama dengan `PermohonanAdminController` —
+     * komponen `Paginasi` di sisi klien membaca kunci yang sama.
      */
     public function index(Request $request)
     {
@@ -46,7 +53,13 @@ class UserAdminController extends Controller
         $level = (string) $request->query('level');   // "3" | "4" | "staff"
         $q = trim((string) $request->query('q'));
 
-        $items = User::query()
+        $limit = min(100, max(5, (int) $request->query('limit', 20)));
+        $page = max(1, (int) $request->query('page', 1));
+
+        // Klausa dasar dipakai dua kali (hitung total, lalu ambil barisnya),
+        // jadi disimpan sebagai pabrik query — bukan query yang dieksekusi dua
+        // kali dengan state yang sudah ternoda `count()`.
+        $query = fn () => User::query()
             ->when(in_array($status, ['0', '1', '2', '3'], true), fn ($w) => $w->where('status', (int) $status))
             ->when($level === 'staff', fn ($w) => $w->whereIn('userlevel_id', [UserLevel::SUPER_ADMIN, UserLevel::OPERATOR]))
             ->when(in_array($level, ['3', '4'], true), fn ($w) => $w->where('userlevel_id', (int) $level))
@@ -54,10 +67,50 @@ class UserAdminController extends Controller
                 ->where('user_id', 'like', "%{$q}%")
                 ->orWhere('user_fullname', 'like', "%{$q}%")
                 ->orWhere('user_email', 'like', "%{$q}%")
-                ->orWhere('user_nik', 'like', "%{$q}%")))
+                ->orWhere('user_nik', 'like', "%{$q}%")));
+
+        // Datang dari notifikasi akun (`?sorot=<id>`): hitung akun itu ada di
+        // halaman berapa, lalu langsung buka halaman tersebut — sama seperti
+        // permohonan. Tanpa ini petugas mendarat di halaman 1 dan harus mencari
+        // sendiri pendaftar yang baru saja diberitahukan kepadanya.
+        //
+        // 🔴 Urutannya `created_at` DESC, bukan id, jadi posisinya TIDAK bisa
+        // dihitung dari id saja. `id` dipakai sebagai pemecah seri supaya dua
+        // akun yang terdaftar pada detik yang sama tidak menggeser hitungan.
+        $sorot = $request->query('sorot');
+
+        if (filled($sorot) && ctype_digit((string) $sorot)) {
+            $acuan = User::find((int) $sorot);
+
+            if ($acuan) {
+                $sebelum = $query()
+                    ->where(fn ($w) => $w
+                        ->where('created_at', '>', $acuan->created_at)
+                        ->orWhere(fn ($x) => $x
+                            ->where('created_at', $acuan->created_at)
+                            ->where('id', '>', $acuan->id)))
+                    ->count();
+
+                $page = intdiv($sebelum, $limit) + 1;
+            }
+        }
+
+        $total = $query()->count();
+        $totalHalaman = max(1, (int) ceil($total / $limit));
+
+        // Halaman di luar jangkauan (mis. sesudah filter dipersempit) dijepit ke
+        // halaman terakhir — bukan dibalas kosong, yang terbaca seperti "tidak
+        // ada data" padahal datanya ada.
+        $page = min($page, $totalHalaman);
+
+        $items = $query()
             ->with('level:id,nama')
+            // Pemecah seri wajib: tanpa `id`, urutan baris yang `created_at`-nya
+            // sama tidak dijamin tetap antar-kueri, dan halaman hasil `?sorot=`
+            // bisa meleset satu baris.
             ->orderByDesc('created_at')
-            ->take(200)
+            ->orderByDesc('id')
+            ->forPage($page, $limit)
             ->get()
             ->map(fn ($u) => [
                 'id' => $u->id,
@@ -75,7 +128,13 @@ class UserAdminController extends Controller
                 'level' => ['nama' => $u->level->nama ?? '-'],
             ]);
 
-        return Balasan::ok(['items' => $items]);
+        return Balasan::ok([
+            'items' => $items,
+            'page' => $page,
+            'limit' => $limit,
+            'total' => $total,
+            'totalHalaman' => $totalHalaman,
+        ]);
     }
 
     /**

@@ -7,6 +7,7 @@ import {
 
 import { Button } from '@/Components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/Components/ui/sheet';
+import LoncengNotifikasi from '@/Components/LoncengNotifikasi';
 import { menuNavigasi } from '@/lib/navigasi';
 import { cn } from '@/lib/utils';
 
@@ -375,7 +376,16 @@ function AreaAkun({ user, mobile, onNavigasi, onKeluar }) {
   );
 }
 
-export default function Navbar({ user = null, onKeluar = null }) {
+/**
+ * @param lonceng  tampilkan lonceng notifikasi di sudut kanan.
+ *
+ * 🔴 Sengaja BUKAN otomatis-menyala saat ada `user`. Navbar ini juga dirender
+ * sebagai React island di halaman **Blade** publik, dan lonceng itu menavigasi
+ * lewat `router.visit()` milik Inertia yang tidak punya konteks di sana.
+ * Hanya pemanggil dari halaman Inertia (`LayoutPengguna`) yang menyalakannya;
+ * dashboard petugas punya loncengnya sendiri di `LayoutDashboard`.
+ */
+export default function Navbar({ user = null, onKeluar = null, lonceng = false }) {
   const [tergulir, setTergulir] = useState(false);
   const [mobileBuka, setMobileBuka] = useState(false);
   const [logoDitunjuk, setLogoDitunjuk] = useState(false);
@@ -432,11 +442,13 @@ export default function Navbar({ user = null, onKeluar = null }) {
 
           {/* Akun (desktop) */}
           <div className="hidden flex-shrink-0 items-center gap-1.5 lg:flex">
+            {lonceng && user && <LoncengNotifikasi nada="gelap" />}
             <AreaAkun user={user} onKeluar={onKeluar} />
           </div>
 
           {/* Mobile: hamburger */}
           <div className="flex items-center gap-1 lg:hidden">
+            {lonceng && user && <LoncengNotifikasi nada="gelap" />}
             <Sheet open={mobileBuka} onOpenChange={setMobileBuka}>
               <SheetTrigger asChild>
                 <button aria-label="Buka menu navigasi"

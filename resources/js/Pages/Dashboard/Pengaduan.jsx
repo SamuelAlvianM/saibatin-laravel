@@ -3,6 +3,7 @@ import { CheckCircle2, Clock, Mail, MessageSquare, Phone, User } from 'lucide-re
 import LayoutDashboard from '@/Components/LayoutDashboard';
 import { Kartu, Kosong, Memuat, Modal, Pesan, Tombol, tglJam, tglSingkat } from '@/Components/Dasbor';
 import { ambilJson, kirimJson } from '@/lib/api';
+import { kelasSorot, useSorot } from '@/lib/sorot';
 import { Label } from '@/Components/ui/label';
 import { Textarea } from '@/Components/ui/textarea';
 
@@ -32,7 +33,7 @@ function Lencana({ status }) {
   );
 }
 
-export default function Pengaduan() {
+export default function Pengaduan({ sorot }) {
   const [items, setItems] = useState([]);
   const [saring, setSaring] = useState('');
   const [memuat, setMemuat] = useState(true);
@@ -40,6 +41,10 @@ export default function Pengaduan() {
   const [balasan, setBalasan] = useState('');
   const [menyimpan, setMenyimpan] = useState(false);
   const [pesan, setPesan] = useState(null);
+
+  // Datang dari notifikasi pengaduan. Daftar ini TIDAK berpaginasi (300 teratas
+  // sekaligus), jadi tidak perlu hitungan halaman di server — cukup menggulir.
+  const sorotId = useSorot(sorot, 'pengaduan', !memuat, items);
 
   const muat = useCallback(async () => {
     setMemuat(true);
@@ -103,8 +108,9 @@ export default function Pengaduan() {
               </thead>
               <tbody>
                 {items.map((it) => (
-                  <tr key={it.id} onClick={() => { setDetail(it); setBalasan(it.balasan ?? ''); }}
-                      className="cursor-pointer border-b border-slate-100 hover:bg-slate-50/60">
+                  <tr key={it.id} id={`pengaduan-${it.id}`}
+                      onClick={() => { setDetail(it); setBalasan(it.balasan ?? ''); }}
+                      className={`cursor-pointer border-b border-slate-100 hover:bg-slate-50/60 ${kelasSorot(sorotId === it.id)}`}>
                     <td className="py-2.5 pr-4 font-medium text-slate-800">{it.nama}</td>
                     <td className="py-2.5 pr-4">{it.subjek ?? '-'}</td>
                     <td className="max-w-xs truncate py-2.5 pr-4 text-slate-500">{it.isi}</td>

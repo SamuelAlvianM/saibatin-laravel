@@ -36,8 +36,10 @@
             </div>
         </div>
 
+        {{-- Penanda MODE EDIT: pengantar + seluruh daftar produk satu blok CMS. --}}
         <div class="masuk-naik space-y-6 rounded-2xl border border-slate-200/60 bg-white p-6 shadow-sm md:p-8"
-             style="animation-delay: 100ms">
+             style="animation-delay: 100ms"
+             @isset($kunciBlok) data-blok="{{ $kunciBlok }}" data-blok-label="Produk" @endisset>
             @if (! empty($isi['intro']))
                 <p class="text-sm leading-relaxed text-slate-700">{{ $isi['intro'] }}</p>
             @endif
@@ -84,6 +86,8 @@
         </div>
 
         @include('publik.partials.berkas', ['berkas' => $berkas, 'judul' => 'Berkas'])
+
+        @include('publik.partials.dokumen-edit', ['jenis' => $jenisDokumen ?? []])
     </div>
 </div>
 

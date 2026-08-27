@@ -25,7 +25,10 @@
     <div class="container mx-auto px-4 py-12 md:px-8 lg:px-16">
         <div class="grid gap-6 lg:grid-cols-2">
 
-            <section class="masuk-naik space-y-4 rounded-2xl border border-slate-200/60 bg-white p-6 shadow-sm md:p-8">
+            {{-- Dua kartu di bawah = dua blok CMS terpisah; MODE EDIT memberi
+                 masing-masing pensilnya sendiri. --}}
+            <section class="masuk-naik space-y-4 rounded-2xl border border-slate-200/60 bg-white p-6 shadow-sm md:p-8"
+                     @isset($kunciAlamat) data-blok="{{ $kunciAlamat }}" data-blok-label="Alamat" @endisset>
                 <div class="flex items-center gap-3">
                     <div class="flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-brand/10 text-brand">
                         <x-ikon nama="peta-pin" class="h-5 w-5" />
@@ -38,7 +41,8 @@
             </section>
 
             <section class="masuk-naik space-y-4 rounded-2xl border border-slate-200/60 bg-white p-6 shadow-sm md:p-8"
-                     style="animation-delay: 80ms">
+                     style="animation-delay: 80ms"
+                     @isset($kunciKontak) data-blok="{{ $kunciKontak }}" data-blok-label="Kontak" @endisset>
                 <div class="flex items-center gap-3">
                     <div class="flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-brand/10 text-brand">
                         <x-ikon nama="surel" class="h-5 w-5" />

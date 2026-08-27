@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 import {
-  CloudUpload, Copy, FileText, Image as IkonGambar, Loader2, Search, Trash2, X,
+  CloudUpload, Copy, FileText, Image as IkonGambar, Loader2, Maximize2, Search,
+  Trash2, X,
 } from 'lucide-react';
 import LayoutDashboard from '@/Components/LayoutDashboard';
 import MediaUnggah from '@/Components/MediaUnggah';
+import PenampilGambar from '@/Components/PenampilGambar';
 import { Kartu, Pesan, Tombol, useTunda } from '@/Components/Dasbor';
 import { ambilJson, kirimJson } from '@/lib/api';
 import { Input } from '@/Components/ui/input';
@@ -24,6 +26,7 @@ function ukuranBerkas(bita) {
 
 export default function Media() {
   const [items, setItems] = useState([]);
+  const [lihat, setLihat] = useState(null);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [cari, setCari] = useState('');
@@ -126,6 +129,15 @@ export default function Media() {
                     </div>
                   )}
                   <div className="absolute inset-0 flex items-center justify-center gap-2 bg-black/0 opacity-0 transition-colors group-hover:bg-black/40 group-hover:opacity-100">
+                    {/* Hanya untuk gambar — PDF di pustaka ini tidak bisa
+                        ditampilkan penampil gambar, dan tombolnya akan
+                        menyesatkan kalau tetap dipasang. */}
+                    {m.mimeType?.startsWith('image/') && (
+                      <button onClick={() => setLihat(m.id)} title="Lihat besar"
+                              className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-slate-700 hover:bg-slate-100">
+                        <Maximize2 className="h-4 w-4" />
+                      </button>
+                    )}
                     <button onClick={() => salinUrl(m)} title="Salin URL"
                             className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-slate-700 hover:bg-slate-100">
                       <Copy className="h-4 w-4" />
@@ -155,6 +167,23 @@ export default function Media() {
           </div>
         )}
       </Kartu>
+
+      {/* Yang masuk penampil hanya media bergambar; PDF dilewati. Indeks awal
+          dicari dari id, bukan posisi baris, karena daftar tersaring itu tidak
+          sama urutannya dengan daftar penuh. */}
+      {lihat !== null && (() => {
+        const gambar = items.filter((m) => m.mimeType?.startsWith('image/'));
+        const awal = gambar.findIndex((m) => m.id === lihat);
+        if (awal < 0) return null;
+
+        return (
+          <PenampilGambar
+            daftar={gambar.map((m) => ({ src: m.url, judul: m.namaAsli }))}
+            indeksAwal={awal}
+            onTutup={() => setLihat(null)}
+          />
+        );
+      })()}
     </LayoutDashboard>
   );
 }

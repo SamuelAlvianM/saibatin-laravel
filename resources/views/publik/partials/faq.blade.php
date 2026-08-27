@@ -14,11 +14,15 @@
   Yang PERTAMA dibiarkan terbuka supaya halaman tidak terbaca sebagai tumpukan
   baris tertutup yang tak jelas bisa diklik — sama seperti aslinya.
 
+  MODE EDIT: daftarnya blok CMS TERSENDIRI (`pusat-bantuan.faq`), terpisah dari
+  blok isi halaman — petugas menambah pertanyaan tanpa ikut menyunting teks
+  pengantar halamannya.
+
   @param array $faq  [['pertanyaan' => …, 'jawaban' => …], …]
 --}}
 @php($daftar = collect($faq)->filter(fn ($f) => filled($f['pertanyaan'] ?? null))->values())
 
-<div class="pt-2">
+<div class="pt-2" data-blok="pusat-bantuan.faq" data-blok-label="Daftar FAQ">
     @if ($daftar->isEmpty())
         <div class="rounded-2xl border border-dashed border-slate-200 bg-white px-6 py-10 text-center">
             <x-ikon nama="tanya" class="mx-auto h-8 w-8 text-slate-300" />

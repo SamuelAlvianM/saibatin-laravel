@@ -1,0 +1,124 @@
+# =============================================================================
+#  .htaccess untuk public_html — SAIBATIN Laravel di cPanel
+# =============================================================================
+#
+#  Salin isi berkas ini menjadi  /home/<akun>/public_html/.htaccess
+#
+#  Gabungan tiga hal yang selama ini terpisah:
+#    1. aturan rewrite Laravel  (dari public/.htaccess bawaan project)
+#    2. redirect HTTPS          (dari .htaccess lama document root)
+#    3. blok php_value + handler cPanel (dari .htaccess lama document root)
+#
+#  🔴 Blok nomor 3 DIHASILKAN cPanel. Kalau kelak Anda mengubah setelan lewat
+#     MultiPHP INI Editor atau MultiPHP Manager, cPanel akan MENULIS ULANG blok
+#     itu di berkas ini dan menghapus perubahan manual di dalamnya. Karena itu
+#     blok Laravel diletakkan DI ATAS — supaya yang ditimpa cPanel hanya
+#     bagiannya sendiri di bawah.
+#
+#  ⚠️ Dua nilai sengaja dinaikkan dari .htaccess lama, dengan alasannya:
+#       memory_limit  128M → 512M
+#       max_execution_time 90 → 180
+#     Keduanya untuk ekspor Excel statistik (± 170 MB, 13 sheet). Kalau hosting
+#     menolak (LVE atau php_admin_value), yang gagal HANYA ekspor Excel penuh
+#     dan lampiran gambar di PDF — portalnya sendiri tetap jalan.
+#
+# =============================================================================
+
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+
+    # ── HTTPS ────────────────────────────────────────────────────────────────
+    # Dipertahankan dari .htaccess lama. Wajib: cookie sesi portal ini dikirim
+    # dengan Secure, jadi di http:// login akan gagal tanpa pesan.
+    RewriteCond %{HTTPS} !=on
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # ── Header Authorization ─────────────────────────────────────────────────
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # ── Header X-XSRF-Token ──────────────────────────────────────────────────
+    # 🔴 ADA di public/.htaccess Laravel tapi TIDAK ada di .htaccess lama Anda.
+    # Tanpa baris ini seluruh POST dari dashboard & formulir dijawab 419:
+    # portal ini mengirim token lewat header X-XSRF-TOKEN (HANDOFF §5 no. 9),
+    # dan sebagian konfigurasi Apache membuang header non-standar sebelum PHP
+    # sempat melihatnya.
+    RewriteCond %{HTTP:x-xsrf-token} .
+    RewriteRule .* - [E=HTTP_X_XSRF_TOKEN:%{HTTP:X-XSRF-Token}]
+
+    # ── Slash di akhir ───────────────────────────────────────────────────────
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # ── Teruskan ke front controller ─────────────────────────────────────────
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+# ── Jaring pengaman: jangan sajikan berkas rahasia ───────────────────────────
+# Aplikasi memang ditaruh DI LUAR public_html, jadi berkas-berkas ini
+# seharusnya tidak ada di sini. Blok ini untuk kalau suatu saat ada yang
+# menyalin seluruh folder project ke public_html karena terburu-buru.
+<FilesMatch "^(\.env.*|\.git.*|composer\.(json|lock)|package(-lock)?\.json|artisan|phpunit\.xml|vite\.config\.js)$">
+    Require all denied
+</FilesMatch>
+
+# Mesin OCR & aset build boleh di-cache lama — namanya sudah ber-hash.
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/wasm "access plus 1 year"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
+</IfModule>
+
+# =============================================================================
+# BEGIN cPanel-generated php ini directives, do not edit
+# Manual editing of this file may result in unexpected behavior.
+# To make changes to this file, use the cPanel MultiPHP INI Editor
+# (Home >> Software >> MultiPHP INI Editor)
+<IfModule php8_module>
+   php_flag display_errors Off
+   php_value max_execution_time 180
+   php_value max_input_time 60
+   php_value max_input_vars 1000
+   php_value memory_limit 512M
+   php_value post_max_size 10M
+   php_value session.gc_maxlifetime 1440
+   php_value session.save_path "/var/cpanel/php/sessions/ea-php82"
+   php_value upload_max_filesize 5M
+   php_flag zlib.output_compression On
+   php_value error_log "error_log"
+   php_flag log_errors On
+</IfModule>
+<IfModule lsapi_module>
+   php_flag display_errors Off
+   php_value max_execution_time 180
+   php_value max_input_time 60
+   php_value max_input_vars 1000
+   php_value memory_limit 512M
+   php_value post_max_size 10M
+   php_value session.gc_maxlifetime 1440
+   php_value session.save_path "/var/cpanel/php/sessions/ea-php82"
+   php_value upload_max_filesize 5M
+   php_flag zlib.output_compression On
+   php_value error_log "error_log"
+   php_flag log_errors On
+</IfModule>
+# END cPanel-generated php ini directives, do not edit
+# =============================================================================
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the "ea-php82" package as the default "PHP" programming language.
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php82 .php .php8 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit

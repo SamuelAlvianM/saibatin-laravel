@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { ImagePlus, Loader2, X } from 'lucide-react';
+import PenampilGambar from '@/Components/PenampilGambar';
 
 /** Hanya tiga format ini yang diterima (permintaan user). */
 const TIPE_DITERIMA = ['image/jpeg', 'image/jpg', 'image/png'];
@@ -37,6 +38,7 @@ export default function UnggahGambar({
   const inputRef = useRef(null);
   const [memproses, setMemproses] = useState(false);
   const [galat, setGalat] = useState(null);
+  const [lihat, setLihat] = useState(false);
 
   const pilihBerkas = async (e) => {
     const file = e.target.files?.[0];
@@ -70,7 +72,15 @@ export default function UnggahGambar({
     <div className={`space-y-2 ${kelas}`}>
       {nilai ? (
         <div className="relative overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
-          <img src={nilai} alt={label} className="h-auto max-h-64 w-full object-contain" />
+          {/* 🔴 Gambarnya harus bisa diperbesar & diputar. Foto KTP dari ponsel
+              sering miring atau terbalik, dan pratinjau 256 px terlalu kecil
+              untuk memastikan NIK-nya terbaca — padahal itulah satu-satunya
+              kesempatan warga memeriksanya sebelum mengirim. */}
+          <button type="button" onClick={() => setLihat(true)}
+                  title="Klik untuk memperbesar, memutar, atau mengunduh"
+                  className="block w-full cursor-zoom-in">
+            <img src={nilai} alt={label} className="h-auto max-h-64 w-full object-contain" />
+          </button>
           <button
             type="button"
             disabled={nonaktif}
@@ -107,6 +117,10 @@ export default function UnggahGambar({
       <input ref={inputRef} type="file" accept={ACCEPT} onChange={pilihBerkas} className="hidden" />
 
       {galat && <p className="text-xs text-red-600">{galat}</p>}
+
+      {lihat && nilai && (
+        <PenampilGambar daftar={[{ src: nilai, judul: label }]} onTutup={() => setLihat(false)} />
+      )}
     </div>
   );
 }

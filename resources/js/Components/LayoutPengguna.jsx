@@ -40,7 +40,11 @@ export default function LayoutPengguna({
     <div className="min-h-screen bg-slate-50">
       <Head title={judul} />
 
-      <Navbar user={auth.user} onKeluar={() => router.post('/logout')} />
+      {/* `lonceng` hanya dinyalakan di sini: halaman ini Inertia, jadi
+          navigasi dari daftar notifikasi punya konteks yang dibutuhkannya.
+          Backend sudah membuat notifikasi untuk warga sejak Fase 3, tapi
+          sampai 17 Agu 2026 tidak ada satu pun tempat warga bisa melihatnya. */}
+      <Navbar user={auth.user} onKeluar={() => router.post('/logout')} lonceng />
 
       {hero}
 

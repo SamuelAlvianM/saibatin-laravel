@@ -3,6 +3,7 @@ import { CalendarDays, Mail, MessagesSquare, Phone, Search, User } from 'lucide-
 import LayoutDashboard from '@/Components/LayoutDashboard';
 import { Kartu, Memuat, Pesan } from '@/Components/Dasbor';
 import { ambilJson } from '@/lib/api';
+import { kelasSorot, useSorot } from '@/lib/sorot';
 import { Input } from '@/Components/ui/input';
 
 /**
@@ -13,7 +14,7 @@ import { Input } from '@/Components/ui/input';
  * yang sudah diambil — bukan bolak-balik ke server untuk data yang sudah ada
  * di layar.
  */
-export default function KritikSaran() {
+export default function KritikSaran({ sorot }) {
   const [items, setItems] = useState([]);
   const [memuat, setMemuat] = useState(true);
   const [cari, setCari] = useState('');
@@ -36,6 +37,11 @@ export default function KritikSaran() {
       || (i.pesan ?? '').toLowerCase().includes(k)
       || (i.email ?? '').toLowerCase().includes(k));
   }, [items, cari]);
+
+  // Datang dari notifikasi kritik & saran. Daftarnya tidak berpaginasi, tapi
+  // BISA tersaring pencarian — kartunya baru ada setelah `tersaring` dihitung,
+  // karena itu `tersaring` yang jadi penanda, bukan `items`.
+  const sorotId = useSorot(sorot, 'kritik', !memuat, tersaring);
 
   return (
     <LayoutDashboard judul="Kritik & Saran">
@@ -66,7 +72,8 @@ export default function KritikSaran() {
         ) : (
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {tersaring.map((it) => (
-              <div key={it.id} className="rounded-xl border border-slate-200 p-4 transition-all hover:border-brand/30 hover:shadow-sm">
+              <div key={it.id} id={`kritik-${it.id}`}
+                   className={`rounded-xl border border-slate-200 p-4 transition-all hover:border-brand/30 hover:shadow-sm ${kelasSorot(sorotId === it.id)}`}>
                 <div className="flex min-w-0 items-center gap-2">
                   <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand/10">
                     <User className="h-4 w-4 text-brand" />

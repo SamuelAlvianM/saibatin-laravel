@@ -1,0 +1,170 @@
+# =============================================================================
+#  .env untuk cPanel — SALIN JADI /home/<akun>/saibatin-app/.env
+# =============================================================================
+#
+#  🔴 BERKAS INI TIDAK BOLEH BERISI NILAI ASLI. Yang ada di sini hanya NAMA
+#     variabel dan penjelasannya; isi nilainya langsung di server. Aturan
+#     journal induk §2 no. 6 — jangan menaruh rahasia di berkas mana pun yang
+#     ikut repo.
+#
+#  🔴 `.env` lokal SENGAJA TIDAK diikutkan ke paket unggahan. Kalau ikut,
+#     aplikasi produksi akan menunjuk `DB_HOST=127.0.0.1` dengan kredensial
+#     laptop dan gagal terhubung — atau lebih buruk, tersambung ke database
+#     lain yang kebetulan bernama sama.
+#
+# =============================================================================
+#  MENGHUBUNGKAN KE DATABASE cPANEL — jawaban ringkasnya ada di lima baris
+#  DB_* di bawah. Cara mendapatkan nilainya:
+#
+#   1. cPanel → MySQL® Databases → "Create New Database".
+#      Namanya akan diberi awalan akun secara otomatis, mis. Anda mengetik
+#      `saibatin` tetapi yang jadi adalah `namaakun_saibatin`.
+#      🔴 Yang ditulis di DB_DATABASE adalah nama LENGKAP berawalan itu.
+#
+#   2. Di halaman yang sama → "Add New User". Sama, namanya berawalan:
+#      `namaakun_saibatin`. Pakai sandi yang dibuat Password Generator.
+#
+#   3. "Add User To Database" → pilih user & database tadi → centang
+#      **ALL PRIVILEGES**. Tanpa langkah ini, user-nya ada tapi tidak bisa
+#      menyentuh apa pun, dan galatnya berbunyi "Access denied" — mudah
+#      disalahartikan sebagai sandi salah.
+#
+#   4. DB_HOST tetap **127.0.0.1**. Di cPanel, MySQL berjalan di mesin yang
+#      sama dengan PHP. Jangan diisi nama domain: itu memaksa koneksi keluar
+#      lewat jaringan dan biasanya ditolak firewall.
+#      (Kecuali paket Anda memakai "Remote MySQL" — hanya itu pengecualiannya.)
+#
+#   5. Mengisi datanya: ekspor DB lokal jadi .sql lalu impor lewat phpMyAdmin.
+#      🔴 JANGAN `php artisan migrate:fresh` di server — perintah itu MENGHAPUS
+#      seluruh tabel lebih dulu. Untuk DB yang tabelnya sudah ada, urutannya
+#      `migrate:install` lalu menandai migration sebagai sudah jalan
+#      (HANDOFF §5 no. 4).
+#
+#  Uji koneksinya SEBELUM membuka portal untuk warga:
+#      cd ~/saibatin-app && php artisan db:show
+#  Kalau tabelnya terdaftar, koneksinya benar.
+# =============================================================================
+
+APP_NAME="SAIBATIN - Disdukcapil Pesisir Barat"
+
+# 🔴 `production`, bukan `local`. Selain mematikan halaman galat yang membocorkan
+# path & isi variabel, ini juga yang dibaca Laravel untuk mengaktifkan optimasi.
+APP_ENV=production
+
+# 🔴 WAJIB `false` di server. `true` menampilkan jejak galat lengkap kepada
+# siapa pun yang membuka halaman error — termasuk isi .env ini.
+APP_DEBUG=false
+
+# Dihasilkan DI SERVER: `php artisan key:generate`
+# Jangan menyalin APP_KEY laptop: seluruh sesi & cookie terenkripsi dengannya,
+# dan kunci yang sama di dua tempat berarti sesi laptop sah di produksi.
+APP_KEY=
+
+APP_URL=https://disdukcapil.pesisirbaratkab.go.id
+
+APP_LOCALE=id
+# 🔴 `en`, JANGAN disamakan dengan APP_LOCALE. Kalau keduanya `id`, aturan
+# validasi yang belum diterjemahkan tampil sebagai kunci mentah dan warga
+# melihat "validation.required" di formulir pendaftaran (kejadian nyata,
+# ditemukan 17 Agu 2026).
+APP_FALLBACK_LOCALE=en
+APP_FAKER_LOCALE=id_ID
+
+# 🔴 Pesisir Barat = WIB. Seluruh kolom waktu DB warisan adalah waktu lokal
+# Jakarta; salah zona membuat setiap tanggal dan hitungan "hari ini" meleset.
+APP_TIMEZONE=Asia/Jakarta
+
+APP_MAINTENANCE_DRIVER=file
+BCRYPT_ROUNDS=10
+
+LOG_CHANNEL=stack
+LOG_STACK=daily
+LOG_DEPRECATIONS_CHANNEL=null
+# `debug` membanjiri disk cPanel yang kuotanya terbatas.
+LOG_LEVEL=error
+
+# ── DATABASE (lihat penjelasan di kepala berkas) ─────────────────────────────
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=namaakun_saibatin
+DB_USERNAME=namaakun_saibatin
+DB_PASSWORD=
+
+# ── Sesi ─────────────────────────────────────────────────────────────────────
+# 🔴 SESSION_DRIVER & CACHE_STORE = file, BUKAN database.
+#    DB produksi dibuat Prisma dan TIDAK punya tabel `sessions`/`cache` milik
+#    Laravel; dengan driver database setiap halaman menjawab 500
+#    ("Base table or view not found: … sessions"). Driver file memakai
+#    storage/framework/{sessions,cache} yang sudah ikut di paket unggah.
+#    Kalau kelak ingin memakai tabel: buat dulu tabelnya (lihat bagian 5 di
+#    deploy/sql/2026-08-18_siapkan-db-produksi.sql), baru ganti nilainya.
+SESSION_DRIVER=file
+SESSION_LIFETIME=10080
+SESSION_COOKIE=saibatin_session
+SESSION_ENCRYPT=false
+SESSION_PATH=/
+SESSION_DOMAIN=null
+# 🔴 `true` karena .htaccess memaksa HTTPS. Tanpa ini cookie sesi juga dikirim
+# lewat http:// dan bisa disadap; dengan ini, portal yang diakses http:// tidak
+# akan bisa login sama sekali — jadi pastikan redirect HTTPS-nya memang jalan.
+SESSION_SECURE_COOKIE=true
+
+BROADCAST_CONNECTION=log
+FILESYSTEM_DISK=local
+QUEUE_CONNECTION=sync
+CACHE_STORE=file
+
+# ── Email ────────────────────────────────────────────────────────────────────
+# cPanel menyediakan SMTP sendiri: Email Accounts → Connect Devices.
+# `log` (nilai lokal) hanya menulis email ke berkas log dan TIDAK mengirim
+# apa pun — reset sandi warga tidak akan pernah sampai.
+MAIL_MAILER=smtp
+MAIL_HOST=mail.pesisirbaratkab.go.id
+MAIL_PORT=465
+MAIL_SCHEME=smtps
+MAIL_USERNAME=disdukcapil@pesisirbaratkab.go.id
+MAIL_PASSWORD=
+MAIL_FROM_ADDRESS="disdukcapil@pesisirbaratkab.go.id"
+MAIL_FROM_NAME="${APP_NAME}"
+
+# ── Identitas situs ──────────────────────────────────────────────────────────
+SITE_KODE=1813
+SITE_TENANT=disdukcapil
+SITE_TENANT2="dinas dukcapil"
+SITE_NAMA_LENGKAP="pesisir barat"
+SITE_NAMA_PENDEK=pesisirbarat
+SITE_NAMA_POPULER=saibatin
+SITE_KETERANGAN=pelayanan
+SITE_VERSI=24.03.30.001
+SITE_TAHUN_COPYRIGHT=2024
+
+# ── reCAPTCHA ────────────────────────────────────────────────────────────────
+# Dibiarkan kosong = fail-open (Recaptcha::verifikasi mengembalikan true).
+# Keputusan user 13 Agu 2026 untuk TIDAK memakainya diambil pada project TIDORE;
+# untuk portal ini belum ada keputusan — isi kalau memang mau dipakai.
+RECAPTCHA_SITE_KEY=
+RECAPTCHA_SECRET_KEY=
+
+# ── OTP pendaftaran ──────────────────────────────────────────────────────────
+# 🔴 Sakelar mati OTP ada di KODE, bukan di sini: `Otp::AKTIF` (server) dan
+# `OTP_AKTIF` di Register.jsx (klien). Keduanya `false` sekarang. Mengisi token
+# di bawah TIDAK menyalakannya kembali.
+OTP_CHANNEL=email
+FONNTE_TOKEN=
+
+# Membuka halaman /dashboard/master yang tidak ditautkan dari sidebar.
+MASTER_PASSWORD=
+
+# ── Survei Kepuasan Masyarakat ──────────────────────────────────────────────
+# Kuesioner 16 pertanyaan (berkas Word dinas, 17 Agu 2026).
+#
+# false = warga melihat "survei sedang disiapkan"; petugas yang LOGIN tetap
+#         melihat formulir lengkapnya, jadi dinas bisa memeriksanya langsung di
+#         portal produksi. Endpoint POST /api/skm ikut menolak pengiriman dari
+#         non-petugas, bukan cuma formulirnya yang disembunyikan.
+#
+# Biarkan false sampai dinas menyetujui susunan pertanyaannya (keputusan user
+# 18 Agu). Setelah diubah ke true WAJIB `php artisan config:cache` — konfigurasi
+# yang sudah di-cache tidak membaca .env lagi.
+SKM_TERBUKA=false

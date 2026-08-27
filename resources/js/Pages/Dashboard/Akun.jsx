@@ -12,9 +12,10 @@ import { SearchSelect } from '@/Components/SearchSelect';
 import { Input } from '@/Components/ui/input';
 import { Textarea } from '@/Components/ui/textarea';
 import {
-  Kartu, Kosong, Memuat, Modal, Pesan, Tombol, tglJam, useTunda,
+  Kartu, Kosong, Memuat, Modal, Paginasi, Pesan, Tombol, tglJam, useTunda,
 } from '@/Components/Dasbor';
 import { ambilJson, kirimJson } from '@/lib/api';
+import { kelasSorot, useSorot } from '@/lib/sorot';
 import { tanpaAwalanDataUrl } from '@/lib/gambar';
 
 /**
@@ -249,7 +250,10 @@ function IsiDetail({ detail, memuat, sibuk, onAktifkan, onTolak, onNonaktif }) {
 
 // ── Halaman ────────────────────────────────────────────────────────────────
 
-export default function Akun({ kecamatan }) {
+/** Sama dengan Permohonan & Log — satu tinggi tabel untuk seluruh dashboard. */
+const PER_HALAMAN = 20;
+
+export default function Akun({ kecamatan, sorot }) {
   const level = usePage().props.auth.user?.level ?? 2;
 
   const [items, setItems] = useState([]);
@@ -258,6 +262,10 @@ export default function Akun({ kecamatan }) {
   const [cari, setCari] = useState('');
   const cariTertunda = useTunda(cari);
   const [memuat, setMemuat] = useState(true);
+
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+  const [totalHalaman, setTotalHalaman] = useState(1);
   const [sibukId, setSibukId] = useState(null);
   const [pesan, setPesan] = useState(null);
 
@@ -277,6 +285,16 @@ export default function Akun({ kecamatan }) {
   const [ktp, setKtp] = useState('');
   const [membuat, setMembuat] = useState(false);
 
+  // Datang dari notifikasi akun baru (`?sorot=<id>`). Dipakai SEKALI pada
+  // pemuatan pertama: server yang menghitung akun itu ada di halaman berapa,
+  // lalu `page` disetel dari jawabannya dan permintaan berikutnya kembali biasa.
+  //
+  // ⚠️ Tab grup tidak ikut disetel. Bawaannya "Warga" (level 3), yang benar
+  // untuk hampir semua pendaftaran; pendaftar OPD (level 4) tetap perlu
+  // dipindah tabnya sendiri.
+  const sorotAwal = useRef(sorot ? Number(sorot) : null);
+  const sorotId = useSorot(sorot, 'akun', !memuat, items);
+
   // Tombol hapus baru bisa ditekan setelah beberapa detik — jeda singkat ini
   // menahan penghapusan permanen karena klik refleks atau klik ganda.
   useEffect(() => {
@@ -288,18 +306,35 @@ export default function Akun({ kecamatan }) {
 
   const muat = useCallback(async () => {
     setMemuat(true);
-    const q = new URLSearchParams({ level: grup });
+    const q = new URLSearchParams({
+      level: grup, page: String(page), limit: String(PER_HALAMAN),
+    });
     if (status) q.set('status', status);
     if (cariTertunda.trim()) q.set('q', cariTertunda.trim());
+    if (sorotAwal.current) {
+      q.set('sorot', String(sorotAwal.current));
+      q.delete('page');
+    }
 
     const j = await ambilJson(`/api/admin/users?${q}`);
     setMemuat(false);
+    sorotAwal.current = null;
 
-    if (j.error?.length) setPesan({ tipe: 'galat', teks: j.error[0] });
-    else setItems(j.data.items ?? []);
-  }, [grup, status, cariTertunda]);
+    if (j.error?.length) { setPesan({ tipe: 'galat', teks: j.error[0] }); return; }
+
+    setItems(j.data.items ?? []);
+    setTotal(j.data.total ?? 0);
+    setTotalHalaman(j.data.totalHalaman ?? 1);
+    // Server menjepit halaman yang di luar jangkauan; ikuti angkanya supaya
+    // tombol yang tersorot sama dengan isi tabel yang benar-benar tampil.
+    if (j.data.page && j.data.page !== page) setPage(j.data.page);
+  }, [grup, status, cariTertunda, page]);
 
   useEffect(() => { muat(); }, [muat]);
+
+  // Ganti tab/filter/pencarian → kembali ke halaman 1. Tanpa ini petugas yang
+  // sedang di halaman 12 lalu menyaring "Menunggu" mendarat di halaman kosong.
+  useEffect(() => { setPage(1); }, [grup, status, cariTertunda]);
 
   // Pindah tab/filter → detail lama tidak lagi relevan.
   useEffect(() => { setDetailId(null); }, [grup, status]);
@@ -461,10 +496,11 @@ export default function Akun({ kecamatan }) {
                   </thead>
                   <tbody>
                     {items.map((u) => (
-                      <tr key={u.id} onClick={() => setDetailId(u.id)} title="Klik untuk melihat detail akun"
+                      <tr key={u.id} id={`akun-${u.id}`}
+                          onClick={() => setDetailId(u.id)} title="Klik untuk melihat detail akun"
                           className={`cursor-pointer border-b border-slate-100 transition-colors ${
                             detailId === u.id ? 'bg-brand/5' : 'hover:bg-slate-50'
-                          }`}>
+                          } ${kelasSorot(sorotId === u.id)}`}>
                         <td className="py-2.5 pr-4 font-mono text-xs">{u.userId}</td>
                         <td className="py-2.5 pr-4">
                           <span className="flex items-center gap-2">
@@ -503,6 +539,11 @@ export default function Akun({ kecamatan }) {
                   </tbody>
                 </table>
               </div>
+            )}
+
+            {!memuat && (
+              <Paginasi page={page} totalHalaman={totalHalaman} total={total} limit={PER_HALAMAN}
+                        nonaktif={memuat} onGanti={setPage} />
             )}
           </Kartu>
         </div>

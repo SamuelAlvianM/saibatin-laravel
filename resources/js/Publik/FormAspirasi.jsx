@@ -6,6 +6,7 @@ import { Button } from '@/Components/ui/button';
 import { Input } from '@/Components/ui/input';
 import { Label } from '@/Components/ui/label';
 import { Textarea } from '@/Components/ui/textarea';
+import PenampilGambar from '@/Components/PenampilGambar';
 import { kirimBerkas, kirimJson } from '@/lib/api';
 
 /**
@@ -93,6 +94,7 @@ export default function FormAspirasi({ varian = 'pengaduan' }) {
   const [waktuTempat, setWaktuTempat] = useState('');
   const [pihakTerlibat, setPihakTerlibat] = useState('');
   const [foto, setFoto] = useState([]);
+  const [lihat, setLihat] = useState(null);
   const [mengunggah, setMengunggah] = useState(false);
   const [mengirim, setMengirim] = useState(false);
   const [sukses, setSukses] = useState(false);
@@ -258,8 +260,12 @@ export default function FormAspirasi({ varian = 'pengaduan' }) {
               <div className="flex flex-wrap gap-2">
                 {foto.map((f, i) => (
                   <div key={f.url} className="relative">
-                    <img src={f.pratinjau} alt={f.nama}
-                         className="h-20 w-20 rounded-lg border border-slate-200 object-cover" />
+                    <button type="button" onClick={() => setLihat(i)}
+                            title={`Klik untuk memperbesar — ${f.nama}`}
+                            className="block cursor-zoom-in">
+                      <img src={f.pratinjau} alt={f.nama}
+                           className="h-20 w-20 rounded-lg border border-slate-200 object-cover" />
+                    </button>
                     <button type="button" onClick={() => hapusFoto(i)} aria-label={`Hapus ${f.nama}`}
                             className="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-rose-600 text-white shadow">
                       <X className="h-3 w-3" />
@@ -291,6 +297,17 @@ export default function FormAspirasi({ varian = 'pengaduan' }) {
           {t.tombolKirim}
         </Button>
       </form>
+
+      {/* 🔴 `pratinjau` (objectURL lokal), BUKAN `url` hasil unggah. Pelapor WBS
+          boleh anonim, jadi ia tidak punya sesi dan berkas yang sudah tersimpan
+          tidak akan bisa dimuatnya kembali lewat URL-nya sendiri. */}
+      {lihat !== null && foto[lihat] && (
+        <PenampilGambar
+          daftar={foto.map((f) => ({ src: f.pratinjau, judul: f.nama }))}
+          indeksAwal={lihat}
+          onTutup={() => setLihat(null)}
+        />
+      )}
     </div>
   );
 }

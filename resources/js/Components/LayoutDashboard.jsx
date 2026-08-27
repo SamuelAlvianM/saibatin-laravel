@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Head, Link, router, usePage } from '@inertiajs/react';
 import {
-  BarChart3, ClipboardList, FilePlus2, FolderOpen, Gauge, Home, Images, LayoutDashboard as IkonDasbor, LayoutGrid, LogOut,
-  MessageSquare, MessagesSquare, Newspaper, ScrollText, Users, X,
+  BarChart3, ClipboardList, FilePlus2, FolderOpen, Gauge, Images, LayoutDashboard as IkonDasbor, LayoutGrid, LogOut,
+  MessageSquare, MessagesSquare, Newspaper, PanelsTopLeft, ScrollText, Users, X,
 } from 'lucide-react';
 import LoncengNotifikasi from '@/Components/LoncengNotifikasi';
 
@@ -38,6 +38,7 @@ const GRUP = [
     // publik hanya admin, operator tidak.
     judul: 'Konten & Media',
     items: [
+      { href: '/dashboard/konten', label: 'Konten Halaman', icon: PanelsTopLeft, adminSaja: true },
       { href: '/dashboard/berita', label: 'Berita', icon: Newspaper, adminSaja: true },
       { href: '/dashboard/media', label: 'Pustaka Media', icon: Images, adminSaja: true },
       { href: '/dashboard/produk', label: 'Dokumen Publikasi', icon: FolderOpen, adminSaja: true },
@@ -110,13 +111,18 @@ export default function LayoutDashboard({ judul, children, lebar = 'max-w-7xl' }
 
       {/* ── Sidebar desktop ─────────────────────────────────────────────── */}
       <aside className="sticky top-0 z-30 hidden h-screen w-60 flex-shrink-0 flex-col border-r border-slate-200 bg-white lg:flex">
-        <div className="flex items-center gap-2.5 border-b border-slate-200 px-4 py-3">
+        {/* Logo + judul ADALAH jalan pulang ke beranda — menggantikan tombol
+            "Kembali ke Beranda" yang dulu berdiri sendiri di drawer. `<a>`
+            biasa, bukan `<Link>`: beranda publik dirender Blade, jadi kunjungan
+            Inertia ke sana hanya berakhir dengan muat ulang penuh. */}
+        <a href="/" title="Kembali ke beranda"
+           className="flex items-center gap-2.5 border-b border-slate-200 px-4 py-3 transition-colors hover:bg-slate-50">
           <img src="/logo-saibatin.png" alt="Logo SAIBATIN" className="h-9 w-9 flex-shrink-0 object-contain" />
           <div className="min-w-0">
             <p className="truncate text-sm font-bold leading-tight text-slate-900">SAIBATIN</p>
             <p className="truncate text-[0.68rem] leading-tight text-slate-500">Dashboard Petugas</p>
           </div>
-        </div>
+        </a>
 
         <nav className="flex-1 overflow-y-auto p-3">
           {grup.map((g, i) => (
@@ -140,7 +146,9 @@ export default function LayoutDashboard({ judul, children, lebar = 'max-w-7xl' }
             <p className="truncate text-sm font-medium text-slate-700">{nama}</p>
             <p className="text-[0.65rem] text-slate-400">{level === 1 ? 'Super Admin' : 'Operator'}</p>
           </Link>
-          <LoncengNotifikasi nada="terang" sisi="kiri" />
+          {/* Lonceng ini duduk di KAKI sidebar — panelnya harus membuka ke
+              atas, kalau tidak ia digambar di luar bawah layar. */}
+          <LoncengNotifikasi nada="terang" sisi="kiri" arah="atas" />
           <button onClick={keluar} title="Keluar" aria-label="Keluar"
                   className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg text-rose-600 transition-colors hover:bg-rose-50">
             <LogOut className="h-4 w-4" />
@@ -152,7 +160,8 @@ export default function LayoutDashboard({ judul, children, lebar = 'max-w-7xl' }
         {/* ── Top-bar mobile ────────────────────────────────────────────── */}
         <header className="sticky top-0 z-30 flex items-center justify-between gap-3 px-4 py-2.5 text-white shadow-md lg:hidden"
                 style={{ background: 'linear-gradient(135deg,#1b4b72,#2176bd)' }}>
-          <div className="flex min-w-0 items-center gap-2.5">
+          {/* Sama seperti sidebar desktop: logo + judul = kembali ke beranda. */}
+          <a href="/" title="Kembali ke beranda" className="flex min-w-0 items-center gap-2.5">
             {/* Alas putih: logonya berwarna gelap, di atas gradien biru
                 header ia nyaris tak terlihat tanpa ini. */}
             <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-white p-0.5">
@@ -162,7 +171,7 @@ export default function LayoutDashboard({ judul, children, lebar = 'max-w-7xl' }
               <p className="truncate text-sm font-bold leading-tight">SAIBATIN</p>
               <p className="truncate text-[0.68rem] leading-tight text-white/70">{nama}</p>
             </div>
-          </div>
+          </a>
           <div className="flex items-center gap-1.5">
             <LoncengNotifikasi nada="gelap" />
             <button onClick={keluar} aria-label="Keluar"
@@ -210,10 +219,6 @@ export default function LayoutDashboard({ judul, children, lebar = 'max-w-7xl' }
                 <X className="h-4 w-4" />
               </button>
             </div>
-
-            <a href="/" className="mb-2 flex items-center gap-2.5 rounded-xl bg-slate-50 px-3 py-2.5 text-sm font-medium text-slate-700">
-              <Home className="h-4 w-4 text-brand" />Kembali ke Beranda
-            </a>
 
             {grup.map((g, i) => (
               <div key={i}>

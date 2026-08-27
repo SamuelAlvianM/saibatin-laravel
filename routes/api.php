@@ -96,6 +96,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/permohonan', [PermohonanController::class, 'index']);
     Route::post('/permohonan', [PermohonanController::class, 'store']);
 
+    // Tanda terima PDF. Aman dari catch-all `{layanan}/{aksi}` di bawah karena
+    // itu hanya menangkap POST dua segmen; ini GET dan tiga segmen. Tetap
+    // didaftarkan di sini, bukan di bawah, supaya urutannya tidak jadi jebakan
+    // saat rute lain ditambahkan.
+    Route::get('/permohonan/{id}/pdf', App\Http\Controllers\Api\PermohonanPdfController::class)
+        ->whereNumber('id');
+
     Route::post('/penduduk/check', [PendudukController::class, 'cek']);
     Route::post('/upload', UnggahController::class);
 
@@ -154,6 +161,8 @@ Route::middleware(['auth', 'peran:petugas'])->prefix('admin')->group(function ()
         Route::put('/demografi', [DemografiAdminController::class, 'simpan']);
         Route::delete('/demografi', [DemografiAdminController::class, 'hapus']);
 
+        // Bentuk formulir + isi satu blok (dialog Mode Edit di halaman publik).
+        Route::get('/static-content', [KontenStatisController::class, 'skema']);
         Route::put('/static-content', [KontenStatisController::class, 'simpan']);
 
         Route::get('/produk', [ProdukAdminController::class, 'index']);

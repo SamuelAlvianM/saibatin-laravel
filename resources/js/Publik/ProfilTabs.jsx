@@ -1,6 +1,7 @@
-import { lazy, Suspense, useState } from 'react';
-import { CheckSquare, ChevronRight, FileText, Network, Quote, Target, Users } from 'lucide-react';
+import { lazy, Suspense, useEffect, useState } from 'react';
+import { CheckSquare, ChevronRight, FileText, Network, Pencil, Quote, Target, Users } from 'lucide-react';
 import { ikon } from '@/lib/ikon';
+import { bukaEditor, modeEditAktif, pantauModeEdit } from '@/lib/mode-edit';
 
 /**
  * Profil instansi — port `components/landingpage/profile-tabs.tsx`.
@@ -171,6 +172,13 @@ function PanelTugas({ data }) {
 export default function ProfilTabs({ isi = {} }) {
   const [aktif, setAktif] = useState('visi-misi');
 
+  // MODE EDIT: island ini memasang pensilnya SENDIRI, tidak lewat `data-blok`.
+  // Alasannya bukan gaya — lima tab berbagi satu kotak, jadi pensil yang
+  // melayang di atas kotaknya akan menyunting blok yang salah begitu tab
+  // berpindah. Kuncinya harus ikut tab yang sedang tampil.
+  const [modeEdit, setModeEditLokal] = useState(modeEditAktif);
+  useEffect(() => pantauModeEdit(setModeEditLokal), []);
+
   const konfigurasi = TAB.find((t) => t.id === aktif);
   const data = isi[aktif] ?? {};
   const IkonTab = konfigurasi.ikon;
@@ -207,6 +215,19 @@ export default function ProfilTabs({ isi = {} }) {
               <h3 className="text-lg font-semibold text-slate-900">{konfigurasi.label}</h3>
               <p className="mt-0.5 text-xs text-slate-500">{konfigurasi.ket}</p>
             </div>
+
+            {/* Tombolnya duduk DI DALAM kartu, sebaris dengan judul panel —
+                bukan melayang di pojok halaman, jauh dari kotak yang sedang
+                disunting. Ini perbaikan yang sama dengan `profile-tabs.tsx`
+                portal Next.js, dan menutup satu-satunya sisa sinkronisasi
+                13 Agu yang selama ini menunggu mode edit. */}
+            {modeEdit && (
+              <button type="button" onClick={() => bukaEditor(`profil.${aktif}`)}
+                      className="ml-auto inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-brand px-3 py-2 text-xs font-semibold text-white shadow-lg transition-colors hover:bg-brand-dark">
+                <Pencil className="h-3.5 w-3.5" />
+                Edit {konfigurasi.label}
+              </button>
+            )}
           </div>
 
           {/* `key` memaksa panel dirender ulang saat tab berganti, jadi animasi

@@ -361,6 +361,33 @@
   animation: masuk-naik 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+/* ==========================================================================
+   Sorotan baris tabel saat dibuka dari notifikasi — menunjukkan "ini datanya".
+
+   🔴 IKUT TERTINGGAL saat port. `?sorot=<id>` sudah lengkap di kedua sisi —
+   API menghitung halaman yang memuat data itu, dan halamannya sudah
+   `scrollIntoView` ke barisnya — tapi kelas penandanya tidak pernah ikut
+   disalin dari `app/globals.css` portal Next.js. Yang tersisa hanya
+   `bg-amber-50` statis: terlalu samar untuk terlihat, apalagi karena hilang
+   sendiri 2,6 detik kemudian. Petugas mendarat di baris yang benar tanpa
+   pernah tahu baris mana yang dimaksud.
+
+   Berdenyut dua kali lalu memudar sendiri.
+   ========================================================================== */
+@keyframes sorot-baris {
+  0%   { background-color: rgba(217, 119, 6, 0.28); }
+  35%  { background-color: rgba(217, 119, 6, 0.10); }
+  60%  { background-color: rgba(217, 119, 6, 0.24); }
+  100% { background-color: transparent; }
+}
+
+.baris-disorot {
+  animation: sorot-baris 2.4s ease-out forwards;
+  /* Pita di tepi kiri bertahan selama sorotan aktif — inilah penanda yang
+     tetap terbaca kalau animasinya dimatikan. */
+  box-shadow: inset 3px 0 0 0 #d97706;
+}
+
 /* Hormati pengguna yang mematikan animasi di sistemnya. */
 @media (prefers-reduced-motion: reduce) {
   .masuk-naik,
@@ -370,7 +397,10 @@
   .carousel-slide-enter-next,
   .carousel-slide-exit-next,
   .carousel-slide-enter-prev,
-  .carousel-slide-exit-prev {
+  .carousel-slide-exit-prev,
+  /* Sorotan baris kehilangan denyutnya, TAPI pita tepi kirinya tetap —
+     tanpa itu barisnya jadi tak bertanda sama sekali. */
+  .baris-disorot {
     animation: none;
     opacity: 1;
   }

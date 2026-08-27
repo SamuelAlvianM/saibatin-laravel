@@ -37,8 +37,11 @@
 
         <div class="grid gap-6 {{ ($halaman['duaKolom'] ?? false) ? 'lg:grid-cols-2' : '' }}">
             @foreach ($seksi as $i => $s)
+                {{-- Penanda MODE EDIT: tiap seksi punya blok CMS sendiri
+                     (`info.ppid.<slug>`), jadi pensilnya pun sendiri-sendiri. --}}
                 <section class="masuk-naik space-y-4 rounded-2xl border border-slate-200/60 bg-white p-6 shadow-sm md:p-8"
-                         style="animation-delay: {{ 100 + $i * 80 }}ms">
+                         style="animation-delay: {{ 100 + $i * 80 }}ms"
+                         data-blok="{{ $s['kunci'] }}" data-blok-label="Isi Seksi">
                     <div>
                         <h2 class="text-lg font-semibold tracking-tight text-slate-900">{{ $s['isi']['title'] }}</h2>
                         <p class="mt-1 text-sm text-slate-500">{{ $s['isi']['description'] }}</p>
@@ -47,6 +50,8 @@
                     @include('publik.partials.blok-isi', ['isi' => $s['isi']])
 
                     @include('publik.partials.berkas', ['berkas' => $s['berkas'], 'judul' => 'Berkas'])
+
+                    @include('publik.partials.dokumen-edit', ['jenis' => [$s['dokumen']]])
                 </section>
             @endforeach
         </div>

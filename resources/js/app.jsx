@@ -3,6 +3,8 @@ import '../css/app.css';
 import { createInertiaApp } from '@inertiajs/react';
 import { createRoot } from 'react-dom/client';
 
+import Toaster from '@/Components/ui/toast';
+
 /**
  * Titik masuk sisi klien.
  *
@@ -30,8 +32,16 @@ createInertiaApp({
         return muat();
     },
 
+    // `Toaster` sengaja BERSANDING dengan `App`, bukan di dalamnya: ia membaca
+    // `flash` lewat `router.on('success')`, bukan `usePage()`, jadi tidak perlu
+    // konteks Inertia — dan cukup dipasang sekali di sini untuk seluruh halaman.
     setup({ el, App, props }) {
-        createRoot(el).render(<App {...props} />);
+        createRoot(el).render(
+            <>
+                <App {...props} />
+                <Toaster awal={props.initialPage.props.flash} />
+            </>,
+        );
     },
 
     progress: { color: '#2176bd' },

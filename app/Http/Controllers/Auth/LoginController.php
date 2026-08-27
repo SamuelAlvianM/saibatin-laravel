@@ -107,9 +107,13 @@ class LoginController extends Controller
             'ip_address' => $request->ip(),
         ])->save();
 
+        // Sambutan lewat toast. Nama depan saja — di ponsel, nama lengkap warga
+        // (kerap 4–5 kata) membuat toast setinggi tiga baris.
+        $sapaan = strtok(trim((string) $user->user_fullname), ' ') ?: 'kembali';
+
         return redirect()->intended(
             $lengkapiFoto ? '/profil?lengkapi=foto' : $this->tujuanAman($request->input('redirect'))
-        );
+        )->with('sukses', "Selamat datang, {$sapaan}.");
     }
 
     public function keluar(Request $request)
@@ -118,7 +122,7 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        return redirect('/login')->with('sukses', 'Anda telah keluar.');
     }
 
     /** Terima hanya path internal; `//host` ditolak karena itu URL protokol-relatif. */

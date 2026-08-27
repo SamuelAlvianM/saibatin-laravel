@@ -129,12 +129,17 @@ class PublikController extends Controller
     public function produkDisdukcapil()
     {
         $bawaan = config('konten.bawaan', [])['produk.disdukcapil'] ?? [];
+        $jenis = self::jenisDokumen('/produk/produk-disdukcapil');
 
         return view('publik.produk-disdukcapil', [
             'isi' => array_merge($bawaan, Konten::satu('produk.disdukcapil')),
+            // Penanda MODE EDIT — kunci bloknya + kategori dokumen halaman ini
+            // (dipakai panel unggah di bawah tabel berkas).
+            'kunciBlok' => 'produk.disdukcapil',
+            'jenisDokumen' => $jenis,
             // Dokumen yang dipetakan ke alamat ini tetap ikut, sama seperti
             // halaman produk lainnya.
-            'berkas' => ($jenis = self::jenisDokumen('/produk/produk-disdukcapil')) === []
+            'berkas' => $jenis === []
                 ? collect()
                 : Produk::whereIn('jenis', $jenis)
                     ->whereNotNull('file')
@@ -184,6 +189,10 @@ class PublikController extends Controller
 
         $seksi = collect($halaman['seksi'])->map(fn ($s) => [
             'isi' => array_merge($s['isi'], Konten::satu("info.ppid.{$s['slug']}")),
+            // Penanda MODE EDIT — tiap seksi blok CMS-nya sendiri, begitu pula
+            // kategori dokumennya (panel unggah di bawah tabel berkas).
+            'kunci' => "info.ppid.{$s['slug']}",
+            'dokumen' => $s['dokumen'],
             'berkas' => Produk::where('jenis', $s['dokumen'])
                 ->whereNotNull('file')
                 ->orderByDesc('created_at')
@@ -263,6 +272,13 @@ class PublikController extends Controller
 
         $data = [
             'isi' => $isi,
+            // Penanda MODE EDIT: blok yang disunting saat pensil di halaman ini
+            // ditekan. Kuncinya sama dengan yang dibaca di atas.
+            'kunciBlok' => "info.{$grup}.{$slug}",
+            // Kategori dokumen halaman ini — panel unggah MODE EDIT memakainya
+            // supaya berkas yang ditambah petugas mendarat di kategori yang
+            // memang ditampilkan halaman ini.
+            'jenisDokumen' => $jenis,
             'ikon' => self::IKON_GRUP[$grup] ?? 'berkas',
             'berkas' => $jenis === []
                 ? collect()
@@ -340,6 +356,9 @@ class PublikController extends Controller
         return view('publik.hubungi-kami', [
             'alamat' => array_merge($grup['alamat'], Konten::satu('info.hubungi-kami.alamat')),
             'kontak' => array_merge($grup['kontak'], Konten::satu('info.hubungi-kami.kontak')),
+            // Dua blok terpisah — MODE EDIT menyunting keduanya sendiri-sendiri.
+            'kunciAlamat' => 'info.hubungi-kami.alamat',
+            'kunciKontak' => 'info.hubungi-kami.kontak',
         ]);
     }
 
@@ -355,9 +374,32 @@ class PublikController extends Controller
      */
     public function survei()
     {
+        // 🔴 Props island dirakit DI SINI, bukan di dalam `@json([...])` pada
+        // view. Blade memotong argumen direktif pada `)` pertama, sehingga larik
+        // bertingkat di dalam `@json` gagal compile ("Unclosed '['") — jebakan
+        // yang sudah tercatat di HANDOFF §5 no. 21 dan sudah memakan waktu tiga
+        // kali di port ini.
+        // Sakelar `skm.terbuka`: selama dinas belum menyetujui kuesionernya,
+        // formulir hanya tampil bagi petugas yang login — warga melihat
+        // pemberitahuan. Penjaga yang sesungguhnya ada di `POST /api/skm`;
+        // yang di sini hanya supaya warga tidak mengisi formulir yang nanti
+        // ditolak.
+        $petugas = (bool) auth()->user()?->isPetugas();
+
         return view('publik.survei-kepuasan', [
-            'aspek' => config('skm.aspek'),
-            'skalaLabel' => config('skm.skala_label'),
+            'terbuka' => (bool) config('skm.terbuka'),
+            'pratinjauPetugas' => $petugas,
+            // Kuesioner resmi dinas: 16 pertanyaan + identitas responden
+            // (berkas Word 17 Agu 2026). Dikirim sebagai props island, bukan
+            // diambil ulang lewat `/api/skm/unsur`, supaya formulirnya utuh
+            // sejak muat pertama.
+            'propsSkm' => [
+                'pertanyaan' => config('skm.pertanyaan'),
+                'skalaLabel' => config('skm.skala_label'),
+                'pendidikan' => config('skm.pendidikan'),
+                'pekerjaan' => config('skm.pekerjaan'),
+                'jenisDisabilitas' => config('skm.jenis_disabilitas'),
+            ],
         ]);
     }
 
@@ -377,6 +419,7 @@ class PublikController extends Controller
 
         return view('publik.ketentuan', [
             'halaman' => $def,
+            'kunciBlok' => $def['kunci'],
             'isi' => array_merge(
                 config('ketentuan.bawaan', [])[$def['kunci']] ?? [],
                 Konten::satu($def['kunci']),

@@ -189,6 +189,158 @@ return [
     ],
 
     /*
+    |--------------------------------------------------------------------------
+    | Bentuk formulir tiap blok (MODE EDIT)
+    |--------------------------------------------------------------------------
+    |
+    | Port bagian `fields` di `lib/static-content-registry.ts`. Dipakai dialog
+    | penyuntingan Mode Edit di halaman publik — bukan halaman formulir
+    | tersendiri: petugas menekan pensil di atas bagian yang ingin diubah, dan
+    | dialognya dirakit dari daftar ini.
+    |
+    | 🔴 Yang TIDAK dicantumkan di sini sengaja tidak bisa disunting inline:
+    |   • `pelayanan.jam` & `pelayanan.visibilitas` — bukan konten, melainkan
+    |     pengaturan; tempatnya drawer Pengaturan di `/dashboard/pengajuan-baru`.
+    |   • `beranda.statistik` — kartunya dirakit editor demografi layar penuh
+    |     (`/dashboard/demografi`), yang juga mengatur sumber datanya.
+    | Blok tanpa entri di sini tetap tampil di halaman publik seperti biasa;
+    | yang tidak ada hanyalah pensilnya.
+    |
+    | Kunci DINAMIS (`info.<grup>.<slug>` dan halaman ketentuan) tidak ditulis
+    | satu per satu — bentuknya dirakit `App\Support\Konten::skema()` dari
+    | `config/info-halaman.php`, `config/ppid-layanan.php`, dan
+    | `config/ketentuan.php`, supaya halaman informasi baru langsung bisa
+    | disunting tanpa menyentuh berkas ini.
+    |
+    | Tipe medan: text · textarea · list · richtext · image · items
+    | Tipe kolom `items`: text · image · icon · parent · richtext
+    |
+    */
+    'medan' => [
+
+        'beranda.hero' => [
+            'deskripsi' => 'Judul besar, sub-judul, dan teks pencarian di bagian atas beranda.',
+            'medan' => [
+                ['nama' => 'heading', 'label' => 'Judul Utama', 'tipe' => 'text'],
+                ['nama' => 'subheading', 'label' => 'Sub-judul', 'tipe' => 'textarea'],
+                ['nama' => 'searchPlaceholder', 'label' => 'Placeholder Pencarian', 'tipe' => 'text'],
+            ],
+        ],
+
+        'beranda.carousel' => [
+            'deskripsi' => 'Slide gambar besar di beranda. Bila dikosongkan, beranda memakai slide bawaannya.',
+            'medan' => [
+                [
+                    'nama' => 'slides',
+                    'label' => 'Slide',
+                    'tipe' => 'items',
+                    'catatan' => 'Ukuran gambar disarankan 1200 × 1050 piksel (rasio ± 8:7) agar semua slide seragam dan pas mengisi bingkai carousel. Slide tanpa gambar tidak ditampilkan.',
+                    'kolom' => [
+                        ['nama' => 'image', 'label' => 'Gambar', 'tipe' => 'image', 'rasio' => 1200 / 1050, 'petunjuk' => '1200 × 1050 px'],
+                        ['nama' => 'title', 'label' => 'Judul'],
+                        ['nama' => 'subtitle', 'label' => 'Sub-judul'],
+                    ],
+                ],
+            ],
+        ],
+
+        'profil.visi-misi' => [
+            'deskripsi' => 'Visi dan daftar misi dinas.',
+            'medan' => [
+                ['nama' => 'visi', 'label' => 'Visi', 'tipe' => 'textarea'],
+                ['nama' => 'misi', 'label' => 'Daftar Misi', 'tipe' => 'list'],
+            ],
+        ],
+
+        'profil.motto' => [
+            'deskripsi' => 'Motto pelayanan, tujuan, dan sasaran strategis.',
+            'medan' => [
+                ['nama' => 'motto', 'label' => 'Motto', 'tipe' => 'text', 'catatan' => 'Dipisah koma — tiap kata tampil bergaris miring di beranda.'],
+                ['nama' => 'tujuan', 'label' => 'Daftar Tujuan', 'tipe' => 'list'],
+                ['nama' => 'sasaran', 'label' => 'Daftar Sasaran', 'tipe' => 'list'],
+            ],
+        ],
+
+        'profil.maklumat' => [
+            'deskripsi' => 'Janji pelayanan (4 kartu) dan pernyataan standar pelayanan.',
+            'medan' => [
+                [
+                    'nama' => 'janji',
+                    'label' => 'Janji Pelayanan',
+                    'tipe' => 'items',
+                    'kolom' => [
+                        ['nama' => 'icon', 'label' => 'Ikon', 'tipe' => 'icon'],
+                        ['nama' => 'title', 'label' => 'Judul'],
+                        ['nama' => 'desc', 'label' => 'Keterangan'],
+                    ],
+                ],
+                ['nama' => 'standar', 'label' => 'Pernyataan Standar', 'tipe' => 'textarea'],
+            ],
+        ],
+
+        'profil.tugas' => [
+            'deskripsi' => 'Tugas utama dan daftar fungsi dinas.',
+            'medan' => [
+                ['nama' => 'utama', 'label' => 'Tugas Utama', 'tipe' => 'textarea'],
+                ['nama' => 'fungsi', 'label' => 'Daftar Fungsi', 'tipe' => 'list'],
+            ],
+        ],
+
+        'profil.struktur' => [
+            'deskripsi' => "Bagan struktur. Kolom 'Atasan' menentukan garisnya: pilih jabatan di atasnya, dan biarkan kosong untuk jabatan paling atas.",
+            'medan' => [
+                [
+                    'nama' => 'organisasi',
+                    'label' => 'Susunan Organisasi',
+                    'tipe' => 'items',
+                    'kolom' => [
+                        ['nama' => 'jabatan', 'label' => 'Jabatan'],
+                        ['nama' => 'nama', 'label' => 'Nama Pejabat'],
+                        ['nama' => 'status', 'label' => 'Status/Golongan'],
+                        ['nama' => 'parent', 'label' => 'Atasan', 'tipe' => 'parent'],
+                    ],
+                ],
+            ],
+        ],
+
+        'pusat-bantuan.faq' => [
+            'deskripsi' => 'Daftar tanya-jawab pada halaman Pusat Bantuan → FAQ.',
+            'medan' => [
+                [
+                    'nama' => 'daftar',
+                    'label' => 'Daftar Pertanyaan',
+                    'tipe' => 'items',
+                    'kolom' => [
+                        ['nama' => 'pertanyaan', 'label' => 'Pertanyaan'],
+                        ['nama' => 'jawaban', 'label' => 'Jawaban'],
+                    ],
+                ],
+            ],
+        ],
+
+        'produk.disdukcapil' => [
+            'deskripsi' => 'Pengantar + daftar produk layanan (gambar, nama, penjelasan) di halaman Produk Disdukcapil.',
+            'medan' => [
+                ['nama' => 'intro', 'label' => 'Paragraf Pengantar', 'tipe' => 'textarea'],
+                [
+                    'nama' => 'produk',
+                    'label' => 'Daftar Produk Layanan',
+                    'tipe' => 'items',
+                    'kolom' => [
+                        ['nama' => 'image', 'label' => 'Gambar', 'tipe' => 'image'],
+                        ['nama' => 'nama', 'label' => 'Nama Produk'],
+                        // Persyaratan di produksi tersimpan sebagai HTML (daftar
+                        // bernomor + tautan), jadi kolomnya richtext — teks polos
+                        // akan memaksa petugas menulis tag sendiri.
+                        ['nama' => 'desc', 'label' => 'Penjelasan & Persyaratan', 'tipe' => 'richtext'],
+                    ],
+                ],
+            ],
+        ],
+
+    ],
+
+    /*
     | Susunan kartu "Statistik Demografi" di beranda — port `DEFAULT_KARTU`
     | di `lib/beranda-statistik.ts`. Dipakai tombol "Reset Kartu Beranda"
     | di halaman Data Demografi.

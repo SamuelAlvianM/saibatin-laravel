@@ -102,6 +102,15 @@
 
     @include('publik.partials.footer')
 
+    {{-- MODE EDIT — hanya Super Admin.
+         Petugas menyunting isi situs langsung di halamannya: bagian yang bisa
+         disunting ditandai `data-blok` pada elemennya, dan island ini yang
+         memasang garis + pensilnya. `?editmode=1` menyalakannya sejak awal —
+         itulah yang dipakai pratinjau iframe di dashboard Konten Halaman. --}}
+    @if (auth()->check() && auth()->user()->isSuperAdmin())
+        <div data-island="ModeEdit" data-props='@json(['auto' => request()->query('editmode') === '1'])'></div>
+    @endif
+
     {{-- Widget aksesibilitas (14 kontrol). Island terakhir supaya tombolnya
          tidak pernah menutupi konten saat halaman masih dimuat. Sengaja hanya
          di situs publik — dashboard petugas punya UI padat yang akan tertimpa

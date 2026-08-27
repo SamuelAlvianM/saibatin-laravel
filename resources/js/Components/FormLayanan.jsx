@@ -12,6 +12,7 @@ import {
 } from '@/Components/ui/select';
 import { Textarea } from '@/Components/ui/textarea';
 import { TimePicker } from '@/Components/ui/time-picker';
+import PenampilGambar from '@/Components/PenampilGambar';
 import { kirimBerkas, kirimJson } from '@/lib/api';
 import { cn } from '@/lib/utils';
 
@@ -28,7 +29,11 @@ import { cn } from '@/lib/utils';
  *   mandiri=false → petugas mengisi atas nama warga
  */
 
-/** Validasi sisi klien. Server memeriksa ulang dengan aturan yang sama. */
+/**
+ * Validasi sisi klien. Server memeriksa ulang dengan aturan yang sama —
+ * kembarannya `App\Support\Layanan::periksaField`. **Ubah keduanya bersamaan**,
+ * kalau tidak warga ditolak server tanpa tahu kolom mana yang salah.
+ */
 function periksaField(fd, nilai) {
   const v = (nilai ?? '').trim();
 
@@ -43,6 +48,30 @@ function periksaField(fd, nilai) {
       return /^0\d{9,12}$/.test(v) ? null : `${fd.label} harus 10–13 digit dan diawali 0`;
     case 'email':
       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? null : `Format ${fd.label} tidak valid`;
+
+    // 🔴 Masker DatePicker/TimePicker cuma mengatur BENTUK ketikan — ia dengan
+    // senang hati menghasilkan 32/13/2026 dan 99:99. Sampai 17 Agu 2026 tidak
+    // ada yang memeriksa isinya, di klien maupun server.
+    case 'date': {
+      const c = /^(\d{4})-(\d{2})-(\d{2})$/.exec(v);
+      if (!c) return `${fd.label} harus berupa tanggal yang sah`;
+      const [th, bl, tg] = [+c[1], +c[2], +c[3]];
+      const d = new Date(th, bl - 1, tg);
+      // Bulan/tanggal di luar kalender akan "meluber" ke bulan berikutnya —
+      // 2023-02-29 jadi 1 Maret. Cocokkan kembali untuk menangkapnya.
+      if (d.getFullYear() !== th || d.getMonth() !== bl - 1 || d.getDate() !== tg) {
+        return `${fd.label} bukan tanggal yang ada di kalender`;
+      }
+      const maks = new Date().getFullYear() + 1;
+      return th >= 1900 && th <= maks ? null : `${fd.label} harus antara tahun 1900 dan ${maks}`;
+    }
+    case 'time':
+      return /^([01]\d|2[0-3]):[0-5]\d$/.test(v)
+        ? null : `${fd.label} harus berupa jam yang sah (00:00–23:59)`;
+    case 'number':
+      return /^\d+$/.test(v) && Number(v) > 0
+        ? null : `${fd.label} harus berupa angka lebih dari 0`;
+
     default:
       return null;
   }
@@ -67,6 +96,14 @@ export default function FormLayanan({
   const semuaField = useMemo(
     () => layanan.sections.flatMap((s) => s.fields),
     [layanan],
+  );
+
+  /** Berkas yang sudah terunggah, urut seperti di layar — isi penampil gambar. */
+  const daftarLihat = useMemo(
+    () => semuaField
+      .filter((fd) => fd.type === 'file' && (nilai[fd.name] ?? '') !== '')
+      .map((fd) => ({ name: fd.name, src: nilai[fd.name], judul: fd.label })),
+    [semuaField, nilai],
   );
 
   const set = (nama, v) => {
@@ -159,7 +196,7 @@ export default function FormLayanan({
           {v ? (
             <div className="overflow-hidden rounded-lg border-2 border-emerald-300 bg-emerald-50/50">
               <div className="group relative">
-                <button type="button" onClick={() => setLihat({ src: v, judul: fd.label })}
+                <button type="button" onClick={() => setLihat(fd.name)}
                         title="Klik untuk perbesar" className="block w-full cursor-zoom-in">
                   <img src={v} alt={fd.label} className="h-28 w-full bg-slate-100 object-cover" />
                   <span className="absolute inset-0 flex items-center justify-center transition-colors group-hover:bg-black/25">
@@ -320,14 +357,17 @@ export default function FormLayanan({
         </Button>
       </div>
 
-      {lihat && (
-        <div onClick={() => setLihat(null)}
-             className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4">
-          <img src={lihat.src} alt={lihat.judul} className="max-h-full max-w-full object-contain" />
-          <button className="absolute right-4 top-4 rounded-full bg-white/15 p-2 text-white hover:bg-white/25">
-            <X className="h-5 w-5" />
-          </button>
-        </div>
+      {/* Seluruh berkas yang SUDAH terunggah diserahkan ke penampil, bukan
+          hanya yang diklik: warga baru bisa memastikan unggahannya terbaca
+          kalau bisa memutar & memperbesarnya, dan berpindah antar-berkas
+          tanpa menutup penampilnya. `daftarLihat` dihitung dari nilai form,
+          jadi urutannya selalu mengikuti urutan field di layar. */}
+      {lihat !== null && (
+        <PenampilGambar
+          daftar={daftarLihat}
+          indeksAwal={Math.max(0, daftarLihat.findIndex((g) => g.name === lihat))}
+          onTutup={() => setLihat(null)}
+        />
       )}
     </div>
   );

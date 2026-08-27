@@ -117,48 +117,82 @@ class AspirasiController extends Controller
     /**
      * Simpan jawaban SKM (publik).
      *
-     * SELURUH 9 unsur wajib dinilai pada skala 1–4. Validasinya di sini, bukan
-     * hanya di UI — nilai yang lolos setengah terisi akan merusak perhitungan
-     * IKM tanpa terlihat rusak.
+     * SELURUH 16 pertanyaan wajib dinilai pada skala 1–4; identitas responden
+     * seluruhnya OPSIONAL — mengikuti berkas kuesioner dinas, yang menyatakan
+     * nama "boleh inisial atau tidak diisi".
+     *
+     * 🔴 Validasi kelengkapan ada DI SINI, bukan hanya di UI: jawaban setengah
+     * terisi merusak NRR (dan karenanya nilai IKM) tanpa terlihat rusak.
      */
     public function kirimSkm(Request $request)
     {
+        // 🔴 Penjaga sesungguhnya sakelar `skm.terbuka` — halaman yang sekadar
+        // menyembunyikan formulir masih bisa dilewati dengan mengirim permintaan
+        // langsung ke endpoint ini. Petugas tetap boleh mengirim supaya dinas
+        // bisa mencoba kuesionernya sampai tuntas sebelum dibuka untuk warga.
+        if (! config('skm.terbuka') && ! $request->user()?->isPetugas()) {
+            return Balasan::gagal(['Info: Survei belum dibuka untuk umum'], 403);
+        }
+
         $data = $request->validate([
-            'nama' => ['required', 'string', 'max:191'],
+            'nama' => ['nullable', 'string', 'max:191'],
+            'instansi' => ['nullable', 'string', 'max:191'],
             'jenisKel' => ['nullable', 'string', 'max:191'],
             'umur' => ['nullable', 'integer', 'min:1', 'max:120'],
+            'pendidikan' => ['nullable', 'string', 'max:191'],
             'pekerjaan' => ['nullable', 'string', 'max:191'],
+            'produkLayanan' => ['nullable', 'string', 'max:191'],
+            'disabilitas' => ['nullable', 'boolean'],
+            'jenisDisabilitas' => ['nullable', 'string', 'max:191'],
             'jawaban' => ['required', 'array'],
             'saran' => ['nullable', 'string'],
-        ], ['nama.required' => 'Info: Nama wajib diisi']);
+        ]);
 
-        $maks = config('skm.skala_max');
+        $maks = (int) config('skm.skala_max');
         $belum = [];
+        $bersih = [];
 
-        foreach (array_keys(config('skm.aspek')) as $i) {
-            $nilai = (int) ($data['jawaban'][(string) $i] ?? 0);
+        foreach (config('skm.pertanyaan') as $urutan => $p) {
+            $nilai = (int) ($data['jawaban'][$p['kunci']] ?? 0);
+
             if ($nilai < 1 || $nilai > $maks) {
-                $belum[] = $i + 1;
+                $belum[] = $urutan + 1;
+
+                continue;
             }
+
+            // Hanya kunci yang dikenal yang ikut tersimpan — badan permintaan
+            // tidak boleh menyelundupkan kunci lain ke kolom JSON.
+            $bersih[$p['kunci']] = $nilai;
         }
 
         if ($belum !== []) {
-            return Balasan::gagal(['Belum dinilai: unsur '.implode(',', $belum)], 422);
+            return Balasan::gagal(['Belum dinilai: pertanyaan '.implode(', ', $belum)], 422);
         }
 
+        $nama = trim((string) ($data['nama'] ?? ''));
+
         $jawaban = SkmJawaban::create([
-            'nama' => trim($data['nama']),
+            'nama' => $nama !== '' ? $nama : null,
+            'instansi' => $data['instansi'] ?? null,
             'jenis_kelamin' => $data['jenisKel'] ?? null,
             'umur' => $data['umur'] ?? null,
+            'pendidikan' => $data['pendidikan'] ?? null,
             'pekerjaan' => $data['pekerjaan'] ?? null,
-            'jawaban' => $data['jawaban'],
+            'produk_layanan' => $data['produkLayanan'] ?? null,
+            'disabilitas' => $data['disabilitas'] ?? null,
+            // Jenis disabilitas hanya bermakna kalau jawabannya "ya"; menyimpan
+            // sisa isian dari orang yang berpindah pilihan akan muncul di rekap
+            // sebagai penyandang disabilitas yang tidak pernah menyatakannya.
+            'jenis_disabilitas' => ($data['disabilitas'] ?? false) ? ($data['jenisDisabilitas'] ?? null) : null,
+            'jawaban' => $bersih,
             'saran' => $data['saran'] ?? null,
         ]);
 
         $this->notif->aman(fn () => $this->notif->kePetugas(
             tipe: 'SKM_BARU',
             judul: 'Responden SKM baru',
-            isi: trim($data['nama']).' mengisi Survei Kepuasan Masyarakat'
+            isi: ($nama !== '' ? $nama : 'Responden anonim').' mengisi Survei Kepuasan Masyarakat'
                 .(filled($data['saran'] ?? null) ? ' — saran: "'.mb_substr(trim($data['saran']), 0, 120).'"' : '').'.',
             link: '/dashboard/skm',
             refType: 'SkmJawaban',
@@ -168,13 +202,16 @@ class AspirasiController extends Controller
         return Balasan::ok(null, ['Info: Terima kasih, survei Anda berhasil dikirim']);
     }
 
-    /** Daftar unsur & skala — dipakai formulir survei. */
+    /** Daftar pertanyaan, skala, & pilihan identitas — dipakai formulir survei. */
     public function unsurSkm()
     {
         return Balasan::ok([
-            'aspek' => config('skm.aspek'),
+            'pertanyaan' => config('skm.pertanyaan'),
             'skalaMax' => config('skm.skala_max'),
             'skalaLabel' => config('skm.skala_label'),
+            'pendidikan' => config('skm.pendidikan'),
+            'pekerjaan' => config('skm.pekerjaan'),
+            'jenisDisabilitas' => config('skm.jenis_disabilitas'),
         ]);
     }
 }

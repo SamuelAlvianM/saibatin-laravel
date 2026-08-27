@@ -1,13 +1,16 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
-  AlertTriangle, ArrowLeft, ClipboardList, Eye, Lock, Mail, Phone, Search, User,
+  AlertTriangle, ArrowLeft, ClipboardList, Download, Eye, Lock, Mail, Phone,
+  Search, User,
 } from 'lucide-react';
 import LayoutDashboard from '@/Components/LayoutDashboard';
+import PenampilGambar from '@/Components/PenampilGambar';
 import {
   FilterPeriode, Kartu, Kosong, LencanaStatus, Memuat, Modal, Paginasi, Pesan,
   STATUS_FINAL, STATUS_PERMOHONAN, Tombol, tglJam, tglSingkat, tulisAcuan, useTunda,
 } from '@/Components/Dasbor';
 import { ambilJson, kirimJson } from '@/lib/api';
+import { kelasSorot, useSorot } from '@/lib/sorot';
 import { Input } from '@/Components/ui/input';
 import { Label } from '@/Components/ui/label';
 import {
@@ -67,7 +70,6 @@ export default function Permohonan({ sorot }) {
   const permintaan = useRef(0);
   // Datang dari notifikasi (?sorot=<id>): server yang menghitung halamannya.
   const sorotAwal = useRef(sorot ? Number(sorot) : null);
-  const [sorotId, setSorotId] = useState(sorot ? Number(sorot) : null);
 
   const muat = useCallback(async (halaman) => {
     const milik = ++permintaan.current;
@@ -116,12 +118,7 @@ export default function Permohonan({ sorot }) {
   }, [muat]);
 
   // Sorotan cukup sebagai penunjuk arah — hilang sendiri setelah terlihat.
-  useEffect(() => {
-    if (sorotId == null || memuat) return undefined;
-    document.getElementById(`permohonan-${sorotId}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    const t = setTimeout(() => setSorotId(null), 2600);
-    return () => clearTimeout(t);
-  }, [sorotId, memuat, items]);
+  const sorotId = useSorot(sorot, 'permohonan', !memuat, items);
 
   const gantiHalaman = (p) => {
     setPage(p);
@@ -258,7 +255,7 @@ export default function Permohonan({ sorot }) {
                     {items.map((it) => (
                       <tr key={it.id} id={`permohonan-${it.id}`}
                           className={`border-b border-slate-100 align-top transition-colors ${
-                            sorotId === it.id ? 'bg-amber-50' : ''
+                            kelasSorot(sorotId === it.id)
                           }`}>
                         <td className="py-2.5 pr-4 font-mono text-xs">{it.noregister}</td>
                         <td className="py-2.5 pr-4">
@@ -416,7 +413,16 @@ function PanelDetail({ detail, memuat, onTutup, onProses }) {
     <Kartu>
       <div className="mb-4 flex items-center justify-between gap-2">
         <Tombol varian="garis" onClick={onTutup}><ArrowLeft className="h-4 w-4" />Kembali ke tabel</Tombol>
-        <LencanaStatus status={detail.status} />
+        <div className="flex items-center gap-2">
+          {/* Tautan biasa, bukan router.visit — balasannya berkas PDF dan
+              kunjungan Inertia akan menelannya tanpa pesan apa pun. */}
+          <a href={`/api/permohonan/${detail.id}/pdf`} download
+             title={`Unduh tanda terima ${detail.noregister}`}
+             className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-600 transition-colors hover:border-brand hover:text-brand">
+            <Download className="h-4 w-4" />PDF
+          </a>
+          <LencanaStatus status={detail.status} />
+        </div>
       </div>
 
       <div className="space-y-4">
@@ -468,7 +474,8 @@ function PanelDetail({ detail, memuat, onTutup, onProses }) {
           {detail.berkas?.length ? (
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
               {detail.berkas.map((b, i) => (
-                <button key={i} onClick={() => setLihat(b)} className="group text-left">
+                <button key={i} onClick={() => setLihat(i)} className="group text-left"
+                        title={`Klik untuk memperbesar — ${b.label}`}>
                   <div className="overflow-hidden rounded-lg border border-slate-200 bg-slate-50">
                     {/* Berkasnya disajikan BerkasController, bukan dari public/ —
                         petugas boleh melihat semua, warga hanya miliknya. */}
@@ -515,13 +522,15 @@ function PanelDetail({ detail, memuat, onTutup, onProses }) {
       </div>
 
       {/* Penampil berkas layar penuh */}
-      {lihat && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/80 p-4" onClick={() => setLihat(null)}>
-          <div className="max-h-full max-w-4xl overflow-auto" onClick={(e) => e.stopPropagation()}>
-            <img src={lihat.path} alt={lihat.label} className="max-h-[85dvh] rounded-lg" />
-            <p className="mt-2 text-center text-sm text-white/80">{lihat.label}</p>
-          </div>
-        </div>
+      {/* Seluruh lampiran diserahkan sekaligus, bukan hanya yang diklik —
+          dengan begitu petugas bisa berpindah antar-berkas pakai ←/→ tanpa
+          menutup dan membuka penampilnya berkali-kali. */}
+      {lihat !== null && (
+        <PenampilGambar
+          daftar={(detail.berkas ?? []).map((b) => ({ src: b.path, judul: b.label }))}
+          indeksAwal={lihat}
+          onTutup={() => setLihat(null)}
+        />
       )}
     </Kartu>
   );

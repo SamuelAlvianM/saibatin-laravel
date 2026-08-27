@@ -171,8 +171,49 @@ final class Layanan
                 ? null : "{$fd['label']} harus 10–13 digit dan diawali 0",
             'email' => filter_var($v, FILTER_VALIDATE_EMAIL)
                 ? null : "Format {$fd['label']} tidak valid",
+            'date' => self::periksaTanggal($v, $fd['label']),
+            'time' => self::periksaJam($v, $fd['label']),
+            'number' => preg_match('/^\d+$/', $v) && (int) $v > 0
+                ? null : "{$fd['label']} harus berupa angka lebih dari 0",
             default => null,
         };
+    }
+
+    /**
+     * Tanggal `yyyy-MM-dd` yang benar-benar ada di kalender.
+     *
+     * 🔴 `date` dulu jatuh ke `default => null`, artinya TIDAK diperiksa sama
+     * sekali. Diuji 17 Agu 2026: `32/13/2026`, `00/00/0000`, `29/02/2023`, dan
+     * bahkan teks `BUKAN-TANGGAL` semuanya tersimpan ke `t_permohonan.payload`
+     * tanpa keluhan — petugas menerima tanggal yang mustahil, dan apa pun yang
+     * mem-parsing kolom itu nanti akan pecah.
+     *
+     * `checkdate` dipakai, bukan `strtotime`: `strtotime('2023-02-29')` diam-diam
+     * menggeser ke 1 Maret, jadi tanggal salah lolos sebagai tanggal lain.
+     */
+    private static function periksaTanggal(string $v, string $label): ?string
+    {
+        if (! preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $v, $c)) {
+            return "{$label} harus berupa tanggal yang sah";
+        }
+        if (! checkdate((int) $c[2], (int) $c[3], (int) $c[1])) {
+            return "{$label} bukan tanggal yang ada di kalender";
+        }
+        // Rentang wajar untuk data kependudukan; menahan salah ketik tahun
+        // (mis. 0202 atau 20260) tanpa menolak lansia.
+        $tahun = (int) $c[1];
+        if ($tahun < 1900 || $tahun > (int) date('Y') + 1) {
+            return "{$label} harus antara tahun 1900 dan ".((int) date('Y') + 1);
+        }
+
+        return null;
+    }
+
+    /** Jam `HH:mm` 24 jam. Sebelumnya `99:99` dan `25:61` diterima apa adanya. */
+    private static function periksaJam(string $v, string $label): ?string
+    {
+        return preg_match('/^([01]\d|2[0-3]):[0-5]\d$/', $v)
+            ? null : "{$label} harus berupa jam yang sah (00:00–23:59)";
     }
 
     /**

@@ -23,7 +23,11 @@
                      :ket="$halaman['description']"
                      ikon="berkas" />
 
-    <div class="container mx-auto max-w-4xl px-4 py-12 md:px-8">
+    {{-- Seluruh isi halaman = SATU blok CMS, jadi penanda MODE EDIT-nya di
+         pembungkus ini. `$kunci` di bawah adalah nama bagian dalam perulangan,
+         bukan kunci blok — karena itu kunci bloknya bernama `$kunciBlok`. --}}
+    <div class="container mx-auto max-w-4xl px-4 py-12 md:px-8"
+         @isset($kunciBlok) data-blok="{{ $kunciBlok }}" data-blok-label="Isi Halaman" @endisset>
         @if (! empty($isi['intro']))
             <p class="masuk-naik mb-6 rounded-2xl border border-brand/20 bg-brand/5 p-5 text-sm leading-relaxed text-slate-700">
                 {{ $isi['intro'] }}

@@ -29,7 +29,12 @@
 
     <div class="container relative mx-auto px-4 py-12 md:px-8 md:py-16 lg:px-16">
         <div class="flex flex-col items-center gap-10 lg:flex-row">
-            <div class="w-full text-white lg:flex-1">
+            {{-- `data-blok` = penanda MODE EDIT: bagian ini disunting petugas
+                 lewat pensil yang muncul saat mode edit menyala (island
+                 `ModeEdit`). Tanpa mode edit, atribut ini tidak melakukan
+                 apa-apa. --}}
+            <div class="w-full text-white lg:flex-1"
+                 data-blok="beranda.hero" data-blok-label="Teks Hero">
                 <h1 class="masuk-naik mt-5 text-3xl font-bold leading-tight tracking-tight md:text-4xl lg:text-[2.75rem]"
                     style="animation-delay: 80ms">
                     {{ $hero['heading'] }}
@@ -87,7 +92,8 @@
             </div>
 
             {{-- Carousel: satu-satunya bagian hero yang benar-benar butuh JS. --}}
-            <div class="w-full shrink-0 lg:w-[52%]">
+            <div class="w-full shrink-0 lg:w-[52%]"
+                 data-blok="beranda.carousel" data-blok-label="Carousel">
                 <div class="h-[280px] overflow-hidden rounded-3xl shadow-2xl shadow-blue-950/40 ring-1 ring-white/20 sm:h-[380px] md:h-[460px] lg:h-[520px]">
                     <div data-island="Carousel" data-props='@json(['slides' => $slides])' class="h-full"></div>
                 </div>

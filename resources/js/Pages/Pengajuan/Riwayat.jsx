@@ -1,6 +1,6 @@
 import { Link, usePage } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
-import { CheckCircle2, ClipboardList, FilePlus2, Loader2 } from 'lucide-react';
+import { CheckCircle2, ClipboardList, Download, FilePlus2, Loader2 } from 'lucide-react';
 import LayoutPengguna from '@/Components/LayoutPengguna';
 import { ambilJson } from '@/lib/api';
 
@@ -125,6 +125,16 @@ export default function Riwayat({ baru }) {
                 <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ring-1 ${WARNA[p.status] ?? WARNA.MENUNGGU}`}>
                   {p.status}
                 </span>
+                {/* 🔴 <a> biasa, BUKAN router.visit: balasannya berkas PDF,
+                    bukan respons Inertia — kunjungan Inertia akan tersedak
+                    lalu diam saja. `download` membuat peramban menyimpannya
+                    dengan nama dari header, bukan membuka tab kosong. */}
+                <a href={`/api/permohonan/${p.id}/pdf`} download
+                   title={`Unduh tanda terima ${p.noregister}`}
+                   className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-xs font-medium text-slate-600 transition-colors hover:border-brand hover:text-brand">
+                  <Download className="h-3.5 w-3.5" />
+                  <span className="hidden sm:inline">PDF</span>
+                </a>
               </div>
             </div>
           ))}

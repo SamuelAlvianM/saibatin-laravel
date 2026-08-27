@@ -4,15 +4,29 @@ import {
 } from 'lucide-react';
 
 /**
- * Penampil gambar layar penuh: zoom, putar, geser, dan pindah antar-berkas.
- * Port dari `components/shared/image-viewer.tsx`.
+ * Penampil gambar layar penuh: zoom, putar, geser, unduh, dan pindah
+ * antar-berkas. Port dari `components/shared/image-viewer.tsx`.
  *
- * Dipakai di tiga tempat yang sama-sama menampilkan berkas warga — detail
- * permohonan (petugas memeriksa), formulir pengajuan (memastikan unggahannya
- * terbaca), dan detail akun (mencocokkan foto KTP dengan data diri). Ketiganya
- * memakai komponen ini agar perilakunya sama.
+ * 🔴 DIPAKAI DI SETIAP TEMPAT YANG MENAMPILKAN GAMBAR UNGGAHAN — jangan
+ * menulis modal gambar sendiri lagi. Sampai 17 Agu 2026 docblock ini mengklaim
+ * "dipakai di tiga tempat" padahal kenyataannya hanya SATU (detail akun);
+ * enam tempat lain memakai modal seadanya yang cuma menampilkan gambar polos
+ * tanpa zoom, tanpa putar, tanpa unduh. Foto KTP dari ponsel sering miring dan
+ * pratinjau kecil tidak cukup untuk memastikan NIK-nya terbaca, jadi
+ * ketiadaan kontrol itu bukan soal kenyamanan.
  *
- * `daftar` berisi `{ src, judul }`.
+ * Tempat pemakaiannya sekarang:
+ *   Dashboard/Permohonan  berkas lampiran yang diperiksa petugas
+ *   Dashboard/Akun        foto KTP & selfie saat verifikasi akun
+ *   Dashboard/Galeri      foto galeri
+ *   Dashboard/Media       pustaka media (gambar saja, PDF dilewati)
+ *   Components/FormLayanan  berkas yang baru diunggah warga di formulir
+ *   Components/UnggahGambar foto KTP saat pendaftaran
+ *   Publik/FormAspirasi     bukti foto WBS
+ *   Pages/Profil            foto profil
+ *
+ * `daftar` berisi `{ src, judul }`. Berikan SELURUH gambar yang ada di layar,
+ * bukan hanya yang diklik — itulah yang membuat ←/→ berguna.
  */
 export default function PenampilGambar({ daftar, indeksAwal = 0, onTutup }) {
   const [idx, setIdx] = useState(indeksAwal);

@@ -21,6 +21,7 @@ import { Suspense, lazy, useEffect, useRef, useState } from 'react';
 const Grafik = {
   tren: lazy(() => import('@/Components/Grafik').then((m) => ({ default: m.GrafikTren }))),
   peringkat: lazy(() => import('@/Components/Grafik').then((m) => ({ default: m.GrafikPeringkat }))),
+  garis: lazy(() => import('@/Components/Grafik').then((m) => ({ default: m.GrafikGaris }))),
 };
 
 function Kerangka({ tinggi }) {

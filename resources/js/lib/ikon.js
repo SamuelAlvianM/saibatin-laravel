@@ -28,3 +28,13 @@ const PETA = {
 export function ikon(nama) {
   return PETA[nama] ?? FileText;
 }
+
+/**
+ * Nama ikon yang tersedia — dipakai pemilih ikon di Mode Edit.
+ *
+ * Sengaja diambil dari `PETA` yang sama, bukan daftar tersendiri: pemilih yang
+ * menawarkan nama di luar peta akan menyimpan nama yang di halaman publik
+ * jatuh ke ikon cadangan, dan itu terlihat sebagai "ikon yang dipilih tidak
+ * tersimpan".
+ */
+export const NAMA_IKON = Object.keys(PETA).sort();

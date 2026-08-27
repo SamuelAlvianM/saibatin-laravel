@@ -87,8 +87,15 @@ return [
     |
     */
 
-    'locale' => env('APP_LOCALE', 'en'),
+    // 🔴 Bawaannya `id`, bukan `en` — portal ini berbahasa Indonesia dan
+    // `.env` di server bisa saja dibuat ulang tanpa baris APP_LOCALE.
+    'locale' => env('APP_LOCALE', 'id'),
 
+    // 🔴 Fallback WAJIB `en`, jangan disamakan dengan `locale`. Kalau keduanya
+    // `id` (keadaan sampai 17 Agu 2026), aturan validasi yang belum ada di
+    // `lang/id` tidak punya tempat jatuh dan Laravel menampilkan KUNCI-nya —
+    // warga melihat "validation.required" di formulir pendaftaran.
+    // `lang/en/validation.php` sudah diterbitkan sebagai jaring pengaman.
     'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
 
     'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),

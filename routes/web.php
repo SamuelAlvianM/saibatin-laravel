@@ -80,12 +80,21 @@ Route::middleware('auth')->group(function () {
         Route::get('/pengajuan-baru', [PengajuanPetugasController::class, 'tampilkan']);
         Route::get('/pengajuan-baru/{slug}', [PengajuanPetugasController::class, 'form']);
 
+        // `sorot` diteruskan ke keempat halaman tujuan notifikasi — lonceng
+        // menambahkannya sebagai `?sorot=<refId>` supaya baris yang dimaksud
+        // langsung disorot, bukan dicari sendiri oleh petugas.
         Route::get('/users', fn () => Inertia::render('Dashboard/Akun', [
             'kecamatan' => Wilayah::where('jenis', Wilayah::KECAMATAN)->orderBy('nama')->pluck('nama'),
+            'sorot' => request()->query('sorot'),
         ]));
 
-        Route::get('/pengaduan', fn () => Inertia::render('Dashboard/Pengaduan'));
-        Route::get('/kritik-saran', fn () => Inertia::render('Dashboard/KritikSaran'));
+        Route::get('/pengaduan', fn () => Inertia::render('Dashboard/Pengaduan', [
+            'sorot' => request()->query('sorot'),
+        ]));
+
+        Route::get('/kritik-saran', fn () => Inertia::render('Dashboard/KritikSaran', [
+            'sorot' => request()->query('sorot'),
+        ]));
         Route::get('/skm', fn () => Inertia::render('Dashboard/Skm'));
 
         // 🔴 Sengaja TIDAK ditautkan dari sidebar — dibuka lewat URL saja.
@@ -96,6 +105,10 @@ Route::middleware('auth')->group(function () {
         Route::middleware('peran:1')->group(function () {
             Route::get('/berita', fn () => Inertia::render('Dashboard/Berita'));
             Route::get('/media', fn () => Inertia::render('Dashboard/Media'));
+
+            // Konten Halaman — site editor: me-render halaman publik di dalam
+            // iframe `?editmode=1`, penyuntingannya terjadi di halaman itu.
+            Route::get('/konten', fn () => Inertia::render('Dashboard/Konten'));
 
             Route::get('/demografi', fn () => Inertia::render('Dashboard/Demografi', [
                 'kategori' => config('demografi.kategori'),

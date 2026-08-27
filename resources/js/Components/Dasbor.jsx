@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
-  CheckCircle2, ChevronLeft, ChevronRight, Clock, FileSpreadsheet, FileText, Loader2,
-  XCircle, X,
+  CheckCircle2, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Clock,
+  FileSpreadsheet, FileText, Loader2, XCircle, X,
 } from 'lucide-react';
 
 import {
@@ -234,11 +234,17 @@ export function Modal({ judul, sub, lebar = 'max-w-md', onTutup, children }) {
  * Deret nomor halaman dengan elipsis. Selalu menampilkan halaman pertama,
  * terakhir, dan tetangga halaman aktif — daftar 596 halaman tidak boleh
  * melebar sampai menggeser tabelnya.
+ *
+ * Jendelanya **dua** halaman ke tiap arah (permintaan user): dengan ±1 satu
+ * klik hanya memindahkan satu halaman, sehingga melompat dua halaman selalu
+ * butuh dua kali klik. Dengan ±2 deretnya jadi 1 … 6 7 [8] 9 10 … 60 —
+ * masih muat satu baris, tapi lompatan dua halaman cukup sekali klik.
  */
 function nomorHalaman(aktif, total) {
-  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+  if (total <= 9) return Array.from({ length: total }, (_, i) => i + 1);
 
-  const sekitar = [aktif - 1, aktif, aktif + 1].filter((n) => n > 1 && n < total);
+  const sekitar = [aktif - 2, aktif - 1, aktif, aktif + 1, aktif + 2]
+    .filter((n) => n > 1 && n < total);
   const hasil = [1, ...sekitar, total];
 
   return hasil.flatMap((n, i) => (i > 0 && n - hasil[i - 1] > 1 ? ['…', n] : [n]));
@@ -260,6 +266,11 @@ export function Paginasi({ page, totalHalaman, total, limit = 20, onGanti, nonak
         Menampilkan {dari}–{sampai} dari {total} data
       </p>
       <div className="flex items-center gap-1">
+        <button onClick={() => onGanti(1)} disabled={nonaktif || page <= 1} aria-label="Halaman pertama"
+                title="Halaman pertama"
+                className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 text-slate-600 disabled:opacity-40">
+          <ChevronsLeft className="h-4 w-4" />
+        </button>
         <button onClick={() => onGanti(page - 1)} disabled={nonaktif || page <= 1} aria-label="Halaman sebelumnya"
                 className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 text-slate-600 disabled:opacity-40">
           <ChevronLeft className="h-4 w-4" />
@@ -281,6 +292,11 @@ export function Paginasi({ page, totalHalaman, total, limit = 20, onGanti, nonak
         <button onClick={() => onGanti(page + 1)} disabled={nonaktif || page >= totalHalaman} aria-label="Halaman berikutnya"
                 className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 text-slate-600 disabled:opacity-40">
           <ChevronRight className="h-4 w-4" />
+        </button>
+        <button onClick={() => onGanti(totalHalaman)} disabled={nonaktif || page >= totalHalaman}
+                aria-label="Halaman terakhir" title={`Halaman terakhir (${totalHalaman})`}
+                className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 text-slate-600 disabled:opacity-40">
+          <ChevronsRight className="h-4 w-4" />
         </button>
       </div>
     </div>

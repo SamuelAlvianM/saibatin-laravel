@@ -1,10 +1,20 @@
 # HANDOFF — SAIBATIN Laravel
 
 > Untuk sesi/developer berikutnya. **Baca ini dulu sebelum menyentuh kode.**
-> Terakhir diperbarui: **2026-08-14** · Fase 1–5 selesai (16 halaman dashboard
-> jadi & diuji; hanya `konten` yang menunggu situs publik) — lihat §4,
-> `_analisis/05-…` & `06-…`. Perubahan baru portal Next.js sudah disusul
-> (§4 "Sinkronisasi", `_analisis/06` §2.9–2.10).
+> Terakhir diperbarui: **2026-08-17** · Fase 1–5 selesai — **16 halaman
+> dashboard jadi & diuji, termasuk `konten` yang menyusul 17 Agu bersama MODE
+> EDIT** (lihat §4 & `_analisis/08-…`). Perubahan baru portal Next.js sudah
+> disusul (§4 "Sinkronisasi", `_analisis/06` §2.9–2.10).
+>
+> 🟢 **Kuesioner SKM diganti ke kuesioner resmi dinas (18 Agu)** — 16
+> pertanyaan + identitas responden (termasuk disabilitas), menggantikan 9 unsur.
+> Rekap dashboard menghitung DUA generasi kuesioner. Detail:
+> `_analisis/09-KUESIONER-SKM-2026.md`.
+>
+> 🟢 **MODE EDIT SELESAI (17 Agu).** Isi situs disunting dari halamannya
+> sendiri: tombol melayang → garis putus-putus + pensil di tiap bagian → dialog
+> medan blok. `/dashboard/konten` adalah bingkainya (iframe `?editmode=1`),
+> bukan halaman formulir. Detail: `_analisis/08-MODE-EDIT-DAN-KONTEN.md`.
 >
 > 🟢 **Fase 7 (situs publik) SELESAI.** Beranda, berita, galeri, Produk & PPID
 > lengkap ber-sub-tab, Pusat Bantuan, WBS, Hubungi Kami, Survei Kepuasan, GIS &
@@ -129,12 +139,13 @@ validasi servernya menebak tipe kolom dari akhiran nama, sehingga `alasannumpang
 Tidak diperbaiki di sana (di luar lingkup, portal itu melayani warga) — diserahkan
 ke user. Di port ini validasi digerakkan skema. Lihat `_analisis/04-FASE-4-LAYANAN.md` §1.
 
-### Fase 5 — dashboard petugas (SELESAI kecuali 1 halaman — 15 halaman, diuji di browser)
+### Fase 5 — dashboard petugas (SELESAI — 16 halaman, diuji di browser)
 
 `/dashboard` (statistik rekap), `/permohonan` (+ panel detail & proses),
 `/pengajuan-baru` (+ formulir per layanan + **drawer Pengaturan**), `/users`,
 `/pengaduan`, `/kritik-saran`, `/skm`, `/log`, `/master`, `/berita`, `/media`,
-`/galeri`, `/produk`, `/demografi` — semuanya di atas data asli `saibatin_lv`
+`/galeri`, `/produk`, `/demografi`, dan **`/konten`** (Konten Halaman, 17 Agu —
+site editor ber-iframe, lihat `_analisis/08`) — semuanya di atas data asli `saibatin_lv`
 (11.902 permohonan · 1.386 akun · 203 responden SKM · 67 berita · 94 foto
 galeri · 85 dokumen publikasi).
 Dilayani rute `/api/admin/*`, `/api/media/*`, `/api/demografi` di 14 controller.
@@ -234,7 +245,7 @@ di `resources/css/app.css`.
 |---|---|
 | ✅ 7 | **Situs publik SELESAI** — beranda, berita, galeri, Produk & PPID ber-sub-tab, Pusat Bantuan, WBS, Hubungi Kami, Survei Kepuasan, GIS & demografi, halaman ketentuan, peta situs, widget aksesibilitas (`_analisis/07` §8) |
 | 🟡 | `/produk/produk-disdukcapil` — tampilan khususnya (153 baris) belum; sekarang view informasi generik. **Satu-satunya sisa Fase 7.** |
-| ⛔ → **berikutnya** | **Konten Halaman** BUKAN halaman formulir: ia me-render halaman publik di dalam iframe (`?editmode=1`) dan disunting di sana. Prasyaratnya (situs publik) **kini sudah ada** — lihat `_analisis/06` §3.4 |
+| ✅ | **MODE EDIT + Konten Halaman SELESAI (17 Agu)** — penanda `data-blok` di Blade + island `Publik/ModeEdit.jsx`, skema medan dari `config/konten.php` & `Konten::skema()`, panel dokumen di halaman publik, tombol edit `profile-tabs`. `_analisis/08` |
 | 8 (sebagian) | Unduh PDF permohonan — satu-satunya fungsi yang kurang di halaman yang sudah jadi |
 | 9 | ✅ OCR sisi browser (tesseract.js) — sudah masuk lewat sinkronisasi 13 Agu |
 | 10 | Paket unggah manual cPanel |
@@ -427,6 +438,47 @@ di `resources/css/app.css`.
     petanya tetap tampil rapi — hanya **kurang 31.604 jiwa**, tanpa tanda apa
     pun. `lib/geo.js` kini membuang spasi + punya peta alias.
     ⚠️ Bug yang sama **masih ada** di portal Next.js (`lib/pesisir-barat-geo.ts`).
+
+### Mode Edit (17 Agu)
+
+26. 🔴 **Penjaga kunci konten TIDAK boleh cuma `config('konten.blok')`.**
+    Daftar itu hanya memuat blok tetap, sehingga `PUT /api/admin/static-content`
+    menolak SELURUH kunci halaman informasi (`info.produk.sop`,
+    `info.kebijakan-privasi`, `info.ppid.*`) — justru blok yang paling sering
+    disunting. Pemeriksaannya sekarang lewat `App\Support\Konten::skema()`, yang
+    juga merakit bentuk formulir kunci dinamis. Menambah halaman informasi cukup
+    di config; jangan membuat daftar kedua yang harus diurus manual.
+
+27. ⚠️ **Island tidak punya Context bersama.** Halaman publik Blade + beberapa
+    root React terpisah, jadi pola `InlineEditProvider` portal Next.js tidak
+    bisa disalin. Keadaan mode edit tinggal di `resources/js/lib/mode-edit.js`
+    (modul + `CustomEvent`); island yang perlu tahu berlangganan
+    `pantauModeEdit()`. Elemen ber-`data-blok` yang muncul belakangan (dari
+    island lain) tertangkap `MutationObserver` — bukan sekali query.
+
+28. ⚠️ **`ketentuan.blade.php` sudah memakai `$kunci`** sebagai variabel
+    perulangan bagian halaman. Kunci blok CMS-nya karena itu dikirim sebagai
+    **`$kunciBlok`**; menamainya `$kunci` membuat penanda `data-blok` di dalam
+    perulangan menunjuk nama bagian, bukan blok.
+
+### Kuesioner SKM 2026 (18 Agu)
+
+29. 🔴 **`Collection::where('kolom', false)` memakai `==`, dan `null == false`
+    itu TRUE di PHP.** Rekap disabilitas SKM sempat menghitung 204 responden
+    kuesioner lama (kolomnya NULL — tidak pernah ditanya) sebagai "bukan
+    penyandang disabilitas" SEKALIGUS "tidak ditanya": angkanya dobel dan
+    laporannya salah tanpa terlihat rusak. Pakai `where('kolom', '===', false)`
+    untuk kolom boolean nullable.
+
+30. 🔴 **Kunci jawaban kuesioner baru TIDAK BOLEH memakai indeks angka.**
+    204 responden menyimpan jawaban sebagai `{"0":…,"8":…}` (produksi:
+    `u0`–`u8`). Kuesioner 2026 memakai `p1`–`p16`; kalau ikut angka, jawaban
+    lama akan dibaca sebagai 9 pertanyaan pertama kuesioner baru yang isinya
+    berbeda. Pembacaan semua bentuk dipusatkan di `SkmJawaban::nilaiTerbaca()`.
+
+31. ⚠️ **Jebakan `@json([...])` bertingkat TERJADI LAGI** (no. 21 di atas) saat
+    mengirim props formulir SKM dari Blade — halaman 500 `Unclosed '['`. Rakit
+    lariknya di controller, view cukup `@json($propsSudahJadi)`.
 
 ## 6. Aturan keras (warisan journal workspace)
 

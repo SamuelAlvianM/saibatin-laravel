@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Image as IkonGambar, Loader2, Plus, Trash2 } from 'lucide-react';
 import LayoutDashboard from '@/Components/LayoutDashboard';
 import BidangGambar from '@/Components/BidangGambar';
+import PenampilGambar from '@/Components/PenampilGambar';
 import { Kartu, Kosong, Memuat, Modal, Pesan, Tombol } from '@/Components/Dasbor';
 import { ambilJson, kirimJson } from '@/lib/api';
 import { Input } from '@/Components/ui/input';
@@ -19,6 +20,7 @@ const KATEGORI = ['PELAYANAN', 'BUPATI'];
 export default function Galeri() {
   const [items, setItems] = useState([]);
   const [memuat, setMemuat] = useState(true);
+  const [lihat, setLihat] = useState(null);
   const [buka, setBuka] = useState(false);
   const [judul, setJudul] = useState('');
   const [kategori, setKategori] = useState('PELAYANAN');
@@ -90,11 +92,15 @@ export default function Galeri() {
 
         {memuat ? <Memuat /> : items.length === 0 ? <Kosong>Belum ada foto.</Kosong> : (
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-            {items.map((f) => (
+            {items.map((f, i) => (
               <div key={f.id} className="group relative overflow-hidden rounded-xl border border-slate-200">
-                <div className="aspect-square bg-slate-50">
-                  <img src={f.gambar} alt={f.judul} className="h-full w-full object-contain p-1" />
-                </div>
+                <button type="button" onClick={() => setLihat(i)}
+                        title={`Klik untuk memperbesar — ${f.judul}`}
+                        className="block w-full cursor-zoom-in">
+                  <div className="aspect-square bg-slate-50">
+                    <img src={f.gambar} alt={f.judul} className="h-full w-full object-contain p-1" />
+                  </div>
+                </button>
                 <div className="p-2">
                   <p className="truncate text-sm font-medium text-slate-800">{f.judul}</p>
                   <p className="text-xs text-slate-400">{f.kategori}</p>
@@ -145,6 +151,14 @@ export default function Galeri() {
             </div>
           </div>
         </Modal>
+      )}
+
+      {lihat !== null && items[lihat] && (
+        <PenampilGambar
+          daftar={items.map((f) => ({ src: f.gambar, judul: f.judul }))}
+          indeksAwal={lihat}
+          onTutup={() => setLihat(null)}
+        />
       )}
     </LayoutDashboard>
   );
