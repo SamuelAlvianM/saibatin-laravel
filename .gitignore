@@ -28,3 +28,8 @@ yarn-error.log
 
 # Paket unggahan cPanel — dihasilkan deploy/buat-paket.ps1, jangan di-commit
 /deploy/dist
+
+# graphify: cost.json & cache lokal saja; graph.json + report sengaja
+# di-commit supaya siapa pun yang clone langsung punya peta fungsinya.
+/graphify-out/cost.json
+/graphify-out/cache/
