@@ -33,3 +33,5 @@ yarn-error.log
 # di-commit supaya siapa pun yang clone langsung punya peta fungsinya.
 /graphify-out/cost.json
 /graphify-out/cache/
+# Snapshot bertanggal graphify — menggembungkan repo tiap hari, tidak perlu di-commit.
+/graphify-out/20*/

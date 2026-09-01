@@ -1,0 +1,12 @@
+# Sudah otomatis lewat .gitignore (node_modules, vendor, public/build,
+# public/ocr, public/uploads, storage/*). Yang di bawah ini tambahan:
+
+# Aset & data, bukan kode
+tessdata/
+public/produk-layanan/
+public/relasi/
+lang/
+
+# Dokumen — dipetakan terpisah, tidak perlu jadi node kode
+_analisis/
+deploy/

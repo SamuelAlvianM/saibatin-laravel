@@ -1,7 +1,77 @@
 {
   "communities": {
     "0": [
+      "app_http_controllers_api_admin_useradmincontroller_useradmincontroller_store",
+      "app_http_controllers_api_aspirasicontroller_aspirasicontroller_daftarkritik",
+      "app_http_controllers_api_aspirasicontroller_aspirasicontroller_kirimkritik",
+      "app_http_controllers_api_aspirasicontroller_aspirasicontroller_kirimskm",
+      "app_http_controllers_berkascontroller",
+      "app_http_controllers_berkascontroller_berkascontroller",
+      "app_http_controllers_berkascontroller_berkascontroller_miliknya",
+      "app_http_controllers_berkascontroller_berkascontroller_tampilkan",
+      "app_http_controllers_mediapublikcontroller",
+      "app_http_controllers_mediapublikcontroller_mediapublikcontroller",
+      "app_http_controllers_mediapublikcontroller_mediapublikcontroller_invoke",
+      "app_http_middleware_pastikanperan",
+      "app_http_middleware_pastikanperan_pastikanperan",
+      "app_http_middleware_pastikanperan_pastikanperan_handle",
+      "app_models_berkas",
+      "app_models_berkas_berkas",
+      "app_models_berkas_berkas_permohonan",
+      "app_models_concerns_presisimilidetik",
+      "app_models_concerns_presisimilidetik_presisimilidetik",
+      "app_models_concerns_presisimilidetik_presisimilidetik_initializepresisimilidetik",
+      "app_models_kritiksaran",
+      "app_models_kritiksaran_kritiksaran",
+      "app_models_kunjungan",
+      "app_models_kunjungan_kunjungan",
+      "app_models_kunjungan_kunjungan_casts",
+      "app_models_logaktivitas",
+      "app_models_logaktivitas_logaktivitas",
+      "app_models_logaktivitas_logaktivitas_user",
+      "app_models_news",
+      "app_models_news_news_scopeterbit",
+      "app_models_notifikasi",
+      "app_models_notifikasi_notifikasi",
+      "app_models_notifikasi_notifikasi_casts",
+      "app_models_notifikasi_notifikasi_scopebelumdibaca",
+      "app_models_notifikasi_notifikasi_user",
+      "app_models_permohonan",
+      "app_models_permohonan_permohonan_jenis",
+      "app_models_permohonan_permohonan_user",
+      "app_models_produk",
+      "app_models_skmjawaban",
+      "app_models_skmjawaban_skmjawaban",
+      "app_models_skmjawaban_skmjawaban_casts",
+      "app_models_skmjawaban_skmjawaban_nilaiterbaca",
+      "app_models_skmjawaban_skmjawaban_rataskor",
+      "app_models_tiket",
+      "app_models_tiket_tiket",
+      "app_models_tiket_tiket_casts",
+      "app_models_tiket_tiket_pesan",
+      "app_models_tiket_tiket_scopeuntuk",
+      "app_models_tiket_tiket_user",
+      "app_models_tiketpesan",
+      "app_models_tiketpesan_tiketpesan",
+      "app_models_tiketpesan_tiketpesan_pengirim",
+      "app_models_tiketpesan_tiketpesan_tiket",
+      "app_models_user_user_level",
+      "app_models_userlevel",
+      "app_models_userlevel_userlevel",
+      "app_models_userlevel_userlevel_users",
+      "app_services_catatanaktivitas",
+      "app_services_catatanaktivitas_catatanaktivitas_catat",
+      "app_services_pemberitahuan_pemberitahuan_buat",
+      "app_services_pemberitahuan_pemberitahuan_kepetugas",
+      "closure",
+      "illuminate_database_eloquent_builder",
+      "illuminate_database_eloquent_model",
+      "illuminate_database_eloquent_relations_belongsto",
+      "symfony_component_httpfoundation_response"
+    ],
+    "1": [
       "app_http_controllers_api_permohonancontroller_permohonancontroller_store",
+      "app_http_controllers_api_sistemcontroller_sistemcontroller_construct",
       "app_http_controllers_api_statistikcontroller",
       "app_http_controllers_api_statistikcontroller_statistikcontroller",
       "app_http_controllers_api_statistikcontroller_statistikcontroller_invoke",
@@ -17,7 +87,6 @@
       "app_models_jenispermohonan_jenispermohonan_permohonan",
       "app_models_permohonan_permohonan",
       "app_models_permohonan_permohonan_casts",
-      "app_services_pencacahkunjungan",
       "app_services_pencacahkunjungan_pencacahkunjungan",
       "app_services_pencacahkunjungan_pencacahkunjungan_catat",
       "app_services_pencacahkunjungan_pencacahkunjungan_statistik",
@@ -54,7 +123,6 @@
       "app_services_statistikexcel_statistikexcel_waktu",
       "carbon",
       "illuminate_support_carbon",
-      "illuminate_support_facades_cookie",
       "phpoffice_phpspreadsheet_cell_coordinate",
       "phpoffice_phpspreadsheet_cell_datatype",
       "phpoffice_phpspreadsheet_spreadsheet",
@@ -65,7 +133,94 @@
       "phpoffice_phpspreadsheet_worksheet_pagesetup",
       "worksheet"
     ],
-    "1": [
+    "2": [
+      "app_http_controllers_api_admin_pengaturancontroller",
+      "app_http_controllers_api_admin_pengaturancontroller_pengaturancontroller",
+      "app_http_controllers_api_admin_pengaturancontroller_pengaturancontroller_construct",
+      "app_http_controllers_api_admin_pengaturancontroller_pengaturancontroller_hidden",
+      "app_http_controllers_api_admin_pengaturancontroller_pengaturancontroller_jamlayanan",
+      "app_http_controllers_api_admin_pengaturancontroller_pengaturancontroller_simpanjamlayanan",
+      "app_http_controllers_api_admin_pengaturancontroller_pengaturancontroller_simpanvisibilitas",
+      "app_http_controllers_api_admin_pengaturancontroller_pengaturancontroller_visibilitas",
+      "app_http_controllers_pengajuancontroller",
+      "app_http_controllers_pengajuancontroller_pengajuancontroller",
+      "app_http_controllers_pengajuancontroller_pengajuancontroller_construct",
+      "app_http_controllers_pengajuancontroller_pengajuancontroller_form",
+      "app_http_controllers_pengajuancontroller_pengajuancontroller_pilih",
+      "app_http_controllers_pengajuancontroller_pengajuancontroller_riwayat",
+      "app_http_controllers_pengajuanpetugascontroller",
+      "app_http_controllers_pengajuanpetugascontroller_pengajuanpetugascontroller",
+      "app_http_controllers_pengajuanpetugascontroller_pengajuanpetugascontroller_construct",
+      "app_http_controllers_pengajuanpetugascontroller_pengajuanpetugascontroller_form",
+      "app_http_controllers_pengajuanpetugascontroller_pengajuanpetugascontroller_tampilkan",
+      "app_models_staticcontent",
+      "app_models_staticcontent_staticcontent",
+      "app_models_staticcontent_staticcontent_casts",
+      "app_models_staticcontent_staticcontent_getroutekeyname",
+      "app_services_jamlayanan",
+      "app_services_jamlayanan_jamlayanan",
+      "app_services_jamlayanan_jamlayanan_bersihkan",
+      "app_services_jamlayanan_jamlayanan_default",
+      "app_services_jamlayanan_jamlayanan_jamvalid",
+      "app_services_jamlayanan_jamlayanan_kemenit",
+      "app_services_jamlayanan_jamlayanan_konfigurasi",
+      "app_services_jamlayanan_jamlayanan_status",
+      "app_services_jamlayanan_php_carbonimmutable",
+      "app_support_konten",
+      "app_support_konten_konten_ambil",
+      "app_support_layanan",
+      "app_support_layanan_layanan",
+      "app_support_layanan_layanan_berkasdaripayload",
+      "app_support_layanan_layanan_form",
+      "app_support_layanan_layanan_formdarikode",
+      "app_support_layanan_layanan_formdarirute",
+      "app_support_layanan_layanan_kode",
+      "app_support_layanan_layanan_labelkode",
+      "app_support_layanan_layanan_periksafield",
+      "app_support_layanan_layanan_periksajam",
+      "app_support_layanan_layanan_periksapayload",
+      "app_support_layanan_layanan_periksatanggal",
+      "app_support_layanan_layanan_semuafield",
+      "app_support_layanan_layanan_tampilkanpayload",
+      "app_support_periode",
+      "app_support_periode_periode_bacaacuan",
+      "app_support_periode_periode_rentang",
+      "app_support_periode_php_carbonimmutable",
+      "carbon_carbonimmutable"
+    ],
+    "3": [
+      "app_http_controllers_api_admin_mediacontroller",
+      "app_http_controllers_api_admin_mediacontroller_mediacontroller",
+      "app_http_controllers_api_admin_mediacontroller_mediacontroller_bentuk",
+      "app_http_controllers_api_admin_mediacontroller_mediacontroller_construct",
+      "app_http_controllers_api_admin_mediacontroller_mediacontroller_hapus",
+      "app_http_controllers_api_admin_mediacontroller_mediacontroller_index",
+      "app_http_controllers_api_admin_mediacontroller_mediacontroller_unggah",
+      "app_models_media",
+      "app_models_media_media",
+      "app_models_media_media_casts",
+      "app_services_pencacahkunjungan",
+      "app_services_pustakamedia",
+      "app_services_pustakamedia_pustakamedia",
+      "app_services_pustakamedia_pustakamedia_hapusberkas",
+      "app_services_pustakamedia_pustakamedia_kewebp",
+      "app_services_pustakamedia_pustakamedia_simpan",
+      "app_services_pustakamedia_pustakamedia_ukuran",
+      "config_cache",
+      "config_database",
+      "config_session",
+      "database_factories_userfactory",
+      "database_factories_userfactory_userfactory",
+      "database_factories_userfactory_userfactory_definition",
+      "database_factories_userfactory_userfactory_unverified",
+      "illuminate_database_eloquent_factories_factory",
+      "illuminate_http_uploadedfile",
+      "illuminate_support_facades_cookie",
+      "illuminate_support_str",
+      "static"
+    ],
+    "4": [
+      "app_http_controllers_publikcontroller",
       "app_http_controllers_publikcontroller_publikcontroller",
       "app_http_controllers_publikcontroller_publikcontroller_beranda",
       "app_http_controllers_publikcontroller_publikcontroller_demografi",
@@ -84,7 +239,6 @@
       "app_http_controllers_publikcontroller_publikcontroller_subnavuntuk",
       "app_http_controllers_publikcontroller_publikcontroller_survei",
       "app_http_controllers_publikcontroller_publikcontroller_wbs",
-      "app_models_produk",
       "app_models_produk_produk",
       "app_support_konten_konten",
       "app_support_konten_konten_bawaaninfo",
@@ -95,36 +249,7 @@
       "app_support_konten_konten_skemaketentuan",
       "app_support_konten_konten_slidecarousel"
     ],
-    "2": [
-      "app_http_controllers_api_admin_mediacontroller",
-      "app_http_controllers_api_admin_mediacontroller_mediacontroller",
-      "app_http_controllers_api_admin_mediacontroller_mediacontroller_bentuk",
-      "app_http_controllers_api_admin_mediacontroller_mediacontroller_construct",
-      "app_http_controllers_api_admin_mediacontroller_mediacontroller_hapus",
-      "app_http_controllers_api_admin_mediacontroller_mediacontroller_index",
-      "app_http_controllers_api_admin_mediacontroller_mediacontroller_unggah",
-      "app_models_media",
-      "app_models_media_media",
-      "app_models_media_media_casts",
-      "app_services_pustakamedia",
-      "app_services_pustakamedia_pustakamedia",
-      "app_services_pustakamedia_pustakamedia_hapusberkas",
-      "app_services_pustakamedia_pustakamedia_kewebp",
-      "app_services_pustakamedia_pustakamedia_simpan",
-      "app_services_pustakamedia_pustakamedia_ukuran",
-      "config_cache",
-      "config_database",
-      "config_session",
-      "database_factories_userfactory",
-      "database_factories_userfactory_userfactory",
-      "database_factories_userfactory_userfactory_definition",
-      "database_factories_userfactory_userfactory_unverified",
-      "illuminate_database_eloquent_factories_factory",
-      "illuminate_http_uploadedfile",
-      "illuminate_support_str",
-      "static"
-    ],
-    "3": [
+    "5": [
       "axios",
       "concurrently",
       "laravel_vite_plugin",
@@ -152,7 +277,7 @@
       "vite",
       "vitejs_plugin_react"
     ],
-    "4": [
+    "6": [
       "app_http_controllers_api_admin_demografiadmincontroller_demografiadmincontroller",
       "app_http_controllers_api_admin_demografiadmincontroller_demografiadmincontroller_construct",
       "app_http_controllers_api_admin_demografiadmincontroller_demografiadmincontroller_ekspor",
@@ -179,56 +304,32 @@
       "app_services_demografiexcel_php_streamedresponse",
       "phpoffice_phpspreadsheet_iofactory"
     ],
-    "5": [
-      "app_http_controllers_api_profilcontroller_profilcontroller_construct",
-      "app_http_controllers_api_unggahcontroller",
-      "app_http_controllers_berkascontroller",
-      "app_http_controllers_berkascontroller_berkascontroller",
-      "app_http_controllers_berkascontroller_berkascontroller_miliknya",
-      "app_http_controllers_berkascontroller_berkascontroller_tampilkan",
-      "app_http_controllers_mediapublikcontroller",
-      "app_http_controllers_mediapublikcontroller_mediapublikcontroller",
-      "app_http_controllers_mediapublikcontroller_mediapublikcontroller_invoke",
-      "app_http_middleware_pastikanperan",
-      "app_http_middleware_pastikanperan_pastikanperan",
-      "app_http_middleware_pastikanperan_pastikanperan_handle",
-      "app_services_fotoprofil",
-      "app_services_fotoprofil_fotoprofil",
-      "app_services_fotoprofil_fotoprofil_adalahdataurlgambar",
-      "app_services_fotoprofil_fotoprofil_ekstensidaribiner",
-      "app_services_fotoprofil_fotoprofil_hapus",
-      "app_services_fotoprofil_fotoprofil_hapusktp",
-      "app_services_fotoprofil_fotoprofil_simpan",
-      "app_services_fotoprofil_fotoprofil_simpanktp",
-      "closure",
-      "illuminate_support_facades_storage",
-      "symfony_component_httpfoundation_response"
-    ],
-    "6": [
-      "app_http_controllers_api_admin_logaktivitascontroller",
-      "app_http_controllers_api_admin_logaktivitascontroller_logaktivitascontroller",
-      "app_http_controllers_api_admin_logaktivitascontroller_logaktivitascontroller_index",
-      "app_http_controllers_api_admin_permohonanadmincontroller",
-      "app_http_controllers_api_admin_permohonanadmincontroller_permohonanadmincontroller",
-      "app_http_controllers_api_admin_permohonanadmincontroller_permohonanadmincontroller_construct",
-      "app_http_controllers_api_admin_permohonanadmincontroller_permohonanadmincontroller_index",
-      "app_http_controllers_api_admin_permohonanadmincontroller_permohonanadmincontroller_show",
-      "app_http_controllers_api_admin_permohonanadmincontroller_permohonanadmincontroller_update",
-      "app_http_controllers_api_admin_useradmincontroller",
-      "app_http_controllers_api_admin_useradmincontroller_useradmincontroller",
-      "app_http_controllers_api_admin_useradmincontroller_useradmincontroller_construct",
-      "app_http_controllers_api_admin_useradmincontroller_useradmincontroller_destroy",
-      "app_http_controllers_api_admin_useradmincontroller_useradmincontroller_index",
-      "app_http_controllers_api_unggahcontroller_unggahcontroller",
-      "app_http_controllers_api_unggahcontroller_unggahcontroller_folderaman",
-      "app_http_controllers_api_unggahcontroller_unggahcontroller_invoke",
-      "app_services_surel_surel",
-      "app_services_surel_surel_kirim",
-      "app_support_periode_periode",
-      "app_support_periode_periode_saring",
-      "routes_api"
-    ],
     "7": [
+      "app_http_controllers_api_admin_demografiadmincontroller",
+      "app_http_controllers_api_sistemcontroller",
+      "app_http_controllers_api_sistemcontroller_sistemcontroller",
+      "app_http_controllers_api_sistemcontroller_sistemcontroller_health",
+      "app_http_controllers_api_sistemcontroller_sistemcontroller_jamlayanan",
+      "app_http_controllers_api_sistemcontroller_sistemcontroller_jenispermohonan",
+      "app_http_controllers_api_sistemcontroller_sistemcontroller_kontenstatis",
+      "app_http_controllers_api_sistemcontroller_sistemcontroller_kunjunganping",
+      "app_http_controllers_api_sistemcontroller_sistemcontroller_kunjunganstatistik",
+      "app_http_controllers_api_sistemcontroller_sistemcontroller_sesi",
+      "app_http_controllers_api_sistemcontroller_sistemcontroller_wilayah",
+      "app_http_controllers_auth_otpcontroller",
+      "app_http_controllers_auth_otpcontroller_otpcontroller",
+      "app_http_controllers_auth_otpcontroller_otpcontroller_construct",
+      "app_http_controllers_auth_otpcontroller_otpcontroller_kirim",
+      "app_http_controllers_auth_otpcontroller_otpcontroller_verifikasi",
+      "app_support_balasan",
+      "app_support_balasan_balasan",
+      "app_support_balasan_balasan_gagal",
+      "app_support_balasan_balasan_ok",
+      "illuminate_http_jsonresponse",
+      "illuminate_support_facades_cache",
+      "illuminate_support_facades_db"
+    ],
+    "8": [
       "resources_js_components_dasbor",
       "resources_js_components_dasbor_angka",
       "resources_js_components_dasbor_filterperiode",
@@ -252,74 +353,7 @@
       "resources_js_components_dasbor_tulisacuan",
       "resources_js_components_dasbor_usetunda"
     ],
-    "8": [
-      "app_http_controllers_api_admin_pengaduanadmincontroller",
-      "app_http_controllers_api_admin_pengaduanadmincontroller_pengaduanadmincontroller",
-      "app_http_controllers_api_admin_pengaduanadmincontroller_pengaduanadmincontroller_construct",
-      "app_http_controllers_api_admin_pengaduanadmincontroller_pengaduanadmincontroller_index",
-      "app_http_controllers_api_admin_pengaduanadmincontroller_pengaduanadmincontroller_update",
-      "app_http_controllers_api_aspirasicontroller",
-      "app_http_controllers_api_aspirasicontroller_aspirasicontroller",
-      "app_http_controllers_api_aspirasicontroller_aspirasicontroller_construct",
-      "app_http_controllers_api_aspirasicontroller_aspirasicontroller_daftarpengaduan",
-      "app_http_controllers_api_aspirasicontroller_aspirasicontroller_kirimpengaduan",
-      "app_http_controllers_api_aspirasicontroller_aspirasicontroller_unsurskm",
-      "app_http_controllers_api_permohonancontroller",
-      "app_http_controllers_api_permohonancontroller_permohonancontroller",
-      "app_http_controllers_api_permohonancontroller_permohonancontroller_construct",
-      "app_http_controllers_api_permohonancontroller_permohonancontroller_index",
-      "app_models_pengaduan",
-      "app_models_pengaduan_pengaduan",
-      "app_services_pemberitahuan_pemberitahuan",
-      "app_services_pemberitahuan_pemberitahuan_aman",
-      "app_services_recaptcha_recaptcha",
-      "app_services_recaptcha_recaptcha_verifikasi"
-    ],
     "9": [
-      "app_http_controllers_api_admin_galeriadmincontroller",
-      "app_http_controllers_api_admin_galeriadmincontroller_galeriadmincontroller",
-      "app_http_controllers_api_admin_galeriadmincontroller_galeriadmincontroller_construct",
-      "app_http_controllers_api_admin_galeriadmincontroller_galeriadmincontroller_destroy",
-      "app_http_controllers_api_admin_galeriadmincontroller_galeriadmincontroller_store",
-      "app_http_controllers_api_admin_kontenstatiscontroller",
-      "app_http_controllers_api_admin_kontenstatiscontroller_kontenstatiscontroller",
-      "app_http_controllers_api_admin_kontenstatiscontroller_kontenstatiscontroller_construct",
-      "app_http_controllers_api_admin_kontenstatiscontroller_kontenstatiscontroller_simpan",
-      "app_http_controllers_api_admin_kontenstatiscontroller_kontenstatiscontroller_skema",
-      "app_http_controllers_api_admin_mastercontroller",
-      "app_http_controllers_api_admin_mastercontroller_mastercontroller",
-      "app_http_controllers_api_admin_mastercontroller_mastercontroller_bukakunci",
-      "app_http_controllers_api_admin_mastercontroller_mastercontroller_construct",
-      "app_http_controllers_api_layanancontroller_layanancontroller",
-      "app_http_controllers_api_layanancontroller_layanancontroller_buat",
-      "app_http_controllers_api_layanancontroller_layanancontroller_construct",
-      "app_http_controllers_api_layanancontroller_layanancontroller_invoke",
-      "app_http_controllers_api_layanancontroller_layanancontroller_unggah",
-      "app_services_catatanaktivitas_catatanaktivitas"
-    ],
-    "10": [
-      "app_http_controllers_api_aspirasicontroller_aspirasicontroller_daftarkritik",
-      "app_http_controllers_api_aspirasicontroller_aspirasicontroller_kirimkritik",
-      "app_http_controllers_publikcontroller",
-      "app_http_controllers_publikcontroller_publikcontroller_galeri",
-      "app_models_concerns_presisimilidetik",
-      "app_models_concerns_presisimilidetik_presisimilidetik",
-      "app_models_concerns_presisimilidetik_presisimilidetik_initializepresisimilidetik",
-      "app_models_gallery",
-      "app_models_gallery_gallery",
-      "app_models_kritiksaran",
-      "app_models_kritiksaran_kritiksaran",
-      "app_models_kunjungan",
-      "app_models_kunjungan_kunjungan",
-      "app_models_kunjungan_kunjungan_casts",
-      "app_models_logaktivitas",
-      "app_models_logaktivitas_logaktivitas",
-      "app_models_permohonan",
-      "app_services_catatanaktivitas",
-      "app_services_catatanaktivitas_catatanaktivitas_catat",
-      "illuminate_database_eloquent_model"
-    ],
-    "11": [
       "app_http_controllers_api_notifikasicontroller",
       "app_http_controllers_api_notifikasicontroller_notifikasicontroller",
       "app_http_controllers_api_notifikasicontroller_notifikasicontroller_index",
@@ -341,7 +375,7 @@
       "app_http_controllers_profilpagecontroller_profilpagecontroller_invoke",
       "illuminate_http_request"
     ],
-    "12": [
+    "10": [
       "app_models_permohonan_permohonan_berkas",
       "app_models_user",
       "app_models_user_user",
@@ -363,7 +397,7 @@
       "illuminate_foundation_auth_user",
       "illuminate_notifications_notifiable"
     ],
-    "13": [
+    "11": [
       "app_http_controllers_api_admin_beritaadmincontroller",
       "app_http_controllers_api_admin_beritaadmincontroller_beritaadmincontroller",
       "app_http_controllers_api_admin_beritaadmincontroller_beritaadmincontroller_construct",
@@ -377,14 +411,33 @@
       "app_http_controllers_api_kontencontroller_kontencontroller",
       "app_http_controllers_api_kontencontroller_kontencontroller_berita",
       "app_http_controllers_api_kontencontroller_kontencontroller_beritadetail",
-      "app_http_controllers_api_kontencontroller_kontencontroller_galeri",
       "app_http_controllers_publikcontroller_publikcontroller_beritadetail",
       "app_http_controllers_publikcontroller_publikcontroller_beritaindeks",
       "app_models_news_news",
       "app_models_news_news_casts",
       "app_models_news_news_getroutekeyname"
     ],
-    "14": [
+    "12": [
+      "app_http_controllers_api_admin_logaktivitascontroller",
+      "app_http_controllers_api_admin_logaktivitascontroller_logaktivitascontroller",
+      "app_http_controllers_api_admin_logaktivitascontroller_logaktivitascontroller_index",
+      "app_http_controllers_api_admin_permohonanadmincontroller",
+      "app_http_controllers_api_admin_permohonanadmincontroller_permohonanadmincontroller",
+      "app_http_controllers_api_admin_permohonanadmincontroller_permohonanadmincontroller_construct",
+      "app_http_controllers_api_admin_permohonanadmincontroller_permohonanadmincontroller_index",
+      "app_http_controllers_api_admin_permohonanadmincontroller_permohonanadmincontroller_show",
+      "app_http_controllers_api_admin_permohonanadmincontroller_permohonanadmincontroller_update",
+      "app_http_controllers_api_admin_useradmincontroller",
+      "app_http_controllers_api_admin_useradmincontroller_useradmincontroller",
+      "app_http_controllers_api_admin_useradmincontroller_useradmincontroller_construct",
+      "app_http_controllers_api_admin_useradmincontroller_useradmincontroller_destroy",
+      "app_http_controllers_api_admin_useradmincontroller_useradmincontroller_index",
+      "app_services_surel_surel",
+      "app_services_surel_surel_kirim",
+      "app_support_periode_periode",
+      "app_support_periode_periode_saring"
+    ],
+    "13": [
       "app_http_controllers_api_admin_statistikeksporcontroller",
       "app_http_controllers_api_admin_statistikeksporcontroller_statistikeksporcontroller",
       "app_http_controllers_api_admin_statistikeksporcontroller_statistikeksporcontroller_construct",
@@ -395,16 +448,16 @@
       "app_http_controllers_api_demograficontroller",
       "app_http_controllers_api_demograficontroller_demograficontroller",
       "app_http_controllers_api_demograficontroller_demograficontroller_invoke",
-      "app_http_controllers_auth_otpcontroller",
-      "app_http_controllers_auth_otpcontroller_otpcontroller",
-      "app_http_controllers_auth_otpcontroller_otpcontroller_construct",
-      "app_http_controllers_auth_otpcontroller_otpcontroller_kirim",
-      "app_http_controllers_auth_otpcontroller_otpcontroller_verifikasi",
+      "app_http_controllers_api_layanancontroller",
+      "app_http_controllers_api_permohonanpdfcontroller",
+      "app_http_controllers_api_unggahcontroller",
       "app_http_controllers_controller",
       "app_http_controllers_controller_controller",
-      "illuminate_support_facades_cache"
+      "app_services_fotoprofil",
+      "barryvdh_dompdf_facade_pdf",
+      "illuminate_support_facades_storage"
     ],
-    "15": [
+    "14": [
       "resources_js_publik_petakantor",
       "resources_js_publik_petakantor_penanda",
       "resources_js_publik_petakantor_petakantor",
@@ -424,26 +477,26 @@
       "resources_js_publik_statistik_rinciandemografi",
       "resources_js_publik_statistik_statistik"
     ],
-    "16": [
-      "app_http_controllers_api_admin_demografiadmincontroller",
-      "app_http_controllers_api_sistemcontroller",
-      "app_http_controllers_api_sistemcontroller_sistemcontroller",
-      "app_http_controllers_api_sistemcontroller_sistemcontroller_health",
-      "app_http_controllers_api_sistemcontroller_sistemcontroller_jamlayanan",
-      "app_http_controllers_api_sistemcontroller_sistemcontroller_jenispermohonan",
-      "app_http_controllers_api_sistemcontroller_sistemcontroller_kontenstatis",
-      "app_http_controllers_api_sistemcontroller_sistemcontroller_kunjunganping",
-      "app_http_controllers_api_sistemcontroller_sistemcontroller_kunjunganstatistik",
-      "app_http_controllers_api_sistemcontroller_sistemcontroller_sesi",
-      "app_http_controllers_api_sistemcontroller_sistemcontroller_wilayah",
-      "app_support_balasan",
-      "app_support_balasan_balasan",
-      "app_support_balasan_balasan_gagal",
-      "app_support_balasan_balasan_ok",
-      "illuminate_http_jsonresponse",
-      "illuminate_support_facades_db"
+    "15": [
+      "app_http_controllers_api_permohonancontroller",
+      "app_http_controllers_api_permohonancontroller_permohonancontroller",
+      "app_http_controllers_api_permohonancontroller_permohonancontroller_construct",
+      "app_http_controllers_api_permohonancontroller_permohonancontroller_index",
+      "app_http_controllers_auth_registercontroller_registercontroller",
+      "app_http_controllers_auth_registercontroller_registercontroller_construct",
+      "app_http_controllers_auth_registercontroller_registercontroller_daftar",
+      "app_http_controllers_auth_sandicontroller_sandicontroller",
+      "app_http_controllers_auth_sandicontroller_sandicontroller_construct",
+      "app_http_controllers_auth_sandicontroller_sandicontroller_formlupa",
+      "app_http_controllers_auth_sandicontroller_sandicontroller_formreset",
+      "app_http_controllers_auth_sandicontroller_sandicontroller_kirimtautan",
+      "app_http_controllers_auth_sandicontroller_sandicontroller_reset",
+      "app_services_recaptcha_recaptcha",
+      "app_services_recaptcha_recaptcha_verifikasi",
+      "illuminate_support_facades_route",
+      "routes_web"
     ],
-    "17": [
+    "16": [
       "app_http_controllers_auth_cekstatuscontroller",
       "app_http_controllers_auth_logincontroller",
       "app_http_controllers_auth_registercontroller",
@@ -461,25 +514,7 @@
       "illuminate_validation_validationexception",
       "inertia_inertia"
     ],
-    "18": [
-      "app_models_news",
-      "app_models_news_news_scopeterbit",
-      "app_models_notifikasi",
-      "app_models_notifikasi_notifikasi",
-      "app_models_notifikasi_notifikasi_casts",
-      "app_models_notifikasi_notifikasi_scopebelumdibaca",
-      "app_models_notifikasi_notifikasi_user",
-      "app_models_tiket",
-      "app_models_tiket_tiket",
-      "app_models_tiket_tiket_casts",
-      "app_models_tiket_tiket_pesan",
-      "app_models_tiket_tiket_scopeuntuk",
-      "app_models_tiket_tiket_user",
-      "app_services_pemberitahuan_pemberitahuan_buat",
-      "app_services_pemberitahuan_pemberitahuan_kepetugas",
-      "illuminate_database_eloquent_builder"
-    ],
-    "19": [
+    "17": [
       "app_services_fonnte_fonnte",
       "app_services_fonnte_fonnte_aktif",
       "app_services_fonnte_fonnte_kirim",
@@ -497,7 +532,7 @@
       "app_services_otp_otp_verifikasi",
       "app_services_otp_otp_wajib"
     ],
-    "20": [
+    "18": [
       "resources_js_publik_profiltabs",
       "resources_js_publik_profiltabs_bernomor",
       "resources_js_publik_profiltabs_butir",
@@ -515,24 +550,41 @@
       "resources_js_publik_strukturbagan_kotak",
       "resources_js_publik_strukturbagan_strukturbagan"
     ],
-    "21": [
-      "app_http_controllers_auth_registercontroller_registercontroller",
-      "app_http_controllers_auth_registercontroller_registercontroller_construct",
-      "app_http_controllers_auth_registercontroller_registercontroller_daftar",
-      "app_http_controllers_auth_registercontroller_registercontroller_tampilkan",
-      "app_http_controllers_auth_sandicontroller_sandicontroller",
-      "app_http_controllers_auth_sandicontroller_sandicontroller_construct",
-      "app_http_controllers_auth_sandicontroller_sandicontroller_formlupa",
-      "app_http_controllers_auth_sandicontroller_sandicontroller_formreset",
-      "app_http_controllers_auth_sandicontroller_sandicontroller_kirimtautan",
-      "app_http_controllers_auth_sandicontroller_sandicontroller_reset",
-      "app_models_wilayah",
-      "app_models_wilayah_wilayah",
-      "app_models_wilayah_wilayah_children",
-      "illuminate_support_facades_route",
-      "routes_web"
+    "19": [
+      "app_http_controllers_api_admin_kontenstatiscontroller",
+      "app_http_controllers_api_admin_kontenstatiscontroller_kontenstatiscontroller",
+      "app_http_controllers_api_admin_kontenstatiscontroller_kontenstatiscontroller_construct",
+      "app_http_controllers_api_admin_kontenstatiscontroller_kontenstatiscontroller_simpan",
+      "app_http_controllers_api_admin_kontenstatiscontroller_kontenstatiscontroller_skema",
+      "app_http_controllers_api_admin_mastercontroller",
+      "app_http_controllers_api_admin_mastercontroller_mastercontroller",
+      "app_http_controllers_api_admin_mastercontroller_mastercontroller_bukakunci",
+      "app_http_controllers_api_admin_mastercontroller_mastercontroller_construct",
+      "app_http_controllers_api_layanancontroller_layanancontroller",
+      "app_http_controllers_api_layanancontroller_layanancontroller_buat",
+      "app_http_controllers_api_layanancontroller_layanancontroller_construct",
+      "app_http_controllers_api_layanancontroller_layanancontroller_invoke",
+      "app_http_controllers_api_layanancontroller_layanancontroller_unggah",
+      "app_services_catatanaktivitas_catatanaktivitas"
     ],
-    "22": [
+    "20": [
+      "app_http_controllers_api_admin_pengaduanadmincontroller",
+      "app_http_controllers_api_admin_pengaduanadmincontroller_pengaduanadmincontroller",
+      "app_http_controllers_api_admin_pengaduanadmincontroller_pengaduanadmincontroller_construct",
+      "app_http_controllers_api_admin_pengaduanadmincontroller_pengaduanadmincontroller_index",
+      "app_http_controllers_api_admin_pengaduanadmincontroller_pengaduanadmincontroller_update",
+      "app_http_controllers_api_aspirasicontroller",
+      "app_http_controllers_api_aspirasicontroller_aspirasicontroller",
+      "app_http_controllers_api_aspirasicontroller_aspirasicontroller_construct",
+      "app_http_controllers_api_aspirasicontroller_aspirasicontroller_daftarpengaduan",
+      "app_http_controllers_api_aspirasicontroller_aspirasicontroller_kirimpengaduan",
+      "app_http_controllers_api_aspirasicontroller_aspirasicontroller_unsurskm",
+      "app_models_pengaduan",
+      "app_models_pengaduan_pengaduan",
+      "app_services_pemberitahuan_pemberitahuan",
+      "app_services_pemberitahuan_pemberitahuan_aman"
+    ],
+    "21": [
       "penyuntingkaya",
       "resources_js_components_editormedan",
       "resources_js_components_editormedan_barisitem",
@@ -549,70 +601,7 @@
       "resources_js_pages_dashboard_berita_penyuntingkaya",
       "resources_js_pages_dashboard_berita_slugify"
     ],
-    "23": [
-      "app_http_controllers_api_admin_pengaturancontroller",
-      "app_http_controllers_api_admin_pengaturancontroller_pengaturancontroller",
-      "app_http_controllers_api_admin_pengaturancontroller_pengaturancontroller_construct",
-      "app_http_controllers_api_admin_pengaturancontroller_pengaturancontroller_hidden",
-      "app_http_controllers_api_admin_pengaturancontroller_pengaturancontroller_jamlayanan",
-      "app_http_controllers_api_admin_pengaturancontroller_pengaturancontroller_simpanjamlayanan",
-      "app_http_controllers_api_admin_pengaturancontroller_pengaturancontroller_simpanvisibilitas",
-      "app_http_controllers_api_admin_pengaturancontroller_pengaturancontroller_visibilitas",
-      "app_models_staticcontent",
-      "app_models_staticcontent_staticcontent",
-      "app_models_staticcontent_staticcontent_casts",
-      "app_models_staticcontent_staticcontent_getroutekeyname",
-      "app_support_konten",
-      "app_support_konten_konten_ambil"
-    ],
-    "24": [
-      "app_http_controllers_api_sistemcontroller_sistemcontroller_construct",
-      "app_http_controllers_pengajuanpetugascontroller",
-      "app_http_controllers_pengajuanpetugascontroller_pengajuanpetugascontroller",
-      "app_http_controllers_pengajuanpetugascontroller_pengajuanpetugascontroller_construct",
-      "app_http_controllers_pengajuanpetugascontroller_pengajuanpetugascontroller_form",
-      "app_http_controllers_pengajuanpetugascontroller_pengajuanpetugascontroller_tampilkan",
-      "app_services_jamlayanan_jamlayanan",
-      "app_services_jamlayanan_jamlayanan_bersihkan",
-      "app_services_jamlayanan_jamlayanan_default",
-      "app_services_jamlayanan_jamlayanan_jamvalid",
-      "app_services_jamlayanan_jamlayanan_kemenit",
-      "app_services_jamlayanan_jamlayanan_konfigurasi",
-      "app_services_jamlayanan_jamlayanan_status",
-      "app_services_jamlayanan_php_carbonimmutable"
-    ],
-    "25": [
-      "app_support_layanan",
-      "app_support_layanan_layanan",
-      "app_support_layanan_layanan_berkasdaripayload",
-      "app_support_layanan_layanan_form",
-      "app_support_layanan_layanan_formdarikode",
-      "app_support_layanan_layanan_formdarirute",
-      "app_support_layanan_layanan_kode",
-      "app_support_layanan_layanan_labelkode",
-      "app_support_layanan_layanan_periksafield",
-      "app_support_layanan_layanan_periksajam",
-      "app_support_layanan_layanan_periksapayload",
-      "app_support_layanan_layanan_periksatanggal",
-      "app_support_layanan_layanan_semuafield",
-      "app_support_layanan_layanan_tampilkanpayload"
-    ],
-    "26": [
-      "app_http_controllers_api_layanancontroller",
-      "app_models_berkas",
-      "app_models_berkas_berkas",
-      "app_models_berkas_berkas_permohonan",
-      "app_models_logaktivitas_logaktivitas_user",
-      "app_models_permohonan_permohonan_jenis",
-      "app_models_permohonan_permohonan_user",
-      "app_models_tiketpesan",
-      "app_models_tiketpesan_tiketpesan",
-      "app_models_tiketpesan_tiketpesan_pengirim",
-      "app_models_tiketpesan_tiketpesan_tiket",
-      "app_models_user_user_level",
-      "illuminate_database_eloquent_relations_belongsto"
-    ],
-    "27": [
+    "22": [
       "resources_js_lib_ocr_ktp",
       "resources_js_lib_ocr_ktp_ambilworker",
       "resources_js_lib_ocr_ktp_bacaktp",
@@ -627,35 +616,7 @@
       "resources_js_lib_ocr_ktp_skor",
       "resources_js_lib_ocr_ktp_uraikanteksktp"
     ],
-    "28": [
-      "app_http_controllers_api_admin_useradmincontroller_useradmincontroller_show",
-      "app_http_controllers_api_admin_useradmincontroller_useradmincontroller_ubahstatus",
-      "app_http_controllers_auth_cekstatuscontroller_cekstatuscontroller",
-      "app_http_controllers_auth_cekstatuscontroller_cekstatuscontroller_ajukanulang",
-      "app_http_controllers_auth_cekstatuscontroller_cekstatuscontroller_construct",
-      "app_http_controllers_auth_cekstatuscontroller_cekstatuscontroller_periksa",
-      "app_http_controllers_auth_cekstatuscontroller_cekstatuscontroller_tampilkan",
-      "app_support_alasantolak",
-      "app_support_alasantolak_alasantolak",
-      "app_support_alasantolak_alasantolak_label",
-      "app_support_alasantolak_alasantolak_susun",
-      "app_support_alasantolak_alasantolak_uraikan"
-    ],
-    "29": [
-      "app_http_middleware_handleinertiarequests",
-      "app_http_middleware_handleinertiarequests_handleinertiarequests",
-      "app_http_middleware_handleinertiarequests_handleinertiarequests_share",
-      "app_models_wilayah_wilayah_parent",
-      "bootstrap_app",
-      "deploy_index_public_html",
-      "illuminate_foundation_application",
-      "illuminate_foundation_configuration_exceptions",
-      "illuminate_foundation_configuration_middleware",
-      "illuminate_http_middleware_addlinkheadersforpreloadedassets",
-      "inertia_middleware",
-      "public_index"
-    ],
-    "30": [
+    "23": [
       "composer_scripts",
       "composer_scripts_dev",
       "composer_scripts_post_create_project_cmd",
@@ -669,7 +630,37 @@
       "ref_php_r_file_exists_database_database_sqlite_touch_database_database_sqlite",
       "ref_php_r_file_exists_env_copy_env_example_env"
     ],
-    "31": [
+    "24": [
+      "app_http_controllers_api_admin_useradmincontroller_useradmincontroller_show",
+      "app_http_controllers_api_admin_useradmincontroller_useradmincontroller_ubahstatus",
+      "app_http_controllers_auth_registercontroller_registercontroller_tampilkan",
+      "app_models_wilayah",
+      "app_models_wilayah_wilayah",
+      "app_models_wilayah_wilayah_children",
+      "app_support_alasantolak",
+      "app_support_alasantolak_alasantolak",
+      "app_support_alasantolak_alasantolak_label",
+      "app_support_alasantolak_alasantolak_susun",
+      "app_support_alasantolak_alasantolak_uraikan"
+    ],
+    "25": [
+      "claude",
+      "claude_graphify"
+    ],
+    "26": [
+      "app_http_middleware_handleinertiarequests",
+      "app_http_middleware_handleinertiarequests_handleinertiarequests",
+      "app_http_middleware_handleinertiarequests_handleinertiarequests_share",
+      "app_models_wilayah_wilayah_parent",
+      "bootstrap_app",
+      "illuminate_foundation_application",
+      "illuminate_foundation_configuration_exceptions",
+      "illuminate_foundation_configuration_middleware",
+      "illuminate_http_middleware_addlinkheadersforpreloadedassets",
+      "inertia_middleware",
+      "public_index"
+    ],
+    "27": [
       "composer",
       "composer_description",
       "composer_keywords",
@@ -682,7 +673,7 @@
       "ref_framework",
       "ref_laravel"
     ],
-    "32": [
+    "28": [
       "grafikharian",
       "resources_js_pages_dashboard_beranda",
       "resources_js_pages_dashboard_beranda_aksi_warna",
@@ -695,7 +686,7 @@
       "resources_js_pages_dashboard_beranda_persen",
       "resources_js_pages_dashboard_beranda_status_bar"
     ],
-    "33": [
+    "29": [
       "resources_js_components_ui_dialog",
       "resources_js_components_ui_dialog_dialog",
       "resources_js_components_ui_dialog_dialogclose",
@@ -708,7 +699,7 @@
       "resources_js_components_ui_dialog_dialogtitle",
       "resources_js_components_ui_dialog_dialogtrigger"
     ],
-    "34": [
+    "30": [
       "resources_js_components_ui_select",
       "resources_js_components_ui_select_select",
       "resources_js_components_ui_select_selectcontent",
@@ -721,7 +712,7 @@
       "resources_js_components_ui_select_selecttrigger",
       "resources_js_components_ui_select_selectvalue"
     ],
-    "35": [
+    "31": [
       "resources_js_components_ui_sheet",
       "resources_js_components_ui_sheet_sheet",
       "resources_js_components_ui_sheet_sheetclose",
@@ -734,7 +725,7 @@
       "resources_js_components_ui_sheet_sheettitle",
       "resources_js_components_ui_sheet_sheettrigger"
     ],
-    "36": [
+    "32": [
       "resources_js_pages_dashboard_akun",
       "resources_js_pages_dashboard_akun_akun",
       "resources_js_pages_dashboard_akun_baris",
@@ -747,19 +738,7 @@
       "resources_js_pages_dashboard_akun_status_akun",
       "resources_js_pages_dashboard_akun_warna_permohonan"
     ],
-    "37": [
-      "app_http_controllers_api_admin_skmadmincontroller",
-      "app_http_controllers_api_admin_skmadmincontroller_skmadmincontroller",
-      "app_http_controllers_api_admin_skmadmincontroller_skmadmincontroller_demografi",
-      "app_http_controllers_api_admin_skmadmincontroller_skmadmincontroller_invoke",
-      "app_http_controllers_api_aspirasicontroller_aspirasicontroller_kirimskm",
-      "app_models_skmjawaban",
-      "app_models_skmjawaban_skmjawaban",
-      "app_models_skmjawaban_skmjawaban_casts",
-      "app_models_skmjawaban_skmjawaban_nilaiterbaca",
-      "app_models_skmjawaban_skmjawaban_rataskor"
-    ],
-    "38": [
+    "33": [
       "resources_js_components_ui_navigation_menu",
       "resources_js_components_ui_navigation_menu_navigationmenu",
       "resources_js_components_ui_navigation_menu_navigationmenucontent",
@@ -771,18 +750,18 @@
       "resources_js_components_ui_navigation_menu_navigationmenutriggerstyle",
       "resources_js_components_ui_navigation_menu_navigationmenuviewport"
     ],
-    "39": [
-      "app_http_controllers_api_admin_useradmincontroller_useradmincontroller_store",
-      "app_models_userlevel",
-      "app_models_userlevel_userlevel",
-      "app_models_userlevel_userlevel_users",
-      "app_services_fonnte",
-      "app_services_pemberitahuan",
-      "app_services_recaptcha",
-      "illuminate_support_facades_http",
-      "illuminate_support_facades_log"
+    "34": [
+      "app_http_controllers_api_admin_galeriadmincontroller",
+      "app_http_controllers_api_admin_galeriadmincontroller_galeriadmincontroller",
+      "app_http_controllers_api_admin_galeriadmincontroller_galeriadmincontroller_construct",
+      "app_http_controllers_api_admin_galeriadmincontroller_galeriadmincontroller_destroy",
+      "app_http_controllers_api_admin_galeriadmincontroller_galeriadmincontroller_store",
+      "app_http_controllers_api_kontencontroller_kontencontroller_galeri",
+      "app_http_controllers_publikcontroller_publikcontroller_galeri",
+      "app_models_gallery",
+      "app_models_gallery_gallery"
     ],
-    "40": [
+    "35": [
       "class_variance_authority",
       "package_dependencies",
       "package_dependencies_class_variance_authority",
@@ -793,7 +772,7 @@
       "react_organizational_chart",
       "tiptap_extension_text_align"
     ],
-    "41": [
+    "36": [
       "resources_js_lib_a11y",
       "resources_js_lib_a11y_bacaprefs",
       "resources_js_lib_a11y_font_bawaan_idx",
@@ -804,7 +783,7 @@
       "resources_js_lib_a11y_spasi_maks",
       "resources_js_lib_a11y_terapkanprefs"
     ],
-    "42": [
+    "37": [
       "resources_js_publik_navbar",
       "resources_js_publik_navbar_areaakun",
       "resources_js_publik_navbar_ikon_menu",
@@ -815,17 +794,27 @@
       "resources_js_publik_navbar_menudropdown",
       "resources_js_publik_navbar_navbar"
     ],
-    "43": [
-      "app_http_controllers_api_permohonanpdfcontroller",
-      "app_http_controllers_api_permohonanpdfcontroller_permohonanpdfcontroller",
-      "app_http_controllers_api_permohonanpdfcontroller_permohonanpdfcontroller_invoke",
-      "app_http_controllers_api_permohonanpdfcontroller_permohonanpdfcontroller_kecilkan",
-      "app_http_controllers_api_permohonanpdfcontroller_permohonanpdfcontroller_logokop",
-      "app_http_controllers_api_permohonanpdfcontroller_permohonanpdfcontroller_memoritersedia",
-      "app_http_controllers_api_permohonanpdfcontroller_permohonanpdfcontroller_siapkanlampiran",
-      "barryvdh_dompdf_facade_pdf"
+    "38": [
+      "app_http_controllers_api_admin_skmadmincontroller",
+      "app_http_controllers_api_admin_skmadmincontroller_skmadmincontroller",
+      "app_http_controllers_api_admin_skmadmincontroller_skmadmincontroller_demografi",
+      "app_http_controllers_api_admin_skmadmincontroller_skmadmincontroller_invoke",
+      "app_http_controllers_api_unggahcontroller_unggahcontroller",
+      "app_http_controllers_api_unggahcontroller_unggahcontroller_folderaman",
+      "app_http_controllers_api_unggahcontroller_unggahcontroller_invoke",
+      "routes_api"
     ],
-    "44": [
+    "39": [
+      "app_http_controllers_api_profilcontroller_profilcontroller_construct",
+      "app_services_fotoprofil_fotoprofil",
+      "app_services_fotoprofil_fotoprofil_adalahdataurlgambar",
+      "app_services_fotoprofil_fotoprofil_ekstensidaribiner",
+      "app_services_fotoprofil_fotoprofil_hapus",
+      "app_services_fotoprofil_fotoprofil_hapusktp",
+      "app_services_fotoprofil_fotoprofil_simpan",
+      "app_services_fotoprofil_fotoprofil_simpanktp"
+    ],
+    "40": [
       "app_providers_appserviceprovider",
       "app_providers_appserviceprovider_appserviceprovider",
       "app_providers_appserviceprovider_appserviceprovider_boot",
@@ -835,7 +824,7 @@
       "illuminate_support_facades_view",
       "illuminate_support_serviceprovider"
     ],
-    "45": [
+    "41": [
       "composer_require_dev",
       "composer_require_dev_fakerphp_faker",
       "composer_require_dev_laravel_pail",
@@ -845,7 +834,7 @@
       "composer_require_dev_nunomaduro_collision",
       "composer_require_dev_phpunit_phpunit"
     ],
-    "46": [
+    "42": [
       "resources_js_components_pengaturanlayanan",
       "resources_js_components_pengaturanlayanan_editorjamlayanan",
       "resources_js_components_pengaturanlayanan_editorvisibilitas",
@@ -855,7 +844,7 @@
       "resources_js_components_pengaturanlayanan_statussimpan",
       "resources_js_components_pengaturanlayanan_urutan_hari"
     ],
-    "47": [
+    "43": [
       "resources_js_components_ui_card",
       "resources_js_components_ui_card_card",
       "resources_js_components_ui_card_cardaction",
@@ -865,7 +854,7 @@
       "resources_js_components_ui_card_cardheader",
       "resources_js_components_ui_card_cardtitle"
     ],
-    "48": [
+    "44": [
       "resources_js_lib_geo",
       "resources_js_lib_geo_alias",
       "resources_js_lib_geo_geowilayah",
@@ -875,7 +864,7 @@
       "resources_js_lib_geo_pusat_peta",
       "resources_js_lib_geo_zoom_awal"
     ],
-    "49": [
+    "45": [
       "app_http_controllers_api_admin_produkadmincontroller",
       "app_http_controllers_api_admin_produkadmincontroller_produkadmincontroller",
       "app_http_controllers_api_admin_produkadmincontroller_produkadmincontroller_construct",
@@ -884,7 +873,7 @@
       "app_http_controllers_api_admin_produkadmincontroller_produkadmincontroller_jenissah",
       "app_http_controllers_api_admin_produkadmincontroller_produkadmincontroller_store"
     ],
-    "50": [
+    "46": [
       "app_http_controllers_auth_logincontroller_logincontroller",
       "app_http_controllers_auth_logincontroller_logincontroller_construct",
       "app_http_controllers_auth_logincontroller_logincontroller_keluar",
@@ -893,7 +882,7 @@
       "app_http_controllers_auth_logincontroller_logincontroller_tujuanaman",
       "inertia_response"
     ],
-    "51": [
+    "47": [
       "composer_allow_plugins_pestphp_pest_plugin",
       "composer_allow_plugins_php_http_discovery",
       "composer_config",
@@ -902,7 +891,7 @@
       "composer_config_preferred_install",
       "composer_config_sort_packages"
     ],
-    "52": [
+    "48": [
       "composer_require",
       "composer_require_barryvdh_laravel_dompdf",
       "composer_require_inertiajs_inertia_laravel",
@@ -911,7 +900,7 @@
       "composer_require_php",
       "composer_require_phpoffice_phpspreadsheet"
     ],
-    "53": [
+    "49": [
       "database_migrations_0001_01_01_000000_create_sessions_table",
       "database_migrations_0001_01_01_000000_create_sessions_table_down",
       "database_migrations_0001_01_01_000000_create_sessions_table_up",
@@ -920,7 +909,7 @@
       "database_migrations_2026_08_07_100010_create_t_pengaduanmasyarakat_table_up",
       "illuminate_database_schema_blueprint"
     ],
-    "54": [
+    "50": [
       "database_migrations_0001_01_01_000002_create_jobs_table",
       "database_migrations_0001_01_01_000002_create_jobs_table_down",
       "database_migrations_0001_01_01_000002_create_jobs_table_up",
@@ -929,7 +918,7 @@
       "database_migrations_2026_08_07_100001_create_m_userlevels_table_up",
       "illuminate_database_migrations_migration"
     ],
-    "55": [
+    "51": [
       "resources_js_components_grafik",
       "resources_js_components_grafik_angkaid",
       "resources_js_components_grafik_dasar",
@@ -938,7 +927,7 @@
       "resources_js_components_grafik_grafiktren",
       "resources_js_components_grafik_kartutooltip"
     ],
-    "56": [
+    "52": [
       "resources_js_components_loncengnotifikasi",
       "resources_js_components_loncengnotifikasi_ambilkonteks",
       "resources_js_components_loncengnotifikasi_bukaaudio",
@@ -947,7 +936,7 @@
       "resources_js_components_loncengnotifikasi_tipe_ikon",
       "resources_js_components_loncengnotifikasi_wakturelatif"
     ],
-    "57": [
+    "53": [
       "resources_js_components_ui_time_picker",
       "resources_js_components_ui_time_picker_hours",
       "resources_js_components_ui_time_picker_isjam",
@@ -956,23 +945,15 @@
       "resources_js_components_ui_time_picker_scrollcolumn",
       "resources_js_components_ui_time_picker_timepicker"
     ],
-    "58": [
-      "app_http_controllers_pengajuancontroller",
-      "app_http_controllers_pengajuancontroller_pengajuancontroller",
-      "app_http_controllers_pengajuancontroller_pengajuancontroller_construct",
-      "app_http_controllers_pengajuancontroller_pengajuancontroller_form",
-      "app_http_controllers_pengajuancontroller_pengajuancontroller_pilih",
-      "app_http_controllers_pengajuancontroller_pengajuancontroller_riwayat"
+    "54": [
+      "app_http_controllers_api_permohonanpdfcontroller_permohonanpdfcontroller",
+      "app_http_controllers_api_permohonanpdfcontroller_permohonanpdfcontroller_invoke",
+      "app_http_controllers_api_permohonanpdfcontroller_permohonanpdfcontroller_kecilkan",
+      "app_http_controllers_api_permohonanpdfcontroller_permohonanpdfcontroller_logokop",
+      "app_http_controllers_api_permohonanpdfcontroller_permohonanpdfcontroller_memoritersedia",
+      "app_http_controllers_api_permohonanpdfcontroller_permohonanpdfcontroller_siapkanlampiran"
     ],
-    "59": [
-      "app_services_jamlayanan",
-      "app_support_periode",
-      "app_support_periode_periode_bacaacuan",
-      "app_support_periode_periode_rentang",
-      "app_support_periode_php_carbonimmutable",
-      "carbon_carbonimmutable"
-    ],
-    "60": [
+    "55": [
       "illuminate_foundation_testing_testcase",
       "tests_feature_exampletest",
       "tests_feature_exampletest_exampletest",
@@ -980,7 +961,7 @@
       "tests_testcase",
       "tests_testcase_testcase"
     ],
-    "61": [
+    "56": [
       "publik_partials_faq",
       "resources_views_publik_info_blade",
       "resources_views_publik_info_blade_php_publik_partials_berkas",
@@ -988,7 +969,7 @@
       "resources_views_publik_info_blade_php_publik_partials_dokumen_edit",
       "resources_views_publik_info_blade_php_publik_partials_subnav"
     ],
-    "62": [
+    "57": [
       "resources_js_components_layoutdashboard",
       "resources_js_components_layoutdashboard_aktifkan",
       "resources_js_components_layoutdashboard_grup",
@@ -996,7 +977,7 @@
       "resources_js_components_layoutdashboard_itemmenu",
       "resources_js_components_layoutdashboard_layoutdashboard"
     ],
-    "63": [
+    "58": [
       "resources_js_components_ui_tabs",
       "resources_js_components_ui_tabs_tabs",
       "resources_js_components_ui_tabs_tabscontent",
@@ -1004,7 +985,7 @@
       "resources_js_components_ui_tabs_tabslistvariants",
       "resources_js_components_ui_tabs_tabstrigger"
     ],
-    "64": [
+    "59": [
       "resources_js_lib_mode_edit",
       "resources_js_lib_mode_edit_bukaeditor",
       "resources_js_lib_mode_edit_modeeditaktif",
@@ -1012,7 +993,7 @@
       "resources_js_lib_mode_edit_pendengar",
       "resources_js_lib_mode_edit_setmodeedit"
     ],
-    "65": [
+    "60": [
       "resources_js_lib_statistik_kartu",
       "resources_js_lib_statistik_kartu_kartu_bawaan",
       "resources_js_lib_statistik_kartu_label_kolom",
@@ -1020,7 +1001,7 @@
       "resources_js_lib_statistik_kartu_warna_preset",
       "resources_js_lib_statistik_kartu_warnapreset"
     ],
-    "66": [
+    "61": [
       "resources_js_pages_dashboard_skm",
       "resources_js_pages_dashboard_skm_kartuangka",
       "resources_js_pages_dashboard_skm_mutu",
@@ -1028,7 +1009,7 @@
       "resources_js_pages_dashboard_skm_tab",
       "resources_js_pages_dashboard_skm_warnanilai"
     ],
-    "67": [
+    "62": [
       "resources_js_pages_profil",
       "resources_js_pages_profil_gradien",
       "resources_js_pages_profil_kartubiodata",
@@ -1036,7 +1017,7 @@
       "resources_js_pages_profil_kartusandi",
       "resources_js_pages_profil_profil"
     ],
-    "68": [
+    "63": [
       "scripts_salin_aset_ocr",
       "scripts_salin_aset_ocr_akar",
       "scripts_salin_aset_ocr_berkas",
@@ -1044,913 +1025,904 @@
       "scripts_salin_aset_ocr_tessdata",
       "scripts_salin_aset_ocr_tujuan"
     ],
-    "69": [
+    "64": [
+      "app_http_controllers_auth_cekstatuscontroller_cekstatuscontroller",
+      "app_http_controllers_auth_cekstatuscontroller_cekstatuscontroller_ajukanulang",
+      "app_http_controllers_auth_cekstatuscontroller_cekstatuscontroller_construct",
+      "app_http_controllers_auth_cekstatuscontroller_cekstatuscontroller_periksa",
+      "app_http_controllers_auth_cekstatuscontroller_cekstatuscontroller_tampilkan"
+    ],
+    "65": [
+      "app_services_fonnte",
+      "app_services_pemberitahuan",
+      "app_services_recaptcha",
+      "illuminate_support_facades_http",
+      "illuminate_support_facades_log"
+    ],
+    "66": [
       "composer_autoload",
       "composer_autoload_psr_4",
       "composer_psr_4_app",
       "composer_psr_4_database_factories",
       "composer_psr_4_database_seeders"
     ],
-    "70": [
+    "67": [
       "composer_branch_alias_dev_master",
       "composer_extra",
       "composer_extra_branch_alias",
       "composer_extra_laravel",
       "composer_laravel_dont_discover"
     ],
-    "71": [
+    "68": [
       "config_logging",
       "monolog_handler_nullhandler",
       "monolog_handler_streamhandler",
       "monolog_handler_syslogudphandler",
       "monolog_processor_psrlogmessageprocessor"
     ],
-    "72": [
+    "69": [
       "grafik",
       "resources_js_components_grafiktampak",
       "resources_js_components_grafiktampak_grafik",
       "resources_js_components_grafiktampak_grafiktampak",
       "resources_js_components_grafiktampak_kerangka"
     ],
-    "73": [
+    "70": [
       "resources_js_components_editordemografi",
       "resources_js_components_editordemografi_angka",
       "resources_js_components_editordemografi_digit",
       "resources_js_components_editordemografi_editordemografi",
       "resources_js_components_editordemografi_tabeldemografi"
     ],
-    "74": [
+    "71": [
       "resources_js_components_penyuntingkaya",
       "resources_js_components_penyuntingkaya_bilahalat",
       "resources_js_components_penyuntingkaya_pemisah",
       "resources_js_components_penyuntingkaya_penyuntingkaya",
       "resources_js_components_penyuntingkaya_tombolalat"
     ],
-    "75": [
+    "72": [
       "resources_js_components_ui_alert",
       "resources_js_components_ui_alert_alert",
       "resources_js_components_ui_alert_alertdescription",
       "resources_js_components_ui_alert_alerttitle",
       "resources_js_components_ui_alert_alertvariants"
     ],
-    "76": [
+    "73": [
       "resources_js_components_ui_date_picker",
       "resources_js_components_ui_date_picker_datepicker",
       "resources_js_components_ui_date_picker_ketampilan",
       "resources_js_components_ui_date_picker_masker",
       "resources_js_components_ui_date_picker_parsevalue"
     ],
-    "77": [
+    "74": [
       "resources_js_components_ui_popover",
       "resources_js_components_ui_popover_popover",
       "resources_js_components_ui_popover_popoveranchor",
       "resources_js_components_ui_popover_popovercontent",
       "resources_js_components_ui_popover_popovertrigger"
     ],
-    "78": [
+    "75": [
       "resources_js_components_ui_toast",
       "resources_js_components_ui_toast_durasi",
       "resources_js_components_ui_toast_gaya",
       "resources_js_components_ui_toast_toast",
       "resources_js_components_ui_toast_toaster"
     ],
-    "79": [
+    "76": [
       "resources_js_lib_api",
       "resources_js_lib_api_ambiljson",
       "resources_js_lib_api_kirimberkas",
       "resources_js_lib_api_kirimjson",
       "resources_js_lib_api_tokencsrf"
     ],
-    "80": [
+    "77": [
       "resources_js_pages_dashboard_permohonan",
       "resources_js_pages_dashboard_permohonan_alasan_tolak",
       "resources_js_pages_dashboard_permohonan_paneldetail",
       "resources_js_pages_dashboard_permohonan_permohonan",
       "resources_js_pages_dashboard_permohonan_status_urut"
     ],
-    "81": [
+    "78": [
       "resources_js_pages_pengajuan_riwayat",
       "resources_js_pages_pengajuan_riwayat_hero",
       "resources_js_pages_pengajuan_riwayat_riwayat",
       "resources_js_pages_pengajuan_riwayat_tab",
       "resources_js_pages_pengajuan_riwayat_warna"
     ],
-    "82": [
+    "79": [
       "resources_views_publik_ppid_layanan_blade",
       "resources_views_publik_ppid_layanan_blade_php_publik_partials_berkas",
       "resources_views_publik_ppid_layanan_blade_php_publik_partials_blok_isi",
       "resources_views_publik_ppid_layanan_blade_php_publik_partials_dokumen_edit",
       "resources_views_publik_ppid_layanan_blade_php_publik_partials_subnav"
     ],
-    "83": [
+    "80": [
       "phpunit_framework_testcase",
       "tests_unit_exampletest",
       "tests_unit_exampletest_exampletest",
       "tests_unit_exampletest_exampletest_test_that_true_is_true"
     ],
-    "84": [
+    "81": [
       "potonggambar",
       "resources_js_components_mediaunggah",
       "resources_js_components_mediaunggah_mediaunggah",
       "resources_js_components_mediaunggah_potonggambar"
     ],
-    "85": [
+    "82": [
       "resources_js_components_unggahgambar",
       "resources_js_components_unggahgambar_kecilkan",
       "resources_js_components_unggahgambar_tipe_diterima",
       "resources_js_components_unggahgambar_unggahgambar"
     ],
-    "86": [
+    "83": [
       "resources_js_lib_ikon",
       "resources_js_lib_ikon_ikon",
       "resources_js_lib_ikon_nama_ikon",
       "resources_js_lib_ikon_peta"
     ],
-    "87": [
+    "84": [
       "resources_js_pages_auth_register",
       "resources_js_pages_auth_register_bagian",
       "resources_js_pages_auth_register_register",
       "resources_js_pages_auth_register_tandaocr"
     ],
-    "88": [
+    "85": [
       "resources_js_pages_dashboard_log",
       "resources_js_pages_dashboard_log_log",
       "resources_js_pages_dashboard_log_tautandata",
       "resources_js_pages_dashboard_log_warna_aksi"
     ],
-    "89": [
+    "86": [
       "resources_js_pages_dashboard_pengaduan",
       "resources_js_pages_dashboard_pengaduan_lencana",
       "resources_js_pages_dashboard_pengaduan_pengaduan",
       "resources_js_pages_dashboard_pengaduan_saringan"
     ],
-    "90": [
+    "87": [
       "resources_js_publik",
       "resources_js_publik_bacaprops",
       "resources_js_publik_pasang",
       "resources_js_publik_pulau"
     ],
-    "91": [
+    "88": [
       "resources_js_publik_carousel",
       "resources_js_publik_carousel_bawaan",
       "resources_js_publik_carousel_carousel",
       "resources_js_publik_carousel_cincinprogres"
     ],
-    "92": [
+    "89": [
       "resources_js_publik_formskm",
       "resources_js_publik_formskm_formskm",
       "resources_js_publik_formskm_pilihandropdown",
       "resources_js_publik_formskm_pilihantombol"
     ],
-    "93": [
+    "90": [
       "resources_js_publik_modeedit",
       "resources_js_publik_modeedit_dialogblok",
       "resources_js_publik_modeedit_modeedit",
       "resources_js_publik_modeedit_tombolpensil"
     ],
-    "94": [
+    "91": [
       "resources_js_publik_petasebaran",
       "resources_js_publik_petasebaran_angka",
       "resources_js_publik_petasebaran_jarijari",
       "resources_js_publik_petasebaran_petasebaran"
     ],
-    "95": [
+    "92": [
       "resources_js_publik_widgetaksesibilitas",
       "resources_js_publik_widgetaksesibilitas_label_spasi",
       "resources_js_publik_widgetaksesibilitas_ubin",
       "resources_js_publik_widgetaksesibilitas_widgetaksesibilitas"
     ],
-    "96": [
+    "93": [
       "composer_autoload_dev",
       "composer_autoload_dev_psr_4",
       "composer_psr_4_tests"
     ],
-    "97": [
+    "94": [
       "composer_scripts_post_autoload_dump",
       "ref_illuminate_foundation_composerscripts_postautoloaddump",
       "ref_php_artisan_package_discover_ansi"
     ],
-    "98": [
+    "95": [
       "database_migrations_0001_01_01_000001_create_cache_table",
       "database_migrations_0001_01_01_000001_create_cache_table_down",
       "database_migrations_0001_01_01_000001_create_cache_table_up"
     ],
-    "99": [
+    "96": [
       "database_migrations_2026_08_07_100002_create_users_table",
       "database_migrations_2026_08_07_100002_create_users_table_down",
       "database_migrations_2026_08_07_100002_create_users_table_up"
     ],
-    "100": [
+    "97": [
       "database_migrations_2026_08_07_100003_create_m_jenis_permohonan_table",
       "database_migrations_2026_08_07_100003_create_m_jenis_permohonan_table_down",
       "database_migrations_2026_08_07_100003_create_m_jenis_permohonan_table_up"
     ],
-    "101": [
+    "98": [
       "database_migrations_2026_08_07_100004_create_t_permohonan_table",
       "database_migrations_2026_08_07_100004_create_t_permohonan_table_down",
       "database_migrations_2026_08_07_100004_create_t_permohonan_table_up"
     ],
-    "102": [
+    "99": [
       "database_migrations_2026_08_07_100005_create_t_berkas_table",
       "database_migrations_2026_08_07_100005_create_t_berkas_table_down",
       "database_migrations_2026_08_07_100005_create_t_berkas_table_up"
     ],
-    "103": [
+    "100": [
       "database_migrations_2026_08_07_100006_create_m_wilayah_table",
       "database_migrations_2026_08_07_100006_create_m_wilayah_table_down",
       "database_migrations_2026_08_07_100006_create_m_wilayah_table_up"
     ],
-    "104": [
+    "101": [
       "database_migrations_2026_08_07_100007_create_m_news_posts_table",
       "database_migrations_2026_08_07_100007_create_m_news_posts_table_down",
       "database_migrations_2026_08_07_100007_create_m_news_posts_table_up"
     ],
-    "105": [
+    "102": [
       "database_migrations_2026_08_07_100008_create_t_galleries_table",
       "database_migrations_2026_08_07_100008_create_t_galleries_table_down",
       "database_migrations_2026_08_07_100008_create_t_galleries_table_up"
     ],
-    "106": [
+    "103": [
       "database_migrations_2026_08_07_100009_create_t_produk_table",
       "database_migrations_2026_08_07_100009_create_t_produk_table_down",
       "database_migrations_2026_08_07_100009_create_t_produk_table_up"
     ],
-    "107": [
+    "104": [
       "database_migrations_2026_08_07_100011_create_t_kritiksaran_table",
       "database_migrations_2026_08_07_100011_create_t_kritiksaran_table_down",
       "database_migrations_2026_08_07_100011_create_t_kritiksaran_table_up"
     ],
-    "108": [
+    "105": [
       "database_migrations_2026_08_07_100012_create_t_skm_jawaban_table",
       "database_migrations_2026_08_07_100012_create_t_skm_jawaban_table_down",
       "database_migrations_2026_08_07_100012_create_t_skm_jawaban_table_up"
     ],
-    "109": [
+    "106": [
       "database_migrations_2026_08_07_100013_create_t_static_contents_table",
       "database_migrations_2026_08_07_100013_create_t_static_contents_table_down",
       "database_migrations_2026_08_07_100013_create_t_static_contents_table_up"
     ],
-    "110": [
+    "107": [
       "database_migrations_2026_08_07_100014_create_t_media_table",
       "database_migrations_2026_08_07_100014_create_t_media_table_down",
       "database_migrations_2026_08_07_100014_create_t_media_table_up"
     ],
-    "111": [
+    "108": [
       "database_migrations_2026_08_07_100015_create_m_demografi_wilayah_table",
       "database_migrations_2026_08_07_100015_create_m_demografi_wilayah_table_down",
       "database_migrations_2026_08_07_100015_create_m_demografi_wilayah_table_up"
     ],
-    "112": [
+    "109": [
       "database_migrations_2026_08_07_100016_create_t_tiket_table",
       "database_migrations_2026_08_07_100016_create_t_tiket_table_down",
       "database_migrations_2026_08_07_100016_create_t_tiket_table_up"
     ],
-    "113": [
+    "110": [
       "database_migrations_2026_08_07_100017_create_t_tiket_pesan_table",
       "database_migrations_2026_08_07_100017_create_t_tiket_pesan_table_down",
       "database_migrations_2026_08_07_100017_create_t_tiket_pesan_table_up"
     ],
-    "114": [
+    "111": [
       "database_migrations_2026_08_07_100018_create_t_notifikasi_table",
       "database_migrations_2026_08_07_100018_create_t_notifikasi_table_down",
       "database_migrations_2026_08_07_100018_create_t_notifikasi_table_up"
     ],
-    "115": [
+    "112": [
       "database_migrations_2026_08_07_100019_create_t_kunjungan_table",
       "database_migrations_2026_08_07_100019_create_t_kunjungan_table_down",
       "database_migrations_2026_08_07_100019_create_t_kunjungan_table_up"
     ],
-    "116": [
+    "113": [
       "database_migrations_2026_08_07_100020_create_t_log_aktivitas_table",
       "database_migrations_2026_08_07_100020_create_t_log_aktivitas_table_down",
       "database_migrations_2026_08_07_100020_create_t_log_aktivitas_table_up"
     ],
-    "117": [
+    "114": [
       "database_migrations_2026_08_12_100001_tambah_user_ktp_ke_users",
       "database_migrations_2026_08_12_100001_tambah_user_ktp_ke_users_down",
       "database_migrations_2026_08_12_100001_tambah_user_ktp_ke_users_up"
     ],
-    "118": [
+    "115": [
       "database_migrations_2026_08_17_100001_tambah_identitas_responden_ke_t_skm_jawaban",
       "database_migrations_2026_08_17_100001_tambah_identitas_responden_ke_t_skm_jawaban_down",
       "database_migrations_2026_08_17_100001_tambah_identitas_responden_ke_t_skm_jawaban_up"
     ],
-    "119": [
+    "116": [
       "illuminate_foundation_inspiring",
       "illuminate_support_facades_artisan",
       "routes_console"
     ],
-    "120": [
+    "117": [
       "resources_js_components_footerpublik",
       "resources_js_components_footerpublik_footerpublik",
       "resources_js_components_footerpublik_ikon"
     ],
-    "121": [
+    "118": [
       "resources_js_components_formlayanan",
       "resources_js_components_formlayanan_formlayanan",
       "resources_js_components_formlayanan_periksafield"
     ],
-    "122": [
+    "119": [
       "resources_js_components_kartuauth",
       "resources_js_components_kartuauth_kartuauth",
       "resources_js_components_kartuauth_kotakgalat"
     ],
-    "123": [
+    "120": [
       "resources_js_components_searchselect",
       "resources_js_components_searchselect_norm",
       "resources_js_components_searchselect_searchselect"
     ],
-    "124": [
+    "121": [
       "resources_js_components_ui_button",
       "resources_js_components_ui_button_button",
       "resources_js_components_ui_button_buttonvariants"
     ],
-    "125": [
+    "122": [
       "resources_js_lib_konten_statis",
       "resources_js_lib_konten_statis_bawaan",
       "resources_js_lib_konten_statis_usekontenstatis"
     ],
-    "126": [
+    "123": [
       "resources_js_lib_sorot",
       "resources_js_lib_sorot_kelassorot",
       "resources_js_lib_sorot_usesorot"
     ],
-    "127": [
+    "124": [
       "resources_js_pages_auth_cekstatus",
       "resources_js_pages_auth_cekstatus_cekstatus",
       "resources_js_pages_auth_cekstatus_warna"
     ],
-    "128": [
+    "125": [
       "resources_js_pages_dashboard_demografi",
       "resources_js_pages_dashboard_demografi_demografi",
       "resources_js_pages_dashboard_demografi_unduh"
     ],
-    "129": [
+    "126": [
       "resources_js_pages_dashboard_galeri",
       "resources_js_pages_dashboard_galeri_galeri",
       "resources_js_pages_dashboard_galeri_kategori"
     ],
-    "130": [
+    "127": [
       "resources_js_pages_dashboard_konten",
       "resources_js_pages_dashboard_konten_konten",
       "resources_js_pages_dashboard_konten_ratakan"
     ],
-    "131": [
+    "128": [
       "resources_js_pages_dashboard_media",
       "resources_js_pages_dashboard_media_media",
       "resources_js_pages_dashboard_media_ukuranberkas"
     ],
-    "132": [
+    "129": [
       "resources_js_pages_dashboard_produk",
       "resources_js_pages_dashboard_produk_grup",
       "resources_js_pages_dashboard_produk_produk"
     ],
-    "133": [
+    "130": [
       "resources_js_publik_formaspirasi",
       "resources_js_publik_formaspirasi_formaspirasi",
       "resources_js_publik_formaspirasi_teks"
     ],
-    "134": [
+    "131": [
       "resources_js_publik_hitungpengunjung",
       "resources_js_publik_hitungpengunjung_fmt",
       "resources_js_publik_hitungpengunjung_hitungpengunjung"
     ],
-    "135": [
+    "132": [
       "resources_views_publik_produk_disdukcapil_blade",
       "resources_views_publik_produk_disdukcapil_blade_php_publik_partials_berkas",
       "resources_views_publik_produk_disdukcapil_blade_php_publik_partials_dokumen_edit"
     ],
-    "136": [
+    "133": [
       "clsx",
       "package_dependencies_clsx"
     ],
-    "137": [
+    "134": [
       "date_fns",
       "package_dependencies_date_fns"
     ],
-    "138": [
-      "deploy_buat_paket",
-      "deploy_buat_paket_new_zipforwardslash"
-    ],
-    "139": [
-      "deploy_sql_2026_08_18_siapkan_db_produksi",
-      "deploy_sql_2026_08_18_siapkan_db_produksi_migrations"
-    ],
-    "140": [
+    "135": [
       "framer_motion",
       "package_dependencies_framer_motion"
     ],
-    "141": [
+    "136": [
       "highcharts",
       "package_dependencies_highcharts"
     ],
-    "142": [
+    "137": [
       "highcharts_react_official",
       "package_dependencies_highcharts_react_official"
     ],
-    "143": [
+    "138": [
       "inertiajs_react",
       "package_dependencies_inertiajs_react"
     ],
-    "144": [
+    "139": [
       "leaflet",
       "package_dependencies_leaflet"
     ],
-    "145": [
+    "140": [
       "lucide_react",
       "package_dependencies_lucide_react"
     ],
-    "146": [
+    "141": [
       "package_dependencies_radix_ui",
       "radix_ui"
     ],
-    "147": [
+    "142": [
       "package_dependencies_radix_ui_react_dialog",
       "radix_ui_react_dialog"
     ],
-    "148": [
+    "143": [
       "package_dependencies_radix_ui_react_popover",
       "radix_ui_react_popover"
     ],
-    "149": [
+    "144": [
       "package_dependencies_radix_ui_react_slot",
       "radix_ui_react_slot"
     ],
-    "150": [
+    "145": [
       "package_dependencies_react",
       "react"
     ],
-    "151": [
+    "146": [
       "package_dependencies_react_advanced_cropper",
       "react_advanced_cropper"
     ],
-    "152": [
+    "147": [
       "package_dependencies_react_day_picker",
       "react_day_picker"
     ],
-    "153": [
+    "148": [
       "package_dependencies_react_dom",
       "react_dom"
     ],
-    "154": [
+    "149": [
       "package_dependencies_react_dropzone",
       "react_dropzone"
     ],
-    "155": [
+    "150": [
       "package_dependencies_react_leaflet",
       "react_leaflet"
     ],
-    "156": [
+    "151": [
       "package_dependencies_sonner",
       "sonner"
     ],
-    "157": [
+    "152": [
       "package_dependencies_tailwind_merge",
       "tailwind_merge"
     ],
-    "158": [
+    "153": [
       "package_dependencies_tesseract_js",
       "package_json_tesseract_js"
     ],
-    "159": [
+    "154": [
       "package_dependencies_tiptap_extension_image",
       "tiptap_extension_image"
     ],
-    "160": [
+    "155": [
       "package_dependencies_tiptap_extension_link",
       "tiptap_extension_link"
     ],
-    "161": [
+    "156": [
       "package_dependencies_tiptap_extension_underline",
       "tiptap_extension_underline"
     ],
-    "162": [
+    "157": [
       "package_dependencies_tiptap_extensions",
       "tiptap_extensions"
     ],
-    "163": [
+    "158": [
       "package_dependencies_tiptap_pm",
       "tiptap_pm"
     ],
-    "164": [
+    "159": [
       "package_dependencies_tiptap_react",
       "tiptap_react"
     ],
-    "165": [
+    "160": [
       "package_dependencies_tiptap_starter_kit",
       "tiptap_starter_kit"
     ],
-    "166": [
+    "161": [
       "publik_partials_footer",
       "resources_views_publik_layout_blade"
     ],
-    "167": [
+    "162": [
       "resources_js_app_js_resources_js_app",
       "resources_js_bootstrap"
     ],
-    "168": [
+    "163": [
       "resources_js_app_jsx_resources_js_app",
       "resources_js_app_setup"
     ],
-    "169": [
+    "164": [
       "resources_js_components_ambilselfie",
       "resources_js_components_ambilselfie_ambilselfie"
     ],
-    "170": [
+    "165": [
       "resources_js_components_bidanggambar",
       "resources_js_components_bidanggambar_bidanggambar"
     ],
-    "171": [
+    "166": [
       "resources_js_components_grafikharian",
       "resources_js_components_grafikharian_grafikharian"
     ],
-    "172": [
+    "167": [
       "resources_js_components_layoutpengguna",
       "resources_js_components_layoutpengguna_layoutpengguna"
     ],
-    "173": [
+    "168": [
       "resources_js_components_pemilihmedia",
       "resources_js_components_pemilihmedia_pemilihmedia"
     ],
-    "174": [
+    "169": [
       "resources_js_components_penampilgambar",
       "resources_js_components_penampilgambar_penampilgambar"
     ],
-    "175": [
+    "170": [
       "resources_js_components_potonggambar",
       "resources_js_components_potonggambar_potonggambar"
     ],
-    "176": [
+    "171": [
       "resources_js_components_ui_calendar",
       "resources_js_components_ui_calendar_calendar"
     ],
-    "177": [
+    "172": [
       "resources_js_components_ui_checkbox",
       "resources_js_components_ui_checkbox_checkbox"
     ],
-    "178": [
+    "173": [
       "resources_js_components_ui_input",
       "resources_js_components_ui_input_input"
     ],
-    "179": [
+    "174": [
       "resources_js_components_ui_label",
       "resources_js_components_ui_label_label"
     ],
-    "180": [
+    "175": [
       "resources_js_components_ui_password_input",
       "resources_js_components_ui_password_input_passwordinput"
     ],
-    "181": [
+    "176": [
       "resources_js_components_ui_textarea",
       "resources_js_components_ui_textarea_textarea"
     ],
-    "182": [
+    "177": [
       "resources_js_lib_gambar",
       "resources_js_lib_gambar_tanpaawalandataurl"
     ],
-    "183": [
+    "178": [
       "resources_js_lib_navigasi",
       "resources_js_lib_navigasi_menunavigasi"
     ],
-    "184": [
+    "179": [
       "resources_js_lib_utils",
       "resources_js_lib_utils_cn"
     ],
-    "185": [
+    "180": [
       "resources_js_pages_auth_login",
       "resources_js_pages_auth_login_login"
     ],
-    "186": [
+    "181": [
       "resources_js_pages_auth_lupasandi",
       "resources_js_pages_auth_lupasandi_lupasandi"
     ],
-    "187": [
+    "182": [
       "resources_js_pages_auth_resetsandi",
       "resources_js_pages_auth_resetsandi_resetsandi"
     ],
-    "188": [
+    "183": [
       "resources_js_pages_dashboard_kritiksaran",
       "resources_js_pages_dashboard_kritiksaran_kritiksaran"
     ],
-    "189": [
+    "184": [
       "resources_js_pages_dashboard_master",
       "resources_js_pages_dashboard_master_master"
     ],
-    "190": [
+    "185": [
       "resources_js_pages_dashboard_pengajuanbaru",
       "resources_js_pages_dashboard_pengajuanbaru_pengajuanbaru"
     ],
-    "191": [
+    "186": [
       "resources_js_pages_dashboard_pengajuanform",
       "resources_js_pages_dashboard_pengajuanform_pengajuanform"
     ],
-    "192": [
+    "187": [
       "resources_js_pages_pengajuan_form",
       "resources_js_pages_pengajuan_form_form"
     ],
-    "193": [
+    "188": [
       "resources_js_pages_pengajuan_pilih",
       "resources_js_pages_pengajuan_pilih_pilih"
     ],
-    "194": [
+    "189": [
       "resources_js_publik_dokumenedit",
       "resources_js_publik_dokumenedit_dokumenedit"
     ],
-    "195": [
+    "190": [
       "resources_js_publik_tabeldemografi",
       "resources_js_publik_tabeldemografi_tabeldemografi"
     ],
-    "196": [
+    "191": [
       "resources_views_publik_ppid_indeks_blade",
       "resources_views_publik_ppid_indeks_blade_php_publik_partials_subnav"
     ],
-    "197": [
+    "192": [
       "artisan"
     ],
-    "198": [
+    "193": [
       "bootstrap_providers"
     ],
-    "199": [
+    "194": [
       "config_app"
     ],
-    "200": [
+    "195": [
       "config_auth"
     ],
-    "201": [
+    "196": [
       "config_demografi"
     ],
-    "202": [
+    "197": [
       "config_dokumen"
     ],
-    "203": [
+    "198": [
       "config_dompdf"
     ],
-    "204": [
+    "199": [
       "config_filesystems"
     ],
-    "205": [
+    "200": [
       "config_footer"
     ],
-    "206": [
+    "201": [
       "config_hashing"
     ],
-    "207": [
+    "202": [
       "config_ikon"
     ],
-    "208": [
+    "203": [
       "config_info_halaman"
     ],
-    "209": [
+    "204": [
       "config_ketentuan"
     ],
-    "210": [
+    "205": [
       "config_kode_options"
     ],
-    "211": [
+    "206": [
       "config_konten"
     ],
-    "212": [
+    "207": [
       "config_layanan"
     ],
-    "213": [
+    "208": [
       "config_mail"
     ],
-    "214": [
+    "209": [
       "config_master"
     ],
-    "215": [
+    "210": [
       "config_ppid"
     ],
-    "216": [
+    "211": [
       "config_ppid_layanan"
     ],
-    "217": [
+    "212": [
       "config_ppid_subnav"
     ],
-    "218": [
+    "213": [
       "config_queue"
     ],
-    "219": [
+    "214": [
       "config_services"
     ],
-    "220": [
+    "215": [
       "config_situs"
     ],
-    "221": [
+    "216": [
       "config_skm"
     ],
-    "222": [
-      "lang_en_auth"
-    ],
-    "223": [
-      "lang_en_pagination"
-    ],
-    "224": [
-      "lang_en_passwords"
-    ],
-    "225": [
-      "lang_en_validation"
-    ],
-    "226": [
-      "lang_id_validation"
-    ],
-    "227": [
+    "217": [
       "resources_views_app_blade"
     ],
-    "228": [
+    "218": [
       "resources_views_components_ikon_blade"
     ],
-    "229": [
+    "219": [
       "resources_views_components_kepala_publik_blade"
     ],
-    "230": [
+    "220": [
       "resources_views_emails_akun_disetujui_blade"
     ],
-    "231": [
+    "221": [
       "resources_views_emails_akun_ditolak_blade"
     ],
-    "232": [
+    "222": [
       "resources_views_emails_layout_blade"
     ],
-    "233": [
+    "223": [
       "resources_views_emails_otp_blade"
     ],
-    "234": [
+    "224": [
       "resources_views_emails_permohonan_ditolak_blade"
     ],
-    "235": [
+    "225": [
       "resources_views_emails_permohonan_selesai_blade"
     ],
-    "236": [
+    "226": [
       "resources_views_emails_registrasi_diterima_blade"
     ],
-    "237": [
+    "227": [
       "resources_views_emails_reset_sandi_blade"
     ],
-    "238": [
+    "228": [
       "resources_views_pdf_permohonan_blade"
     ],
-    "239": [
+    "229": [
       "resources_views_publik_beranda_blade"
     ],
-    "240": [
+    "230": [
       "resources_views_publik_berita_detail_blade"
     ],
-    "241": [
+    "231": [
       "resources_views_publik_berita_indeks_blade"
     ],
-    "242": [
+    "232": [
       "resources_views_publik_demografi_blade"
     ],
-    "243": [
+    "233": [
       "resources_views_publik_galeri_blade"
     ],
-    "244": [
+    "234": [
       "resources_views_publik_gis_blade"
     ],
-    "245": [
+    "235": [
       "resources_views_publik_hubungi_kami_blade"
     ],
-    "246": [
+    "236": [
       "resources_views_publik_ketentuan_blade"
     ],
-    "247": [
+    "237": [
       "resources_views_publik_partials_berkas_blade"
     ],
-    "248": [
+    "238": [
       "resources_views_publik_partials_blok_isi_blade"
     ],
-    "249": [
+    "239": [
       "resources_views_publik_partials_dokumen_edit_blade"
     ],
-    "250": [
+    "240": [
       "resources_views_publik_partials_faq_blade"
     ],
-    "251": [
+    "241": [
       "resources_views_publik_partials_footer_blade"
     ],
-    "252": [
+    "242": [
       "resources_views_publik_partials_paginasi_blade"
     ],
-    "253": [
+    "243": [
       "resources_views_publik_partials_subnav_blade"
     ],
-    "254": [
+    "244": [
       "resources_views_publik_sitemap_blade"
     ],
-    "255": [
+    "245": [
       "resources_views_publik_survei_kepuasan_blade"
+    ],
+    "246": [
+      "tesseract_js_tesseract_js"
+    ],
+    "247": [
+      "vite_config"
     ],
     "256": [
       "t_skm_jawaban"
     ],
-    "257": [
-      "tesseract_js_tesseract_js"
-    ],
     "258": [
       "users"
-    ],
-    "259": [
-      "vite_config"
     ]
   },
   "cohesion": {
-    "0": 0.08294930875576037,
-    "1": 0.10846560846560846,
-    "2": 0.11965811965811966,
-    "3": 0.07692307692307693,
-    "4": 0.14,
-    "5": 0.12648221343873517,
-    "6": 0.12987012987012986,
-    "7": 0.1038961038961039,
-    "8": 0.17142857142857143,
-    "9": 0.14736842105263157,
-    "10": 0.1631578947368421,
-    "11": 0.15789473684210525,
-    "12": 0.14210526315789473,
-    "13": 0.1695906432748538,
-    "14": 0.13725490196078433,
-    "15": 0.1437908496732026,
-    "16": 0.19852941176470587,
-    "17": 0.19166666666666668,
-    "18": 0.14166666666666666,
+    "0": 0.05336951605608322,
+    "1": 0.08461131676361713,
+    "2": 0.054426705370101594,
+    "3": 0.10837438423645321,
+    "4": 0.11375661375661375,
+    "5": 0.07692307692307693,
+    "6": 0.14,
+    "7": 0.1383399209486166,
+    "8": 0.1038961038961039,
+    "9": 0.15789473684210525,
+    "10": 0.14210526315789473,
+    "11": 0.1830065359477124,
+    "12": 0.1503267973856209,
+    "13": 0.1503267973856209,
+    "14": 0.1437908496732026,
+    "15": 0.15441176470588236,
+    "16": 0.19166666666666668,
+    "17": 0.2,
+    "18": 0.13333333333333333,
     "19": 0.2,
-    "20": 0.13333333333333333,
-    "21": 0.14285714285714285,
-    "22": 0.1523809523809524,
-    "23": 0.18681318681318682,
-    "24": 0.2087912087912088,
-    "25": 0.14285714285714285,
-    "26": 0.19230769230769232,
-    "27": 0.2948717948717949,
-    "28": 0.16666666666666666,
+    "20": 0.21904761904761905,
+    "21": 0.1523809523809524,
+    "22": 0.2948717948717949,
+    "23": 0.16666666666666666,
+    "24": 0.18181818181818182,
+    "25": 1.0,
+    "26": 0.2,
+    "27": 0.18181818181818182,
+    "28": 0.21818181818181817,
     "29": 0.18181818181818182,
-    "30": 0.16666666666666666,
+    "30": 0.18181818181818182,
     "31": 0.18181818181818182,
-    "32": 0.21818181818181817,
-    "33": 0.18181818181818182,
-    "34": 0.18181818181818182,
-    "35": 0.18181818181818182,
-    "36": 0.18181818181818182,
-    "37": 0.26666666666666666,
-    "38": 0.2222222222222222,
-    "39": 0.25,
-    "40": 0.2222222222222222,
-    "41": 0.2222222222222222,
-    "42": 0.2222222222222222,
-    "43": 0.39285714285714285,
-    "44": 0.2857142857142857,
-    "45": 0.25,
-    "46": 0.25,
-    "47": 0.25,
-    "48": 0.32142857142857145,
-    "49": 0.3333333333333333,
-    "50": 0.38095238095238093,
-    "51": 0.2857142857142857,
-    "52": 0.2857142857142857,
-    "53": 0.2857142857142857,
-    "54": 0.2857142857142857,
-    "55": 0.42857142857142855,
-    "56": 0.5238095238095238,
-    "57": 0.38095238095238093,
-    "58": 0.3333333333333333,
-    "59": 0.4,
-    "60": 0.4,
-    "61": 0.3333333333333333,
-    "62": 0.5333333333333333,
-    "63": 0.4,
-    "64": 0.3333333333333333,
-    "65": 0.3333333333333333,
-    "66": 0.4666666666666667,
-    "67": 0.3333333333333333,
-    "68": 0.3333333333333333,
+    "32": 0.18181818181818182,
+    "33": 0.2222222222222222,
+    "34": 0.2777777777777778,
+    "35": 0.2222222222222222,
+    "36": 0.2222222222222222,
+    "37": 0.2222222222222222,
+    "38": 0.32142857142857145,
+    "39": 0.39285714285714285,
+    "40": 0.2857142857142857,
+    "41": 0.25,
+    "42": 0.25,
+    "43": 0.25,
+    "44": 0.32142857142857145,
+    "45": 0.3333333333333333,
+    "46": 0.38095238095238093,
+    "47": 0.2857142857142857,
+    "48": 0.2857142857142857,
+    "49": 0.2857142857142857,
+    "50": 0.2857142857142857,
+    "51": 0.42857142857142855,
+    "52": 0.5238095238095238,
+    "53": 0.38095238095238093,
+    "54": 0.6,
+    "55": 0.4,
+    "56": 0.3333333333333333,
+    "57": 0.5333333333333333,
+    "58": 0.4,
+    "59": 0.3333333333333333,
+    "60": 0.3333333333333333,
+    "61": 0.4666666666666667,
+    "62": 0.3333333333333333,
+    "63": 0.3333333333333333,
+    "64": 0.4,
+    "65": 0.5,
+    "66": 0.4,
+    "67": 0.4,
+    "68": 0.4,
     "69": 0.4,
-    "70": 0.4,
+    "70": 0.6,
     "71": 0.4,
-    "72": 0.4,
-    "73": 0.6,
+    "72": 0.5,
+    "73": 0.8,
     "74": 0.4,
-    "75": 0.5,
-    "76": 0.8,
+    "75": 0.4,
+    "76": 0.6,
     "77": 0.4,
     "78": 0.4,
-    "79": 0.6,
-    "80": 0.4,
-    "81": 0.4,
-    "82": 0.4,
-    "83": 0.6666666666666666,
+    "79": 0.4,
+    "80": 0.6666666666666666,
+    "81": 0.5,
+    "82": 0.6666666666666666,
+    "83": 0.5,
     "84": 0.5,
     "85": 0.6666666666666666,
     "86": 0.5,
-    "87": 0.5,
-    "88": 0.6666666666666666,
+    "87": 0.6666666666666666,
+    "88": 0.5,
     "89": 0.5,
-    "90": 0.6666666666666666,
-    "91": 0.5,
+    "90": 0.5,
+    "91": 0.8333333333333334,
     "92": 0.5,
-    "93": 0.5,
-    "94": 0.8333333333333334,
-    "95": 0.5,
+    "93": 0.6666666666666666,
+    "94": 0.6666666666666666,
+    "95": 0.6666666666666666,
     "96": 0.6666666666666666,
     "97": 0.6666666666666666,
     "98": 0.6666666666666666,
@@ -1973,24 +1945,24 @@
     "115": 0.6666666666666666,
     "116": 0.6666666666666666,
     "117": 0.6666666666666666,
-    "118": 0.6666666666666666,
+    "118": 1.0,
     "119": 0.6666666666666666,
-    "120": 0.6666666666666666,
+    "120": 1.0,
     "121": 1.0,
     "122": 0.6666666666666666,
-    "123": 1.0,
-    "124": 1.0,
-    "125": 0.6666666666666666,
+    "123": 0.6666666666666666,
+    "124": 0.6666666666666666,
+    "125": 1.0,
     "126": 0.6666666666666666,
-    "127": 0.6666666666666666,
+    "127": 1.0,
     "128": 1.0,
     "129": 0.6666666666666666,
-    "130": 1.0,
+    "130": 0.6666666666666666,
     "131": 1.0,
     "132": 0.6666666666666666,
-    "133": 0.6666666666666666,
+    "133": 1.0,
     "134": 1.0,
-    "135": 0.6666666666666666,
+    "135": 1.0,
     "136": 1.0,
     "137": 1.0,
     "138": 1.0,
@@ -2103,18 +2075,8 @@
     "245": 1.0,
     "246": 1.0,
     "247": 1.0,
-    "248": 1.0,
-    "249": 1.0,
-    "250": 1.0,
-    "251": 1.0,
-    "252": 1.0,
-    "253": 1.0,
-    "254": 1.0,
-    "255": 1.0,
     "256": 1.0,
-    "257": 1.0,
-    "258": 1.0,
-    "259": 1.0
+    "258": 1.0
   },
   "gods": [
     {
@@ -2228,38 +2190,38 @@
   "questions": [
     {
       "type": "bridge_node",
-      "question": "Why does `Controller` connect `Community 14` to `Community 0`, `Community 1`, `Community 2`, `Community 4`, `Community 5`, `Community 6`, `Community 8`, `Community 9`, `Community 11`, `Community 13`, `Community 16`, `Community 17`, `Community 21`, `Community 23`, `Community 24`, `Community 26`, `Community 28`, `Community 37`, `Community 43`, `Community 49`, `Community 50`, `Community 58`?",
+      "question": "Why does `Controller` connect `Controller` to `Illuminate\\Database\\Eloquent\\Model`, `Permohonan`, `JamLayanan`, `Media`, `PublikController`, `DemografiAdminController`, `Balasan`, `Illuminate\\Http\\Request`, `News`, `UserAdminController.php`, `Recaptcha`, `StatusAkun`, `CatatanAktivitas`, `Pemberitahuan`, `Gallery`, `api.php`, `ProdukAdminController`, `LoginController`, `PermohonanPdfController`, `CekStatusController`?",
+      "why": "High betweenness centrality (0.036) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `User` connect `User` to `Illuminate\\Database\\Eloquent\\Model`, `CekStatusController`, `Permohonan`, `Pemberitahuan.php`, `Media`, `Illuminate\\Http\\Request`, `UserAdminController.php`, `Controller`, `LoginController`, `Recaptcha`, `StatusAkun`, `Pemberitahuan`, `AlasanTolak`?",
       "why": "High betweenness centrality (0.026) - this node is a cross-community bridge."
     },
     {
       "type": "bridge_node",
-      "question": "Why does `Balasan` connect `Community 16` to `Community 0`, `Community 2`, `Community 4`, `Community 37`, `Community 6`, `Community 39`, `Community 8`, `Community 9`, `Community 10`, `Community 11`, `Community 5`, `Community 13`, `Community 14`, `Community 49`, `Community 17`, `Community 23`, `Community 26`, `Community 28`?",
-      "why": "High betweenness centrality (0.023) - this node is a cross-community bridge."
-    },
-    {
-      "type": "bridge_node",
-      "question": "Why does `User` connect `Community 12` to `Community 0`, `Community 2`, `Community 5`, `Community 6`, `Community 39`, `Community 8`, `Community 10`, `Community 11`, `Community 17`, `Community 50`, `Community 18`, `Community 21`, `Community 26`, `Community 28`?",
-      "why": "High betweenness centrality (0.021) - this node is a cross-community bridge."
+      "question": "Why does `Balasan` connect `Balasan` to `Illuminate\\Database\\Eloquent\\Model`, `Permohonan`, `Gallery`, `Media`, `JamLayanan`, `CekStatusController`, `DemografiAdminController`, `api.php`, `Illuminate\\Http\\Request`, `News`, `UserAdminController.php`, `ProdukAdminController`, `Controller`, `Recaptcha`, `StatusAkun`, `CatatanAktivitas`, `Pemberitahuan`, `AlasanTolak`?",
+      "why": "High betweenness centrality (0.025) - this node is a cross-community bridge."
     },
     {
       "type": "isolated_nodes",
-      "question": "What connects `$schema`, `name`, `type` to the rest of the system?",
+      "question": "What connects `graphify`, `$schema`, `name` to the rest of the system?",
       "why": "172 weakly-connected nodes found - possible documentation gaps or missing edges."
     },
     {
       "type": "low_cohesion",
-      "question": "Should `Community 0` be split into smaller, more focused modules?",
-      "why": "Cohesion score 0.08294930875576037 - nodes in this community are weakly interconnected."
+      "question": "Should `Illuminate\\Database\\Eloquent\\Model` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.05336951605608322 - nodes in this community are weakly interconnected."
     },
     {
       "type": "low_cohesion",
-      "question": "Should `Community 1` be split into smaller, more focused modules?",
-      "why": "Cohesion score 0.10846560846560846 - nodes in this community are weakly interconnected."
+      "question": "Should `Permohonan` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.08461131676361713 - nodes in this community are weakly interconnected."
     },
     {
       "type": "low_cohesion",
-      "question": "Should `Community 2` be split into smaller, more focused modules?",
-      "why": "Cohesion score 0.11965811965811966 - nodes in this community are weakly interconnected."
+      "question": "Should `JamLayanan` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.054426705370101594 - nodes in this community are weakly interconnected."
     }
   ]
 }
