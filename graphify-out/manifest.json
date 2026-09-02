@@ -1248,10 +1248,10 @@
     "semantic_hash": "532768e5cf568f2775cf8c8c91d02c86"
   },
   "resources/js/Publik/Carousel.jsx": {
-    "mtime": 1786645612.0012271,
-    "seen": 1788252599.7624009,
-    "ast_hash": "cf0bf577f1940b533af2b7360510b5de",
-    "semantic_hash": "cf0bf577f1940b533af2b7360510b5de"
+    "mtime": 1788339538.2465844,
+    "seen": 1788339756.1583703,
+    "ast_hash": "a3cf0ede7a545a9f6d0f45329850695e",
+    "semantic_hash": ""
   },
   "resources/js/Publik/DokumenEdit.jsx": {
     "mtime": 1786980260.0023646,

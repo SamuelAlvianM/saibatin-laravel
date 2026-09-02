@@ -134,17 +134,69 @@
       "source_location": "L26"
     },
     {
-      "id": "tests_feature_layanannonaktiftest_layanannonaktiftest",
-      "label": "LayananNonaktifTest",
+      "id": "database_seeders_databaseseeder_databaseseeder",
+      "label": "DatabaseSeeder",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 102,
+      "community_name": "DatabaseSeeder.php",
+      "file_type": "code",
+      "norm_label": "databaseseeder",
+      "source_file": "database/seeders/DatabaseSeeder.php",
+      "source_location": "L9"
+    },
+    {
+      "id": "app_http_controllers_api_demograficontroller_demograficontroller",
+      "label": "DemografiController",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 103,
+      "community_name": "DemografiController.php",
+      "file_type": "code",
+      "norm_label": "demograficontroller",
+      "source_file": "app/Http/Controllers/Api/DemografiController.php",
+      "source_location": "L21"
+    },
+    {
+      "id": "app_models_userlevel_userlevel",
+      "label": "UserLevel",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 11,
-      "community_name": "LayananNonaktifTest",
+      "community_name": "UserLevel",
       "file_type": "code",
-      "norm_label": "layanannonaktiftest",
-      "source_file": "tests/Feature/LayananNonaktifTest.php",
-      "source_location": "L24"
+      "norm_label": "userlevel",
+      "source_file": "app/Models/UserLevel.php",
+      "source_location": "L16"
+    },
+    {
+      "id": "tests_feature_exampletest_exampletest",
+      "label": "ExampleTest",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "UserLevel",
+      "file_type": "code",
+      "norm_label": "exampletest",
+      "source_file": "tests/Feature/ExampleTest.php",
+      "source_location": "L8"
+    },
+    {
+      "id": "tests_testcase_testcase",
+      "label": "TestCase",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "UserLevel",
+      "file_type": "code",
+      "norm_label": "testcase",
+      "source_file": "tests/TestCase.php",
+      "source_location": "L7"
     },
     {
       "id": "app_console_commands_isiwilayahakun_isiwilayahakun",
@@ -171,19 +223,6 @@
       "norm_label": "wilayah",
       "source_file": "app/Models/Wilayah.php",
       "source_location": "L17"
-    },
-    {
-      "id": "tests_feature_peranopdtest_peranopdtest",
-      "label": "PeranOpdTest",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "PeranOpdTest",
-      "file_type": "code",
-      "norm_label": "peranopdtest",
-      "source_file": "tests/Feature/PeranOpdTest.php",
-      "source_location": "L25"
     },
     {
       "id": "app_http_controllers_api_permohonanpdfcontroller_permohonanpdfcontroller",
@@ -563,45 +602,6 @@
       "source_location": "L245"
     },
     {
-      "id": "app_models_userlevel_userlevel",
-      "label": "UserLevel",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 249,
-      "community_name": "UserLevel",
-      "file_type": "code",
-      "norm_label": "userlevel",
-      "source_file": "app/Models/UserLevel.php",
-      "source_location": "L16"
-    },
-    {
-      "id": "tests_feature_exampletest_exampletest",
-      "label": "ExampleTest",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 249,
-      "community_name": "UserLevel",
-      "file_type": "code",
-      "norm_label": "exampletest",
-      "source_file": "tests/Feature/ExampleTest.php",
-      "source_location": "L8"
-    },
-    {
-      "id": "tests_testcase_testcase",
-      "label": "TestCase",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 249,
-      "community_name": "UserLevel",
-      "file_type": "code",
-      "norm_label": "testcase",
-      "source_file": "tests/TestCase.php",
-      "source_location": "L7"
-    },
-    {
       "id": "app_http_controllers_auth_registercontroller_registercontroller",
       "label": "RegisterController",
       "_callable": true,
@@ -784,17 +784,17 @@
       "source_location": "L21"
     },
     {
-      "id": "app_http_middleware_handleinertiarequests_handleinertiarequests",
-      "label": "HandleInertiaRequests",
+      "id": "tests_feature_peranopdtest_peranopdtest",
+      "label": "PeranOpdTest",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 39,
-      "community_name": "bootstrap/app.php",
+      "community_name": "PeranOpdTest",
       "file_type": "code",
-      "norm_label": "handleinertiarequests",
-      "source_file": "app/Http/Middleware/HandleInertiaRequests.php",
-      "source_location": "L20"
+      "norm_label": "peranopdtest",
+      "source_file": "tests/Feature/PeranOpdTest.php",
+      "source_location": "L25"
     },
     {
       "id": "app_http_controllers_publikcontroller_publikcontroller",
@@ -1031,30 +1031,43 @@
       "source_location": "L23"
     },
     {
-      "id": "database_seeders_databaseseeder_databaseseeder",
-      "label": "DatabaseSeeder",
+      "id": "app_http_controllers_api_admin_logaktivitascontroller_logaktivitascontroller",
+      "label": "LogAktivitasController",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 46,
-      "community_name": "DatabaseSeeder.php",
+      "community": 50,
+      "community_name": "Periode",
       "file_type": "code",
-      "norm_label": "databaseseeder",
-      "source_file": "database/seeders/DatabaseSeeder.php",
-      "source_location": "L9"
+      "norm_label": "logaktivitascontroller",
+      "source_file": "app/Http/Controllers/Api/Admin/LogAktivitasController.php",
+      "source_location": "L18"
     },
     {
-      "id": "app_http_controllers_api_demograficontroller_demograficontroller",
-      "label": "DemografiController",
+      "id": "app_support_periode_periode",
+      "label": "Periode",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 50,
+      "community_name": "Periode",
+      "file_type": "code",
+      "norm_label": "periode",
+      "source_file": "app/Support/Periode.php",
+      "source_location": "L20"
+    },
+    {
+      "id": "app_http_middleware_handleinertiarequests_handleinertiarequests",
+      "label": "HandleInertiaRequests",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 54,
-      "community_name": "DemografiController.php",
+      "community_name": "bootstrap/app.php",
       "file_type": "code",
-      "norm_label": "demograficontroller",
-      "source_file": "app/Http/Controllers/Api/DemografiController.php",
-      "source_location": "L21"
+      "norm_label": "handleinertiarequests",
+      "source_file": "app/Http/Middleware/HandleInertiaRequests.php",
+      "source_location": "L20"
     },
     {
       "id": "tests_feature_suntingakuntest_suntingakuntest",
@@ -1122,30 +1135,17 @@
       "source_location": "L18"
     },
     {
-      "id": "app_http_controllers_api_admin_logaktivitascontroller_logaktivitascontroller",
-      "label": "LogAktivitasController",
+      "id": "app_http_controllers_auth_otpcontroller_otpcontroller",
+      "label": "OtpController",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 65,
-      "community_name": "Periode",
+      "community_name": "OtpController",
       "file_type": "code",
-      "norm_label": "logaktivitascontroller",
-      "source_file": "app/Http/Controllers/Api/Admin/LogAktivitasController.php",
-      "source_location": "L18"
-    },
-    {
-      "id": "app_support_periode_periode",
-      "label": "Periode",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 65,
-      "community_name": "Periode",
-      "file_type": "code",
-      "norm_label": "periode",
-      "source_file": "app/Support/Periode.php",
-      "source_location": "L20"
+      "norm_label": "otpcontroller",
+      "source_file": "app/Http/Controllers/Auth/OtpController.php",
+      "source_location": "L19"
     },
     {
       "id": "app_http_controllers_api_aspirasicontroller_aspirasicontroller",
@@ -1200,17 +1200,17 @@
       "source_location": "L7"
     },
     {
-      "id": "app_http_controllers_auth_otpcontroller_otpcontroller",
-      "label": "OtpController",
+      "id": "tests_feature_layanannonaktiftest_layanannonaktiftest",
+      "label": "LayananNonaktifTest",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 9,
-      "community_name": "OtpController",
+      "community_name": "LayananNonaktifTest",
       "file_type": "code",
-      "norm_label": "otpcontroller",
-      "source_file": "app/Http/Controllers/Auth/OtpController.php",
-      "source_location": "L19"
+      "norm_label": "layanannonaktiftest",
+      "source_file": "tests/Feature/LayananNonaktifTest.php",
+      "source_location": "L24"
     },
     {
       "id": "app_http_controllers_api_admin_mastercontroller_mastercontroller_bukakunci",
@@ -2149,11 +2149,35 @@
       "source_location": "L10"
     },
     {
+      "id": "database_seeders_databaseseeder_databaseseeder_run",
+      "label": ".run()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 102,
+      "community_name": "DatabaseSeeder.php",
+      "file_type": "code",
+      "norm_label": ".run()",
+      "source_file": "database/seeders/DatabaseSeeder.php",
+      "source_location": "L14"
+    },
+    {
+      "id": "app_http_controllers_api_demograficontroller_demograficontroller_invoke",
+      "label": ".__invoke()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 103,
+      "community_name": "DemografiController.php",
+      "file_type": "code",
+      "norm_label": ".__invoke()",
+      "source_file": "app/Http/Controllers/Api/DemografiController.php",
+      "source_location": "L23"
+    },
+    {
       "id": "database_migrations_0001_01_01_000002_create_jobs_table_down",
       "label": "down()",
       "_callable": true,
       "_origin": "ast",
-      "community": 102,
+      "community": 104,
       "community_name": "0001_01_01_000002_create_jobs_table.php",
       "file_type": "code",
       "norm_label": "down()",
@@ -2165,36 +2189,12 @@
       "label": "up()",
       "_callable": true,
       "_origin": "ast",
-      "community": 102,
+      "community": 104,
       "community_name": "0001_01_01_000002_create_jobs_table.php",
       "file_type": "code",
       "norm_label": "up()",
       "source_file": "database/migrations/0001_01_01_000002_create_jobs_table.php",
       "source_location": "L12"
-    },
-    {
-      "id": "database_migrations_2026_08_07_100010_create_t_pengaduanmasyarakat_table_down",
-      "label": "down()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 103,
-      "community_name": "2026_08_07_100010_create_t_pengaduanmasyarakat_table.php",
-      "file_type": "code",
-      "norm_label": "down()",
-      "source_file": "database/migrations/2026_08_07_100010_create_t_pengaduanmasyarakat_table.php",
-      "source_location": "L27"
-    },
-    {
-      "id": "database_migrations_2026_08_07_100010_create_t_pengaduanmasyarakat_table_up",
-      "label": "up()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 103,
-      "community_name": "2026_08_07_100010_create_t_pengaduanmasyarakat_table.php",
-      "file_type": "code",
-      "norm_label": "up()",
-      "source_file": "database/migrations/2026_08_07_100010_create_t_pengaduanmasyarakat_table.php",
-      "source_location": "L10"
     },
     {
       "id": "database_migrations_2026_08_07_100012_create_t_skm_jawaban_table_down",
@@ -2317,148 +2317,40 @@
       "source_location": "L16"
     },
     {
-      "id": "app_models_wilayah_wilayah_parent",
-      "label": ".parent()",
+      "id": "app_http_controllers_api_admin_useradmincontroller_useradmincontroller_store",
+      "label": ".store()",
       "_callable": true,
       "_origin": "ast",
       "community": 11,
-      "community_name": "LayananNonaktifTest",
+      "community_name": "UserLevel",
       "file_type": "code",
-      "norm_label": ".parent()",
-      "source_file": "app/Models/Wilayah.php",
-      "source_location": "L28"
+      "norm_label": ".store()",
+      "source_file": "app/Http/Controllers/Api/Admin/UserAdminController.php",
+      "source_location": "L202"
     },
     {
-      "id": "tests_feature_layanannonaktiftest_layanannonaktiftest_akun",
-      "label": ".akun()",
+      "id": "app_models_userlevel_userlevel_users",
+      "label": ".users()",
       "_callable": true,
       "_origin": "ast",
       "community": 11,
-      "community_name": "LayananNonaktifTest",
+      "community_name": "UserLevel",
       "file_type": "code",
-      "norm_label": ".akun()",
-      "source_file": "tests/Feature/LayananNonaktifTest.php",
-      "source_location": "L57"
+      "norm_label": ".users()",
+      "source_file": "app/Models/UserLevel.php",
+      "source_location": "L85"
     },
     {
-      "id": "tests_feature_layanannonaktiftest_layanannonaktiftest_setup",
-      "label": ".setUp()",
+      "id": "tests_feature_exampletest_exampletest_test_the_application_returns_a_successful_response",
+      "label": ".test_the_application_returns_a_successful_response()",
       "_callable": true,
       "_origin": "ast",
       "community": 11,
-      "community_name": "LayananNonaktifTest",
+      "community_name": "UserLevel",
       "file_type": "code",
-      "norm_label": ".setup()",
-      "source_file": "tests/Feature/LayananNonaktifTest.php",
-      "source_location": "L32"
-    },
-    {
-      "id": "tests_feature_layanannonaktiftest_layanannonaktiftest_teardown",
-      "label": ".tearDown()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "LayananNonaktifTest",
-      "file_type": "code",
-      "norm_label": ".teardown()",
-      "source_file": "tests/Feature/LayananNonaktifTest.php",
-      "source_location": "L45"
-    },
-    {
-      "id": "tests_feature_layanannonaktiftest_layanannonaktiftest_test_daftar_menyembunyikan_bagi_operator_dan_menandai_bagi_admin",
-      "label": ".test_daftar_menyembunyikan_bagi_operator_dan_menandai_bagi_admin()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "LayananNonaktifTest",
-      "file_type": "code",
-      "norm_label": ".test_daftar_menyembunyikan_bagi_operator_dan_menandai_bagi_admin()",
-      "source_file": "tests/Feature/LayananNonaktifTest.php",
-      "source_location": "L118"
-    },
-    {
-      "id": "tests_feature_layanannonaktiftest_layanannonaktiftest_test_layanan_lain_tidak_ikut_terkunci",
-      "label": ".test_layanan_lain_tidak_ikut_terkunci()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "LayananNonaktifTest",
-      "file_type": "code",
-      "norm_label": ".test_layanan_lain_tidak_ikut_terkunci()",
-      "source_file": "tests/Feature/LayananNonaktifTest.php",
-      "source_location": "L110"
-    },
-    {
-      "id": "tests_feature_layanannonaktiftest_layanannonaktiftest_test_opd_ditolak_404",
-      "label": ".test_opd_ditolak_404()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "LayananNonaktifTest",
-      "file_type": "code",
-      "norm_label": ".test_opd_ditolak_404()",
-      "source_file": "tests/Feature/LayananNonaktifTest.php",
-      "source_location": "L84"
-    },
-    {
-      "id": "tests_feature_layanannonaktiftest_layanannonaktiftest_test_operator_biasa_ditolak_404",
-      "label": ".test_operator_biasa_ditolak_404()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "LayananNonaktifTest",
-      "file_type": "code",
-      "norm_label": ".test_operator_biasa_ditolak_404()",
-      "source_file": "tests/Feature/LayananNonaktifTest.php",
-      "source_location": "L76"
-    },
-    {
-      "id": "tests_feature_layanannonaktiftest_layanannonaktiftest_test_pengiriman_permohonan_ditolak_403",
-      "label": ".test_pengiriman_permohonan_ditolak_403()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "LayananNonaktifTest",
-      "file_type": "code",
-      "norm_label": ".test_pengiriman_permohonan_ditolak_403()",
-      "source_file": "tests/Feature/LayananNonaktifTest.php",
-      "source_location": "L98"
-    },
-    {
-      "id": "tests_feature_layanannonaktiftest_layanannonaktiftest_test_super_admin_masih_bisa_membuka_layanan_yang_ia_matikan",
-      "label": ".test_super_admin_masih_bisa_membuka_layanan_yang_ia_matikan()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "LayananNonaktifTest",
-      "file_type": "code",
-      "norm_label": ".test_super_admin_masih_bisa_membuka_layanan_yang_ia_matikan()",
-      "source_file": "tests/Feature/LayananNonaktifTest.php",
-      "source_location": "L68"
-    },
-    {
-      "id": "tests_feature_layanannonaktiftest_layanannonaktiftest_test_warga_ditolak_404_di_jalur_publiknya",
-      "label": ".test_warga_ditolak_404_di_jalur_publiknya()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "LayananNonaktifTest",
-      "file_type": "code",
-      "norm_label": ".test_warga_ditolak_404_di_jalur_publiknya()",
-      "source_file": "tests/Feature/LayananNonaktifTest.php",
-      "source_location": "L91"
-    },
-    {
-      "id": "tests_feature_suntingakuntest_suntingakuntest_teardown",
-      "label": ".tearDown()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "LayananNonaktifTest",
-      "file_type": "code",
-      "norm_label": ".teardown()",
-      "source_file": "tests/Feature/SuntingAkunTest.php",
-      "source_location": "L52"
+      "norm_label": ".test_the_application_returns_a_successful_response()",
+      "source_file": "tests/Feature/ExampleTest.php",
+      "source_location": "L13"
     },
     {
       "id": "database_migrations_2026_08_07_100017_create_t_tiket_pesan_table_down",
@@ -2929,136 +2821,52 @@
       "source_location": "L24"
     },
     {
-      "id": "tests_feature_peranopdtest_peranopdtest_opd",
-      "label": ".opd()",
+      "id": "database_migrations_2026_08_07_100002_create_users_table_down",
+      "label": "down()",
       "_callable": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "PeranOpdTest",
+      "community_name": "Illuminate\\Database\\Schema\\Blueprint",
       "file_type": "code",
-      "norm_label": ".opd()",
-      "source_file": "tests/Feature/PeranOpdTest.php",
-      "source_location": "L27"
+      "norm_label": "down()",
+      "source_file": "database/migrations/2026_08_07_100002_create_users_table.php",
+      "source_location": "L64"
     },
     {
-      "id": "tests_feature_peranopdtest_peranopdtest_test_alamat_lama_mengalih_beserta_query_string",
-      "label": ".test_alamat_lama_mengalih_beserta_query_string()",
+      "id": "database_migrations_2026_08_07_100002_create_users_table_up",
+      "label": "up()",
       "_callable": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "PeranOpdTest",
+      "community_name": "Illuminate\\Database\\Schema\\Blueprint",
       "file_type": "code",
-      "norm_label": ".test_alamat_lama_mengalih_beserta_query_string()",
-      "source_file": "tests/Feature/PeranOpdTest.php",
-      "source_location": "L147"
+      "norm_label": "up()",
+      "source_file": "database/migrations/2026_08_07_100002_create_users_table.php",
+      "source_location": "L21"
     },
     {
-      "id": "tests_feature_peranopdtest_peranopdtest_test_daftar_permohonan_opd_hanya_miliknya",
-      "label": ".test_daftar_permohonan_opd_hanya_miliknya()",
+      "id": "database_migrations_2026_08_07_100003_create_m_jenis_permohonan_table_down",
+      "label": "down()",
       "_callable": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "PeranOpdTest",
+      "community_name": "Illuminate\\Database\\Schema\\Blueprint",
       "file_type": "code",
-      "norm_label": ".test_daftar_permohonan_opd_hanya_miliknya()",
-      "source_file": "tests/Feature/PeranOpdTest.php",
-      "source_location": "L82"
+      "norm_label": "down()",
+      "source_file": "database/migrations/2026_08_07_100003_create_m_jenis_permohonan_table.php",
+      "source_location": "L28"
     },
     {
-      "id": "tests_feature_peranopdtest_peranopdtest_test_detail_permohonan_orang_lain_menjawab_404_bukan_403",
-      "label": ".test_detail_permohonan_orang_lain_menjawab_404_bukan_403()",
+      "id": "database_migrations_2026_08_07_100003_create_m_jenis_permohonan_table_up",
+      "label": "up()",
       "_callable": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "PeranOpdTest",
+      "community_name": "Illuminate\\Database\\Schema\\Blueprint",
       "file_type": "code",
-      "norm_label": ".test_detail_permohonan_orang_lain_menjawab_404_bukan_403()",
-      "source_file": "tests/Feature/PeranOpdTest.php",
-      "source_location": "L123"
-    },
-    {
-      "id": "tests_feature_peranopdtest_peranopdtest_test_halaman_master_kini_khusus_super_admin",
-      "label": ".test_halaman_master_kini_khusus_super_admin()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "PeranOpdTest",
-      "file_type": "code",
-      "norm_label": ".test_halaman_master_kini_khusus_super_admin()",
-      "source_file": "tests/Feature/PeranOpdTest.php",
-      "source_location": "L67"
-    },
-    {
-      "id": "tests_feature_peranopdtest_peranopdtest_test_hitungan_per_status_ikut_disaring",
-      "label": ".test_hitungan_per_status_ikut_disaring()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "PeranOpdTest",
-      "file_type": "code",
-      "norm_label": ".test_hitungan_per_status_ikut_disaring()",
-      "source_file": "tests/Feature/PeranOpdTest.php",
-      "source_location": "L107"
-    },
-    {
-      "id": "tests_feature_peranopdtest_peranopdtest_test_opd_boleh_membuka_halaman_yang_dipakai_bersama",
-      "label": ".test_opd_boleh_membuka_halaman_yang_dipakai_bersama()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "PeranOpdTest",
-      "file_type": "code",
-      "norm_label": ".test_opd_boleh_membuka_halaman_yang_dipakai_bersama()",
-      "source_file": "tests/Feature/PeranOpdTest.php",
-      "source_location": "L50"
-    },
-    {
-      "id": "tests_feature_peranopdtest_peranopdtest_test_opd_ditolak_di_halaman_khusus_petugas",
-      "label": ".test_opd_ditolak_di_halaman_khusus_petugas()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "PeranOpdTest",
-      "file_type": "code",
-      "norm_label": ".test_opd_ditolak_di_halaman_khusus_petugas()",
-      "source_file": "tests/Feature/PeranOpdTest.php",
-      "source_location": "L58"
-    },
-    {
-      "id": "tests_feature_peranopdtest_peranopdtest_test_opd_mendarat_di_daftar_permohonannya_sendiri",
-      "label": ".test_opd_mendarat_di_daftar_permohonannya_sendiri()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "PeranOpdTest",
-      "file_type": "code",
-      "norm_label": ".test_opd_mendarat_di_daftar_permohonannya_sendiri()",
-      "source_file": "tests/Feature/PeranOpdTest.php",
-      "source_location": "L41"
-    },
-    {
-      "id": "tests_feature_peranopdtest_peranopdtest_test_opd_tidak_bisa_memproses_permohonan",
-      "label": ".test_opd_tidak_bisa_memproses_permohonan()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "PeranOpdTest",
-      "file_type": "code",
-      "norm_label": ".test_opd_tidak_bisa_memproses_permohonan()",
-      "source_file": "tests/Feature/PeranOpdTest.php",
-      "source_location": "L136"
-    },
-    {
-      "id": "tests_feature_peranopdtest_peranopdtest_test_warga_tidak_ikut_pindah",
-      "label": ".test_warga_tidak_ikut_pindah()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "PeranOpdTest",
-      "file_type": "code",
-      "norm_label": ".test_warga_tidak_ikut_pindah()",
-      "source_file": "tests/Feature/PeranOpdTest.php",
-      "source_location": "L157"
+      "norm_label": "up()",
+      "source_file": "database/migrations/2026_08_07_100003_create_m_jenis_permohonan_table.php",
+      "source_location": "L14"
     },
     {
       "id": "resources_js_publik_formaspirasi_formaspirasi",
@@ -4861,40 +4669,28 @@
       "source_location": "L193"
     },
     {
-      "id": "app_http_controllers_api_admin_useradmincontroller_useradmincontroller_store",
-      "label": ".store()",
+      "id": "database_migrations_2026_08_07_100010_create_t_pengaduanmasyarakat_table_down",
+      "label": "down()",
       "_callable": true,
       "_origin": "ast",
-      "community": 249,
-      "community_name": "UserLevel",
+      "community": 246,
+      "community_name": "2026_08_07_100010_create_t_pengaduanmasyarakat_table.php",
       "file_type": "code",
-      "norm_label": ".store()",
-      "source_file": "app/Http/Controllers/Api/Admin/UserAdminController.php",
-      "source_location": "L202"
+      "norm_label": "down()",
+      "source_file": "database/migrations/2026_08_07_100010_create_t_pengaduanmasyarakat_table.php",
+      "source_location": "L27"
     },
     {
-      "id": "app_models_userlevel_userlevel_users",
-      "label": ".users()",
+      "id": "database_migrations_2026_08_07_100010_create_t_pengaduanmasyarakat_table_up",
+      "label": "up()",
       "_callable": true,
       "_origin": "ast",
-      "community": 249,
-      "community_name": "UserLevel",
+      "community": 246,
+      "community_name": "2026_08_07_100010_create_t_pengaduanmasyarakat_table.php",
       "file_type": "code",
-      "norm_label": ".users()",
-      "source_file": "app/Models/UserLevel.php",
-      "source_location": "L85"
-    },
-    {
-      "id": "tests_feature_exampletest_exampletest_test_the_application_returns_a_successful_response",
-      "label": ".test_the_application_returns_a_successful_response()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 249,
-      "community_name": "UserLevel",
-      "file_type": "code",
-      "norm_label": ".test_the_application_returns_a_successful_response()",
-      "source_file": "tests/Feature/ExampleTest.php",
-      "source_location": "L13"
+      "norm_label": "up()",
+      "source_file": "database/migrations/2026_08_07_100010_create_t_pengaduanmasyarakat_table.php",
+      "source_location": "L10"
     },
     {
       "id": "resources_js_pages_dashboard_permohonandetail_blokpenolakan",
@@ -4943,30 +4739,6 @@
       "norm_label": "pilihrincian()",
       "source_file": "resources/js/Components/PilihRincian.jsx",
       "source_location": "L38"
-    },
-    {
-      "id": "database_migrations_2026_09_02_100001_tambah_wilayah_akun_down",
-      "label": "down()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 258,
-      "community_name": "2026_09_02_100001_tambah_wilayah_akun.php",
-      "file_type": "code",
-      "norm_label": "down()",
-      "source_file": "database/migrations/2026_09_02_100001_tambah_wilayah_akun.php",
-      "source_location": "L46"
-    },
-    {
-      "id": "database_migrations_2026_09_02_100001_tambah_wilayah_akun_up",
-      "label": "up()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 258,
-      "community_name": "2026_09_02_100001_tambah_wilayah_akun.php",
-      "file_type": "code",
-      "norm_label": "up()",
-      "source_file": "database/migrations/2026_09_02_100001_tambah_wilayah_akun.php",
-      "source_location": "L36"
     },
     {
       "id": "app_http_controllers_api_profilcontroller_profilcontroller_construct",
@@ -6265,16 +6037,136 @@
       "source_location": "L94"
     },
     {
-      "id": "app_http_middleware_handleinertiarequests_handleinertiarequests_share",
-      "label": ".share()",
+      "id": "tests_feature_peranopdtest_peranopdtest_opd",
+      "label": ".opd()",
       "_callable": true,
       "_origin": "ast",
       "community": 39,
-      "community_name": "bootstrap/app.php",
+      "community_name": "PeranOpdTest",
       "file_type": "code",
-      "norm_label": ".share()",
-      "source_file": "app/Http/Middleware/HandleInertiaRequests.php",
-      "source_location": "L24"
+      "norm_label": ".opd()",
+      "source_file": "tests/Feature/PeranOpdTest.php",
+      "source_location": "L27"
+    },
+    {
+      "id": "tests_feature_peranopdtest_peranopdtest_test_alamat_lama_mengalih_beserta_query_string",
+      "label": ".test_alamat_lama_mengalih_beserta_query_string()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 39,
+      "community_name": "PeranOpdTest",
+      "file_type": "code",
+      "norm_label": ".test_alamat_lama_mengalih_beserta_query_string()",
+      "source_file": "tests/Feature/PeranOpdTest.php",
+      "source_location": "L147"
+    },
+    {
+      "id": "tests_feature_peranopdtest_peranopdtest_test_daftar_permohonan_opd_hanya_miliknya",
+      "label": ".test_daftar_permohonan_opd_hanya_miliknya()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 39,
+      "community_name": "PeranOpdTest",
+      "file_type": "code",
+      "norm_label": ".test_daftar_permohonan_opd_hanya_miliknya()",
+      "source_file": "tests/Feature/PeranOpdTest.php",
+      "source_location": "L82"
+    },
+    {
+      "id": "tests_feature_peranopdtest_peranopdtest_test_detail_permohonan_orang_lain_menjawab_404_bukan_403",
+      "label": ".test_detail_permohonan_orang_lain_menjawab_404_bukan_403()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 39,
+      "community_name": "PeranOpdTest",
+      "file_type": "code",
+      "norm_label": ".test_detail_permohonan_orang_lain_menjawab_404_bukan_403()",
+      "source_file": "tests/Feature/PeranOpdTest.php",
+      "source_location": "L123"
+    },
+    {
+      "id": "tests_feature_peranopdtest_peranopdtest_test_halaman_master_kini_khusus_super_admin",
+      "label": ".test_halaman_master_kini_khusus_super_admin()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 39,
+      "community_name": "PeranOpdTest",
+      "file_type": "code",
+      "norm_label": ".test_halaman_master_kini_khusus_super_admin()",
+      "source_file": "tests/Feature/PeranOpdTest.php",
+      "source_location": "L67"
+    },
+    {
+      "id": "tests_feature_peranopdtest_peranopdtest_test_hitungan_per_status_ikut_disaring",
+      "label": ".test_hitungan_per_status_ikut_disaring()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 39,
+      "community_name": "PeranOpdTest",
+      "file_type": "code",
+      "norm_label": ".test_hitungan_per_status_ikut_disaring()",
+      "source_file": "tests/Feature/PeranOpdTest.php",
+      "source_location": "L107"
+    },
+    {
+      "id": "tests_feature_peranopdtest_peranopdtest_test_opd_boleh_membuka_halaman_yang_dipakai_bersama",
+      "label": ".test_opd_boleh_membuka_halaman_yang_dipakai_bersama()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 39,
+      "community_name": "PeranOpdTest",
+      "file_type": "code",
+      "norm_label": ".test_opd_boleh_membuka_halaman_yang_dipakai_bersama()",
+      "source_file": "tests/Feature/PeranOpdTest.php",
+      "source_location": "L50"
+    },
+    {
+      "id": "tests_feature_peranopdtest_peranopdtest_test_opd_ditolak_di_halaman_khusus_petugas",
+      "label": ".test_opd_ditolak_di_halaman_khusus_petugas()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 39,
+      "community_name": "PeranOpdTest",
+      "file_type": "code",
+      "norm_label": ".test_opd_ditolak_di_halaman_khusus_petugas()",
+      "source_file": "tests/Feature/PeranOpdTest.php",
+      "source_location": "L58"
+    },
+    {
+      "id": "tests_feature_peranopdtest_peranopdtest_test_opd_mendarat_di_daftar_permohonannya_sendiri",
+      "label": ".test_opd_mendarat_di_daftar_permohonannya_sendiri()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 39,
+      "community_name": "PeranOpdTest",
+      "file_type": "code",
+      "norm_label": ".test_opd_mendarat_di_daftar_permohonannya_sendiri()",
+      "source_file": "tests/Feature/PeranOpdTest.php",
+      "source_location": "L41"
+    },
+    {
+      "id": "tests_feature_peranopdtest_peranopdtest_test_opd_tidak_bisa_memproses_permohonan",
+      "label": ".test_opd_tidak_bisa_memproses_permohonan()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 39,
+      "community_name": "PeranOpdTest",
+      "file_type": "code",
+      "norm_label": ".test_opd_tidak_bisa_memproses_permohonan()",
+      "source_file": "tests/Feature/PeranOpdTest.php",
+      "source_location": "L136"
+    },
+    {
+      "id": "tests_feature_peranopdtest_peranopdtest_test_warga_tidak_ikut_pindah",
+      "label": ".test_warga_tidak_ikut_pindah()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 39,
+      "community_name": "PeranOpdTest",
+      "file_type": "code",
+      "norm_label": ".test_warga_tidak_ikut_pindah()",
+      "source_file": "tests/Feature/PeranOpdTest.php",
+      "source_location": "L157"
     },
     {
       "id": "app_http_controllers_api_admin_kontenstatiscontroller_kontenstatiscontroller_simpan",
@@ -7237,16 +7129,52 @@
       "source_location": "L110"
     },
     {
-      "id": "database_seeders_databaseseeder_databaseseeder_run",
-      "label": ".run()",
+      "id": "database_migrations_2026_08_07_100008_create_t_galleries_table_down",
+      "label": "down()",
       "_callable": true,
       "_origin": "ast",
       "community": 46,
-      "community_name": "DatabaseSeeder.php",
+      "community_name": "Illuminate\\Support\\Facades\\Schema",
       "file_type": "code",
-      "norm_label": ".run()",
-      "source_file": "database/seeders/DatabaseSeeder.php",
-      "source_location": "L14"
+      "norm_label": "down()",
+      "source_file": "database/migrations/2026_08_07_100008_create_t_galleries_table.php",
+      "source_location": "L22"
+    },
+    {
+      "id": "database_migrations_2026_08_07_100008_create_t_galleries_table_up",
+      "label": "up()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 46,
+      "community_name": "Illuminate\\Support\\Facades\\Schema",
+      "file_type": "code",
+      "norm_label": "up()",
+      "source_file": "database/migrations/2026_08_07_100008_create_t_galleries_table.php",
+      "source_location": "L10"
+    },
+    {
+      "id": "database_migrations_2026_08_07_100009_create_t_produk_table_down",
+      "label": "down()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 46,
+      "community_name": "Illuminate\\Support\\Facades\\Schema",
+      "file_type": "code",
+      "norm_label": "down()",
+      "source_file": "database/migrations/2026_08_07_100009_create_t_produk_table.php",
+      "source_location": "L32"
+    },
+    {
+      "id": "database_migrations_2026_08_07_100009_create_t_produk_table_up",
+      "label": "up()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 46,
+      "community_name": "Illuminate\\Support\\Facades\\Schema",
+      "file_type": "code",
+      "norm_label": "up()",
+      "source_file": "database/migrations/2026_08_07_100009_create_t_produk_table.php",
+      "source_location": "L15"
     },
     {
       "id": "database_migrations_0001_01_01_000000_create_sessions_table_down",
@@ -7273,52 +7201,52 @@
       "source_location": "L21"
     },
     {
-      "id": "database_migrations_2026_08_07_100002_create_users_table_down",
-      "label": "down()",
+      "id": "app_http_controllers_api_admin_logaktivitascontroller_logaktivitascontroller_index",
+      "label": ".index()",
       "_callable": true,
       "_origin": "ast",
       "community": 50,
-      "community_name": "Illuminate\\Database\\Schema\\Blueprint",
+      "community_name": "Periode",
       "file_type": "code",
-      "norm_label": "down()",
-      "source_file": "database/migrations/2026_08_07_100002_create_users_table.php",
+      "norm_label": ".index()",
+      "source_file": "app/Http/Controllers/Api/Admin/LogAktivitasController.php",
+      "source_location": "L22"
+    },
+    {
+      "id": "app_support_periode_periode_bacaacuan",
+      "label": ".bacaAcuan()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 50,
+      "community_name": "Periode",
+      "file_type": "code",
+      "norm_label": ".bacaacuan()",
+      "source_file": "app/Support/Periode.php",
+      "source_location": "L46"
+    },
+    {
+      "id": "app_support_periode_periode_rentang",
+      "label": ".rentang()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 50,
+      "community_name": "Periode",
+      "file_type": "code",
+      "norm_label": ".rentang()",
+      "source_file": "app/Support/Periode.php",
+      "source_location": "L29"
+    },
+    {
+      "id": "app_support_periode_periode_saring",
+      "label": ".saring()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 50,
+      "community_name": "Periode",
+      "file_type": "code",
+      "norm_label": ".saring()",
+      "source_file": "app/Support/Periode.php",
       "source_location": "L64"
-    },
-    {
-      "id": "database_migrations_2026_08_07_100002_create_users_table_up",
-      "label": "up()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 50,
-      "community_name": "Illuminate\\Database\\Schema\\Blueprint",
-      "file_type": "code",
-      "norm_label": "up()",
-      "source_file": "database/migrations/2026_08_07_100002_create_users_table.php",
-      "source_location": "L21"
-    },
-    {
-      "id": "database_migrations_2026_08_07_100003_create_m_jenis_permohonan_table_down",
-      "label": "down()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 50,
-      "community_name": "Illuminate\\Database\\Schema\\Blueprint",
-      "file_type": "code",
-      "norm_label": "down()",
-      "source_file": "database/migrations/2026_08_07_100003_create_m_jenis_permohonan_table.php",
-      "source_location": "L28"
-    },
-    {
-      "id": "database_migrations_2026_08_07_100003_create_m_jenis_permohonan_table_up",
-      "label": "up()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 50,
-      "community_name": "Illuminate\\Database\\Schema\\Blueprint",
-      "file_type": "code",
-      "norm_label": "up()",
-      "source_file": "database/migrations/2026_08_07_100003_create_m_jenis_permohonan_table.php",
-      "source_location": "L14"
     },
     {
       "id": "resources_js_components_grafik_angkaid",
@@ -7501,16 +7429,16 @@
       "source_location": "L61"
     },
     {
-      "id": "app_http_controllers_api_demograficontroller_demograficontroller_invoke",
-      "label": ".__invoke()",
+      "id": "app_http_middleware_handleinertiarequests_handleinertiarequests_share",
+      "label": ".share()",
       "_callable": true,
       "_origin": "ast",
       "community": 54,
-      "community_name": "DemografiController.php",
+      "community_name": "bootstrap/app.php",
       "file_type": "code",
-      "norm_label": ".__invoke()",
-      "source_file": "app/Http/Controllers/Api/DemografiController.php",
-      "source_location": "L23"
+      "norm_label": ".share()",
+      "source_file": "app/Http/Middleware/HandleInertiaRequests.php",
+      "source_location": "L24"
     },
     {
       "id": "tests_feature_suntingakuntest_suntingakuntest_akun",
@@ -8221,52 +8149,40 @@
       "source_location": "L47"
     },
     {
-      "id": "app_http_controllers_api_admin_logaktivitascontroller_logaktivitascontroller_index",
-      "label": ".index()",
+      "id": "app_http_controllers_auth_otpcontroller_otpcontroller_construct",
+      "label": ".__construct()",
       "_callable": true,
       "_origin": "ast",
       "community": 65,
-      "community_name": "Periode",
+      "community_name": "OtpController",
       "file_type": "code",
-      "norm_label": ".index()",
-      "source_file": "app/Http/Controllers/Api/Admin/LogAktivitasController.php",
-      "source_location": "L22"
+      "norm_label": ".__construct()",
+      "source_file": "app/Http/Controllers/Auth/OtpController.php",
+      "source_location": "L23"
     },
     {
-      "id": "app_support_periode_periode_bacaacuan",
-      "label": ".bacaAcuan()",
+      "id": "app_http_controllers_auth_otpcontroller_otpcontroller_kirim",
+      "label": ".kirim()",
       "_callable": true,
       "_origin": "ast",
       "community": 65,
-      "community_name": "Periode",
+      "community_name": "OtpController",
       "file_type": "code",
-      "norm_label": ".bacaacuan()",
-      "source_file": "app/Support/Periode.php",
-      "source_location": "L46"
+      "norm_label": ".kirim()",
+      "source_file": "app/Http/Controllers/Auth/OtpController.php",
+      "source_location": "L25"
     },
     {
-      "id": "app_support_periode_periode_rentang",
-      "label": ".rentang()",
+      "id": "app_http_controllers_auth_otpcontroller_otpcontroller_verifikasi",
+      "label": ".verifikasi()",
       "_callable": true,
       "_origin": "ast",
       "community": 65,
-      "community_name": "Periode",
+      "community_name": "OtpController",
       "file_type": "code",
-      "norm_label": ".rentang()",
-      "source_file": "app/Support/Periode.php",
-      "source_location": "L29"
-    },
-    {
-      "id": "app_support_periode_periode_saring",
-      "label": ".saring()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 65,
-      "community_name": "Periode",
-      "file_type": "code",
-      "norm_label": ".saring()",
-      "source_file": "app/Support/Periode.php",
-      "source_location": "L64"
+      "norm_label": ".verifikasi()",
+      "source_file": "app/Http/Controllers/Auth/OtpController.php",
+      "source_location": "L70"
     },
     {
       "id": "resources_js_components_grafiktampak_grafiktampak",
@@ -9286,7 +9202,7 @@
       "file_type": "code",
       "norm_label": "carousel()",
       "source_file": "resources/js/Publik/Carousel.jsx",
-      "source_location": "L47"
+      "source_location": "L57"
     },
     {
       "id": "resources_js_publik_carousel_cincinprogres",
@@ -9298,7 +9214,7 @@
       "file_type": "code",
       "norm_label": "cincinprogres()",
       "source_file": "resources/js/Publik/Carousel.jsx",
-      "source_location": "L32"
+      "source_location": "L42"
     },
     {
       "id": "resources_js_publik_formskm_formskm",
@@ -9337,40 +9253,148 @@
       "source_location": "L29"
     },
     {
-      "id": "app_http_controllers_auth_otpcontroller_otpcontroller_construct",
-      "label": ".__construct()",
+      "id": "app_models_wilayah_wilayah_parent",
+      "label": ".parent()",
       "_callable": true,
       "_origin": "ast",
       "community": 9,
-      "community_name": "OtpController",
+      "community_name": "LayananNonaktifTest",
       "file_type": "code",
-      "norm_label": ".__construct()",
-      "source_file": "app/Http/Controllers/Auth/OtpController.php",
-      "source_location": "L23"
+      "norm_label": ".parent()",
+      "source_file": "app/Models/Wilayah.php",
+      "source_location": "L28"
     },
     {
-      "id": "app_http_controllers_auth_otpcontroller_otpcontroller_kirim",
-      "label": ".kirim()",
+      "id": "tests_feature_layanannonaktiftest_layanannonaktiftest_akun",
+      "label": ".akun()",
       "_callable": true,
       "_origin": "ast",
       "community": 9,
-      "community_name": "OtpController",
+      "community_name": "LayananNonaktifTest",
       "file_type": "code",
-      "norm_label": ".kirim()",
-      "source_file": "app/Http/Controllers/Auth/OtpController.php",
-      "source_location": "L25"
+      "norm_label": ".akun()",
+      "source_file": "tests/Feature/LayananNonaktifTest.php",
+      "source_location": "L57"
     },
     {
-      "id": "app_http_controllers_auth_otpcontroller_otpcontroller_verifikasi",
-      "label": ".verifikasi()",
+      "id": "tests_feature_layanannonaktiftest_layanannonaktiftest_setup",
+      "label": ".setUp()",
       "_callable": true,
       "_origin": "ast",
       "community": 9,
-      "community_name": "OtpController",
+      "community_name": "LayananNonaktifTest",
       "file_type": "code",
-      "norm_label": ".verifikasi()",
-      "source_file": "app/Http/Controllers/Auth/OtpController.php",
-      "source_location": "L70"
+      "norm_label": ".setup()",
+      "source_file": "tests/Feature/LayananNonaktifTest.php",
+      "source_location": "L32"
+    },
+    {
+      "id": "tests_feature_layanannonaktiftest_layanannonaktiftest_teardown",
+      "label": ".tearDown()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "LayananNonaktifTest",
+      "file_type": "code",
+      "norm_label": ".teardown()",
+      "source_file": "tests/Feature/LayananNonaktifTest.php",
+      "source_location": "L45"
+    },
+    {
+      "id": "tests_feature_layanannonaktiftest_layanannonaktiftest_test_daftar_menyembunyikan_bagi_operator_dan_menandai_bagi_admin",
+      "label": ".test_daftar_menyembunyikan_bagi_operator_dan_menandai_bagi_admin()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "LayananNonaktifTest",
+      "file_type": "code",
+      "norm_label": ".test_daftar_menyembunyikan_bagi_operator_dan_menandai_bagi_admin()",
+      "source_file": "tests/Feature/LayananNonaktifTest.php",
+      "source_location": "L118"
+    },
+    {
+      "id": "tests_feature_layanannonaktiftest_layanannonaktiftest_test_layanan_lain_tidak_ikut_terkunci",
+      "label": ".test_layanan_lain_tidak_ikut_terkunci()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "LayananNonaktifTest",
+      "file_type": "code",
+      "norm_label": ".test_layanan_lain_tidak_ikut_terkunci()",
+      "source_file": "tests/Feature/LayananNonaktifTest.php",
+      "source_location": "L110"
+    },
+    {
+      "id": "tests_feature_layanannonaktiftest_layanannonaktiftest_test_opd_ditolak_404",
+      "label": ".test_opd_ditolak_404()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "LayananNonaktifTest",
+      "file_type": "code",
+      "norm_label": ".test_opd_ditolak_404()",
+      "source_file": "tests/Feature/LayananNonaktifTest.php",
+      "source_location": "L84"
+    },
+    {
+      "id": "tests_feature_layanannonaktiftest_layanannonaktiftest_test_operator_biasa_ditolak_404",
+      "label": ".test_operator_biasa_ditolak_404()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "LayananNonaktifTest",
+      "file_type": "code",
+      "norm_label": ".test_operator_biasa_ditolak_404()",
+      "source_file": "tests/Feature/LayananNonaktifTest.php",
+      "source_location": "L76"
+    },
+    {
+      "id": "tests_feature_layanannonaktiftest_layanannonaktiftest_test_pengiriman_permohonan_ditolak_403",
+      "label": ".test_pengiriman_permohonan_ditolak_403()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "LayananNonaktifTest",
+      "file_type": "code",
+      "norm_label": ".test_pengiriman_permohonan_ditolak_403()",
+      "source_file": "tests/Feature/LayananNonaktifTest.php",
+      "source_location": "L98"
+    },
+    {
+      "id": "tests_feature_layanannonaktiftest_layanannonaktiftest_test_super_admin_masih_bisa_membuka_layanan_yang_ia_matikan",
+      "label": ".test_super_admin_masih_bisa_membuka_layanan_yang_ia_matikan()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "LayananNonaktifTest",
+      "file_type": "code",
+      "norm_label": ".test_super_admin_masih_bisa_membuka_layanan_yang_ia_matikan()",
+      "source_file": "tests/Feature/LayananNonaktifTest.php",
+      "source_location": "L68"
+    },
+    {
+      "id": "tests_feature_layanannonaktiftest_layanannonaktiftest_test_warga_ditolak_404_di_jalur_publiknya",
+      "label": ".test_warga_ditolak_404_di_jalur_publiknya()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "LayananNonaktifTest",
+      "file_type": "code",
+      "norm_label": ".test_warga_ditolak_404_di_jalur_publiknya()",
+      "source_file": "tests/Feature/LayananNonaktifTest.php",
+      "source_location": "L91"
+    },
+    {
+      "id": "tests_feature_suntingakuntest_suntingakuntest_teardown",
+      "label": ".tearDown()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "LayananNonaktifTest",
+      "file_type": "code",
+      "norm_label": ".teardown()",
+      "source_file": "tests/Feature/SuntingAkunTest.php",
+      "source_location": "L52"
     },
     {
       "id": "resources_js_publik_modeedit_dialogblok",
@@ -9517,52 +9541,28 @@
       "source_location": "L10"
     },
     {
-      "id": "database_migrations_2026_08_07_100008_create_t_galleries_table_down",
+      "id": "database_migrations_2026_09_02_100001_tambah_wilayah_akun_down",
       "label": "down()",
       "_callable": true,
       "_origin": "ast",
       "community": 97,
-      "community_name": "Illuminate\\Support\\Facades\\Schema",
+      "community_name": "2026_09_02_100001_tambah_wilayah_akun.php",
       "file_type": "code",
       "norm_label": "down()",
-      "source_file": "database/migrations/2026_08_07_100008_create_t_galleries_table.php",
-      "source_location": "L22"
+      "source_file": "database/migrations/2026_09_02_100001_tambah_wilayah_akun.php",
+      "source_location": "L46"
     },
     {
-      "id": "database_migrations_2026_08_07_100008_create_t_galleries_table_up",
+      "id": "database_migrations_2026_09_02_100001_tambah_wilayah_akun_up",
       "label": "up()",
       "_callable": true,
       "_origin": "ast",
       "community": 97,
-      "community_name": "Illuminate\\Support\\Facades\\Schema",
+      "community_name": "2026_09_02_100001_tambah_wilayah_akun.php",
       "file_type": "code",
       "norm_label": "up()",
-      "source_file": "database/migrations/2026_08_07_100008_create_t_galleries_table.php",
-      "source_location": "L10"
-    },
-    {
-      "id": "database_migrations_2026_08_07_100009_create_t_produk_table_down",
-      "label": "down()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 97,
-      "community_name": "Illuminate\\Support\\Facades\\Schema",
-      "file_type": "code",
-      "norm_label": "down()",
-      "source_file": "database/migrations/2026_08_07_100009_create_t_produk_table.php",
-      "source_location": "L32"
-    },
-    {
-      "id": "database_migrations_2026_08_07_100009_create_t_produk_table_up",
-      "label": "up()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 97,
-      "community_name": "Illuminate\\Support\\Facades\\Schema",
-      "file_type": "code",
-      "norm_label": "up()",
-      "source_file": "database/migrations/2026_08_07_100009_create_t_produk_table.php",
-      "source_location": "L15"
+      "source_file": "database/migrations/2026_09_02_100001_tambah_wilayah_akun.php",
+      "source_location": "L36"
     },
     {
       "id": "database_migrations_2026_08_07_100004_create_t_permohonan_table_down",
@@ -9956,37 +9956,48 @@
       "source_location": "L1"
     },
     {
+      "id": "database_seeders_databaseseeder",
+      "label": "DatabaseSeeder.php",
+      "_origin": "ast",
+      "community": 102,
+      "community_name": "DatabaseSeeder.php",
+      "file_type": "code",
+      "norm_label": "databaseseeder.php",
+      "source_file": "database/seeders/DatabaseSeeder.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "illuminate_database_seeder",
+      "label": "Illuminate\\Database\\Seeder",
+      "_origin": "ast",
+      "community": 102,
+      "community_name": "DatabaseSeeder.php",
+      "file_type": "code",
+      "norm_label": "illuminate\\database\\seeder",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "app_http_controllers_api_demograficontroller",
+      "label": "DemografiController.php",
+      "_origin": "ast",
+      "community": 103,
+      "community_name": "DemografiController.php",
+      "file_type": "code",
+      "norm_label": "demograficontroller.php",
+      "source_file": "app/Http/Controllers/Api/DemografiController.php",
+      "source_location": "L1"
+    },
+    {
       "id": "database_migrations_0001_01_01_000002_create_jobs_table",
       "label": "0001_01_01_000002_create_jobs_table.php",
       "_origin": "ast",
-      "community": 102,
+      "community": 104,
       "community_name": "0001_01_01_000002_create_jobs_table.php",
       "file_type": "code",
       "norm_label": "0001_01_01_000002_create_jobs_table.php",
       "source_file": "database/migrations/0001_01_01_000002_create_jobs_table.php",
       "source_location": "L1"
-    },
-    {
-      "id": "database_migrations_2026_08_07_100010_create_t_pengaduanmasyarakat_table",
-      "label": "2026_08_07_100010_create_t_pengaduanmasyarakat_table.php",
-      "_origin": "ast",
-      "community": 103,
-      "community_name": "2026_08_07_100010_create_t_pengaduanmasyarakat_table.php",
-      "file_type": "code",
-      "norm_label": "2026_08_07_100010_create_t_pengaduanmasyarakat_table.php",
-      "source_file": "database/migrations/2026_08_07_100010_create_t_pengaduanmasyarakat_table.php",
-      "source_location": "L1"
-    },
-    {
-      "id": "tesseract_js_tesseract_js",
-      "label": "tesseract.js",
-      "_origin": "ast",
-      "community": 104,
-      "community_name": "tesseract.js",
-      "confidence": "EXTRACTED",
-      "file_type": "code",
-      "norm_label": "tesseract.js",
-      "source_file": "tesseract.js"
     },
     {
       "id": "database_migrations_2026_08_07_100012_create_t_skm_jawaban_table",
@@ -10041,6 +10052,72 @@
       "file_type": "code",
       "norm_label": "2026_08_07_100016_create_t_tiket_table.php",
       "source_file": "database/migrations/2026_08_07_100016_create_t_tiket_table.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_services_catatanaktivitas",
+      "label": "CatatanAktivitas.php",
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "UserLevel",
+      "file_type": "code",
+      "norm_label": "catatanaktivitas.php",
+      "source_file": "app/Services/CatatanAktivitas.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "illuminate_foundation_testing_testcase",
+      "label": "Illuminate\\Foundation\\Testing\\TestCase",
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "UserLevel",
+      "file_type": "code",
+      "norm_label": "illuminate\\foundation\\testing\\testcase",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "tests_feature_exampletest",
+      "label": "Feature/ExampleTest.php",
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "UserLevel",
+      "file_type": "code",
+      "norm_label": "feature/exampletest.php",
+      "source_file": "tests/Feature/ExampleTest.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "tests_feature_layanannonaktiftest",
+      "label": "LayananNonaktifTest.php",
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "UserLevel",
+      "file_type": "code",
+      "norm_label": "layanannonaktiftest.php",
+      "source_file": "tests/Feature/LayananNonaktifTest.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "tests_feature_peranopdtest",
+      "label": "PeranOpdTest.php",
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "UserLevel",
+      "file_type": "code",
+      "norm_label": "peranopdtest.php",
+      "source_file": "tests/Feature/PeranOpdTest.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "tests_testcase",
+      "label": "TestCase.php",
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "UserLevel",
+      "file_type": "code",
+      "norm_label": "testcase.php",
+      "source_file": "tests/TestCase.php",
       "source_location": "L1"
     },
     {
@@ -10383,6 +10460,39 @@
       "norm_label": "grup",
       "source_file": "resources/js/Pages/Dashboard/Produk.jsx",
       "source_location": "L22"
+    },
+    {
+      "id": "database_migrations_2026_08_07_100002_create_users_table",
+      "label": "2026_08_07_100002_create_users_table.php",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "Illuminate\\Database\\Schema\\Blueprint",
+      "file_type": "code",
+      "norm_label": "2026_08_07_100002_create_users_table.php",
+      "source_file": "database/migrations/2026_08_07_100002_create_users_table.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "database_migrations_2026_08_07_100003_create_m_jenis_permohonan_table",
+      "label": "2026_08_07_100003_create_m_jenis_permohonan_table.php",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "Illuminate\\Database\\Schema\\Blueprint",
+      "file_type": "code",
+      "norm_label": "2026_08_07_100003_create_m_jenis_permohonan_table.php",
+      "source_file": "database/migrations/2026_08_07_100003_create_m_jenis_permohonan_table.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "illuminate_database_schema_blueprint",
+      "label": "Illuminate\\Database\\Schema\\Blueprint",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "Illuminate\\Database\\Schema\\Blueprint",
+      "file_type": "code",
+      "norm_label": "illuminate\\database\\schema\\blueprint",
+      "source_file": "",
+      "source_location": ""
     },
     {
       "id": "resources_js_publik_formaspirasi",
@@ -13195,6 +13305,17 @@
       "source_location": null
     },
     {
+      "id": "database_migrations_2026_08_07_100010_create_t_pengaduanmasyarakat_table",
+      "label": "2026_08_07_100010_create_t_pengaduanmasyarakat_table.php",
+      "_origin": "ast",
+      "community": 246,
+      "community_name": "2026_08_07_100010_create_t_pengaduanmasyarakat_table.php",
+      "file_type": "code",
+      "norm_label": "2026_08_07_100010_create_t_pengaduanmasyarakat_table.php",
+      "source_file": "database/migrations/2026_08_07_100010_create_t_pengaduanmasyarakat_table.php",
+      "source_location": "L1"
+    },
+    {
       "id": "vite_config",
       "label": "vite.config.js",
       "_origin": "ast",
@@ -13206,70 +13327,15 @@
       "source_location": "L1"
     },
     {
-      "id": "app_services_catatanaktivitas",
-      "label": "CatatanAktivitas.php",
+      "id": "tesseract_js_tesseract_js",
+      "label": "tesseract.js",
       "_origin": "ast",
-      "community": 249,
-      "community_name": "UserLevel",
+      "community": 248,
+      "community_name": "tesseract.js",
+      "confidence": "EXTRACTED",
       "file_type": "code",
-      "norm_label": "catatanaktivitas.php",
-      "source_file": "app/Services/CatatanAktivitas.php",
-      "source_location": "L1"
-    },
-    {
-      "id": "illuminate_foundation_testing_testcase",
-      "label": "Illuminate\\Foundation\\Testing\\TestCase",
-      "_origin": "ast",
-      "community": 249,
-      "community_name": "UserLevel",
-      "file_type": "code",
-      "norm_label": "illuminate\\foundation\\testing\\testcase",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "tests_feature_exampletest",
-      "label": "Feature/ExampleTest.php",
-      "_origin": "ast",
-      "community": 249,
-      "community_name": "UserLevel",
-      "file_type": "code",
-      "norm_label": "feature/exampletest.php",
-      "source_file": "tests/Feature/ExampleTest.php",
-      "source_location": "L1"
-    },
-    {
-      "id": "tests_feature_layanannonaktiftest",
-      "label": "LayananNonaktifTest.php",
-      "_origin": "ast",
-      "community": 249,
-      "community_name": "UserLevel",
-      "file_type": "code",
-      "norm_label": "layanannonaktiftest.php",
-      "source_file": "tests/Feature/LayananNonaktifTest.php",
-      "source_location": "L1"
-    },
-    {
-      "id": "tests_feature_peranopdtest",
-      "label": "PeranOpdTest.php",
-      "_origin": "ast",
-      "community": 249,
-      "community_name": "UserLevel",
-      "file_type": "code",
-      "norm_label": "peranopdtest.php",
-      "source_file": "tests/Feature/PeranOpdTest.php",
-      "source_location": "L1"
-    },
-    {
-      "id": "tests_testcase",
-      "label": "TestCase.php",
-      "_origin": "ast",
-      "community": 249,
-      "community_name": "UserLevel",
-      "file_type": "code",
-      "norm_label": "testcase.php",
-      "source_file": "tests/TestCase.php",
-      "source_location": "L1"
+      "norm_label": "tesseract.js",
+      "source_file": "tesseract.js"
     },
     {
       "id": "claude",
@@ -13457,28 +13523,6 @@
       "norm_label": "pilihrincian.jsx",
       "source_file": "resources/js/Components/PilihRincian.jsx",
       "source_location": "L1"
-    },
-    {
-      "id": "database_migrations_2026_09_02_100001_tambah_wilayah_akun",
-      "label": "2026_09_02_100001_tambah_wilayah_akun.php",
-      "_origin": "ast",
-      "community": 258,
-      "community_name": "2026_09_02_100001_tambah_wilayah_akun.php",
-      "file_type": "code",
-      "norm_label": "2026_09_02_100001_tambah_wilayah_akun.php",
-      "source_file": "database/migrations/2026_09_02_100001_tambah_wilayah_akun.php",
-      "source_location": "L1"
-    },
-    {
-      "id": "illuminate_support_facades_db",
-      "label": "Illuminate\\Support\\Facades\\DB",
-      "_origin": "ast",
-      "community": 258,
-      "community_name": "2026_09_02_100001_tambah_wilayah_akun.php",
-      "file_type": "code",
-      "norm_label": "illuminate\\support\\facades\\db",
-      "source_file": "",
-      "source_location": ""
     },
     {
       "id": "composer",
@@ -14218,94 +14262,6 @@
       "source_location": ""
     },
     {
-      "id": "app_http_middleware_handleinertiarequests",
-      "label": "HandleInertiaRequests.php",
-      "_origin": "ast",
-      "community": 39,
-      "community_name": "bootstrap/app.php",
-      "file_type": "code",
-      "norm_label": "handleinertiarequests.php",
-      "source_file": "app/Http/Middleware/HandleInertiaRequests.php",
-      "source_location": "L1"
-    },
-    {
-      "id": "bootstrap_app",
-      "label": "bootstrap/app.php",
-      "_origin": "ast",
-      "community": 39,
-      "community_name": "bootstrap/app.php",
-      "file_type": "code",
-      "norm_label": "bootstrap/app.php",
-      "source_file": "bootstrap/app.php",
-      "source_location": "L1"
-    },
-    {
-      "id": "illuminate_foundation_application",
-      "label": "Illuminate\\Foundation\\Application",
-      "_origin": "ast",
-      "community": 39,
-      "community_name": "bootstrap/app.php",
-      "file_type": "code",
-      "norm_label": "illuminate\\foundation\\application",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "illuminate_foundation_configuration_exceptions",
-      "label": "Illuminate\\Foundation\\Configuration\\Exceptions",
-      "_origin": "ast",
-      "community": 39,
-      "community_name": "bootstrap/app.php",
-      "file_type": "code",
-      "norm_label": "illuminate\\foundation\\configuration\\exceptions",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "illuminate_foundation_configuration_middleware",
-      "label": "Illuminate\\Foundation\\Configuration\\Middleware",
-      "_origin": "ast",
-      "community": 39,
-      "community_name": "bootstrap/app.php",
-      "file_type": "code",
-      "norm_label": "illuminate\\foundation\\configuration\\middleware",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "illuminate_http_middleware_addlinkheadersforpreloadedassets",
-      "label": "Illuminate\\Http\\Middleware\\AddLinkHeadersForPreloadedAssets",
-      "_origin": "ast",
-      "community": 39,
-      "community_name": "bootstrap/app.php",
-      "file_type": "code",
-      "norm_label": "illuminate\\http\\middleware\\addlinkheadersforpreloadedassets",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "inertia_middleware",
-      "label": "Inertia\\Middleware",
-      "_origin": "ast",
-      "community": 39,
-      "community_name": "bootstrap/app.php",
-      "file_type": "code",
-      "norm_label": "inertia\\middleware",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "public_index",
-      "label": "index.php",
-      "_origin": "ast",
-      "community": 39,
-      "community_name": "bootstrap/app.php",
-      "file_type": "code",
-      "norm_label": "index.php",
-      "source_file": "public/index.php",
-      "source_location": "L1"
-    },
-    {
       "id": "app_support_konten",
       "label": "Konten.php",
       "_origin": "ast",
@@ -14856,24 +14812,35 @@
       "source_location": ""
     },
     {
-      "id": "database_seeders_databaseseeder",
-      "label": "DatabaseSeeder.php",
+      "id": "database_migrations_2026_08_07_100008_create_t_galleries_table",
+      "label": "2026_08_07_100008_create_t_galleries_table.php",
       "_origin": "ast",
       "community": 46,
-      "community_name": "DatabaseSeeder.php",
+      "community_name": "Illuminate\\Support\\Facades\\Schema",
       "file_type": "code",
-      "norm_label": "databaseseeder.php",
-      "source_file": "database/seeders/DatabaseSeeder.php",
+      "norm_label": "2026_08_07_100008_create_t_galleries_table.php",
+      "source_file": "database/migrations/2026_08_07_100008_create_t_galleries_table.php",
       "source_location": "L1"
     },
     {
-      "id": "illuminate_database_seeder",
-      "label": "Illuminate\\Database\\Seeder",
+      "id": "database_migrations_2026_08_07_100009_create_t_produk_table",
+      "label": "2026_08_07_100009_create_t_produk_table.php",
       "_origin": "ast",
       "community": 46,
-      "community_name": "DatabaseSeeder.php",
+      "community_name": "Illuminate\\Support\\Facades\\Schema",
       "file_type": "code",
-      "norm_label": "illuminate\\database\\seeder",
+      "norm_label": "2026_08_07_100009_create_t_produk_table.php",
+      "source_file": "database/migrations/2026_08_07_100009_create_t_produk_table.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "illuminate_support_facades_schema",
+      "label": "Illuminate\\Support\\Facades\\Schema",
+      "_origin": "ast",
+      "community": 46,
+      "community_name": "Illuminate\\Support\\Facades\\Schema",
+      "file_type": "code",
+      "norm_label": "illuminate\\support\\facades\\schema",
       "source_file": "",
       "source_location": ""
     },
@@ -15329,35 +15296,57 @@
       "source_location": "L12"
     },
     {
-      "id": "database_migrations_2026_08_07_100002_create_users_table",
-      "label": "2026_08_07_100002_create_users_table.php",
+      "id": "app_http_controllers_api_admin_logaktivitascontroller",
+      "label": "LogAktivitasController.php",
       "_origin": "ast",
       "community": 50,
-      "community_name": "Illuminate\\Database\\Schema\\Blueprint",
+      "community_name": "Periode",
       "file_type": "code",
-      "norm_label": "2026_08_07_100002_create_users_table.php",
-      "source_file": "database/migrations/2026_08_07_100002_create_users_table.php",
+      "norm_label": "logaktivitascontroller.php",
+      "source_file": "app/Http/Controllers/Api/Admin/LogAktivitasController.php",
       "source_location": "L1"
     },
     {
-      "id": "database_migrations_2026_08_07_100003_create_m_jenis_permohonan_table",
-      "label": "2026_08_07_100003_create_m_jenis_permohonan_table.php",
+      "id": "app_services_jamlayanan",
+      "label": "JamLayanan.php",
       "_origin": "ast",
       "community": 50,
-      "community_name": "Illuminate\\Database\\Schema\\Blueprint",
+      "community_name": "Periode",
       "file_type": "code",
-      "norm_label": "2026_08_07_100003_create_m_jenis_permohonan_table.php",
-      "source_file": "database/migrations/2026_08_07_100003_create_m_jenis_permohonan_table.php",
+      "norm_label": "jamlayanan.php",
+      "source_file": "app/Services/JamLayanan.php",
       "source_location": "L1"
     },
     {
-      "id": "illuminate_database_schema_blueprint",
-      "label": "Illuminate\\Database\\Schema\\Blueprint",
+      "id": "app_support_periode",
+      "label": "Periode.php",
       "_origin": "ast",
       "community": 50,
-      "community_name": "Illuminate\\Database\\Schema\\Blueprint",
+      "community_name": "Periode",
       "file_type": "code",
-      "norm_label": "illuminate\\database\\schema\\blueprint",
+      "norm_label": "periode.php",
+      "source_file": "app/Support/Periode.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_support_periode_php_carbonimmutable",
+      "label": "CarbonImmutable",
+      "_origin": "ast",
+      "community": 50,
+      "community_name": "Periode",
+      "file_type": "code",
+      "norm_label": "carbonimmutable",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "carbon_carbonimmutable",
+      "label": "Carbon\\CarbonImmutable",
+      "_origin": "ast",
+      "community": 50,
+      "community_name": "Periode",
+      "file_type": "code",
+      "norm_label": "carbon\\carbonimmutable",
       "source_file": "",
       "source_location": ""
     },
@@ -15428,14 +15417,91 @@
       "source_location": "L10"
     },
     {
-      "id": "app_http_controllers_api_demograficontroller",
-      "label": "DemografiController.php",
+      "id": "app_http_middleware_handleinertiarequests",
+      "label": "HandleInertiaRequests.php",
       "_origin": "ast",
       "community": 54,
-      "community_name": "DemografiController.php",
+      "community_name": "bootstrap/app.php",
       "file_type": "code",
-      "norm_label": "demograficontroller.php",
-      "source_file": "app/Http/Controllers/Api/DemografiController.php",
+      "norm_label": "handleinertiarequests.php",
+      "source_file": "app/Http/Middleware/HandleInertiaRequests.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "bootstrap_app",
+      "label": "bootstrap/app.php",
+      "_origin": "ast",
+      "community": 54,
+      "community_name": "bootstrap/app.php",
+      "file_type": "code",
+      "norm_label": "bootstrap/app.php",
+      "source_file": "bootstrap/app.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "illuminate_foundation_application",
+      "label": "Illuminate\\Foundation\\Application",
+      "_origin": "ast",
+      "community": 54,
+      "community_name": "bootstrap/app.php",
+      "file_type": "code",
+      "norm_label": "illuminate\\foundation\\application",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "illuminate_foundation_configuration_exceptions",
+      "label": "Illuminate\\Foundation\\Configuration\\Exceptions",
+      "_origin": "ast",
+      "community": 54,
+      "community_name": "bootstrap/app.php",
+      "file_type": "code",
+      "norm_label": "illuminate\\foundation\\configuration\\exceptions",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "illuminate_foundation_configuration_middleware",
+      "label": "Illuminate\\Foundation\\Configuration\\Middleware",
+      "_origin": "ast",
+      "community": 54,
+      "community_name": "bootstrap/app.php",
+      "file_type": "code",
+      "norm_label": "illuminate\\foundation\\configuration\\middleware",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "illuminate_http_middleware_addlinkheadersforpreloadedassets",
+      "label": "Illuminate\\Http\\Middleware\\AddLinkHeadersForPreloadedAssets",
+      "_origin": "ast",
+      "community": 54,
+      "community_name": "bootstrap/app.php",
+      "file_type": "code",
+      "norm_label": "illuminate\\http\\middleware\\addlinkheadersforpreloadedassets",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "inertia_middleware",
+      "label": "Inertia\\Middleware",
+      "_origin": "ast",
+      "community": 54,
+      "community_name": "bootstrap/app.php",
+      "file_type": "code",
+      "norm_label": "inertia\\middleware",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "public_index",
+      "label": "index.php",
+      "_origin": "ast",
+      "community": 54,
+      "community_name": "bootstrap/app.php",
+      "file_type": "code",
+      "norm_label": "index.php",
+      "source_file": "public/index.php",
       "source_location": "L1"
     },
     {
@@ -15901,57 +15967,24 @@
       "source_location": ""
     },
     {
-      "id": "app_http_controllers_api_admin_logaktivitascontroller",
-      "label": "LogAktivitasController.php",
+      "id": "app_http_controllers_auth_otpcontroller",
+      "label": "OtpController.php",
       "_origin": "ast",
       "community": 65,
-      "community_name": "Periode",
+      "community_name": "OtpController",
       "file_type": "code",
-      "norm_label": "logaktivitascontroller.php",
-      "source_file": "app/Http/Controllers/Api/Admin/LogAktivitasController.php",
+      "norm_label": "otpcontroller.php",
+      "source_file": "app/Http/Controllers/Auth/OtpController.php",
       "source_location": "L1"
     },
     {
-      "id": "app_services_jamlayanan",
-      "label": "JamLayanan.php",
+      "id": "illuminate_support_facades_cache",
+      "label": "Illuminate\\Support\\Facades\\Cache",
       "_origin": "ast",
       "community": 65,
-      "community_name": "Periode",
+      "community_name": "OtpController",
       "file_type": "code",
-      "norm_label": "jamlayanan.php",
-      "source_file": "app/Services/JamLayanan.php",
-      "source_location": "L1"
-    },
-    {
-      "id": "app_support_periode",
-      "label": "Periode.php",
-      "_origin": "ast",
-      "community": 65,
-      "community_name": "Periode",
-      "file_type": "code",
-      "norm_label": "periode.php",
-      "source_file": "app/Support/Periode.php",
-      "source_location": "L1"
-    },
-    {
-      "id": "app_support_periode_php_carbonimmutable",
-      "label": "CarbonImmutable",
-      "_origin": "ast",
-      "community": 65,
-      "community_name": "Periode",
-      "file_type": "code",
-      "norm_label": "carbonimmutable",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "carbon_carbonimmutable",
-      "label": "Carbon\\CarbonImmutable",
-      "_origin": "ast",
-      "community": 65,
-      "community_name": "Periode",
-      "file_type": "code",
-      "norm_label": "carbon\\carbonimmutable",
+      "norm_label": "illuminate\\support\\facades\\cache",
       "source_file": "",
       "source_location": ""
     },
@@ -16657,7 +16690,7 @@
       "file_type": "code",
       "norm_label": "bawaan",
       "source_file": "resources/js/Publik/Carousel.jsx",
-      "source_location": "L22"
+      "source_location": "L33"
     },
     {
       "id": "resources_js_publik_formskm",
@@ -16669,28 +16702,6 @@
       "norm_label": "formskm.jsx",
       "source_file": "resources/js/Publik/FormSkm.jsx",
       "source_location": "L1"
-    },
-    {
-      "id": "app_http_controllers_auth_otpcontroller",
-      "label": "OtpController.php",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "OtpController",
-      "file_type": "code",
-      "norm_label": "otpcontroller.php",
-      "source_file": "app/Http/Controllers/Auth/OtpController.php",
-      "source_location": "L1"
-    },
-    {
-      "id": "illuminate_support_facades_cache",
-      "label": "Illuminate\\Support\\Facades\\Cache",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "OtpController",
-      "file_type": "code",
-      "norm_label": "illuminate\\support\\facades\\cache",
-      "source_file": "",
-      "source_location": ""
     },
     {
       "id": "resources_js_publik_modeedit",
@@ -16825,35 +16836,24 @@
       "source_location": "L1"
     },
     {
-      "id": "database_migrations_2026_08_07_100008_create_t_galleries_table",
-      "label": "2026_08_07_100008_create_t_galleries_table.php",
+      "id": "database_migrations_2026_09_02_100001_tambah_wilayah_akun",
+      "label": "2026_09_02_100001_tambah_wilayah_akun.php",
       "_origin": "ast",
       "community": 97,
-      "community_name": "Illuminate\\Support\\Facades\\Schema",
+      "community_name": "2026_09_02_100001_tambah_wilayah_akun.php",
       "file_type": "code",
-      "norm_label": "2026_08_07_100008_create_t_galleries_table.php",
-      "source_file": "database/migrations/2026_08_07_100008_create_t_galleries_table.php",
+      "norm_label": "2026_09_02_100001_tambah_wilayah_akun.php",
+      "source_file": "database/migrations/2026_09_02_100001_tambah_wilayah_akun.php",
       "source_location": "L1"
     },
     {
-      "id": "database_migrations_2026_08_07_100009_create_t_produk_table",
-      "label": "2026_08_07_100009_create_t_produk_table.php",
+      "id": "illuminate_support_facades_db",
+      "label": "Illuminate\\Support\\Facades\\DB",
       "_origin": "ast",
       "community": 97,
-      "community_name": "Illuminate\\Support\\Facades\\Schema",
+      "community_name": "2026_09_02_100001_tambah_wilayah_akun.php",
       "file_type": "code",
-      "norm_label": "2026_08_07_100009_create_t_produk_table.php",
-      "source_file": "database/migrations/2026_08_07_100009_create_t_produk_table.php",
-      "source_location": "L1"
-    },
-    {
-      "id": "illuminate_support_facades_schema",
-      "label": "Illuminate\\Support\\Facades\\Schema",
-      "_origin": "ast",
-      "community": 97,
-      "community_name": "Illuminate\\Support\\Facades\\Schema",
-      "file_type": "code",
-      "norm_label": "illuminate\\support\\facades\\schema",
+      "norm_label": "illuminate\\support\\facades\\db",
       "source_file": "",
       "source_location": ""
     },
@@ -39309,7 +39309,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "resources/js/Publik/Carousel.jsx",
-      "source_location": "L22",
+      "source_location": "L33",
       "weight": 1.0
     },
     {
@@ -39320,7 +39320,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "resources/js/Publik/Carousel.jsx",
-      "source_location": "L32",
+      "source_location": "L42",
       "weight": 1.0
     },
     {
@@ -39331,7 +39331,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "resources/js/Publik/Carousel.jsx",
-      "source_location": "L47",
+      "source_location": "L57",
       "weight": 1.0
     },
     {
@@ -45448,5 +45448,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "65bd850c8a809a3adef5cccd5dc2a301b3cc651d"
+  "built_at_commit": "47818b6dbf051396f1ac61de1428b83f0e0890b2"
 }

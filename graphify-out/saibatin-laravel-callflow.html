@@ -60,7 +60,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
 <div class="container">
 
 <h1>saibatin-laravel — Complete Call Flow &amp; Architecture Documentation</h1>
-<p class="subtitle">Generated from graphify knowledge graph: 1451 nodes, 2474 edges, 252 communities. Commit: 65bd850</p>
+<p class="subtitle">Generated from graphify knowledge graph: 1451 nodes, 2474 edges, 252 communities. Commit: 47818b6</p>
 
 <div class="nav">
     <a href="#overview">Architecture Overview</a>
@@ -126,8 +126,8 @@ flowchart LR
     SERVE_API_35EC8E86 -->|imports x14| OTHER_D0941E68
     SERVE_API_35EC8E86 -->|imports x12| TESTS_FIXTURES_B84B1DCC
     OTHER_D0941E68 -->|references x5| OTP_7A20AECD
-    OTP_7A20AECD -->|imports x4| SERVE_API_35EC8E86
     BUILD_GRAPH_321CBB04 -->|imports x4| OTHER_D0941E68
+    OTP_7A20AECD -->|imports x4| SERVE_API_35EC8E86
     STATUSAKUN_9EBB54D1 -->|imports x3| OTHER_D0941E68
     STATUSAKUN_9EBB54D1 -->|imports x2| TESTS_FIXTURES_B84B1DCC
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
@@ -146,7 +146,7 @@ flowchart LR
     <h4>Architecture Layers</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>Layer</th><th>Nodes</th><th>Communities</th></tr>
-      <tr><td>Graph Build</td><td>166</td><td><code>5, 23, 27, 35, 41, 47, 48, 50, 97, 66, 67, 93, 94, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160</code></td></tr><tr><td>CLI &amp; Skill Installers</td><td>2</td><td><code>25</code></td></tr><tr><td>Ingestion &amp; Updates</td><td>3</td><td><code>95</code></td></tr><tr><td>Serving API</td><td>489</td><td><code>45, 1, 15, 4, 0, 3, 38, 10, 7, 16, 6, 2, 20, 34, 12, 65, 76, 19, 54</code></td></tr><tr><td>Tests &amp; Fixtures</td><td>58</td><td><code>55, 11, 13, 249, 80</code></td></tr><tr><td>HANDOFF — SAIBATIN Laravel</td><td>38</td><td><code>24</code></td></tr><tr><td>Dasbor.jsx</td><td>23</td><td><code>8</code></td></tr><tr><td>Otp</td><td>21</td><td><code>17</code></td></tr><tr><td>Statistik.jsx</td><td>18</td><td><code>14</code></td></tr><tr><td>ProfilTabs.jsx</td><td>16</td><td><code>18</code></td></tr><tr><td>StatusAkun</td><td>16</td><td><code>64</code></td></tr><tr><td>EditorMedan.jsx</td><td>15</td><td><code>21</code></td></tr><tr><td>Akun.jsx</td><td>15</td><td><code>32</code></td></tr><tr><td>ocr-ktp.js</td><td>13</td><td><code>22</code></td></tr><tr><td>Other</td><td>558</td><td><code>28, 29, 30, 31, 26, 33, 39, 251, 36, 37, 42, 43, 44, 57, 253, 40, 51, 52, 53, 99, 56, 58, 59, 60, 61, 62, 63, 78, 9, 68, 69, 70, 71, 72, 73, 74, 75, 79, 258, 46, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 100, 101, 102, 103, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 49, 77, 96, 98, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 257, 104, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 247</code></td></tr>
+      <tr><td>Graph Build</td><td>166</td><td><code>5, 23, 27, 35, 41, 13, 46, 47, 48, 66, 67, 93, 94, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160</code></td></tr><tr><td>CLI &amp; Skill Installers</td><td>2</td><td><code>25</code></td></tr><tr><td>Ingestion &amp; Updates</td><td>3</td><td><code>95</code></td></tr><tr><td>Serving API</td><td>489</td><td><code>45, 1, 15, 4, 0, 3, 38, 10, 7, 16, 6, 2, 20, 34, 12, 50, 76, 103, 19</code></td></tr><tr><td>Tests &amp; Fixtures</td><td>58</td><td><code>55, 9, 11, 39, 80</code></td></tr><tr><td>HANDOFF — SAIBATIN Laravel</td><td>38</td><td><code>24</code></td></tr><tr><td>Dasbor.jsx</td><td>23</td><td><code>8</code></td></tr><tr><td>Otp</td><td>21</td><td><code>17</code></td></tr><tr><td>Statistik.jsx</td><td>18</td><td><code>14</code></td></tr><tr><td>ProfilTabs.jsx</td><td>16</td><td><code>18</code></td></tr><tr><td>StatusAkun</td><td>16</td><td><code>64</code></td></tr><tr><td>EditorMedan.jsx</td><td>15</td><td><code>21</code></td></tr><tr><td>Akun.jsx</td><td>15</td><td><code>32</code></td></tr><tr><td>ocr-ktp.js</td><td>13</td><td><code>22</code></td></tr><tr><td>Other</td><td>558</td><td><code>28, 29, 30, 31, 26, 33, 54, 251, 36, 37, 42, 43, 44, 57, 253, 40, 51, 52, 53, 99, 56, 58, 59, 60, 61, 62, 63, 65, 78, 68, 69, 70, 71, 72, 73, 74, 75, 79, 102, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 97, 100, 101, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 246, 49, 77, 96, 98, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 257, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 247, 248</code></td></tr>
     </table>
   </div>
   <div class="card">
@@ -189,19 +189,28 @@ flowchart LR
         package_dependencies_highcharts_react_official_3a855226("highcharts-react-official<br/><small>package.json</small>")
         highcharts_react_official_305e872f("highcharts-react-official<br/><small>package.json</small>")
         package_dependencies_inertiajs_react_0eafdf3d("@inertiajs/react<br/><small>package.json</small>")
-        inertiajs_react_0bb94bbe("@inertiajs/react<br/><small>package.json</small>")
-        package_dependencies_leaflet_e1b9b00b("leaflet<br/><small>package.json</small>")
+    end
+    subgraph build_graph_External_generated_653891f5["External / generated"]
+        illuminate_database_schema_blueprint_b3baadbf("Illuminate\Database\Schema\Blueprint")
+        illuminate_support_facades_schema_45f605fc("Illuminate\Support\Facades\Schema")
     end
     database_migrations_2026_08_07_100002_create_use_b96742d2("create users table.php<br/><small>database/migrations/2026_08_07_100002_create_users_table.php</small>")
     database_migrations_2026_08_07_100003_create_m_j_ad6ec1a4("jenis permohonan table.php<br/><small>database/migrations/2026_08_07_100003_create_m_jenis_permohonan_table.php</small>")
     database_migrations_2026_08_07_100008_create_t_g_63070d58("t galleries table.php<br/><small>database/migrations/2026_08_07_100008_create_t_galleries_table.php</small>")
     database_migrations_2026_08_07_100009_create_t_p_c416ac6e("t produk table.php<br/><small>database/migrations/2026_08_07_100009_create_t_produk_table.php</small>")
+    database_migrations_2026_08_07_100002_create_use_b96742d2 -->|imports| illuminate_database_schema_blueprint_b3baadbf
+    database_migrations_2026_08_07_100002_create_use_b96742d2 -->|imports| illuminate_support_facades_schema_45f605fc
+    database_migrations_2026_08_07_100003_create_m_j_ad6ec1a4 -->|imports| illuminate_database_schema_blueprint_b3baadbf
+    database_migrations_2026_08_07_100003_create_m_j_ad6ec1a4 -->|imports| illuminate_support_facades_schema_45f605fc
     package_dependencies_clsx_4bc09135 -->|imports| clsx_ed67b7e7
     package_dependencies_date_fns_18a69064 -->|imports| date_fns_3907a132
     package_dependencies_framer_motion_02587384 -->|imports| framer_motion_61ed6a3c
     package_dependencies_highcharts_c6e7a75f -->|imports| highcharts_9861ca48
     package_dependencies_highcharts_react_official_3a855226 -->|imports| highcharts_react_official_305e872f
-    package_dependencies_inertiajs_react_0eafdf3d -->|imports| inertiajs_react_0bb94bbe
+    database_migrations_2026_08_07_100008_create_t_g_63070d58 -->|imports| illuminate_database_schema_blueprint_b3baadbf
+    database_migrations_2026_08_07_100008_create_t_g_63070d58 -->|imports| illuminate_support_facades_schema_45f605fc
+    database_migrations_2026_08_07_100009_create_t_p_c416ac6e -->|imports| illuminate_database_schema_blueprint_b3baadbf
+    database_migrations_2026_08_07_100009_create_t_p_c416ac6e -->|imports| illuminate_support_facades_schema_45f605fc
     %% Omitted for readability: 148 nodes, 0 edges
     class package_dependencies_class_variance_authority_28e7f25f function;
     class package_dependencies_clsx_4bc09135 function;
@@ -215,8 +224,8 @@ flowchart LR
     class package_dependencies_highcharts_react_official_3a855226 function;
     class highcharts_react_official_305e872f function;
     class package_dependencies_inertiajs_react_0eafdf3d function;
-    class inertiajs_react_0bb94bbe function;
-    class package_dependencies_leaflet_e1b9b00b function;
+    class illuminate_database_schema_blueprint_b3baadbf klass;
+    class illuminate_support_facades_schema_45f605fc klass;
     class database_migrations_2026_08_07_100002_create_use_b96742d2 module;
     class database_migrations_2026_08_07_100003_create_m_j_ad6ec1a4 module;
     class database_migrations_2026_08_07_100008_create_t_g_63070d58 module;
@@ -1007,18 +1016,16 @@ flowchart LR
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
     %% Section: Tests &amp; Fixtures (58 nodes, 109 edges)
-    subgraph tests_fixtures_tests_Feature_LayananNonaktifTest_9c5e01c2["tests/Feature/LayananNonaktifTest.php"]
-        tests_feature_layanannonaktiftest_layanannonakti_ff285008("LayananNonaktifTest<br/><small>tests/Feature/LayananNonaktifTest.php</small>")
-        tests_feature_layanannonaktiftest_layanannonakti_4ee86f6f("test_layanan_lain_tidak_ikut_terkunci()<br/><small>tests/Feature/LayananNonaktifTest.php</small>")
-        tests_feature_layanannonaktiftest_layanannonakti_c41e7b50("test_daftar_menyembunyikan_bagi_operator_dan_menandai_bagi_admin()<br/><small>tests/Feature/LayananNonaktifTest.php</small>")
-        tests_feature_layanannonaktiftest_layanannonakti_3f4c6ab3("setUp()<br/><small>tests/Feature/LayananNonaktifTest.php</small>")
-        tests_feature_layanannonaktiftest_layanannonakti_ce0c5bb3("tearDown()<br/><small>tests/Feature/LayananNonaktifTest.php</small>")
-        tests_feature_layanannonaktiftest_layanannonakti_de2ede05("akun()<br/><small>tests/Feature/LayananNonaktifTest.php</small>")
-        tests_feature_layanannonaktiftest_layanannonakti_3b502ace("test_super_admin_masih_bisa_membuka_layanan_yang_ia_matikan()<br/><small>tests/Feature/LayananNonaktifTest.php</small>")
-        tests_feature_layanannonaktiftest_layanannonakti_0462a8a1("test_operator_biasa_ditolak_404()<br/><small>tests/Feature/LayananNonaktifTest.php</small>")
-        tests_feature_layanannonaktiftest_layanannonakti_811ec8fb("test_opd_ditolak_404()<br/><small>tests/Feature/LayananNonaktifTest.php</small>")
-        tests_feature_layanannonaktiftest_layanannonakti_591e9e6b("test_warga_ditolak_404_di_jalur_publiknya()<br/><small>tests/Feature/LayananNonaktifTest.php</small>")
-        tests_feature_layanannonaktiftest_layanannonakti_ce617dcc("test_pengiriman_permohonan_ditolak_403()<br/><small>tests/Feature/LayananNonaktifTest.php</small>")
+    subgraph tests_fixtures_tests_Feature_PeranOpdTest_php_5149b8a0["tests/Feature/PeranOpdTest.php"]
+        tests_feature_peranopdtest_peranopdtest_e7a9b430("PeranOpdTest<br/><small>tests/Feature/PeranOpdTest.php</small>")
+        tests_feature_peranopdtest_peranopdtest_test_hit_1dda6ef6("test_hitungan_per_status_ikut_disaring()<br/><small>tests/Feature/PeranOpdTest.php</small>")
+        tests_feature_peranopdtest_peranopdtest_test_det_0b0079b9("test_detail_permohonan_orang_lain_menjawab_404_bukan_403()<br/><small>tests/Feature/PeranOpdTest.php</small>")
+        tests_feature_peranopdtest_peranopdtest_test_opd_36dc1eb0("test_opd_tidak_bisa_memproses_permohonan()<br/><small>tests/Feature/PeranOpdTest.php</small>")
+        tests_feature_peranopdtest_peranopdtest_test_ala_90e1eb3b("test_alamat_lama_mengalih_beserta_query_string()<br/><small>tests/Feature/PeranOpdTest.php</small>")
+        tests_feature_peranopdtest_peranopdtest_test_war_64a7e522("test_warga_tidak_ikut_pindah()<br/><small>tests/Feature/PeranOpdTest.php</small>")
+        tests_feature_peranopdtest_peranopdtest_opd_6707833d("opd()<br/><small>tests/Feature/PeranOpdTest.php</small>")
+        tests_feature_peranopdtest_peranopdtest_test_opd_c1acfb71("test_opd_mendarat_di_daftar_permohonannya_sendiri()<br/><small>tests/Feature/PeranOpdTest.php</small>")
+        tests_feature_peranopdtest_peranopdtest_test_opd_7c4a46aa("test_opd_boleh_membuka_halaman_yang_dipakai_bersama()<br/><small>tests/Feature/PeranOpdTest.php</small>")
     end
     subgraph tests_fixtures_tests_Feature_SuntingAkunTest_php_4657efb7["tests/Feature/SuntingAkunTest.php"]
         tests_feature_suntingakuntest_suntingakuntest_9771f16f("SuntingAkunTest<br/><small>tests/Feature/SuntingAkunTest.php</small>")
@@ -1026,52 +1033,53 @@ flowchart LR
         tests_feature_suntingakuntest_suntingakuntest_te_bab12774("test_akun_lama_tanpa_kecamatan_tetap_bisa_disunting()<br/><small>tests/Feature/SuntingAkunTest.php</small>")
         tests_feature_suntingakuntest_suntingakuntest_te_c4a1d548("test_level_super_admin_tidak_bisa_diberikan_dari_sini()<br/><small>tests/Feature/SuntingAkunTest.php</small>")
     end
-    subgraph tests_fixtures_tests_Feature_PeranOpdTest_php_5149b8a0["tests/Feature/PeranOpdTest.php"]
-        tests_feature_peranopdtest_peranopdtest_e7a9b430("PeranOpdTest<br/><small>tests/Feature/PeranOpdTest.php</small>")
-        tests_feature_peranopdtest_peranopdtest_test_hit_1dda6ef6("test_hitungan_per_status_ikut_disaring()<br/><small>tests/Feature/PeranOpdTest.php</small>")
-        tests_feature_peranopdtest_peranopdtest_test_det_0b0079b9("test_detail_permohonan_orang_lain_menjawab_404_bukan_403()<br/><small>tests/Feature/PeranOpdTest.php</small>")
+    subgraph tests_fixtures_app_Models_UserLevel_php_b027b6f0["app/Models/UserLevel.php"]
+        app_models_userlevel_userlevel_95e878f5("UserLevel<br/><small>app/Models/UserLevel.php</small>")
+        app_models_userlevel_userlevel_users_0e5a3dae("users()<br/><small>app/Models/UserLevel.php</small>")
     end
-    tests_feature_layanannonaktiftest_layanannonakti_ff285008 -->|method| tests_feature_layanannonaktiftest_layanannonakti_4ee86f6f
-    tests_feature_layanannonaktiftest_layanannonakti_ff285008 -->|method| tests_feature_layanannonaktiftest_layanannonakti_c41e7b50
-    tests_feature_layanannonaktiftest_layanannonakti_ff285008 -->|method| tests_feature_layanannonaktiftest_layanannonakti_3f4c6ab3
-    tests_feature_layanannonaktiftest_layanannonakti_ff285008 -->|method| tests_feature_layanannonaktiftest_layanannonakti_ce0c5bb3
-    tests_feature_layanannonaktiftest_layanannonakti_ff285008 -->|method| tests_feature_layanannonaktiftest_layanannonakti_de2ede05
-    tests_feature_layanannonaktiftest_layanannonakti_ff285008 -->|method| tests_feature_layanannonaktiftest_layanannonakti_3b502ace
-    tests_feature_layanannonaktiftest_layanannonakti_ff285008 -->|method| tests_feature_layanannonaktiftest_layanannonakti_0462a8a1
-    tests_feature_layanannonaktiftest_layanannonakti_ff285008 -->|method| tests_feature_layanannonaktiftest_layanannonakti_811ec8fb
-    tests_feature_layanannonaktiftest_layanannonakti_ff285008 -->|method| tests_feature_layanannonaktiftest_layanannonakti_591e9e6b
-    tests_feature_layanannonaktiftest_layanannonakti_ff285008 -->|method| tests_feature_layanannonaktiftest_layanannonakti_ce617dcc
+    subgraph tests_fixtures_tests_Feature_ExampleTest_php_f3dfa6a6["tests/Feature/ExampleTest.php"]
+        tests_feature_exampletest_exampletest_d7999836("ExampleTest<br/><small>tests/Feature/ExampleTest.php</small>")
+        tests_feature_exampletest_exampletest_test_the_a_a1888ca0("test_the_application_returns_a_successful_response()<br/><small>tests/Feature/ExampleTest.php</small>")
+    end
+    tests_feature_layanannonaktiftest_layanannonakti_ff285008("LayananNonaktifTest<br/><small>tests/Feature/LayananNonaktifTest.php</small>")
+    app_models_userlevel_userlevel_95e878f5 -->|method| app_models_userlevel_userlevel_users_0e5a3dae
+    tests_feature_exampletest_exampletest_d7999836 -->|method| tests_feature_exampletest_exampletest_test_the_a_a1888ca0
     tests_feature_peranopdtest_peranopdtest_e7a9b430 -->|method| tests_feature_peranopdtest_peranopdtest_test_hit_1dda6ef6
     tests_feature_peranopdtest_peranopdtest_e7a9b430 -->|method| tests_feature_peranopdtest_peranopdtest_test_det_0b0079b9
+    tests_feature_peranopdtest_peranopdtest_e7a9b430 -->|method| tests_feature_peranopdtest_peranopdtest_test_opd_36dc1eb0
+    tests_feature_peranopdtest_peranopdtest_e7a9b430 -->|method| tests_feature_peranopdtest_peranopdtest_test_ala_90e1eb3b
+    tests_feature_peranopdtest_peranopdtest_e7a9b430 -->|method| tests_feature_peranopdtest_peranopdtest_test_war_64a7e522
+    tests_feature_peranopdtest_peranopdtest_e7a9b430 -->|method| tests_feature_peranopdtest_peranopdtest_opd_6707833d
+    tests_feature_peranopdtest_peranopdtest_e7a9b430 -->|method| tests_feature_peranopdtest_peranopdtest_test_opd_c1acfb71
+    tests_feature_peranopdtest_peranopdtest_e7a9b430 -->|method| tests_feature_peranopdtest_peranopdtest_test_opd_7c4a46aa
     tests_feature_suntingakuntest_suntingakuntest_9771f16f -->|method| tests_feature_suntingakuntest_suntingakuntest_te_c4a1d548
     tests_feature_suntingakuntest_suntingakuntest_9771f16f -->|method| tests_feature_suntingakuntest_suntingakuntest_te_bab12774
     tests_feature_suntingakuntest_suntingakuntest_9771f16f -->|method| tests_feature_suntingakuntest_suntingakuntest_te_ba7966f4
-    tests_feature_layanannonaktiftest_layanannonakti_c41e7b50 -->|calls| tests_feature_layanannonaktiftest_layanannonakti_de2ede05
-    tests_feature_layanannonaktiftest_layanannonakti_4ee86f6f -->|calls| tests_feature_layanannonaktiftest_layanannonakti_de2ede05
-    tests_feature_layanannonaktiftest_layanannonakti_811ec8fb -->|calls| tests_feature_layanannonaktiftest_layanannonakti_de2ede05
-    tests_feature_layanannonaktiftest_layanannonakti_0462a8a1 -->|calls| tests_feature_layanannonaktiftest_layanannonakti_de2ede05
-    tests_feature_layanannonaktiftest_layanannonakti_ce617dcc -->|calls| tests_feature_layanannonaktiftest_layanannonakti_de2ede05
-    tests_feature_layanannonaktiftest_layanannonakti_3b502ace -->|calls| tests_feature_layanannonaktiftest_layanannonakti_de2ede05
-    tests_feature_layanannonaktiftest_layanannonakti_591e9e6b -->|calls| tests_feature_layanannonaktiftest_layanannonakti_de2ede05
+    tests_feature_peranopdtest_peranopdtest_test_ala_90e1eb3b -->|calls| tests_feature_peranopdtest_peranopdtest_opd_6707833d
+    tests_feature_peranopdtest_peranopdtest_test_det_0b0079b9 -->|calls| tests_feature_peranopdtest_peranopdtest_opd_6707833d
+    tests_feature_peranopdtest_peranopdtest_test_hit_1dda6ef6 -->|calls| tests_feature_peranopdtest_peranopdtest_opd_6707833d
+    tests_feature_peranopdtest_peranopdtest_test_opd_7c4a46aa -->|calls| tests_feature_peranopdtest_peranopdtest_opd_6707833d
+    tests_feature_peranopdtest_peranopdtest_test_opd_c1acfb71 -->|calls| tests_feature_peranopdtest_peranopdtest_opd_6707833d
+    tests_feature_peranopdtest_peranopdtest_test_opd_36dc1eb0 -->|calls| tests_feature_peranopdtest_peranopdtest_opd_6707833d
     %% Omitted for readability: 40 nodes, 0 edges
-    class tests_feature_layanannonaktiftest_layanannonakti_ff285008 test;
-    class tests_feature_layanannonaktiftest_layanannonakti_4ee86f6f test;
-    class tests_feature_layanannonaktiftest_layanannonakti_c41e7b50 test;
-    class tests_feature_layanannonaktiftest_layanannonakti_3f4c6ab3 test;
-    class tests_feature_layanannonaktiftest_layanannonakti_ce0c5bb3 test;
-    class tests_feature_layanannonaktiftest_layanannonakti_de2ede05 test;
-    class tests_feature_layanannonaktiftest_layanannonakti_3b502ace test;
-    class tests_feature_layanannonaktiftest_layanannonakti_0462a8a1 test;
-    class tests_feature_layanannonaktiftest_layanannonakti_811ec8fb test;
-    class tests_feature_layanannonaktiftest_layanannonakti_591e9e6b test;
-    class tests_feature_layanannonaktiftest_layanannonakti_ce617dcc test;
+    class tests_feature_peranopdtest_peranopdtest_e7a9b430 test;
+    class tests_feature_peranopdtest_peranopdtest_test_hit_1dda6ef6 test;
+    class tests_feature_peranopdtest_peranopdtest_test_det_0b0079b9 test;
+    class tests_feature_peranopdtest_peranopdtest_test_opd_36dc1eb0 test;
+    class tests_feature_peranopdtest_peranopdtest_test_ala_90e1eb3b test;
+    class tests_feature_peranopdtest_peranopdtest_test_war_64a7e522 test;
+    class tests_feature_peranopdtest_peranopdtest_opd_6707833d test;
+    class tests_feature_peranopdtest_peranopdtest_test_opd_c1acfb71 test;
+    class tests_feature_peranopdtest_peranopdtest_test_opd_7c4a46aa test;
     class tests_feature_suntingakuntest_suntingakuntest_9771f16f test;
     class tests_feature_suntingakuntest_suntingakuntest_te_ba7966f4 test;
     class tests_feature_suntingakuntest_suntingakuntest_te_bab12774 test;
     class tests_feature_suntingakuntest_suntingakuntest_te_c4a1d548 test;
-    class tests_feature_peranopdtest_peranopdtest_e7a9b430 test;
-    class tests_feature_peranopdtest_peranopdtest_test_hit_1dda6ef6 test;
-    class tests_feature_peranopdtest_peranopdtest_test_det_0b0079b9 test;
+    class app_models_userlevel_userlevel_95e878f5 klass;
+    class app_models_userlevel_userlevel_users_0e5a3dae function;
+    class tests_feature_exampletest_exampletest_d7999836 test;
+    class tests_feature_exampletest_exampletest_test_the_a_a1888ca0 test;
+    class tests_feature_layanannonaktiftest_layanannonakti_ff285008 test;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -1241,7 +1249,7 @@ flowchart LR
   <td>19</td>
   <td><code>.parent()</code><br><small style="color:var(--muted)">app/Models/Wilayah.php</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>setUp()</code><br><small style="color:var(--muted)">tests/Feature/LayananNonaktifTest.php</small><br><code>share()</code><br><small style="color:var(--muted)">Http/Middleware/HandleInertiaRequests.php</small><br><code>tearDown()</code><br><small style="color:var(--muted)">tests/Feature/SuntingAkunTest.php</small><br>+2 more</td>
+  <td><code>setUp()</code><br><small style="color:var(--muted)">tests/Feature/LayananNonaktifTest.php</small><br><code>share()</code><br><small style="color:var(--muted)">Http/Middleware/HandleInertiaRequests.php</small><br><code>tearDown()</code><br><small style="color:var(--muted)">tests/Feature/LayananNonaktifTest.php</small><br>+2 more</td>
   <td>No direct outbound edge</td>
   <td>.parent() node in app/Models/Wilayah.php.</td>
 </tr>
@@ -3565,14 +3573,15 @@ flowchart LR
         app_http_controllers_auth_registercontroller_reg_d18d36fa("RegisterController<br/><small>Controllers/Auth/RegisterController.php</small>")
         app_http_controllers_auth_registercontroller_reg_ad78e5d6("__construct()<br/><small>Controllers/Auth/RegisterController.php</small>")
     end
-    subgraph other_Http_Middleware_HandleInertiaRequests_php_0b33fdea["Http/Middleware/HandleInertiaRequests.php"]
-        app_http_middleware_handleinertiarequests_handle_ad813e5f("HandleInertiaRequests<br/><small>Http/Middleware/HandleInertiaRequests.php</small>")
-        app_http_middleware_handleinertiarequests_handle_dad7423c("share()<br/><small>Http/Middleware/HandleInertiaRequests.php</small>")
+    subgraph other_database_seeders_DatabaseSeeder_php_aa3c40ab["database/seeders/DatabaseSeeder.php"]
+        database_seeders_databaseseeder_databaseseeder_c45215ab("DatabaseSeeder<br/><small>database/seeders/DatabaseSeeder.php</small>")
+        database_seeders_databaseseeder_databaseseeder_r_39ebf05f("run()<br/><small>database/seeders/DatabaseSeeder.php</small>")
     end
     resources_js_components_ui_date_picker_datepicke_eacb3d0a("DatePicker()<br/><small>Components/ui/date-picker.jsx</small>")
     app_http_controllers_auth_otpcontroller_otpcontr_dccfdb91("OtpController<br/><small>Controllers/Auth/OtpController.php</small>")
     bootstrap_app_1478e130("bootstrap/app.php")
     config_logging_9dbb9867("logging.php")
+    database_seeders_databaseseeder_databaseseeder_c45215ab -->|method| database_seeders_databaseseeder_databaseseeder_r_39ebf05f
     app_http_controllers_auth_registercontroller_reg_d18d36fa -->|method| app_http_controllers_auth_registercontroller_reg_ad78e5d6
     app_services_fotoprofil_fotoprofil_484c2979 -->|method| app_services_fotoprofil_fotoprofil_simpanktp_e142bdb6
     app_services_fotoprofil_fotoprofil_484c2979 -->|method| app_services_fotoprofil_fotoprofil_hapus_5d5954a4
@@ -3580,13 +3589,11 @@ flowchart LR
     app_services_fotoprofil_fotoprofil_484c2979 -->|method| app_services_fotoprofil_fotoprofil_ekstensidarib_2d3abc5b
     app_services_fotoprofil_fotoprofil_484c2979 -->|method| app_services_fotoprofil_fotoprofil_adalahdataurl_1e38e150
     app_services_fotoprofil_fotoprofil_484c2979 -->|method| app_services_fotoprofil_fotoprofil_simpan_5c925da4
-    app_http_middleware_handleinertiarequests_handle_ad813e5f -->|method| app_http_middleware_handleinertiarequests_handle_dad7423c
     app_providers_appserviceprovider_appserviceprovi_473d74a4 -->|method| app_providers_appserviceprovider_appserviceprovi_1192fb2b
     app_services_fotoprofil_fotoprofil_hapusktp_b961881a -->|calls| app_services_fotoprofil_fotoprofil_hapus_5d5954a4
     app_services_fotoprofil_fotoprofil_simpan_5c925da4 -->|calls| app_services_fotoprofil_fotoprofil_adalahdataurl_1e38e150
     app_services_fotoprofil_fotoprofil_simpan_5c925da4 -->|calls| app_services_fotoprofil_fotoprofil_ekstensidarib_2d3abc5b
     app_services_fotoprofil_fotoprofil_simpanktp_e142bdb6 -->|calls| app_services_fotoprofil_fotoprofil_simpan_5c925da4
-    bootstrap_app_1478e130 -->|imports| app_http_middleware_handleinertiarequests_handle_ad813e5f
     %% Omitted for readability: 540 nodes, 0 edges
     class app_services_fotoprofil_fotoprofil_484c2979 klass;
     class app_services_fotoprofil_fotoprofil_simpanktp_e142bdb6 function;
@@ -3600,8 +3607,8 @@ flowchart LR
     class app_providers_appserviceprovider_appserviceprovi_1192fb2b function;
     class app_http_controllers_auth_registercontroller_reg_d18d36fa klass;
     class app_http_controllers_auth_registercontroller_reg_ad78e5d6 function;
-    class app_http_middleware_handleinertiarequests_handle_ad813e5f klass;
-    class app_http_middleware_handleinertiarequests_handle_dad7423c function;
+    class database_seeders_databaseseeder_databaseseeder_c45215ab klass;
+    class database_seeders_databaseseeder_databaseseeder_r_39ebf05f function;
     class resources_js_components_ui_date_picker_datepicke_eacb3d0a ui;
     class app_http_controllers_auth_otpcontroller_otpcontr_dccfdb91 klass;
     class bootstrap_app_1478e130 module;
@@ -3916,7 +3923,7 @@ flowchart LR
 
 <div style="text-align:center; padding:40px 0; color: var(--muted); font-size:0.9rem;">
   <p>saibatin-laravel — Architecture Documentation</p>
-  <p>Generated: 2026-09-02 08:51 UTC · graphify callflow-html</p>
+  <p>Generated: 2026-09-02 09:02 UTC · graphify callflow-html</p>
 </div>
 
 </div><!-- .container -->

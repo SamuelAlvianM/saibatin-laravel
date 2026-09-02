@@ -1,7 +1,7 @@
 # Graph Report - saibatin-laravel  (2026-09-02)
 
 ## Corpus Check
-- 294 files · ~172,925 words
+- 294 files · ~173,048 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `65bd850c`
+- Built from commit: `47818b6d`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -24,11 +24,11 @@
 - DemografiAdminController
 - Balasan
 - Dasbor.jsx
-- OtpController
-- User
 - LayananNonaktifTest
+- User
+- UserLevel
 - Wilayah
-- PeranOpdTest
+- Illuminate\Database\Schema\Blueprint
 - Statistik.jsx
 - Layanan
 - Pemberitahuan
@@ -51,20 +51,20 @@
 - a11y.js
 - Navbar.jsx
 - JamLayanan
-- bootstrap/app.php
+- PeranOpdTest
 - AppServiceProvider.php
 - require-dev
 - PengaturanLayanan.jsx
 - geo.js
 - Illuminate\Database\Eloquent\Model
-- DatabaseSeeder.php
+- Illuminate\Support\Facades\Schema
 - config
 - require
-- Illuminate\Database\Schema\Blueprint
+- Periode
 - Grafik.jsx
 - LoncengNotifikasi.jsx
 - time-picker.jsx
-- DemografiController.php
+- bootstrap/app.php
 - SuntingAkunTest
 - info.blade.php
 - LayoutDashboard.jsx
@@ -75,7 +75,7 @@
 - Profil.jsx
 - salin-aset-ocr.mjs
 - StatusAkun
-- Periode
+- OtpController
 - psr-4
 - extra
 - logging.php
@@ -100,8 +100,10 @@
 - WidgetAksesibilitas.jsx
 - autoload-dev
 - post-autoload-dump
-- Illuminate\Support\Facades\Schema
+- 2026_09_02_100001_tambah_wilayah_akun.php
 - Illuminate\Database\Migrations\Migration
+- DatabaseSeeder.php
+- DemografiController.php
 - console.php
 - FooterPublik.jsx
 - FormLayanan.jsx
@@ -148,10 +150,8 @@
 - publik.partials.footer
 - navigasi.js
 - ppid-indeks.blade.php
-- UserLevel
 - README.md
 - PermohonanDetail.jsx
-- 2026_09_02_100001_tambah_wilayah_akun.php
 
 ## God Nodes (most connected - your core abstractions)
 1. `Balasan` - 112 edges
@@ -222,6 +222,10 @@ Nodes (8): FilterPeriode(), geser(), labelAcuan(), nomorHalaman(), Paginasi(), P
 Cohesion: 0.10
 Nodes (4): User, Illuminate\Database\Eloquent\Relations\HasMany, Illuminate\Foundation\Auth\User, Illuminate\Notifications\Notifiable
 
+### Community 11 - "UserLevel"
+Cohesion: 0.20
+Nodes (4): UserLevel, Illuminate\Foundation\Testing\TestCase, ExampleTest, TestCase
+
 ### Community 12 - "Wilayah"
 Cohesion: 0.23
 Nodes (4): IsiWilayahAkun, Wilayah, Illuminate\Console\Command, Illuminate\Support\Collection
@@ -290,10 +294,6 @@ Nodes (5): FONT_BAWAAN_IDX, KUNCI_A11Y, LANGKAH_FONT, PREFS_BAWAAN, SPASI_MAKS
 Cohesion: 0.14
 Nodes (6): PengaturanController, LayananController, PengajuanController, PengajuanPetugasController, JamLayanan, CarbonImmutable
 
-### Community 39 - "bootstrap/app.php"
-Cohesion: 0.22
-Nodes (6): HandleInertiaRequests, Illuminate\Foundation\Application, Illuminate\Foundation\Configuration\Exceptions, Illuminate\Foundation\Configuration\Middleware, Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets, Inertia\Middleware
-
 ### Community 40 - "AppServiceProvider.php"
 Cohesion: 0.33
 Nodes (4): AppServiceProvider, Illuminate\Support\Facades\Auth, Illuminate\Support\Facades\View, Illuminate\Support\ServiceProvider
@@ -318,6 +318,10 @@ Nodes (7): pestphp/pest-plugin, php-http/discovery, config, allow-plugins, optim
 Cohesion: 0.29
 Nodes (7): require, barryvdh/laravel-dompdf, inertiajs/inertia-laravel, laravel/framework, laravel/tinker, php, phpoffice/phpspreadsheet
 
+### Community 50 - "Periode"
+Cohesion: 0.25
+Nodes (4): LogAktivitasController, Periode, CarbonImmutable, Carbon\CarbonImmutable
+
 ### Community 51 - "Grafik.jsx"
 Cohesion: 0.43
 Nodes (4): dasar(), GrafikGaris(), GrafikPeringkat(), GrafikTren()
@@ -329,6 +333,10 @@ Nodes (6): ambilKonteks(), bukaAudio(), bunyikan(), LoncengNotifikasi(), TIPE_IK
 ### Community 53 - "time-picker.jsx"
 Cohesion: 0.38
 Nodes (5): HOURS, isJam(), masker(), MINUTES, TimePicker()
+
+### Community 54 - "bootstrap/app.php"
+Cohesion: 0.22
+Nodes (6): HandleInertiaRequests, Illuminate\Foundation\Application, Illuminate\Foundation\Configuration\Exceptions, Illuminate\Foundation\Configuration\Middleware, Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets, Inertia\Middleware
 
 ### Community 56 - "info.blade.php"
 Cohesion: 0.33
@@ -353,10 +361,6 @@ Nodes (5): akar, berkas, hilang, tessdata, tujuan
 ### Community 64 - "StatusAkun"
 Cohesion: 0.18
 Nodes (5): StatusAkun, Illuminate\Support\Facades\Hash, Illuminate\Support\Facades\Mail, Illuminate\Validation\ValidationException, Inertia\Inertia
-
-### Community 65 - "Periode"
-Cohesion: 0.25
-Nodes (4): LogAktivitasController, Periode, CarbonImmutable, Carbon\CarbonImmutable
 
 ### Community 66 - "psr-4"
 Cohesion: 0.40
@@ -410,10 +414,6 @@ Nodes (3): autoload-dev, psr-4, Tests\\
 Cohesion: 0.67
 Nodes (3): post-autoload-dump, Illuminate\\Foundation\\ComposerScripts::postAutoloadDump, @php artisan package:discover --ansi
 
-### Community 249 - "UserLevel"
-Cohesion: 0.20
-Nodes (4): UserLevel, Illuminate\Foundation\Testing\TestCase, ExampleTest, TestCase
-
 ### Community 251 - "README.md"
 Cohesion: 0.22
 Nodes (8): About Laravel, Code of Conduct, Contributing, Laravel Sponsors, Learning Laravel, License, Premium Partners, Security Vulnerabilities
@@ -430,11 +430,11 @@ Nodes (5): ALASAN_TOLAK, perluRincian(), PermohonanDetail(), STATUS_URUT, WAJIB_
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `User` connect `User` to `StatusAkun`, `Illuminate\Http\Request`, `Permohonan`, `Media`, `LayananNonaktifTest`, `Wilayah`, `Illuminate\Database\Eloquent\Model`, `DatabaseSeeder.php`, `Layanan`, `Pemberitahuan`, `Otp`, `PeranOpdTest`, `Recaptcha`, `SuntingAkunTest`, `UserLevel`?**
+- **Why does `User` connect `User` to `StatusAkun`, `Illuminate\Http\Request`, `Permohonan`, `Media`, `DatabaseSeeder.php`, `PeranOpdTest`, `LayananNonaktifTest`, `UserLevel`, `Wilayah`, `Illuminate\Database\Eloquent\Model`, `Layanan`, `Pemberitahuan`, `Otp`, `Recaptcha`, `SuntingAkunTest`?**
   _High betweenness centrality (0.062) - this node is a cross-community bridge._
-- **Why does `Balasan` connect `Balasan` to `Illuminate\Http\Request`, `Permohonan`, `Controller`, `Media`, `PublikController`, `DemografiAdminController`, `OtpController`, `User`, `Wilayah`, `Layanan`, `Pemberitahuan`, `BuktiPengaduanController.php`, `Recaptcha`, `News`, `JamLayanan`, `Illuminate\Database\Eloquent\Model`, `DemografiController.php`, `StatusAkun`, `Periode`, `UserLevel`?**
+- **Why does `Balasan` connect `Balasan` to `Illuminate\Http\Request`, `Permohonan`, `Controller`, `Media`, `PublikController`, `DemografiAdminController`, `User`, `UserLevel`, `Wilayah`, `Layanan`, `Pemberitahuan`, `BuktiPengaduanController.php`, `Recaptcha`, `News`, `JamLayanan`, `Illuminate\Database\Eloquent\Model`, `Periode`, `StatusAkun`, `OtpController`, `DemografiController.php`?**
   _High betweenness centrality (0.030) - this node is a cross-community bridge._
-- **Why does `Controller` connect `Controller` to `StatusAkun`, `Periode`, `Permohonan`, `Media`, `News`, `Illuminate\Http\Request`, `DemografiAdminController`, `JamLayanan`, `Balasan`, `OtpController`, `PublikController`, `Illuminate\Database\Eloquent\Model`, `Layanan`, `Pemberitahuan`, `BuktiPengaduanController.php`, `Recaptcha`, `DemografiController.php`, `FotoProfil`?**
+- **Why does `Controller` connect `Controller` to `StatusAkun`, `Permohonan`, `News`, `Media`, `Illuminate\Http\Request`, `OtpController`, `JamLayanan`, `DemografiAdminController`, `Balasan`, `DemografiController.php`, `PublikController`, `Illuminate\Database\Eloquent\Model`, `Layanan`, `Pemberitahuan`, `Periode`, `BuktiPengaduanController.php`, `Recaptcha`, `FotoProfil`?**
   _High betweenness centrality (0.027) - this node is a cross-community bridge._
 - **What connects `$schema`, `name`, `type` to the rest of the system?**
   _216 weakly-connected nodes found - possible documentation gaps or missing edges._

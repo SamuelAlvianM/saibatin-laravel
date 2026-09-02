@@ -18,14 +18,24 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 const KUNCI_MS = 750;
 const OTOMATIS_MS = 5000;
 
-/** Dipakai bila petugas belum mengisi satu slide pun dari dashboard. */
+/**
+ * Dipakai bila petugas belum mengisi satu slide pun dari dashboard.
+ *
+ * 🔴 SENGAJA TANPA `image`. Sebelumnya slide ini memakai lambang daerah sebagai
+ * foto latar, dan itu keliru dua kali: lambang resmi bukan foto — merentangkan,
+ * memburamkan, lalu menimpanya dengan teks bukan cara menampilkan lambang
+ * daerah — dan hasilnya pun membuat judul hero sulit dibaca.
+ *
+ * Selama belum ada foto sungguhan dari dinas, slide ini tampil sebagai bidang
+ * warna merek saja. Itu jujur dan rapi; begitu petugas mengunggah slide dari
+ * dashboard, bawaan ini tidak dipakai lagi.
+ */
 const BAWAAN = [
   {
     id: 1,
     title: 'Pelayanan Adminduk Online',
     subtitle: 'Ajukan permohonan dokumen kependudukan kapan saja, di mana saja',
-    image: '/logo-saibatin.png',
-    color: '#0d1b2a',
+    color: '#0b1f1e',
   },
 ];
 
@@ -118,13 +128,22 @@ export default function Carousel({ slides, tinggi = 'h-full' }) {
           return (
             <div key={s.id ?? i} className={kelas}>
               <div className="absolute inset-0 overflow-hidden">
-                {/* Latar buram mengisi sisa bingkai kalau rasio foto berbeda dari
-                    rasio kontainer — tanpa ini muncul bilah hitam di sisinya. */}
-                <div aria-hidden style={{ backgroundImage: `url(${s.image})` }}
-                     className={`absolute inset-0 scale-110 bg-cover bg-center opacity-70 blur-xl ${aktif ? 'carousel-image-scale' : ''}`} />
-                {/* Foto utama `contain` supaya SELURUH isinya terlihat. */}
-                <div style={{ backgroundImage: `url(${s.image})` }}
-                     className="absolute inset-0 bg-contain bg-center bg-no-repeat" />
+                {/* ⚠️ Kedua lapisan gambar hanya dirender bila slide-nya MEMANG
+                    punya foto. Tanpa penjaga ini `url(undefined)` tetap ditulis
+                    ke CSS: peramban meminta berkas bernama "undefined", gagal,
+                    dan menyisakan galat 404 di setiap pemuatan halaman depan. */}
+                {s.image && (
+                  <>
+                    {/* Latar buram mengisi sisa bingkai kalau rasio foto berbeda
+                        dari rasio kontainer — tanpa ini muncul bilah hitam di
+                        sisinya. */}
+                    <div aria-hidden style={{ backgroundImage: `url(${s.image})` }}
+                         className={`absolute inset-0 scale-110 bg-cover bg-center opacity-70 blur-xl ${aktif ? 'carousel-image-scale' : ''}`} />
+                    {/* Foto utama `contain` supaya SELURUH isinya terlihat. */}
+                    <div style={{ backgroundImage: `url(${s.image})` }}
+                         className="absolute inset-0 bg-contain bg-center bg-no-repeat" />
+                  </>
+                )}
                 <div className="absolute inset-0" style={{
                   background: `linear-gradient(105deg, ${s.color}80 0%, ${s.color}40 35%, transparent 70%),
                                linear-gradient(to top, ${s.color}d9 0%, ${s.color}59 32%, transparent 58%)`,
