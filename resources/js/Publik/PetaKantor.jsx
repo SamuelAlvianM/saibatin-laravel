@@ -51,8 +51,20 @@ export default function PetaKantor() {
     <MapContainer center={[LAT, LNG]} zoom={11} scrollWheelZoom={false}
                   zoomControl={false} attributionControl={false}
                   style={{ height: '100%', width: '100%' }}>
-      {/* CARTO Voyager: gaya bersih, gratis untuk pemakaian wajar. */}
-      <TileLayer url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png" />
+      {/*
+        🔴 Ubin dari OpenStreetMap, BUKAN CARTO Voyager.
+        CARTO mengubah basemap rasternya jadi berbayar: ubinnya tetap terkirim,
+        tapi setiap petak dicap tulisan besar "API KEY REQUIRED". Petanya tidak
+        gagal memuat — ia tampil rusak, dan itu justru lebih buruk karena tidak
+        ada galat apa pun yang menandainya. Ketahuan dari laporan pengguna.
+        ⚠️ `{s}` dan `{r}` DIBUANG: tile.openstreetmap.org tidak memakai
+        subdomain a/b/c dan tidak menyediakan varian @2x. Menyisakan keduanya
+        membuat URL ubin tidak pernah cocok.
+        ⚠️ Ubin OSM punya batas pemakaian wajar. Kalau portal ini kelak ramai,
+        pindah ke penyedia ubin sendiri — jangan diam-diam dibiarkan.
+      */}
+      <TileLayer url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+                 attribution="&copy; OpenStreetMap" />
       <Marker position={[LAT, LNG]} icon={penanda} />
       <TerbangMasuk />
     </MapContainer>

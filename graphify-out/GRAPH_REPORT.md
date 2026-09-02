@@ -1,7 +1,7 @@
 # Graph Report - saibatin-laravel  (2026-09-02)
 
 ## Corpus Check
-- 294 files · ~173,048 words
+- 294 files · ~173,153 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `47818b6d`
+- Built from commit: `d50c9739`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 

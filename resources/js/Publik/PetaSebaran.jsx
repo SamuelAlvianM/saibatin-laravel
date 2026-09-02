@@ -78,8 +78,10 @@ export default function PetaSebaran() {
         <div className="h-[26rem] w-full sm:h-[32rem]">
           <MapContainer center={PUSAT_PETA} zoom={ZOOM_AWAL} scrollWheelZoom={false}
                         style={{ height: '100%', width: '100%' }}>
-            <TileLayer url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
-                       attribution="&copy; OpenStreetMap &copy; CARTO" />
+            {/* Ubin OpenStreetMap — lihat catatan di `PetaKantor`: CARTO kini
+                mencap ubinnya "API KEY REQUIRED" tanpa memunculkan galat. */}
+            <TileLayer url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+                       attribution="&copy; OpenStreetMap" />
             {titik.map((t) => (
               <CircleMarker key={t.nama} center={[t.lat, t.lng]} radius={t.r}
                             pathOptions={{ color: '#1b4b72', weight: 1.5, fillColor: '#2176bd', fillOpacity: 0.45 }}>
