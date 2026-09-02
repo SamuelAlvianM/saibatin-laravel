@@ -43,7 +43,19 @@ class DashboardController extends Controller
     {
         $u = request()->user();
 
-        // Warga & OPD tidak punya dashboard petugas — arahkan ke halaman mereka.
+        /*
+         * Statistik rekap hanya untuk petugas — sisanya diarahkan ke halaman
+         * mereka sendiri.
+         *
+         * 🔴 Tujuannya BERBEDA sejak 2 Sep 2026: Operator OPD kini memakai
+         * kerangka dashboard, jadi ia mendarat di daftar permohonannya sendiri
+         * (`/dashboard/permohonan`), bukan di halaman publik ber-navbar.
+         * Warga tetap di `/user/pengajuan`.
+         */
+        if ($u->isOpd()) {
+            return redirect('/dashboard/permohonan');
+        }
+
         if (! $u->isPetugas()) {
             return redirect('/user/pengajuan');
         }

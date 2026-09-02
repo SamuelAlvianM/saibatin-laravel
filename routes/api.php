@@ -124,9 +124,23 @@ Route::middleware('auth')->group(function () {
 | ⚠️ Blok ini HARUS tetap berada di ATAS catch-all `{layanan}/{aksi}` di bawah.
 |
 */
-Route::middleware(['auth', 'peran:petugas'])->prefix('admin')->group(function () {
+/*
+ * Membaca daftar & detail permohonan — petugas DAN Operator OPD.
+ *
+ * 🔴 Grup terpisah, dan `PATCH` sengaja TIDAK ikut: Operator OPD mengajukan
+ * permohonan, bukan memprosesnya. Ia tetap di grup `peran:petugas` di bawah.
+ *
+ * ⚠️ Pagar KEPEMILIKAN ada di `PermohonanAdminController`, bukan di sini —
+ * middleware cuma tahu peran, tidak tahu baris mana milik siapa. Controller
+ * itulah yang mempersempit daftar OPD ke permohonannya sendiri dan menjawab
+ * 404 (bukan 403) untuk nomor milik orang lain.
+ */
+Route::middleware(['auth', 'peran:petugas,opd'])->prefix('admin')->group(function () {
     Route::get('/permohonan', [PermohonanAdminController::class, 'index']);
     Route::get('/permohonan/{id}', [PermohonanAdminController::class, 'show'])->whereNumber('id');
+});
+
+Route::middleware(['auth', 'peran:petugas'])->prefix('admin')->group(function () {
     Route::patch('/permohonan/{id}', [PermohonanAdminController::class, 'update'])->whereNumber('id');
 
     Route::get('/users', [UserAdminController::class, 'index']);
@@ -143,10 +157,16 @@ Route::middleware(['auth', 'peran:petugas'])->prefix('admin')->group(function ()
     // Unduhan .xlsx, bukan JSON — tombol Excel di tiap kartu dashboard.
     Route::get('/statistik/export', StatistikEksporController::class);
 
-    Route::post('/master', [MasterController::class, 'bukaKunci']);
-
     // ── Khusus Super Admin ──────────────────────────────────────────────────
     Route::middleware('peran:1')->group(function () {
+        /*
+         * 🔴 Buka kunci permohonan final — dipersempit ke Super Admin 2 Sep 2026
+         * bersama halamannya di `web.php`. Keduanya HARUS sepakat: menyempitkan
+         * halaman saja membuat menunya hilang dari layar sementara endpoint ini
+         * tetap menerima kiriman dari siapa pun yang tahu alamatnya.
+         */
+        Route::post('/master', [MasterController::class, 'bukaKunci']);
+
         Route::get('/log-aktivitas', [LogAktivitasController::class, 'index']);
 
         Route::delete('/galeri/{id}', [GaleriAdminController::class, 'destroy'])->whereNumber('id');

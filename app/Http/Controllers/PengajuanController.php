@@ -22,6 +22,29 @@ class PengajuanController extends Controller
     /** Riwayat permohonan milik pengaju. */
     public function riwayat(Request $request)
     {
+        /*
+         * 🔴 PENGALIHAN INI MEMBAWA QUERY STRING — dan itu bukan kerapian.
+         *
+         * Operator OPD pindah ke kerangka dashboard 2 Sep 2026, jadi alamat
+         * lamanya harus mengalih. Cara yang "jelas" adalah `Route::redirect`
+         * di berkas rute — dan itu MEMBUANG query string diam-diam.
+         *
+         * Lonceng notifikasi membangun tautannya sebagai `<link>?sorot=<id>`,
+         * dan notifikasi yang SUDAH TERSIMPAN di basis data ber-`link =
+         * '/user/pengajuan'`. Dengan `Route::redirect`, setiap notifikasi lama
+         * mendarat di daftar permohonan tanpa menyorot baris yang justru jadi
+         * alasan notifikasinya dikirim. Notifikasinya "berfungsi", cuma
+         * kehilangan gunanya — tanpa galat, tanpa apa pun yang terlihat rusak.
+         * (Sudah pernah terjadi di project saudara; jangan diulang.)
+         *
+         * Warga TIDAK ikut pindah — halaman ini tetap miliknya.
+         */
+        if ($request->user()->isOpd()) {
+            $qs = $request->getQueryString();
+
+            return redirect('/dashboard/permohonan'.($qs ? '?'.$qs : ''));
+        }
+
         return Inertia::render('Pengajuan/Riwayat', [
             'baru' => $request->query('baru'),
         ]);
@@ -30,6 +53,14 @@ class PengajuanController extends Controller
     /** Pemilih layanan. */
     public function pilih(Request $request)
     {
+        // Operator OPD memakai pemilih layanan di dashboard; alamat lamanya
+        // dialihkan beserta query string-nya (lihat catatan di `riwayat()`).
+        if ($request->user()->isOpd()) {
+            $qs = $request->getQueryString();
+
+            return redirect('/dashboard/pengajuan-baru'.($qs ? '?'.$qs : ''));
+        }
+
         // Layanan yang disembunyikan petugas (halaman Pengaturan) tidak
         // ditawarkan di sini. Penyaringannya di server, bukan CSS: kartu yang
         // cuma disembunyikan tampilannya tetap bisa dibuka lewat URL-nya.
@@ -52,6 +83,10 @@ class PengajuanController extends Controller
     /** Formulir satu layanan. */
     public function form(Request $request, string $slug)
     {
+        if ($request->user()->isOpd()) {
+            return redirect('/dashboard/pengajuan-baru/'.$slug);
+        }
+
         $form = Layanan::formDariRute($slug);
 
         if (! $form) {

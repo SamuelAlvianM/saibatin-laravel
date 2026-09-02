@@ -63,7 +63,52 @@ const GRUP = [
 ];
 
 /** Menu yang hanya boleh dilihat Super Admin (level 1). */
+/**
+ * Menu Operator OPD — DUA saja.
+ *
+ * 🔴 Ia memakai kerangka yang sama seperti petugas, tapi bukan pekerjaannya
+ * yang sama: OPD mengajukan permohonan atas nama warga di instansinya, tidak
+ * memproses, tidak mengelola akun, tidak menerbitkan konten. Menu di luar dua
+ * ini akan berakhir 403 — dan tautan yang menjanjikan halaman lalu menolaknya
+ * lebih buruk daripada menu yang memang tidak ada.
+ *
+ * ⚠️ "Permohonan Saya", bukan "Permohonan": daftarnya memang cuma miliknya
+ * (disaring `PermohonanAdminController`), dan judul yang sama dengan milik
+ * petugas membuatnya tampak seperti melihat permohonan seluruh kabupaten.
+ */
+/*
+ * Jumlah kolom bilah bawah, sebagai kelas UTUH.
+ *
+ * ⚠️ Jangan disusun jadi `grid-cols-${n}`. Tailwind memindai berkas sumber
+ * sebagai TEKS: kelas yang cuma lahir saat program berjalan tidak pernah ikut
+ * ke CSS, dan bilahnya akan menumpuk ke bawah tanpa satu pun galat.
+ */
+const KOLOM_BILAH = {
+  2: 'grid-cols-2',
+  3: 'grid-cols-3',
+  4: 'grid-cols-4',
+};
+
+const GRUP_PEMOHON = [
+  {
+    items: [
+      { href: '/dashboard/pengajuan-baru', label: 'Pengajuan Baru', icon: FilePlus2 },
+      { href: '/dashboard/permohonan', label: 'Permohonan Saya', icon: ClipboardList },
+    ],
+  },
+];
+
+/**
+ * Menu menurut peran.
+ *
+ * ⚠️ Diuji dengan `level !== 1 && level !== 2`, bukan `level === 4`. Level yang
+ * tidak dikenal pun ikut ke menu pemohon — arah yang aman: dua menu yang
+ * datanya sudah dipagari server, bukan menu petugas yang tautannya berakhir
+ * 403. Pagar yang sebenarnya tetap di berkas rute, bukan di sini.
+ */
 function grupUntuk(level) {
+  if (level !== 1 && level !== 2) return GRUP_PEMOHON;
+
   return GRUP
     .map((g) => ({ ...g, items: g.items.filter((m) => !m.adminSaja || level === 1) }))
     .filter((g) => g.items.length > 0);
@@ -96,6 +141,8 @@ export default function LayoutDashboard({ judul, children, lebar = 'max-w-7xl' }
   const level = auth?.user?.level ?? 3;
   const nama = auth?.user?.nama || auth?.user?.user_id || 'Petugas';
   const grup = grupUntuk(level);
+  // Tiga menu pertama miliknya sendiri; slot keempat selalu tombol "Menu".
+  const pintasan = grup.flatMap((g) => g.items).slice(0, 3);
 
   const [menuTerbuka, setMenuTerbuka] = useState(false);
 
@@ -185,13 +232,19 @@ export default function LayoutDashboard({ judul, children, lebar = 'max-w-7xl' }
       </div>
 
       {/* ── Bottom-nav mobile ───────────────────────────────────────────── */}
-      <nav className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-4 border-t border-slate-200 bg-white/95 backdrop-blur lg:hidden"
+      {/*
+        🔴 Pintasan DIIRIS dari `grup` yang sama, tidak ditulis ulang.
+        Sebelum 2 Sep 2026 ketiganya ditulis tangan — Statistik · Permohonan ·
+        Pengaduan — sementara laci "Semua Menu" tepat di sebelahnya memakai
+        `grup`. Dua sumber untuk satu daftar, dan yang satu tidak ikut berubah:
+        begitu Operator OPD memakai kerangka ini, SELURUH bilahnya menawarkan
+        halaman yang bukan miliknya dan menjawab 403.
+        ⚠️ Tidak ada galat dan tidak ada uji yang jatuh — menu sidebar-nya
+        benar, jadi dari layar lebar semuanya tampak beres.
+      */}
+      <nav className={`fixed inset-x-0 bottom-0 z-30 grid ${KOLOM_BILAH[pintasan.length + 1] ?? 'grid-cols-4'} border-t border-slate-200 bg-white/95 backdrop-blur lg:hidden`}
            style={{ paddingBottom: 'env(safe-area-inset-bottom)' }} aria-label="Navigasi dashboard">
-        {[
-          { href: '/dashboard', label: 'Statistik', icon: IkonDasbor, exact: true },
-          { href: '/dashboard/permohonan', label: 'Permohonan', icon: ClipboardList },
-          { href: '/dashboard/pengaduan', label: 'Pengaduan', icon: MessageSquare },
-        ].map((m) => {
+        {pintasan.map((m) => {
           const aktif = aktifkan(url, m.href, m.exact);
           return (
             <Link key={m.href} href={m.href}

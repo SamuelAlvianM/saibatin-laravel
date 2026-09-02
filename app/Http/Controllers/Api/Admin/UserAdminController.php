@@ -209,6 +209,7 @@ class UserAdminController extends Controller
         $nik = trim((string) $request->input('nik'));
         $kk = trim((string) $request->input('kk'));
         $kecamatan = trim((string) $request->input('kecamatan'));
+        $kelurahan = trim((string) $request->input('kelurahan'));
 
         if ($nama === '' || $userId === '' || $password === '') {
             return Balasan::gagal(['Info: Nama, NIK/Username, dan password wajib diisi']);
@@ -254,6 +255,27 @@ class UserAdminController extends Controller
             return Balasan::gagal(['Info: NIK/Username sudah terdaftar dan aktif']);
         }
 
+        /*
+         * 🔴 WILAYAH WAJIB untuk peran yang MEWAKILI TEMPAT (lihat
+         * `UserLevel::WAJIB_WILAYAH`).
+         *
+         * Sampai 2 Sep 2026 kolomnya justru dipaksa `null` untuk setiap akun
+         * non-warga, sehingga 141 akun OPD dirancang tanpa wilayah — dan
+         * saringan wilayah pada daftar permohonan jadi mustahil dibuat benar,
+         * karena wilayah sebuah permohonan HANYA tercatat di akun pengajunya.
+         *
+         * ⚠️ Yang diwajibkan hanya KECAMATAN, bukan desa. Kategori "Operator
+         * OPD" di sini lebih luas daripada "operator desa": ia juga menampung
+         * akun sekecamatan (10 akun KUA) dan akun sekabupaten (Dinas Kesehatan,
+         * Pengadilan Agama, rumah sakit, IBI). Mewajibkan desa akan membuat
+         * akun-akun itu mustahil disimpan — dan desa yang dipaksa diisi untuk
+         * instansi sekabupaten justru menaruh permohonannya di satu desa yang
+         * salah, bukan sekadar kosong.
+         */
+        if (in_array($level, UserLevel::WAJIB_WILAYAH, true) && $kecamatan === '') {
+            return Balasan::gagal(['Info: Kecamatan wajib diisi'], 422);
+        }
+
         // Pastikan level Operator OPD ada (DB lama mungkin belum punya barisnya).
         // `forceFill` karena `id` sengaja tidak fillable — di sini nilainya
         // memang harus dipaksa 4, bukan diserahkan ke auto-increment.
@@ -274,7 +296,9 @@ class UserAdminController extends Controller
             'user_nokk' => $kk ?: null,
             'user_hp' => trim((string) $request->input('hp')) ?: null,
             'user_email' => trim((string) $request->input('email')) ?: null,
-            'user_kecamatan' => $level === UserLevel::WARGA ? ($kecamatan ?: null) : null,
+            'user_kecamatan' => in_array($level, UserLevel::WAJIB_WILAYAH, true) ? ($kecamatan ?: null) : null,
+            'user_kelurahan' => $level === UserLevel::OPERATOR_OPD ? ($kelurahan ?: null) : null,
+            'user_kabupaten' => in_array($level, UserLevel::WAJIB_WILAYAH, true) ? 'PESISIR BARAT' : null,
             'status' => StatusAkun::AKTIF,   // dibuat petugas = langsung aktif
             'activation_time' => now(),
             'ip_address' => $request->ip(),

@@ -82,6 +82,24 @@ class User extends Authenticatable
         return $this->userlevel_id === UserLevel::WARGA;
     }
 
+    /**
+     * Operator OPD — akun instansi pemerintah daerah (140 akun di produksi).
+     *
+     * 🔴 BUKAN petugas. Ia MENGAJUKAN permohonan atas nama warga di instansinya,
+     * bukan memprosesnya. Sejak 2 Sep 2026 ia memakai kerangka dashboard yang
+     * sama seperti petugas — tapi itu murni soal tampilan; pagar aksesnya tetap
+     * `peran:` di berkas rute, dan `/dashboard/users` tetap 403 baginya.
+     *
+     * ⚠️ Jangan menambahkannya ke `isPetugas()`. Fungsi itu dipakai 20+ tempat
+     * sebagai "boleh melihat data orang lain"; melebarkannya membuka 11.919
+     * permohonan seluruh kabupaten kepada 140 akun instansi sekaligus, tanpa
+     * satu pun galat yang menandainya.
+     */
+    public function isOpd(): bool
+    {
+        return $this->userlevel_id === UserLevel::OPERATOR_OPD;
+    }
+
     public function isAktif(): bool
     {
         return $this->status === self::STATUS_AKTIF;
