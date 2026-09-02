@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use App\Models\UserLevel;
+use App\Models\Wilayah;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
@@ -68,6 +69,25 @@ class SuntingAkunTest extends TestCase
         return $u;
     }
 
+    /**
+     * Satu nama kecamatan yang BENAR-BENAR ada di `m_wilayah`.
+     *
+     * Sengaja dibaca dari basis data, bukan ditulis sebagai teks. Berkas uji ini
+     * dipakai apa adanya di beberapa portal yang wilayahnya berbeda-beda; nama
+     * kecamatan yang dipatok akan membuatnya lulus di satu portal dan gagal di
+     * portal lain karena alasan yang tidak ada hubungannya dengan yang diuji.
+     */
+    private function kecamatan(): string
+    {
+        $nama = Wilayah::where('jenis', Wilayah::KECAMATAN)->value('nama');
+
+        if (! $nama) {
+            $this->markTestSkipped('m_wilayah belum berisi kecamatan.');
+        }
+
+        return $nama;
+    }
+
     private function muatan(User $u, array $ganti = []): array
     {
         return array_merge([
@@ -77,7 +97,7 @@ class SuntingAkunTest extends TestCase
             'kk' => $u->user_nokk,
             'hp' => $u->user_hp,
             'email' => $u->user_email,
-            'kecamatan' => $u->user_kecamatan ?: 'KRUI SELATAN',
+            'kecamatan' => $u->user_kecamatan ?: $this->kecamatan(),
         ], $ganti);
     }
 
@@ -185,14 +205,15 @@ class SuntingAkunTest extends TestCase
     public function test_kecamatan_yang_sudah_ada_tidak_boleh_dikosongkan(): void
     {
         $warga = $this->warga();
-        User::whereKey($warga->id)->update(['user_kecamatan' => 'KRUI SELATAN']);
+        $kec = $this->kecamatan();
+        User::whereKey($warga->id)->update(['user_kecamatan' => $kec]);
 
         // Yang sudah tercatat tidak boleh hilang — itu memundurkan data.
         $this->actingAs($this->akun(UserLevel::OPERATOR))
             ->putJson("/api/admin/users/{$warga->id}", $this->muatan($warga, ['kecamatan' => '']))
             ->assertStatus(422);
 
-        $this->assertSame('KRUI SELATAN', $warga->fresh()->user_kecamatan);
+        $this->assertSame($kec, $warga->fresh()->user_kecamatan);
     }
 
     public function test_operator_boleh_menyetel_sandi_warga(): void
