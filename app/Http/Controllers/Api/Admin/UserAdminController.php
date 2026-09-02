@@ -177,6 +177,7 @@ class UserAdminController extends Controller
             'userHp' => $u->user_hp,
             'userEmail' => $u->user_email,
             'userKecamatan' => $u->user_kecamatan,
+            'userKelurahan' => $u->user_kelurahan,
             'userFoto' => $u->user_foto,
             'userKtp' => $u->user_ktp,
             'status' => $u->status,
@@ -479,5 +480,241 @@ class UserAdminController extends Controller
         $this->log->catat($petugas, 'HAPUS', 'Akun', "Menghapus akun {$nama} ({$user->user_id})", $id, $request);
 
         return Balasan::ok(null, ["Info: Akun {$nama} telah dihapus permanen"]);
+    }
+
+    /**
+     * Sunting data akun dari panel detail.
+     *
+     * 🔴 Sebelum 2 Sep 2026 metode ini TIDAK ADA. Akun yang salah ketik hanya
+     * bisa dinonaktifkan lalu dibuat ulang — dan permohonan yang sudah tertaut
+     * padanya ikut tertinggal di akun lama.
+     *
+     * ⚠️ Aturan siapa boleh menyunting siapa SAMA PERSIS dengan `store()`.
+     * Kalau salah satu diubah tanpa yang lain, terbuka jalan memutar: "tidak
+     * boleh MEMBUAT akun petugas" tapi "boleh MENAIKKAN akun warga jadi
+     * petugas" berarti larangannya tidak menahan apa pun.
+     */
+    public function update(Request $request, int $id)
+    {
+        $petugas = $request->user();
+        $user = User::find($id);
+
+        if (! $user) {
+            return Balasan::gagal(['Info: Akun tidak ditemukan'], 404);
+        }
+
+        $lama = $user->userlevel_id;
+
+        // Menyunting akun petugas = menyentuh pemegang kunci. Tanpa ini Operator
+        // bisa menyunting akun Super Admin — termasuk `user_id`-nya, yang sama
+        // saja dengan mengambil alih akun itu.
+        if (in_array($lama, UserLevel::PETUGAS, true) && ! $petugas->isSuperAdmin()) {
+            return Balasan::gagal(['Info: Hanya Super Admin yang dapat menyunting akun petugas'], 403);
+        }
+
+        $nama = trim((string) $request->input('nama'));
+        $userId = trim((string) $request->input('userId'));
+        $nik = trim((string) $request->input('nik'));
+        $kk = trim((string) $request->input('kk'));
+        $kecamatan = trim((string) $request->input('kecamatan'));
+        $kelurahan = trim((string) $request->input('kelurahan'));
+
+        // Level boleh tidak dikirim sama sekali — artinya "jangan diubah".
+        $level = $request->filled('level') ? (int) $request->input('level') : $lama;
+
+        if ($nama === '' || $userId === '') {
+            return Balasan::gagal(['Info: Nama dan NIK/Username wajib diisi'], 422);
+        }
+        if (! isset(UserLevel::NAMA[$level])) {
+            return Balasan::gagal(['Info: Level akun tidak valid'], 422);
+        }
+
+        if ($level !== $lama) {
+            if ($level === UserLevel::SUPER_ADMIN) {
+                return Balasan::gagal([
+                    'Info: Level Super Admin tidak dapat diberikan dari sini — lewat server (seeder/tinker)',
+                ], 403);
+            }
+            if (! $petugas->isSuperAdmin()) {
+                return Balasan::gagal(['Info: Hanya Super Admin yang dapat mengubah level akun'], 403);
+            }
+            /*
+             * 🔴 Tidak boleh mengubah level DIRI SENDIRI. Bukan soal kepercayaan:
+             * Super Admin yang salah pilih menurunkan dirinya sendiri, lalu
+             * kehilangan halaman ini — dan tidak ada seorang pun yang tersisa
+             * untuk mengembalikannya kecuali lewat server.
+             */
+            if ($user->id === $petugas->id) {
+                return Balasan::gagal(['Info: Level akun sendiri tidak dapat diubah dari sini'], 403);
+            }
+        }
+
+        // Bentuk `user_id` mengikuti level BARU, bukan level lama — menurunkan
+        // akun ke Warga berarti identitas login-nya pun harus berbentuk NIK.
+        if (in_array($level, UserLevel::MASUK_NIK, true)) {
+            if (! preg_match('/^\d{16}$/', $userId)) {
+                return Balasan::gagal(['Info: NIK harus 16 digit angka'], 422);
+            }
+        } elseif (! preg_match('/^[a-z0-9][a-z0-9._-]{3,29}$/i', $userId)) {
+            return Balasan::gagal(['Info: Username 4-30 karakter (huruf/angka/titik/underscore/strip)'], 422);
+        }
+
+        if ($nik !== '' && ! preg_match('/^\d{16}$/', $nik)) {
+            return Balasan::gagal(['Info: NIK harus 16 digit angka'], 422);
+        }
+        if ($kk !== '' && ! preg_match('/^\d{16}$/', $kk)) {
+            return Balasan::gagal(['Info: Nomor Kartu Keluarga harus 16 digit angka'], 422);
+        }
+
+        /*
+         * 🔴 KECAMATAN TIDAK BOLEH DIHAPUS, tapi akun lama yang memang belum
+         * punya TETAP boleh disunting.
+         *
+         * Aturannya sengaja lebih longgar daripada `store()`. Terukur di basis
+         * data ini: `user_kecamatan` terisi pada 2 dari 1.390 akun — nyaris
+         * seluruh akun warga dibuat sebelum kolom ini diwajibkan. Kalau
+         * penyuntingan menuntutnya, petugas yang cuma ingin membetulkan satu
+         * digit nomor telepon dipaksa MENEBAK kecamatan warga yang tidak ia
+         * ketahui, dan tebakan itu langsung mencemari saringan wilayah dan
+         * rekap per kecamatan. Kolom kosong jujur; kolom terisi salah tidak.
+         *
+         * Yang tetap dijaga: nilai yang SUDAH ada tidak boleh dikosongkan.
+         */
+        if (in_array($level, UserLevel::WAJIB_WILAYAH, true)
+            && $kecamatan === ''
+            && filled($user->user_kecamatan)) {
+            return Balasan::gagal([
+                'Info: Kecamatan tidak boleh dikosongkan untuk akun '.UserLevel::NAMA[$level],
+            ], 422);
+        }
+
+        // Bentrok hanya dilarang dengan akun AKTIF lain — dan `whereKeyNot`
+        // penting: tanpa itu menyimpan TANPA mengubah `user_id` pun ditolak,
+        // karena akun ini bentrok dengan dirinya sendiri.
+        $bentrok = User::where('user_id', $userId)
+            ->where('status', StatusAkun::AKTIF)
+            ->whereKeyNot($user->id)
+            ->exists();
+
+        if ($bentrok) {
+            return Balasan::gagal(['Info: NIK/Username sudah dipakai akun aktif lain'], 422);
+        }
+
+        // Dicatat SEBELUM disimpan — sesudahnya nilai lamanya sudah hilang.
+        $sebelum = [
+            'user_id' => $user->user_id,
+            'nama' => $user->user_fullname,
+            'level' => UserLevel::NAMA[$lama] ?? "level {$lama}",
+        ];
+
+        $user->fill([
+            'user_id' => $userId,
+            'userlevel_id' => $level,
+            'user_fullname' => $nama,
+            /*
+             * Sama persis dengan `store()`: yang login pakai NIK menyimpan
+             * NIK-nya sendiri. Tanpa cabang ini, menyunting akun ber-login NIK
+             * lewat formulir yang tidak menampilkan isian NIK terpisah akan
+             * MENGHAPUS `user_nik`-nya — dan pemulihan sandinya ikut hilang.
+             */
+            'user_nik' => in_array($level, UserLevel::MASUK_NIK, true)
+                ? (preg_match('/^\d{16}$/', $userId) ? $userId : null)
+                : ($nik !== '' ? $nik : null),
+            'user_nokk' => $kk ?: null,
+            'user_hp' => trim((string) $request->input('hp')) ?: null,
+            'user_email' => trim((string) $request->input('email')) ?: null,
+            // Wilayah dikosongkan untuk level yang memang tidak memakainya,
+            // supaya tidak tertinggal alamat desa pada akun staf dinas.
+            'user_kecamatan' => in_array($level, UserLevel::WAJIB_WILAYAH, true) ? ($kecamatan ?: null) : null,
+            'user_kelurahan' => $level === UserLevel::OPERATOR_OPD ? ($kelurahan ?: null) : null,
+            'user_kabupaten' => in_array($level, UserLevel::WAJIB_WILAYAH, true)
+                ? ($user->user_kabupaten ?: 'PESISIR BARAT')
+                : null,
+        ]);
+
+        $berubah = array_keys($user->getDirty());
+
+        if ($berubah === []) {
+            return Balasan::ok(['id' => $user->id], ['Info: Tidak ada perubahan']);
+        }
+
+        $user->forceFill(['updated_by' => $petugas->id])->save();
+
+        // Catatan menyebut APA yang berubah, bukan sekadar "akun disunting" —
+        // log yang tidak bisa dipakai menelusuri sama saja dengan tidak ada.
+        $catatan = 'Menyunting akun '.$sebelum['nama'].' ('.$sebelum['user_id'].')';
+        if ($userId !== $sebelum['user_id']) {
+            $catatan .= '; identitas login '.$sebelum['user_id'].' -> '.$userId;
+        }
+        if ($level !== $lama) {
+            $catatan .= '; level '.$sebelum['level'].' -> '.(UserLevel::NAMA[$level] ?? "level {$level}");
+        }
+        $catatan .= '; kolom: '.implode(', ', $berubah);
+
+        $this->log->catat($petugas, 'UBAH', 'Akun', $catatan, $user->id, $request);
+
+        return Balasan::ok(['id' => $user->id], ['Info: Perubahan akun tersimpan']);
+    }
+
+    /**
+     * Setel ulang sandi akun — petugas membantu warga yang lupa sandinya.
+     *
+     * Endpoint SENDIRI, bukan kolom di `update()`: ini tindakan sekali jalan
+     * yang tidak punya "nilai sebelumnya", dan tidak boleh ikut terbawa saat
+     * petugas cuma membetulkan alamat surel.
+     */
+    public function setelSandi(Request $request, int $id)
+    {
+        $petugas = $request->user();
+        $user = User::find($id);
+
+        if (! $user) {
+            return Balasan::gagal(['Info: Akun tidak ditemukan'], 404);
+        }
+
+        // Aturan sama dengan `update()`: menyentuh akun petugas = menyentuh
+        // pemegang kunci. Menyetel sandinya sama saja dengan mengambil alih.
+        if (in_array($user->userlevel_id, UserLevel::PETUGAS, true) && ! $petugas->isSuperAdmin()) {
+            return Balasan::gagal(['Info: Hanya Super Admin yang dapat menyetel sandi akun petugas'], 403);
+        }
+
+        if ($user->id === $petugas->id) {
+            return Balasan::gagal([
+                'Info: Sandi akun sendiri diubah lewat halaman Profil, bukan dari sini',
+            ], 403);
+        }
+
+        $sandi = (string) $request->input('password');
+
+        // Aturannya disamakan dengan penggantian sandi mandiri supaya sandi yang
+        // ditolak di satu tempat tidak diterima di tempat lain.
+        if (mb_strlen($sandi) < 6) {
+            return Balasan::gagal(['Info: Password minimal 6 karakter'], 422);
+        }
+        if (preg_match('/^\d+$/', $sandi)) {
+            return Balasan::gagal(['Info: Password tidak boleh angka semua'], 422);
+        }
+        if (Hash::check($sandi, $user->password)) {
+            return Balasan::gagal(['Info: Password baru tidak boleh sama dengan password lama'], 422);
+        }
+
+        $user->forceFill([
+            'password' => Hash::make($sandi),
+            // Kode pemulihan yang mungkin masih beredar dimatikan: sesudah
+            // sandinya disetel petugas, tautan "lupa password" lama tidak boleh
+            // lagi bisa dipakai mengubahnya kembali.
+            'forgotten_code' => null,
+            'forgotten_time' => null,
+            'updated_by' => $petugas->id,
+        ])->save();
+
+        // 🔴 Sandinya sendiri TIDAK pernah masuk log.
+        $this->log->catat(
+            $petugas, 'UBAH', 'Akun',
+            'Menyetel ulang sandi akun '.($user->user_fullname ?: $user->user_id).' ('.$user->user_id.')',
+            $user->id, $request,
+        );
+
+        return Balasan::ok(['id' => $user->id], ['Info: Sandi berhasil disetel — sampaikan ke pemilik akun']);
     }
 }

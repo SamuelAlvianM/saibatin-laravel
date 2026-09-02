@@ -93,6 +93,16 @@ class PengajuanController extends Controller
             abort(404);
         }
 
+        /*
+         * 🔴 Kartu layanan yang dimatikan memang tidak ditawarkan di `pilih()`,
+         * tapi sampai 2 Sep 2026 halaman formulirnya tetap terbuka bagi siapa
+         * pun yang mengetik URL-nya langsung — dan kiriman dari sana diterima.
+         * Menyembunyikan kartu bukan pagar.
+         */
+        if (PengaturanController::tersembunyi($form['slug'])) {
+            abort(404);
+        }
+
         $u = $request->user();
 
         // Data pemohon diisi otomatis dari akun yang login. NIK hanya diisi bila

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { usePage } from '@inertiajs/react';
 import {
-  AlertTriangle, Camera, CheckCircle2, ChevronRight, IdCard, KeyRound, Search,
+  AlertTriangle, Camera, CheckCircle2, ChevronRight, IdCard, KeyRound, Pencil, Search,
   Trash2, UserPlus, UserRound, Users, X, XCircle, ZoomIn,
 } from 'lucide-react';
 import LayoutDashboard from '@/Components/LayoutDashboard';
@@ -61,6 +61,18 @@ const FORM_KOSONG = {
   nama: '', userId: '', nik: '', kk: '', hp: '', email: '', level: 3, password: '', kecamatan: '',
 };
 
+/*
+ * Cermin konstanta peran di `app/Models/UserLevel.php`.
+ *
+ * 🔴 Keduanya TIDAK saling memeriksa. Mengubah salah satu saja tidak membuat
+ * apa pun gagal saat build: formulirnya cuma menampilkan isian yang salah, atau
+ * menyembunyikan isian yang justru diwajibkan server — dan petugas melihat
+ * penolakan yang tidak ada penjelasannya di layar. Ubah BERPASANGAN.
+ */
+const LEVEL_OPD = 4;
+const MASUK_NIK = [3];
+const WAJIB_WILAYAH = [3, LEVEL_OPD];
+
 function Baris({ label, children }) {
   return (
     <div className="grid grid-cols-[7.5rem_1fr] gap-2 py-1.5">
@@ -85,9 +97,23 @@ function Isian({ label, ket, wajib, children }) {
 
 // ── Panel detail ───────────────────────────────────────────────────────────
 
-function IsiDetail({ detail, memuat, sibuk, onAktifkan, onTolak, onNonaktif }) {
+function IsiDetail({
+  detail, memuat, sibuk, onAktifkan, onTolak, onNonaktif,
+  kecamatan, bolehGantiLevel, onSelesai,
+}) {
   // Indeks foto identitas yang sedang dibuka di penampil layar penuh.
   const [lihatFoto, setLihatFoto] = useState(null);
+  const [mode, setMode] = useState('lihat');
+
+  /*
+   * Kembali ke tampilan baca setiap kali akun yang dibuka berganti.
+   *
+   * 🔴 Tanpa ini formulir sunting akun SEBELUMNYA tetap terbuka di atas data
+   * yang sudah berganti — isian masih memuat nilai akun lama, dan menekan
+   * Simpan menuliskannya ke akun yang baru dibuka. Tidak ada galat; yang
+   * terjadi cuma dua akun tertukar isinya.
+   */
+  useEffect(() => setMode('lihat'), [detail?.id]);
 
   if (memuat || !detail) return <Memuat kelas="py-16" />;
 
@@ -219,6 +245,40 @@ function IsiDetail({ detail, memuat, sibuk, onAktifkan, onTolak, onNonaktif }) {
         )}
       </div>
 
+      {mode === 'sunting' && (
+        <div className="border-t border-slate-100 pt-4">
+          <FormSunting
+            detail={detail}
+            kecamatan={kecamatan}
+            bolehGantiLevel={bolehGantiLevel}
+            onBatal={() => setMode('lihat')}
+            onSelesai={(pesan, tutup) => { if (tutup) setMode('lihat'); onSelesai(pesan); }}
+          />
+        </div>
+      )}
+
+      {mode === 'sandi' && (
+        <div className="border-t border-slate-100 pt-4">
+          <FormSandi
+            detail={detail}
+            onBatal={() => setMode('lihat')}
+            onSelesai={(pesan) => { setMode('lihat'); onSelesai(pesan); }}
+          />
+        </div>
+      )}
+
+      {mode === 'lihat' && (
+        <div className="grid grid-cols-2 gap-2 border-t border-slate-100 pt-4">
+          <Tombol varian="garis" onClick={() => setMode('sunting')} disabled={sibuk}>
+            <Pencil className="h-4 w-4" />Sunting Data
+          </Tombol>
+          <Tombol varian="garis" kelas="border-amber-300 text-amber-700"
+                  onClick={() => setMode('sandi')} disabled={sibuk}>
+            <KeyRound className="h-4 w-4" />Setel Sandi
+          </Tombol>
+        </div>
+      )}
+
       <div className="border-t border-slate-100 pt-4">
         {detail.status === STATUS_AKUN.AKTIF ? (
           <Tombol varian="garis" kelas="w-full border-amber-300 text-amber-700" disabled={sibuk} onClick={onNonaktif}>
@@ -252,6 +312,193 @@ function IsiDetail({ detail, memuat, sibuk, onAktifkan, onTolak, onNonaktif }) {
 
 /** Sama dengan Permohonan & Log — satu tinggi tabel untuk seluruh dashboard. */
 const PER_HALAMAN = 20;
+
+/**
+ * Sunting data akun langsung di panel detail.
+ *
+ * 🔴 Formulir INLINE, bukan modal. Panel ini sendiri sudah lapisan melayang;
+ * modal di atasnya membuat pesan galat server jatuh di belakangnya (`Pesan`
+ * dan `Modal` pernah sama-sama z-50), dan petugas melihat tombol yang seolah
+ * tidak melakukan apa-apa.
+ *
+ * ⚠️ Isian NIK/KK sengaja ADA meski akun warga login dengan NIK — server
+ * menyimpannya sendiri untuk akun ber-login NIK, tapi akun instansi memakai
+ * NIK perwakilan yang berbeda dari username-nya.
+ */
+function FormSunting({ detail, kecamatan, bolehGantiLevel, onBatal, onSelesai }) {
+  const [form, setForm] = useState({
+    nama: detail.userFullname ?? '',
+    userId: detail.userId ?? '',
+    nik: detail.userNik ?? '',
+    kk: detail.userNokk ?? '',
+    hp: detail.userHp ?? '',
+    email: detail.userEmail ?? '',
+    kecamatan: detail.userKecamatan ?? '',
+    kelurahan: detail.userKelurahan ?? '',
+    level: detail.userlevelId,
+  });
+  const [medan, setMedan] = useState({});
+  const [sibuk, setSibuk] = useState(false);
+
+  const ubah = (k) => (v) => {
+    setForm((f) => ({ ...f, [k]: v }));
+    setMedan((m) => ({ ...m, [k]: undefined }));
+  };
+
+  // Tombol mati sampai ada yang benar-benar berubah — menyimpan tanpa
+  // perubahan hanya menambah baris log yang tidak berarti apa-apa.
+  const berubah = Object.entries(form).some(([k, v]) => {
+    const awal = {
+      nama: detail.userFullname ?? '', userId: detail.userId ?? '', nik: detail.userNik ?? '',
+      kk: detail.userNokk ?? '', hp: detail.userHp ?? '', email: detail.userEmail ?? '',
+      kecamatan: detail.userKecamatan ?? '', kelurahan: detail.userKelurahan ?? '',
+      level: detail.userlevelId,
+    }[k];
+
+    return String(v ?? '') !== String(awal ?? '');
+  });
+
+  const simpan = async () => {
+    setSibuk(true);
+    const j = await kirimJson(`/api/admin/users/${detail.id}`, form, 'PUT');
+    setSibuk(false);
+
+    if (j.error?.length) {
+      if (j.medan) setMedan(j.medan);
+      onSelesai({ tipe: 'galat', teks: j.error[0] });
+
+      return;
+    }
+
+    onSelesai({ tipe: 'sukses', teks: j.success?.[0] ?? 'Tersimpan' }, true);
+  };
+
+  return (
+    <div className="space-y-3 rounded-xl border border-slate-200 bg-slate-50/60 p-3">
+      <h4 className="text-sm font-semibold text-slate-900">Sunting Data Akun</h4>
+
+      <Isian label="Nama Lengkap" wajib>
+        <Input value={form.nama} onChange={(e) => ubah('nama')(e.target.value)}
+               className={medan.nama ? 'border-rose-400' : ''} />
+      </Isian>
+
+      <Isian label={MASUK_NIK.includes(form.level) ? 'NIK (identitas login)' : 'Username'} wajib>
+        <Input value={form.userId} onChange={(e) => ubah('userId')(e.target.value)}
+               className={medan.userId ? 'border-rose-400' : ''} />
+      </Isian>
+
+      {! MASUK_NIK.includes(form.level) && (
+        <Isian label="NIK perwakilan" ket="Dipakai untuk pemulihan sandi.">
+          <Input value={form.nik} onChange={(e) => ubah('nik')(e.target.value)} />
+        </Isian>
+      )}
+
+      <div className="grid grid-cols-2 gap-2">
+        <Isian label="No. HP">
+          <Input value={form.hp} onChange={(e) => ubah('hp')(e.target.value)} />
+        </Isian>
+        <Isian label="Nomor KK">
+          <Input value={form.kk} onChange={(e) => ubah('kk')(e.target.value)} />
+        </Isian>
+      </div>
+
+      <Isian label="Email">
+        <Input value={form.email} onChange={(e) => ubah('email')(e.target.value)} />
+      </Isian>
+
+      {WAJIB_WILAYAH.includes(form.level) && (
+        <>
+          <Isian label="Kecamatan" wajib>
+            <SearchSelect
+              value={form.kecamatan}
+              onValueChange={ubah('kecamatan')}
+              options={kecamatan.map((k) => ({ value: k, label: k }))}
+              placeholder="Pilih Kecamatan"
+              searchPlaceholder="Cari kecamatan…"
+            />
+          </Isian>
+          {form.level === LEVEL_OPD && (
+            <Isian label="Desa/Kelurahan" ket="Kosongkan untuk instansi sekecamatan atau sekabupaten.">
+              <Input value={form.kelurahan} onChange={(e) => ubah('kelurahan')(e.target.value)} />
+            </Isian>
+          )}
+        </>
+      )}
+
+      {bolehGantiLevel && (
+        <Isian label="Level Akun" ket="Level Super Admin hanya bisa diberikan lewat server.">
+          <select value={form.level}
+                  onChange={(e) => ubah('level')(Number(e.target.value))}
+                  className="h-9 w-full rounded-md border border-slate-200 bg-white px-3 text-sm text-slate-700">
+            {[[3, 'Warga'], [LEVEL_OPD, 'Operator OPD'], [2, 'Operator']].map(([v, l]) => (
+              <option key={v} value={v}>{l}</option>
+            ))}
+          </select>
+        </Isian>
+      )}
+
+      <div className="flex justify-end gap-2 pt-1">
+        <Tombol varian="garis" onClick={onBatal} disabled={sibuk}>Batal</Tombol>
+        <Tombol onClick={simpan} disabled={sibuk || ! berubah}>Simpan Perubahan</Tombol>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Setel ulang sandi akun — petugas membantu warga yang lupa sandinya.
+ *
+ * ⚠️ Sandi TIDAK pernah ditampilkan kembali sesudah disimpan, dan tidak masuk
+ * log. Petugas harus menyampaikannya ke pemilik akun saat itu juga; itulah
+ * sebabnya pesan berhasilnya menyebutkan hal tersebut.
+ */
+function FormSandi({ detail, onBatal, onSelesai }) {
+  const [sandi, setSandi] = useState('');
+  const [galat, setGalat] = useState(null);
+  const [sibuk, setSibuk] = useState(false);
+
+  const simpan = async () => {
+    // Diperiksa di klien HANYA supaya galatnya muncul cepat — aturan yang
+    // sebenarnya berlaku ada di server, dan sengaja sama persis.
+    if (sandi.length < 6) return setGalat('Password minimal 6 karakter');
+    if (/^\d+$/.test(sandi)) return setGalat('Password tidak boleh angka semua');
+
+    setSibuk(true);
+    const j = await kirimJson(`/api/admin/users/${detail.id}/sandi`, { password: sandi }, 'POST');
+    setSibuk(false);
+
+    if (j.error?.length) {
+      setGalat(j.error[0]);
+
+      return;
+    }
+
+    onSelesai({ tipe: 'sukses', teks: j.success?.[0] ?? 'Sandi disetel' });
+  };
+
+  return (
+    <div className="space-y-3 rounded-xl border border-amber-200 bg-amber-50/60 p-3">
+      <h4 className="text-sm font-semibold text-slate-900">Setel Ulang Sandi</h4>
+      <p className="text-xs text-slate-500">
+        Sandi lama akan langsung tidak berlaku. Sampaikan sandi baru kepada pemilik akun.
+      </p>
+
+      <Isian label="Password Baru" wajib>
+        <Input type="text" value={sandi} autoComplete="off"
+               placeholder="Minimal 6 karakter, bukan angka semua"
+               onChange={(e) => { setSandi(e.target.value); setGalat(null); }}
+               className={galat ? 'border-rose-400' : ''} />
+      </Isian>
+      {galat && <p className="text-xs text-rose-600">{galat}</p>}
+
+      <div className="flex justify-end gap-2 pt-1">
+        <Tombol varian="garis" onClick={onBatal} disabled={sibuk}>Batal</Tombol>
+        <Tombol varian="bahaya" onClick={simpan} disabled={sibuk || ! sandi}>Setel Sandi</Tombol>
+      </div>
+    </div>
+  );
+}
+
 
 export default function Akun({ kecamatan, sorot }) {
   const level = usePage().props.auth.user?.level ?? 2;
@@ -564,6 +811,19 @@ export default function Akun({ kecamatan, sorot }) {
                 onAktifkan={() => detail && ubahStatus(detail.id, STATUS_AKUN.AKTIF)}
                 onTolak={() => { setAlasan(''); setKolomTolak([]); setKonfirmasi({ tipe: 'tolak', user: detail }); }}
                 onNonaktif={() => { setAlasan(''); setKonfirmasi({ tipe: 'nonaktif', user: detail }); }}
+                kecamatan={kecamatan}
+                bolehGantiLevel={level === 1}
+                onSelesai={async (p) => {
+                  setPesan(p);
+                  if (p.tipe !== 'sukses') return;
+
+                  // Muat ulang KEDUANYA: panel menampilkan nilai baru, dan baris
+                  // di tabel di belakangnya tidak tertinggal memuat nilai lama —
+                  // dua angka berbeda untuk akun yang sama di satu layar.
+                  const j = await ambilJson(`/api/admin/users/${detail.id}`);
+                  if (! j.error?.length) setDetail(j.data ?? null);
+                  muat();
+                }}
               />
             </div>
           </aside>

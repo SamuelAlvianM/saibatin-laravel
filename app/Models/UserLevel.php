@@ -23,6 +23,37 @@ class UserLevel extends Model
     public const OPERATOR_OPD = 4;
 
     /**
+     * Petugas — yang boleh melihat & memproses data orang lain.
+     *
+     * ⚠️ Cerminan `PastikanPeran` alias `petugas` dan `User::isPetugas()`.
+     * Operator OPD SENGAJA tidak di sini meski memakai kerangka dashboard yang
+     * sama: ia mengajukan, bukan memproses.
+     */
+    public const PETUGAS = [
+        self::SUPER_ADMIN,
+        self::OPERATOR,
+    ];
+
+    /**
+     * Level yang identitas login-nya berupa NIK, bukan username.
+     *
+     * 🔴 `MASUK_NIK` dan `PETUGAS` saling meniadakan — satu level di kedua
+     * daftar membuat akunnya mustahil dibuat: `user_id` yang sama dituntut 16
+     * digit angka sekaligus berhuruf.
+     */
+    public const MASUK_NIK = [
+        self::WARGA,
+    ];
+
+    /** Nama tampilan tiap level. */
+    public const NAMA = [
+        self::SUPER_ADMIN => 'Super Admin',
+        self::OPERATOR => 'Operator',
+        self::WARGA => 'Warga',
+        self::OPERATOR_OPD => 'Operator OPD',
+    ];
+
+    /**
      * Level yang WAJIB menyebut wilayah (kecamatan, dan untuk OPD juga desa).
      *
      * 🔴 Wilayah sebuah permohonan dibaca dari AKUN pengajunya — tidak ada

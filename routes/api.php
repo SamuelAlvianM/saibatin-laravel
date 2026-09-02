@@ -147,6 +147,14 @@ Route::middleware(['auth', 'peran:petugas'])->prefix('admin')->group(function ()
     Route::post('/users', [UserAdminController::class, 'store']);
     Route::patch('/users', [UserAdminController::class, 'ubahStatus']);
     Route::get('/users/{id}', [UserAdminController::class, 'show'])->whereNumber('id');
+    // PUT, bukan PATCH:  PATCH sudah dipakai `ubahStatus` (aksi, bukan
+    // sunting data). Memisahkannya membuat dua hal yang berbeda tetap terbaca
+    // berbeda di daftar rute.
+    Route::put('/users/{id}', [UserAdminController::class, 'update'])->whereNumber('id');
+    // Setel ulang sandi — endpoint sendiri, bukan kolom di `update()`: ini
+    // tindakan sekali jalan yang tidak punya "nilai sebelumnya", dan tidak boleh
+    // ikut terbawa saat petugas cuma membetulkan email.
+    Route::post('/users/{id}/sandi', [UserAdminController::class, 'setelSandi'])->whereNumber('id');
     Route::delete('/users/{id}', [UserAdminController::class, 'destroy'])->whereNumber('id');
 
     Route::get('/pengaduan', [PengaduanAdminController::class, 'index']);

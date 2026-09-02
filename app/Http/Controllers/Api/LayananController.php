@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Api\Admin\PengaturanController;
 use App\Http\Controllers\Controller;
 use App\Models\Berkas;
 use App\Models\JenisPermohonan;
@@ -95,6 +96,23 @@ class LayananController extends Controller
 
     private function buat(Request $request, array $form)
     {
+        /*
+         * 🔴 LAYANAN YANG DIMATIKAN MENOLAK KIRIMAN — bukan hanya hilang dari
+         * layar.
+         *
+         * Sampai 2 Sep 2026 endpoint ini tidak memeriksanya sama sekali, jadi
+         * permohonan untuk layanan yang sudah dimatikan tetap DITERIMA dan
+         * masuk ke antrean petugas. Penyaringannya cuma ada di pemilih layanan,
+         * dan pemilih layanan bukan pagar.
+         *
+         * Super Admin dikecualikan karena dialah yang mematikannya dan perlu
+         * mengujinya — sama seperti di `PengajuanPetugasController`.
+         */
+        if (! $request->user()->isSuperAdmin()
+            && PengaturanController::tersembunyi($form['slug'])) {
+            return Balasan::gagal(['Info: Layanan ini sedang tidak tersedia'], 403);
+        }
+
         // 🔴 Jam layanan berlaku untuk SEMUA pembuat permohonan, warga maupun
         // petugas, dan diperiksa di sini — bukan hanya disembunyikan di UI.
         $jam = $this->jam->status();

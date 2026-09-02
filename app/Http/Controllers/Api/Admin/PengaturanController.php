@@ -123,4 +123,45 @@ class PengaturanController extends Controller
 
         return is_array($hidden) ? array_values(array_filter($hidden, 'is_string')) : [];
     }
+
+    /**
+     * Apakah layanan ini sedang dimatikan?
+     *
+     * 🔴 Pemanggilnya WAJIB mengecualikan Super Admin sendiri
+     * (`! $user->isSuperAdmin() && tersembunyi(...)`), bukan seluruh petugas.
+     * Layanan yang dimatikan mati untuk SEMUA peran; Super Admin dilewatkan
+     * hanya supaya yang mematikannya bisa mengujinya.
+     *
+     * 🔴 Menyembunyikan layanan HARUS berlaku di server, bukan cuma
+     * menghilangkan kartunya. Sampai 2 Sep 2026 penyaringannya hanya ada di
+     * pemilih layanan warga, sehingga siapa pun yang mengetik URL formulirnya
+     * tetap bisa membukanya — dan `LayananController::buat()` bahkan tetap
+     * MENERIMA kiriman permohonannya. Jadi "layanan dinonaktifkan" sebenarnya
+     * tidak menonaktifkan apa pun; petugas yang mematikan sebuah layanan tetap
+     * menerima permohonan untuknya, tanpa tahu kenapa.
+     *
+     * 🔴 TIGA penamaan hidup berdampingan, dan mencampurnya membuat
+     * pemeriksaan ini diam-diam selalu berbunyi "tidak disembunyikan":
+     *
+     *   slug RUTE  `kk-numpang-kk`          → dipakai di URL & `daftar[].slug`
+     *   slug FORM  `kk-numpang`             → dipakai `config('layanan.form')`
+     *   KUNCI      `kartuKeluargaNumpang`   → yang benar-benar disimpan di
+     *                                         daftar layanan tersembunyi
+     *
+     * Terukur: 9 dari 17 layanan punya slug rute yang BERBEDA dari slug
+     * formulirnya — termasuk KTP Elektronik dan seluruh turunan Kartu Keluarga.
+     * Mencocokkan `$slugForm` langsung dengan `daftar[].slug` melewatkan
+     * kesembilannya tanpa satu pun galat, dan justru layanan itulah yang paling
+     * mungkin dimatikan.
+     *
+     * @param  string  $slugForm  slug SKEMA (`kk-numpang`), bukan slug rute
+     */
+    public static function tersembunyi(string $slugForm): bool
+    {
+        $kunci = collect(config('layanan.daftar'))
+            ->first(fn ($l) => (config("layanan.rute_ke_form.{$l['slug']}") ?? $l['slug']) === $slugForm)['kunci']
+            ?? null;
+
+        return $kunci !== null && in_array($kunci, self::hidden(), true);
+    }
 }

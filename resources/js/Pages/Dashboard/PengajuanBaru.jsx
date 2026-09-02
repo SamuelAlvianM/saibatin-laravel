@@ -1,6 +1,6 @@
 import { Link, usePage } from '@inertiajs/react';
 import { useState } from 'react';
-import { ArrowLeft, ArrowRight, Clock, FilePlus2, Search, SlidersHorizontal } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Clock, EyeOff, FilePlus2, Search, SlidersHorizontal } from 'lucide-react';
 import LayoutDashboard from '@/Components/LayoutDashboard';
 import PengaturanLayanan from '@/Components/PengaturanLayanan';
 import { Pesan, Tombol } from '@/Components/Dasbor';
@@ -23,18 +23,30 @@ import { Input } from '@/Components/ui/input';
  *    ketersediaan layanan — di portal lama pun pengaturan itu tinggal di sini,
  *    bukan di halaman tersendiri.
  */
-export default function PengajuanBaru({ daftar, jam }) {
+export default function PengajuanBaru({ daftar, jam, tersembunyi = [] }) {
   const { auth } = usePage().props;
   const admin = (auth?.user?.level ?? 3) === 1;
+
+  /*
+   * Layanan yang DIMATIKAN hanya sampai ke sini bagi Super Admin — bagi peran
+   * lain server sudah menyaringnya habis. Ia yang mematikannya, jadi ia perlu
+   * melihat akibat pengaturannya sendiri dan tetap bisa mengujinya.
+   */
+  const mati = new Set(tersembunyi);
 
   const [cari, setCari] = useState('');
   const [pengaturan, setPengaturan] = useState(false);
   const [pesan, setPesan] = useState(null);
 
   const q = cari.trim().toLowerCase();
-  const tampil = q
+  const tampil = (q
     ? daftar.filter((l) => l.title.toLowerCase().includes(q) || l.description.toLowerCase().includes(q))
-    : daftar;
+    : daftar
+  )
+    // Layanan tidak aktif selalu turun ke bawah. Hanya terasa bagi Super Admin;
+    // peran lain tidak menerima layanan mati sama sekali.
+    .slice()
+    .sort((a, b) => (mati.has(a.kunci) ? 1 : 0) - (mati.has(b.kunci) ? 1 : 0));
 
   return (
     <LayoutDashboard judul="Pengajuan Baru">
@@ -89,17 +101,43 @@ export default function PengajuanBaru({ daftar, jam }) {
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {tampil.map((l) => {
             const I = ikonDari(l.icon);
+            const nonaktif = mati.has(l.kunci);
+
+            /*
+             * 🔴 Kartu nonaktif SELALU abu-abu, tanpa warna merek sama sekali.
+             * Kalau ia ikut berwarna seperti yang lain, satu-satunya penanda
+             * "tidak aktif" tinggal teks kecil — dan itu terlewat.
+             */
             return (
               <Link key={l.slug} href={`/dashboard/pengajuan-baru/${l.slug}`}
-                    className="group flex items-center gap-3 rounded-2xl border border-slate-200 bg-white p-4 text-left shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-brand/40 hover:shadow-md">
-                <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand transition-transform group-hover:scale-105">
+                    title={nonaktif
+                      ? `${l.title} — dimatikan untuk semua peran; hanya Super Admin yang masih bisa membukanya`
+                      : l.title}
+                    className={`group flex items-center gap-3 rounded-2xl border p-4 text-left shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md ${
+                      nonaktif
+                        ? 'border-dashed border-slate-300 bg-slate-50 hover:border-slate-400'
+                        : 'border-slate-200 bg-white hover:border-brand/40'
+                    }`}>
+                <div className={`flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl transition-transform group-hover:scale-105 ${
+                  nonaktif ? 'bg-slate-200 text-slate-500' : 'bg-brand/10 text-brand'
+                }`}>
                   <I className="h-5 w-5" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-semibold text-slate-900 group-hover:text-brand">{l.title}</p>
-                  <p className="line-clamp-1 text-xs text-slate-500">{l.description}</p>
+                  <p className={`truncate text-sm font-semibold ${
+                    nonaktif ? 'text-slate-500' : 'text-slate-900 group-hover:text-brand'
+                  }`}>{l.title}</p>
+                  {nonaktif ? (
+                    <p className="flex items-center gap-1 text-xs font-medium text-slate-400">
+                      <EyeOff className="h-3 w-3" /> Layanan tidak aktif
+                    </p>
+                  ) : (
+                    <p className="line-clamp-1 text-xs text-slate-500">{l.description}</p>
+                  )}
                 </div>
-                <ArrowRight className="h-4 w-4 flex-shrink-0 text-slate-300 transition-all group-hover:translate-x-0.5 group-hover:text-brand" />
+                <ArrowRight className={`h-4 w-4 flex-shrink-0 text-slate-300 transition-all group-hover:translate-x-0.5 ${
+                  nonaktif ? '' : 'group-hover:text-brand'
+                }`} />
               </Link>
             );
           })}

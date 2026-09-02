@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import {
   ChevronLeft, ChevronRight, Download, Maximize2, RotateCcw, RotateCw, X, ZoomIn, ZoomOut,
 } from 'lucide-react';
@@ -74,7 +75,32 @@ export default function PenampilGambar({ daftar, indeksAwal = 0, onTutup }) {
 
   const tombol = 'inline-flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 text-white transition-colors hover:bg-white/25 disabled:opacity-30';
 
-  return (
+  /*
+   * 🔴 DIPASANG LEWAT PORTAL KE `document.body`, bukan di tempatnya dipanggil.
+   *
+   * `z-[100]` saja TIDAK cukup, dan ini bukan teori. `position: sticky`
+   * SELALU membuat konteks penumpukan sendiri — tanpa perlu `z-index` sama
+   * sekali. Penampil ini kerap dirender di dalam elemen sticky (panel detail
+   * akun, kepala tabel), sehingga `z-100`-nya terkurung di dalam konteks itu,
+   * dan konteks itu sendiri duduk di bawah sidebar `z-30` dan navbar `z-50`.
+   *
+   * Akibatnya saat pratinjau lampiran terbuka, navbar dan sidebar masih bisa
+   * diklik dan penampilnya TIDAK BISA DITUTUP.
+   *
+   * ⚠️ Menaikkan angka `z` tidak akan pernah menyelesaikannya: angka hanya
+   * berlaku di dalam konteksnya sendiri. Portal membebaskannya dari SELURUH
+   * konteks penumpukan sekaligus, dan karena dipasang di komponen ini,
+   * kesepuluh pemakainya ikut sembuh tanpa disentuh satu per satu.
+   *
+   * ⚠️ Pemicu konteks penumpukan lain yang sama diam-diamnya: `transform`,
+   * `filter`, `backdrop-filter`, `opacity < 1`, `will-change`, `contain`.
+   *
+   * ⚠️ `document` diperiksa dulu — pada render di server ia tidak ada, dan
+   * memanggil portal tanpa penjaga ini menjatuhkan seluruh halaman.
+   */
+  if (typeof document === 'undefined') return null;
+
+  return createPortal(
     <div className="fixed inset-0 z-[100] flex flex-col bg-black/90 backdrop-blur-sm" onClick={onTutup}>
       {/* Bilah alat */}
       <div className="flex items-center gap-2 border-b border-white/10 px-4 py-2.5" onClick={(e) => e.stopPropagation()}>
@@ -152,6 +178,7 @@ export default function PenampilGambar({ daftar, indeksAwal = 0, onTutup }) {
       <p className="border-t border-white/10 px-4 py-2 text-center text-[0.7rem] text-white/40">
         Gulir untuk zoom · seret untuk menggeser · R putar · 0 kembalikan · Esc tutup
       </p>
-    </div>
+    </div>,
+    document.body,
   );
 }
