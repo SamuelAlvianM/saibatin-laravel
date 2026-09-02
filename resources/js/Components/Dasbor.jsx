@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import {
-  CheckCircle2, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Clock,
+  CheckCircle2, ChevronDown, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Clock,
   FileSpreadsheet, FileText, Loader2, XCircle, X,
 } from 'lucide-react';
 
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from '@/Components/ui/select';
+import { Popover, PopoverContent, PopoverTrigger } from '@/Components/ui/popover';
+import { Checkbox } from '@/Components/ui/checkbox';
 
 /**
  * Potongan UI yang dipakai berulang di seluruh halaman dashboard petugas —
@@ -195,7 +197,14 @@ export function Pesan({ pesan, onTutup }) {
   return (
     <div
       role="status"
-      className={`fixed bottom-20 left-1/2 z-50 flex max-w-[92vw] -translate-x-1/2 items-start gap-2 rounded-xl px-4 py-3 text-sm shadow-lg lg:bottom-6 ${
+      /* 🔴 z-[60], bukan z-50. `Modal` di bawah juga z-50 dan SELALU dirender
+          belakangan, jadi pada tumpukan yang sama modal menang — pesan galat
+          dari server muncul PERSIS DI BALIK modal dan tidak pernah terbaca
+          siapa pun. Gejalanya: tombol di dalam modal seolah tidak melakukan
+          apa-apa, padahal servernya menolak dan pesannya memang dirender.
+          ⚠️ Menambah lapisan melayang baru? Periksa `z-`-nya terhadap `Modal`,
+          dan uji dengan galat yang MEMANG muncul dari dalam modal. */
+      className={`fixed bottom-20 left-1/2 z-[60] flex max-w-[92vw] -translate-x-1/2 items-start gap-2 rounded-xl px-4 py-3 text-sm shadow-lg lg:bottom-6 ${
         galat ? 'bg-rose-600 text-white' : 'bg-emerald-600 text-white'
       }`}
     >
@@ -404,3 +413,74 @@ export function tglJam(v) {
 }
 
 export const angka = (n) => Number(n ?? 0).toLocaleString('id-ID');
+
+/**
+ * Saringan pilih-banyak — dipakai untuk jenis permohonan.
+ *
+ * 🔴 Bukan Radix `Select`: komponen itu satu-nilai, menutup tiap kali diklik,
+ * dan menolak `SelectItem` bernilai `""` — memaksanya jadi pilih-banyak berarti
+ * melawan tiga perilaku bawaannya sekaligus. Popover + Checkbox jauh lebih
+ * sedikit lawannya.
+ *
+ * Nilainya larik `string`, bukan angka: id datang dari URL dan kembali ke URL,
+ * dan mencampur tipe di tengah jalan membuat `includes()` gagal diam-diam —
+ * tidak ada galat, cuma centang yang tidak pernah menyala.
+ */
+export function FilterBanyak({
+  nilai = [], onUbah, pilihan = [], label = 'Pilih', labelSemua = 'Semua', nonaktif,
+}) {
+  const [buka, setBuka] = useState(false);
+
+  if (pilihan.length === 0) {
+    return null;
+  }
+
+  const alihkan = (id) =>
+    onUbah(nilai.includes(id) ? nilai.filter((v) => v !== id) : [...nilai, id]);
+
+  // Ringkasan di tombol: nama kalau cuma satu, hitungan kalau lebih. Menuliskan
+  // semua nama akan meregangkan tombol dan mendorong saringan lain keluar baris.
+  const ringkas = nilai.length === 0
+    ? labelSemua
+    : nilai.length === 1
+      ? (pilihan.find((p) => String(p.id) === nilai[0])?.nama ?? '1 dipilih')
+      : `${nilai.length} dipilih`;
+
+  return (
+    <Popover open={buka} onOpenChange={setBuka}>
+      <PopoverTrigger asChild>
+        <button type="button" disabled={nonaktif} aria-label={label}
+                className="flex h-9 w-52 items-center justify-between gap-2 rounded-md border border-slate-200 bg-white px-3 text-sm text-slate-700 transition-colors hover:border-slate-300 disabled:opacity-50">
+          <span className="truncate">{ringkas}</span>
+          <ChevronDown className="h-4 w-4 flex-shrink-0 text-slate-400" />
+        </button>
+      </PopoverTrigger>
+
+      <PopoverContent align="start" className="w-64 p-0">
+        <div className="flex items-center justify-between border-b border-slate-100 px-3 py-2">
+          <span className="text-xs font-semibold uppercase tracking-wide text-slate-400">{label}</span>
+          {nilai.length > 0 && (
+            <button type="button" onClick={() => onUbah([])}
+                    className="text-xs font-medium text-brand hover:underline">
+              Bersihkan
+            </button>
+          )}
+        </div>
+
+        <div className="max-h-72 overflow-y-auto p-1">
+          {pilihan.map((p) => {
+            const id = String(p.id);
+
+            return (
+              <label key={id}
+                     className="flex cursor-pointer items-center gap-2.5 rounded-md px-2 py-1.5 text-sm text-slate-700 hover:bg-slate-50">
+                <Checkbox checked={nilai.includes(id)} onCheckedChange={() => alihkan(id)} />
+                <span className="min-w-0 flex-1">{p.nama}</span>
+              </label>
+            );
+          })}
+        </div>
+      </PopoverContent>
+    </Popover>
+  );
+}
