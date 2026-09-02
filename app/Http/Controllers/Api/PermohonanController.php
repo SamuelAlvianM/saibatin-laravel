@@ -8,6 +8,7 @@ use App\Models\Permohonan;
 use App\Services\JamLayanan;
 use App\Services\Pemberitahuan;
 use App\Services\Recaptcha;
+use App\Support\AlasanTolakPermohonan;
 use App\Support\Balasan;
 use Illuminate\Http\Request;
 
@@ -60,6 +61,26 @@ class PermohonanController extends Controller
                 'createdAt' => $p->created_at,
                 'updatedAt' => $p->updated_at,
                 'jenisNama' => $p->jenis->nama ?? (string) $p->jenis_id,
+
+                /*
+                 * 🔴 ALASAN PENOLAKAN IKUT DIKIRIM — dan sampai 2 Sep 2026 tidak.
+                 *
+                 * Halaman ini sebelumnya hanya menerima status, sehingga
+                 * permohonan yang ditolak tampil sebagai lencana "DITOLAK" tanpa
+                 * satu kata pun penjelasan. Alasannya memang dikirim lewat surel
+                 * dan WhatsApp, tapi keduanya bisa terlewat, masuk folder spam,
+                 * atau nomornya sudah berganti — dan portal, satu-satunya tempat
+                 * yang pasti bisa dibuka pemohon, justru diam.
+                 *
+                 * Warga sungguhan melaporkan ditolak berulang kali "karena data
+                 * tidak lengkap" tanpa pernah tahu data mana yang dimaksud.
+                 *
+                 * Hanya untuk baris yang DITOLAK: pada status lain `catatan`
+                 * adalah catatan kerja petugas, bukan pesan untuk pemohon.
+                 */
+                'tolak' => $p->status === Permohonan::STATUS_DITOLAK
+                    ? AlasanTolakPermohonan::uraikan($p->catatan)
+                    : null,
             ])->values(),
             'nextCursor' => $adaLagi ? $halaman->last()->id : null,
         ];

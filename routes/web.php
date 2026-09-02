@@ -72,14 +72,46 @@ Route::middleware('auth')->group(function () {
     // dilempari 403. Sisanya memang tertutup untuk mereka.
     Route::get('/dashboard', [DashboardController::class, 'beranda'])->name('dashboard');
 
-    Route::middleware('peran:petugas')->prefix('dashboard')->group(function () {
+    /*
+     * ── Halaman yang DIPAKAI BERSAMA petugas & Operator OPD ─────────────────
+     *
+     * 🔴 Grup TERPISAH dari `peran:petugas` di bawah, bukan digabung dengan
+     * melebarkan alias `petugas`. Operator OPD memakai kerangka dashboard yang
+     * sama, tapi wewenangnya berbeda: ia MENGAJUKAN, bukan memproses. Melebarkan
+     * `petugas` akan sekaligus membuka Manajemen Akun, halaman Master, dan
+     * seluruh permohonan kabupaten untuk 140 akun instansi.
+     *
+     * ⚠️ Pagar KEPEMILIKAN tidak ada di sini — middleware hanya tahu peran,
+     * tidak tahu baris mana milik siapa. Penyaringan "hanya permohonan sendiri"
+     * ada di `PermohonanAdminController`, dan itu yang harus diperiksa kalau
+     * cakupan OPD dipertanyakan.
+     */
+    Route::middleware('peran:petugas,opd')->prefix('dashboard')->group(function () {
         Route::get('/permohonan', fn () => Inertia::render('Dashboard/Permohonan', [
             'sorot' => request()->query('sorot'),
         ]));
 
+        /*
+         * Detail permohonan sebagai HALAMAN SENDIRI, bukan panel di dalam
+         * daftar. Yang didapat bukan sekadar tampilan: alamatnya bisa dikirim
+         * ke rekan kerja, tombol Kembali peramban berfungsi sebagaimana mestinya,
+         * dan formulir penolakan punya ruang untuk daftar "data yang perlu
+         * dilengkapi" tanpa harus dijejalkan ke dalam modal.
+         *
+         * ⚠️ `whereNumber` bukan hiasan: tanpa itu pola ini ikut menelan
+         * `/dashboard/permohonan/apa-pun` dan halaman detailnya memanggil API
+         * dengan id yang bukan angka.
+         */
+        Route::get('/permohonan/{id}', fn (int $id) => Inertia::render('Dashboard/PermohonanDetail', [
+            'id' => $id,
+        ]))->whereNumber('id');
+
         Route::get('/pengajuan-baru', [PengajuanPetugasController::class, 'tampilkan']);
         Route::get('/pengajuan-baru/{slug}', [PengajuanPetugasController::class, 'form']);
+    });
 
+    // ── Khusus petugas (memproses, mengelola) ───────────────────────────────
+    Route::middleware('peran:petugas')->prefix('dashboard')->group(function () {
         // `sorot` diteruskan ke keempat halaman tujuan notifikasi — lonceng
         // menambahkannya sebagai `?sorot=<refId>` supaya baris yang dimaksud
         // langsung disorot, bukan dicari sendiri oleh petugas.
@@ -97,8 +129,21 @@ Route::middleware('auth')->group(function () {
         ]));
         Route::get('/skm', fn () => Inertia::render('Dashboard/Skm'));
 
-        // 🔴 Sengaja TIDAK ditautkan dari sidebar — dibuka lewat URL saja.
-        Route::get('/master', fn () => Inertia::render('Dashboard/Master'));
+        /*
+         * 🔴 Sengaja TIDAK ditautkan dari sidebar — dibuka lewat URL saja.
+         *
+         * 🔴 `peran:1` sejak 2 Sep 2026 (keputusan dinas). Halaman ini MEMBUKA
+         * KUNCI permohonan yang sudah final (Selesai/Ditolak) supaya bisa
+         * diproses ulang, dan status final itulah yang membuat angka laporan
+         * bisa dipercaya. Sebelumnya ia cuma `peran:petugas`, jadi setiap
+         * Operator bisa membalik status permohonan yang sudah tuntas.
+         *
+         * ⚠️ Endpoint POST-nya di `routes/api.php` ikut dipersempit. Mengubah
+         * salah satu saja tidak menutup apa pun: halamannya hilang dari layar
+         * sementara endpointnya tetap menerima kiriman.
+         */
+        Route::get('/master', fn () => Inertia::render('Dashboard/Master'))
+            ->middleware('peran:1');
 
         // ── Konten & Media — seluruhnya khusus Super Admin, sama seperti
         //    `ADMIN_ONLY_HREFS` di sidebar portal Next.js.
@@ -223,7 +268,18 @@ Route::get('/permohonan-online', fn (Request $r) => redirect(
         ? '/user/pengajuan/baru?q='.urlencode((string) $r->query('q'))
         : '/user/pengajuan/baru'
 ));
-Route::redirect('/riwayat', '/user/pengajuan', 301);
+/*
+ * ⚠️ Closure, BUKAN `Route::redirect` — fungsi itu MEMBUANG query string.
+ *
+ * Alamat ini dipakai tautan lama dan hasil pencarian, dan tujuannya
+ * (`/user/pengajuan`) sendiri mengalihkan Operator OPD ke dashboard dengan
+ * `?sorot=` yang harus selamat sampai ujung rantai. Satu `Route::redirect` di
+ * tengah rantai cukup untuk menghapusnya tanpa jejak.
+ */
+Route::get('/riwayat', fn (Request $r) => redirect(
+    '/user/pengajuan'.($r->getQueryString() ? '?'.$r->getQueryString() : ''),
+    301,
+));
 
 // ── Peta situs ──────────────────────────────────────────────────────────────
 // Versi untuk MANUSIA (bukan `sitemap.xml`): daftar seluruh alamat publik dalam
