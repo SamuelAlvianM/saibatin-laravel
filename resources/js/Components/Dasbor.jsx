@@ -404,13 +404,15 @@ export function useTunda(nilai, jeda = 400) {
 }
 
 /** Tanggal ID ringkas — dipakai di banyak tabel. */
-export function tglSingkat(v) {
-  return v ? new Date(v).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }) : '—';
-}
+/*
+ * 🔴 Diteruskan dari `lib/waktu.js`, yang memakukan zona ke zona KANTOR.
+ * Sebelumnya keduanya memformat tanpa `timeZone`, jadi merender memakai zona
+ * PERAMBAN — petugas di zona berbeda membaca jam yang meleset dari yang
+ * tercetak di tanda terima. Diekspor ulang dari sini supaya belasan halaman
+ * yang sudah mengimpornya ikut sembuh tanpa disentuh.
+ */
+export { tglJam, tglPanjang, tglSingkat } from '@/lib/waktu';
 
-export function tglJam(v) {
-  return v ? new Date(v).toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' }) : '—';
-}
 
 export const angka = (n) => Number(n ?? 0).toLocaleString('id-ID');
 

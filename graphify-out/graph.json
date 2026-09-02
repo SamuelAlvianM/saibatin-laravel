@@ -4,30 +4,17 @@
   "graph": {},
   "nodes": [
     {
-      "id": "app_http_controllers_api_notifikasicontroller_notifikasicontroller",
-      "label": "NotifikasiController",
+      "id": "app_http_controllers_api_layanancontroller_layanancontroller",
+      "label": "LayananController",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 0,
       "community_name": "Illuminate\\Http\\Request",
       "file_type": "code",
-      "norm_label": "notifikasicontroller",
-      "source_file": "app/Http/Controllers/Api/NotifikasiController.php",
-      "source_location": "L11"
-    },
-    {
-      "id": "app_http_controllers_api_pendudukcontroller_pendudukcontroller",
-      "label": "PendudukController",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "Illuminate\\Http\\Request",
-      "file_type": "code",
-      "norm_label": "pendudukcontroller",
-      "source_file": "app/Http/Controllers/Api/PendudukController.php",
-      "source_location": "L19"
+      "norm_label": "layanancontroller",
+      "source_file": "app/Http/Controllers/Api/LayananController.php",
+      "source_location": "L31"
     },
     {
       "id": "app_http_controllers_api_profilcontroller_profilcontroller",
@@ -41,6 +28,19 @@
       "norm_label": "profilcontroller",
       "source_file": "app/Http/Controllers/Api/ProfilController.php",
       "source_location": "L14"
+    },
+    {
+      "id": "app_http_controllers_auth_cekstatuscontroller_cekstatuscontroller",
+      "label": "CekStatusController",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "Illuminate\\Http\\Request",
+      "file_type": "code",
+      "norm_label": "cekstatuscontroller",
+      "source_file": "app/Http/Controllers/Auth/CekStatusController.php",
+      "source_location": "L22"
     },
     {
       "id": "app_http_controllers_profilpagecontroller_profilpagecontroller",
@@ -82,6 +82,19 @@
       "source_location": "L23"
     },
     {
+      "id": "app_http_controllers_dashboardcontroller_dashboardcontroller",
+      "label": "DashboardController",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "Permohonan",
+      "file_type": "code",
+      "norm_label": "dashboardcontroller",
+      "source_file": "app/Http/Controllers/DashboardController.php",
+      "source_location": "L34"
+    },
+    {
       "id": "app_models_jenispermohonan_jenispermohonan",
       "label": "JenisPermohonan",
       "_callable": true,
@@ -105,6 +118,19 @@
       "file_type": "code",
       "norm_label": "permohonan",
       "source_file": "app/Models/Permohonan.php",
+      "source_location": "L23"
+    },
+    {
+      "id": "app_services_pencacahkunjungan_pencacahkunjungan",
+      "label": "PencacahKunjungan",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "Permohonan",
+      "file_type": "code",
+      "norm_label": "pencacahkunjungan",
+      "source_file": "app/Services/PencacahKunjungan.php",
       "source_location": "L23"
     },
     {
@@ -139,38 +165,51 @@
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 102,
-      "community_name": "DatabaseSeeder.php",
+      "community": 10,
+      "community_name": "User",
       "file_type": "code",
       "norm_label": "databaseseeder",
       "source_file": "database/seeders/DatabaseSeeder.php",
       "source_location": "L9"
     },
     {
-      "id": "app_http_controllers_api_demograficontroller_demograficontroller",
-      "label": "DemografiController",
+      "id": "app_http_controllers_api_admin_galeriadmincontroller_galeriadmincontroller",
+      "label": "GaleriAdminController",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 102,
+      "community_name": "Gallery",
+      "file_type": "code",
+      "norm_label": "galeriadmincontroller",
+      "source_file": "app/Http/Controllers/Api/Admin/GaleriAdminController.php",
+      "source_location": "L17"
+    },
+    {
+      "id": "app_models_gallery_gallery",
+      "label": "Gallery",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 102,
+      "community_name": "Gallery",
+      "file_type": "code",
+      "norm_label": "gallery",
+      "source_file": "app/Models/Gallery.php",
+      "source_location": "L9"
+    },
+    {
+      "id": "app_models_staticcontent_staticcontent",
+      "label": "StaticContent",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 103,
-      "community_name": "DemografiController.php",
+      "community_name": "StaticContent",
       "file_type": "code",
-      "norm_label": "demograficontroller",
-      "source_file": "app/Http/Controllers/Api/DemografiController.php",
-      "source_location": "L21"
-    },
-    {
-      "id": "app_models_userlevel_userlevel",
-      "label": "UserLevel",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "UserLevel",
-      "file_type": "code",
-      "norm_label": "userlevel",
-      "source_file": "app/Models/UserLevel.php",
-      "source_location": "L16"
+      "norm_label": "staticcontent",
+      "source_file": "app/Models/StaticContent.php",
+      "source_location": "L19"
     },
     {
       "id": "tests_feature_exampletest_exampletest",
@@ -179,7 +218,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 11,
-      "community_name": "UserLevel",
+      "community_name": "TestCase",
       "file_type": "code",
       "norm_label": "exampletest",
       "source_file": "tests/Feature/ExampleTest.php",
@@ -192,7 +231,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 11,
-      "community_name": "UserLevel",
+      "community_name": "TestCase",
       "file_type": "code",
       "norm_label": "testcase",
       "source_file": "tests/TestCase.php",
@@ -225,84 +264,6 @@
       "source_location": "L17"
     },
     {
-      "id": "app_http_controllers_api_permohonanpdfcontroller_permohonanpdfcontroller",
-      "label": "PermohonanPdfController",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": "permohonanpdfcontroller",
-      "source_file": "app/Http/Controllers/Api/PermohonanPdfController.php",
-      "source_location": "L33"
-    },
-    {
-      "id": "app_http_controllers_api_unggahcontroller_unggahcontroller",
-      "label": "UnggahController",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": "unggahcontroller",
-      "source_file": "app/Http/Controllers/Api/UnggahController.php",
-      "source_location": "L23"
-    },
-    {
-      "id": "app_http_controllers_berkascontroller_berkascontroller",
-      "label": "BerkasController",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": "berkascontroller",
-      "source_file": "app/Http/Controllers/BerkasController.php",
-      "source_location": "L29"
-    },
-    {
-      "id": "app_http_controllers_mediapublikcontroller_mediapublikcontroller",
-      "label": "MediaPublikController",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": "mediapublikcontroller",
-      "source_file": "app/Http/Controllers/MediaPublikController.php",
-      "source_location": "L22"
-    },
-    {
-      "id": "app_http_middleware_pastikanperan_pastikanperan",
-      "label": "PastikanPeran",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": "pastikanperan",
-      "source_file": "app/Http/Middleware/PastikanPeran.php",
-      "source_location": "L36"
-    },
-    {
-      "id": "app_support_alasantolakpermohonan_alasantolakpermohonan",
-      "label": "AlasanTolakPermohonan",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": "alasantolakpermohonan",
-      "source_file": "app/Support/AlasanTolakPermohonan.php",
-      "source_location": "L37"
-    },
-    {
       "id": "app_support_layanan_layanan",
       "label": "Layanan",
       "_callable": true,
@@ -316,43 +277,56 @@
       "source_location": "L28"
     },
     {
-      "id": "app_http_controllers_api_admin_permohonanadmincontroller_permohonanadmincontroller",
-      "label": "PermohonanAdminController",
+      "id": "app_http_controllers_api_admin_pengaduanadmincontroller_pengaduanadmincontroller",
+      "label": "PengaduanAdminController",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 16,
       "community_name": "Pemberitahuan",
       "file_type": "code",
-      "norm_label": "permohonanadmincontroller",
-      "source_file": "app/Http/Controllers/Api/Admin/PermohonanAdminController.php",
-      "source_location": "L24"
+      "norm_label": "pengaduanadmincontroller",
+      "source_file": "app/Http/Controllers/Api/Admin/PengaduanAdminController.php",
+      "source_location": "L20"
     },
     {
-      "id": "app_http_controllers_api_admin_useradmincontroller_useradmincontroller",
-      "label": "UserAdminController",
+      "id": "app_http_controllers_api_aspirasicontroller_aspirasicontroller",
+      "label": "AspirasiController",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 16,
       "community_name": "Pemberitahuan",
       "file_type": "code",
-      "norm_label": "useradmincontroller",
-      "source_file": "app/Http/Controllers/Api/Admin/UserAdminController.php",
-      "source_location": "L27"
+      "norm_label": "aspirasicontroller",
+      "source_file": "app/Http/Controllers/Api/AspirasiController.php",
+      "source_location": "L20"
     },
     {
-      "id": "app_http_controllers_auth_cekstatuscontroller_cekstatuscontroller",
-      "label": "CekStatusController",
+      "id": "app_models_kritiksaran_kritiksaran",
+      "label": "KritikSaran",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 16,
       "community_name": "Pemberitahuan",
       "file_type": "code",
-      "norm_label": "cekstatuscontroller",
-      "source_file": "app/Http/Controllers/Auth/CekStatusController.php",
-      "source_location": "L22"
+      "norm_label": "kritiksaran",
+      "source_file": "app/Models/KritikSaran.php",
+      "source_location": "L9"
+    },
+    {
+      "id": "app_models_pengaduan_pengaduan",
+      "label": "Pengaduan",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 16,
+      "community_name": "Pemberitahuan",
+      "file_type": "code",
+      "norm_label": "pengaduan",
+      "source_file": "app/Models/Pengaduan.php",
+      "source_location": "L14"
     },
     {
       "id": "app_services_pemberitahuan_pemberitahuan",
@@ -368,30 +342,17 @@
       "source_location": "L18"
     },
     {
-      "id": "app_services_surel_surel",
-      "label": "Surel",
+      "id": "app_http_controllers_auth_otpcontroller_otpcontroller",
+      "label": "OtpController",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 16,
-      "community_name": "Pemberitahuan",
+      "community": 17,
+      "community_name": "Otp",
       "file_type": "code",
-      "norm_label": "surel",
-      "source_file": "app/Services/Surel.php",
-      "source_location": "L15"
-    },
-    {
-      "id": "app_support_alasantolak_alasantolak",
-      "label": "AlasanTolak",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "Pemberitahuan",
-      "file_type": "code",
-      "norm_label": "alasantolak",
-      "source_file": "app/Support/AlasanTolak.php",
-      "source_location": "L16"
+      "norm_label": "otpcontroller",
+      "source_file": "app/Http/Controllers/Auth/OtpController.php",
+      "source_location": "L19"
     },
     {
       "id": "app_services_fonnte_fonnte",
@@ -420,43 +381,69 @@
       "source_location": "L22"
     },
     {
+      "id": "app_http_controllers_api_admin_skmadmincontroller_skmadmincontroller",
+      "label": "SkmAdminController",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "Controller",
+      "file_type": "code",
+      "norm_label": "skmadmincontroller",
+      "source_file": "app/Http/Controllers/Api/Admin/SkmAdminController.php",
+      "source_location": "L27"
+    },
+    {
       "id": "app_http_controllers_api_buktipengaduancontroller_buktipengaduancontroller",
       "label": "BuktiPengaduanController",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 19,
-      "community_name": "BuktiPengaduanController.php",
+      "community_name": "Controller",
       "file_type": "code",
       "norm_label": "buktipengaduancontroller",
       "source_file": "app/Http/Controllers/Api/BuktiPengaduanController.php",
       "source_location": "L29"
     },
     {
-      "id": "app_http_controllers_api_admin_beritaadmincontroller_beritaadmincontroller",
-      "label": "BeritaAdminController",
+      "id": "app_http_controllers_api_demograficontroller_demograficontroller",
+      "label": "DemografiController",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 2,
+      "community": 19,
       "community_name": "Controller",
       "file_type": "code",
-      "norm_label": "beritaadmincontroller",
-      "source_file": "app/Http/Controllers/Api/Admin/BeritaAdminController.php",
-      "source_location": "L16"
+      "norm_label": "demograficontroller",
+      "source_file": "app/Http/Controllers/Api/DemografiController.php",
+      "source_location": "L21"
     },
     {
-      "id": "app_http_controllers_api_admin_galeriadmincontroller_galeriadmincontroller",
-      "label": "GaleriAdminController",
+      "id": "app_http_controllers_api_unggahcontroller_unggahcontroller",
+      "label": "UnggahController",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 2,
+      "community": 19,
       "community_name": "Controller",
       "file_type": "code",
-      "norm_label": "galeriadmincontroller",
-      "source_file": "app/Http/Controllers/Api/Admin/GaleriAdminController.php",
-      "source_location": "L17"
+      "norm_label": "unggahcontroller",
+      "source_file": "app/Http/Controllers/Api/UnggahController.php",
+      "source_location": "L23"
+    },
+    {
+      "id": "app_http_controllers_controller_controller",
+      "label": "Controller",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "Controller",
+      "file_type": "code",
+      "norm_label": "controller",
+      "source_file": "app/Http/Controllers/Controller.php",
+      "source_location": "L5"
     },
     {
       "id": "app_http_controllers_api_admin_kontenstatiscontroller_kontenstatiscontroller",
@@ -465,7 +452,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 2,
-      "community_name": "Controller",
+      "community_name": "CatatanAktivitas",
       "file_type": "code",
       "norm_label": "kontenstatiscontroller",
       "source_file": "app/Http/Controllers/Api/Admin/KontenStatisController.php",
@@ -478,24 +465,11 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 2,
-      "community_name": "Controller",
+      "community_name": "CatatanAktivitas",
       "file_type": "code",
       "norm_label": "mastercontroller",
       "source_file": "app/Http/Controllers/Api/Admin/MasterController.php",
       "source_location": "L22"
-    },
-    {
-      "id": "app_http_controllers_api_admin_pengaduanadmincontroller_pengaduanadmincontroller",
-      "label": "PengaduanAdminController",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "Controller",
-      "file_type": "code",
-      "norm_label": "pengaduanadmincontroller",
-      "source_file": "app/Http/Controllers/Api/Admin/PengaduanAdminController.php",
-      "source_location": "L20"
     },
     {
       "id": "app_http_controllers_api_admin_produkadmincontroller_produkadmincontroller",
@@ -504,24 +478,11 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 2,
-      "community_name": "Controller",
+      "community_name": "CatatanAktivitas",
       "file_type": "code",
       "norm_label": "produkadmincontroller",
       "source_file": "app/Http/Controllers/Api/Admin/ProdukAdminController.php",
       "source_location": "L18"
-    },
-    {
-      "id": "app_http_controllers_controller_controller",
-      "label": "Controller",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "Controller",
-      "file_type": "code",
-      "norm_label": "controller",
-      "source_file": "app/Http/Controllers/Controller.php",
-      "source_location": "L5"
     },
     {
       "id": "app_services_catatanaktivitas_catatanaktivitas",
@@ -530,63 +491,37 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 2,
-      "community_name": "Controller",
+      "community_name": "CatatanAktivitas",
       "file_type": "code",
       "norm_label": "catatanaktivitas",
       "source_file": "app/Services/CatatanAktivitas.php",
       "source_location": "L21"
     },
     {
-      "id": "app_http_controllers_api_permohonancontroller_permohonancontroller",
-      "label": "PermohonanController",
+      "id": "app_http_controllers_api_admin_pengaturancontroller_pengaturancontroller",
+      "label": "PengaturanController",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 20,
-      "community_name": "Recaptcha",
+      "community_name": "PengaturanController",
       "file_type": "code",
-      "norm_label": "permohonancontroller",
-      "source_file": "app/Http/Controllers/Api/PermohonanController.php",
-      "source_location": "L22"
-    },
-    {
-      "id": "app_http_controllers_auth_logincontroller_logincontroller",
-      "label": "LoginController",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "Recaptcha",
-      "file_type": "code",
-      "norm_label": "logincontroller",
-      "source_file": "app/Http/Controllers/Auth/LoginController.php",
-      "source_location": "L31"
-    },
-    {
-      "id": "app_http_controllers_auth_sandicontroller_sandicontroller",
-      "label": "SandiController",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "Recaptcha",
-      "file_type": "code",
-      "norm_label": "sandicontroller",
-      "source_file": "app/Http/Controllers/Auth/SandiController.php",
-      "source_location": "L24"
-    },
-    {
-      "id": "app_services_recaptcha_recaptcha",
-      "label": "Recaptcha",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "Recaptcha",
-      "file_type": "code",
-      "norm_label": "recaptcha",
-      "source_file": "app/Services/Recaptcha.php",
+      "norm_label": "pengaturancontroller",
+      "source_file": "app/Http/Controllers/Api/Admin/PengaturanController.php",
       "source_location": "L21"
+    },
+    {
+      "id": "app_http_controllers_pengajuancontroller_pengajuancontroller",
+      "label": "PengajuanController",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 20,
+      "community_name": "PengaturanController",
+      "file_type": "code",
+      "norm_label": "pengajuancontroller",
+      "source_file": "app/Http/Controllers/PengajuanController.php",
+      "source_location": "L18"
     },
     {
       "id": "resources_js_lib_ocr_ktp_ocrgagal",
@@ -602,17 +537,43 @@
       "source_location": "L245"
     },
     {
-      "id": "app_http_controllers_auth_registercontroller_registercontroller",
-      "label": "RegisterController",
+      "id": "app_http_controllers_api_permohonanpdfcontroller_permohonanpdfcontroller",
+      "label": "PermohonanPdfController",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 248,
+      "community_name": "PermohonanPdfController.php",
+      "file_type": "code",
+      "norm_label": "permohonanpdfcontroller",
+      "source_file": "app/Http/Controllers/Api/PermohonanPdfController.php",
+      "source_location": "L33"
+    },
+    {
+      "id": "app_http_controllers_api_admin_permohonanadmincontroller_permohonanadmincontroller",
+      "label": "PermohonanAdminController",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 26,
       "community_name": "FotoProfil",
       "file_type": "code",
-      "norm_label": "registercontroller",
-      "source_file": "app/Http/Controllers/Auth/RegisterController.php",
-      "source_location": "L32"
+      "norm_label": "permohonanadmincontroller",
+      "source_file": "app/Http/Controllers/Api/Admin/PermohonanAdminController.php",
+      "source_location": "L24"
+    },
+    {
+      "id": "app_http_controllers_api_admin_useradmincontroller_useradmincontroller",
+      "label": "UserAdminController",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "FotoProfil",
+      "file_type": "code",
+      "norm_label": "useradmincontroller",
+      "source_file": "app/Http/Controllers/Api/Admin/UserAdminController.php",
+      "source_location": "L27"
     },
     {
       "id": "app_services_fotoprofil_fotoprofil",
@@ -626,6 +587,32 @@
       "norm_label": "fotoprofil",
       "source_file": "app/Services/FotoProfil.php",
       "source_location": "L28"
+    },
+    {
+      "id": "app_services_surel_surel",
+      "label": "Surel",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "FotoProfil",
+      "file_type": "code",
+      "norm_label": "surel",
+      "source_file": "app/Services/Surel.php",
+      "source_location": "L15"
+    },
+    {
+      "id": "app_support_alasantolak_alasantolak",
+      "label": "AlasanTolak",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "FotoProfil",
+      "file_type": "code",
+      "norm_label": "alasantolak",
+      "source_file": "app/Support/AlasanTolak.php",
+      "source_location": "L16"
     },
     {
       "id": "app_http_controllers_api_admin_mediacontroller_mediacontroller",
@@ -680,6 +667,19 @@
       "source_location": "L12"
     },
     {
+      "id": "app_http_controllers_api_admin_beritaadmincontroller_beritaadmincontroller",
+      "label": "BeritaAdminController",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 34,
+      "community_name": "News",
+      "file_type": "code",
+      "norm_label": "beritaadmincontroller",
+      "source_file": "app/Http/Controllers/Api/Admin/BeritaAdminController.php",
+      "source_location": "L16"
+    },
+    {
       "id": "app_http_controllers_api_kontencontroller_kontencontroller",
       "label": "KontenController",
       "_callable": true,
@@ -693,19 +693,6 @@
       "source_location": "L12"
     },
     {
-      "id": "app_models_gallery_gallery",
-      "label": "Gallery",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 34,
-      "community_name": "News",
-      "file_type": "code",
-      "norm_label": "gallery",
-      "source_file": "app/Models/Gallery.php",
-      "source_location": "L9"
-    },
-    {
       "id": "app_models_news_news",
       "label": "News",
       "_callable": true,
@@ -717,45 +704,6 @@
       "norm_label": "news",
       "source_file": "app/Models/News.php",
       "source_location": "L10"
-    },
-    {
-      "id": "app_http_controllers_api_admin_pengaturancontroller_pengaturancontroller",
-      "label": "PengaturanController",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 38,
-      "community_name": "JamLayanan",
-      "file_type": "code",
-      "norm_label": "pengaturancontroller",
-      "source_file": "app/Http/Controllers/Api/Admin/PengaturanController.php",
-      "source_location": "L21"
-    },
-    {
-      "id": "app_http_controllers_api_layanancontroller_layanancontroller",
-      "label": "LayananController",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 38,
-      "community_name": "JamLayanan",
-      "file_type": "code",
-      "norm_label": "layanancontroller",
-      "source_file": "app/Http/Controllers/Api/LayananController.php",
-      "source_location": "L31"
-    },
-    {
-      "id": "app_http_controllers_pengajuancontroller_pengajuancontroller",
-      "label": "PengajuanController",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 38,
-      "community_name": "JamLayanan",
-      "file_type": "code",
-      "norm_label": "pengajuancontroller",
-      "source_file": "app/Http/Controllers/PengajuanController.php",
-      "source_location": "L18"
     },
     {
       "id": "app_http_controllers_pengajuanpetugascontroller_pengajuanpetugascontroller",
@@ -823,19 +771,6 @@
       "source_location": "L15"
     },
     {
-      "id": "app_models_staticcontent_staticcontent",
-      "label": "StaticContent",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "PublikController",
-      "file_type": "code",
-      "norm_label": "staticcontent",
-      "source_file": "app/Models/StaticContent.php",
-      "source_location": "L19"
-    },
-    {
       "id": "app_support_konten_konten",
       "label": "Konten",
       "_callable": true,
@@ -862,30 +797,43 @@
       "source_location": "L11"
     },
     {
-      "id": "app_http_controllers_api_admin_skmadmincontroller_skmadmincontroller",
-      "label": "SkmAdminController",
+      "id": "app_http_controllers_berkascontroller_berkascontroller",
+      "label": "BerkasController",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 45,
       "community_name": "Illuminate\\Database\\Eloquent\\Model",
       "file_type": "code",
-      "norm_label": "skmadmincontroller",
-      "source_file": "app/Http/Controllers/Api/Admin/SkmAdminController.php",
-      "source_location": "L27"
+      "norm_label": "berkascontroller",
+      "source_file": "app/Http/Controllers/BerkasController.php",
+      "source_location": "L29"
     },
     {
-      "id": "app_http_controllers_dashboardcontroller_dashboardcontroller",
-      "label": "DashboardController",
+      "id": "app_http_controllers_mediapublikcontroller_mediapublikcontroller",
+      "label": "MediaPublikController",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 45,
       "community_name": "Illuminate\\Database\\Eloquent\\Model",
       "file_type": "code",
-      "norm_label": "dashboardcontroller",
-      "source_file": "app/Http/Controllers/DashboardController.php",
-      "source_location": "L34"
+      "norm_label": "mediapublikcontroller",
+      "source_file": "app/Http/Controllers/MediaPublikController.php",
+      "source_location": "L22"
+    },
+    {
+      "id": "app_http_middleware_pastikanperan_pastikanperan",
+      "label": "PastikanPeran",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 45,
+      "community_name": "Illuminate\\Database\\Eloquent\\Model",
+      "file_type": "code",
+      "norm_label": "pastikanperan",
+      "source_file": "app/Http/Middleware/PastikanPeran.php",
+      "source_location": "L36"
     },
     {
       "id": "app_models_berkas_berkas",
@@ -912,19 +860,6 @@
       "norm_label": "presisimilidetik",
       "source_file": "app/Models/Concerns/PresisiMilidetik.php",
       "source_location": "L17"
-    },
-    {
-      "id": "app_models_kritiksaran_kritiksaran",
-      "label": "KritikSaran",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 45,
-      "community_name": "Illuminate\\Database\\Eloquent\\Model",
-      "file_type": "code",
-      "norm_label": "kritiksaran",
-      "source_file": "app/Models/KritikSaran.php",
-      "source_location": "L9"
     },
     {
       "id": "app_models_kunjungan_kunjungan",
@@ -966,19 +901,6 @@
       "source_location": "L17"
     },
     {
-      "id": "app_models_pengaduan_pengaduan",
-      "label": "Pengaduan",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 45,
-      "community_name": "Illuminate\\Database\\Eloquent\\Model",
-      "file_type": "code",
-      "norm_label": "pengaduan",
-      "source_file": "app/Models/Pengaduan.php",
-      "source_location": "L14"
-    },
-    {
       "id": "app_models_skmjawaban_skmjawaban",
       "label": "SkmJawaban",
       "_callable": true,
@@ -1018,17 +940,17 @@
       "source_location": "L10"
     },
     {
-      "id": "app_services_pencacahkunjungan_pencacahkunjungan",
-      "label": "PencacahKunjungan",
+      "id": "app_models_userlevel_userlevel",
+      "label": "UserLevel",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 45,
       "community_name": "Illuminate\\Database\\Eloquent\\Model",
       "file_type": "code",
-      "norm_label": "pencacahkunjungan",
-      "source_file": "app/Services/PencacahKunjungan.php",
-      "source_location": "L23"
+      "norm_label": "userlevel",
+      "source_file": "app/Models/UserLevel.php",
+      "source_location": "L16"
     },
     {
       "id": "app_http_controllers_api_admin_logaktivitascontroller_logaktivitascontroller",
@@ -1122,43 +1044,121 @@
       "source_location": "L23"
     },
     {
+      "id": "app_http_controllers_auth_logincontroller_logincontroller",
+      "label": "LoginController",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 64,
+      "community_name": "Recaptcha",
+      "file_type": "code",
+      "norm_label": "logincontroller",
+      "source_file": "app/Http/Controllers/Auth/LoginController.php",
+      "source_location": "L31"
+    },
+    {
+      "id": "app_http_controllers_auth_registercontroller_registercontroller",
+      "label": "RegisterController",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 64,
+      "community_name": "Recaptcha",
+      "file_type": "code",
+      "norm_label": "registercontroller",
+      "source_file": "app/Http/Controllers/Auth/RegisterController.php",
+      "source_location": "L32"
+    },
+    {
+      "id": "app_http_controllers_auth_sandicontroller_sandicontroller",
+      "label": "SandiController",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 64,
+      "community_name": "Recaptcha",
+      "file_type": "code",
+      "norm_label": "sandicontroller",
+      "source_file": "app/Http/Controllers/Auth/SandiController.php",
+      "source_location": "L24"
+    },
+    {
+      "id": "app_services_recaptcha_recaptcha",
+      "label": "Recaptcha",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 64,
+      "community_name": "Recaptcha",
+      "file_type": "code",
+      "norm_label": "recaptcha",
+      "source_file": "app/Services/Recaptcha.php",
+      "source_location": "L21"
+    },
+    {
       "id": "app_support_statusakun_statusakun",
       "label": "StatusAkun",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 64,
-      "community_name": "StatusAkun",
+      "community_name": "Recaptcha",
       "file_type": "code",
       "norm_label": "statusakun",
       "source_file": "app/Support/StatusAkun.php",
       "source_location": "L18"
     },
     {
-      "id": "app_http_controllers_auth_otpcontroller_otpcontroller",
-      "label": "OtpController",
+      "id": "app_http_controllers_api_permohonancontroller_permohonancontroller",
+      "label": "PermohonanController",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 65,
-      "community_name": "OtpController",
+      "community_name": "AlasanTolakPermohonan",
       "file_type": "code",
-      "norm_label": "otpcontroller",
-      "source_file": "app/Http/Controllers/Auth/OtpController.php",
-      "source_location": "L19"
+      "norm_label": "permohonancontroller",
+      "source_file": "app/Http/Controllers/Api/PermohonanController.php",
+      "source_location": "L22"
     },
     {
-      "id": "app_http_controllers_api_aspirasicontroller_aspirasicontroller",
-      "label": "AspirasiController",
+      "id": "app_support_alasantolakpermohonan_alasantolakpermohonan",
+      "label": "AlasanTolakPermohonan",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 65,
+      "community_name": "AlasanTolakPermohonan",
+      "file_type": "code",
+      "norm_label": "alasantolakpermohonan",
+      "source_file": "app/Support/AlasanTolakPermohonan.php",
+      "source_location": "L37"
+    },
+    {
+      "id": "app_http_controllers_api_notifikasicontroller_notifikasicontroller",
+      "label": "NotifikasiController",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 7,
       "community_name": "Balasan",
       "file_type": "code",
-      "norm_label": "aspirasicontroller",
-      "source_file": "app/Http/Controllers/Api/AspirasiController.php",
-      "source_location": "L20"
+      "norm_label": "notifikasicontroller",
+      "source_file": "app/Http/Controllers/Api/NotifikasiController.php",
+      "source_location": "L11"
+    },
+    {
+      "id": "app_http_controllers_api_pendudukcontroller_pendudukcontroller",
+      "label": "PendudukController",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "Balasan",
+      "file_type": "code",
+      "norm_label": "pendudukcontroller",
+      "source_file": "app/Http/Controllers/Api/PendudukController.php",
+      "source_location": "L19"
     },
     {
       "id": "app_http_controllers_api_sistemcontroller_sistemcontroller",
@@ -1213,54 +1213,6 @@
       "source_location": "L24"
     },
     {
-      "id": "app_http_controllers_api_admin_mastercontroller_mastercontroller_bukakunci",
-      "label": ".bukaKunci()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "Illuminate\\Http\\Request",
-      "file_type": "code",
-      "norm_label": ".bukakunci()",
-      "source_file": "app/Http/Controllers/Api/Admin/MasterController.php",
-      "source_location": "L26"
-    },
-    {
-      "id": "app_http_controllers_api_admin_pengaduanadmincontroller_pengaduanadmincontroller_index",
-      "label": ".index()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "Illuminate\\Http\\Request",
-      "file_type": "code",
-      "norm_label": ".index()",
-      "source_file": "app/Http/Controllers/Api/Admin/PengaduanAdminController.php",
-      "source_location": "L28"
-    },
-    {
-      "id": "app_http_controllers_api_admin_produkadmincontroller_produkadmincontroller_jenissah",
-      "label": ".jenisSah()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "Illuminate\\Http\\Request",
-      "file_type": "code",
-      "norm_label": ".jenissah()",
-      "source_file": "app/Http/Controllers/Api/Admin/ProdukAdminController.php",
-      "source_location": "L92"
-    },
-    {
-      "id": "app_http_controllers_api_admin_produkadmincontroller_produkadmincontroller_store",
-      "label": ".store()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "Illuminate\\Http\\Request",
-      "file_type": "code",
-      "norm_label": ".store()",
-      "source_file": "app/Http/Controllers/Api/Admin/ProdukAdminController.php",
-      "source_location": "L35"
-    },
-    {
       "id": "app_http_controllers_api_layanancontroller_layanancontroller_buat",
       "label": ".buat()",
       "_callable": true,
@@ -1271,6 +1223,18 @@
       "norm_label": ".buat()",
       "source_file": "app/Http/Controllers/Api/LayananController.php",
       "source_location": "L97"
+    },
+    {
+      "id": "app_http_controllers_api_layanancontroller_layanancontroller_construct",
+      "label": ".__construct()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "Illuminate\\Http\\Request",
+      "file_type": "code",
+      "norm_label": ".__construct()",
+      "source_file": "app/Http/Controllers/Api/LayananController.php",
+      "source_location": "L40"
     },
     {
       "id": "app_http_controllers_api_layanancontroller_layanancontroller_invoke",
@@ -1295,66 +1259,6 @@
       "norm_label": ".unggah()",
       "source_file": "app/Http/Controllers/Api/LayananController.php",
       "source_location": "L69"
-    },
-    {
-      "id": "app_http_controllers_api_notifikasicontroller_notifikasicontroller_index",
-      "label": ".index()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "Illuminate\\Http\\Request",
-      "file_type": "code",
-      "norm_label": ".index()",
-      "source_file": "app/Http/Controllers/Api/NotifikasiController.php",
-      "source_location": "L13"
-    },
-    {
-      "id": "app_http_controllers_api_notifikasicontroller_notifikasicontroller_tandaisatu",
-      "label": ".tandaiSatu()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "Illuminate\\Http\\Request",
-      "file_type": "code",
-      "norm_label": ".tandaisatu()",
-      "source_file": "app/Http/Controllers/Api/NotifikasiController.php",
-      "source_location": "L53"
-    },
-    {
-      "id": "app_http_controllers_api_notifikasicontroller_notifikasicontroller_tandaisemua",
-      "label": ".tandaiSemua()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "Illuminate\\Http\\Request",
-      "file_type": "code",
-      "norm_label": ".tandaisemua()",
-      "source_file": "app/Http/Controllers/Api/NotifikasiController.php",
-      "source_location": "L39"
-    },
-    {
-      "id": "app_http_controllers_api_pendudukcontroller_pendudukcontroller_cek",
-      "label": ".cek()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "Illuminate\\Http\\Request",
-      "file_type": "code",
-      "norm_label": ".cek()",
-      "source_file": "app/Http/Controllers/Api/PendudukController.php",
-      "source_location": "L29"
-    },
-    {
-      "id": "app_http_controllers_api_pendudukcontroller_pendudukcontroller_ceknikkk",
-      "label": ".cekNikKk()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "Illuminate\\Http\\Request",
-      "file_type": "code",
-      "norm_label": ".ceknikkk()",
-      "source_file": "app/Http/Controllers/Api/PendudukController.php",
-      "source_location": "L65"
     },
     {
       "id": "app_http_controllers_api_profilcontroller_profilcontroller_gantisandi",
@@ -1417,16 +1321,52 @@
       "source_location": "L18"
     },
     {
-      "id": "app_http_controllers_auth_logincontroller_logincontroller_keluar",
-      "label": ".keluar()",
+      "id": "app_http_controllers_auth_cekstatuscontroller_cekstatuscontroller_ajukanulang",
+      "label": ".ajukanUlang()",
       "_callable": true,
       "_origin": "ast",
       "community": 0,
       "community_name": "Illuminate\\Http\\Request",
       "file_type": "code",
-      "norm_label": ".keluar()",
-      "source_file": "app/Http/Controllers/Auth/LoginController.php",
-      "source_location": "L119"
+      "norm_label": ".ajukanulang()",
+      "source_file": "app/Http/Controllers/Auth/CekStatusController.php",
+      "source_location": "L85"
+    },
+    {
+      "id": "app_http_controllers_auth_cekstatuscontroller_cekstatuscontroller_construct",
+      "label": ".__construct()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "Illuminate\\Http\\Request",
+      "file_type": "code",
+      "norm_label": ".__construct()",
+      "source_file": "app/Http/Controllers/Auth/CekStatusController.php",
+      "source_location": "L24"
+    },
+    {
+      "id": "app_http_controllers_auth_cekstatuscontroller_cekstatuscontroller_periksa",
+      "label": ".periksa()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "Illuminate\\Http\\Request",
+      "file_type": "code",
+      "norm_label": ".periksa()",
+      "source_file": "app/Http/Controllers/Auth/CekStatusController.php",
+      "source_location": "L34"
+    },
+    {
+      "id": "app_http_controllers_auth_cekstatuscontroller_cekstatuscontroller_tampilkan",
+      "label": ".tampilkan()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "Illuminate\\Http\\Request",
+      "file_type": "code",
+      "norm_label": ".tampilkan()",
+      "source_file": "app/Http/Controllers/Auth/CekStatusController.php",
+      "source_location": "L26"
     },
     {
       "id": "app_http_controllers_profilpagecontroller_profilpagecontroller_invoke",
@@ -1477,6 +1417,18 @@
       "source_location": "L105"
     },
     {
+      "id": "app_http_controllers_api_sistemcontroller_sistemcontroller_construct",
+      "label": ".__construct()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "Permohonan",
+      "file_type": "code",
+      "norm_label": ".__construct()",
+      "source_file": "app/Http/Controllers/Api/SistemController.php",
+      "source_location": "L18"
+    },
+    {
       "id": "app_http_controllers_api_statistikcontroller_statistikcontroller_invoke",
       "label": ".__invoke()",
       "_callable": true,
@@ -1511,6 +1463,30 @@
       "norm_label": ".konfigurasikartu()",
       "source_file": "app/Http/Controllers/Api/StatistikController.php",
       "source_location": "L128"
+    },
+    {
+      "id": "app_http_controllers_dashboardcontroller_dashboardcontroller_beranda",
+      "label": ".beranda()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "Permohonan",
+      "file_type": "code",
+      "norm_label": ".beranda()",
+      "source_file": "app/Http/Controllers/DashboardController.php",
+      "source_location": "L42"
+    },
+    {
+      "id": "app_http_controllers_dashboardcontroller_dashboardcontroller_construct",
+      "label": ".__construct()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "Permohonan",
+      "file_type": "code",
+      "norm_label": ".__construct()",
+      "source_file": "app/Http/Controllers/DashboardController.php",
+      "source_location": "L40"
     },
     {
       "id": "app_models_jenispermohonan_jenispermohonan_casts",
@@ -1549,16 +1525,40 @@
       "source_location": "L39"
     },
     {
-      "id": "app_services_demografiexcel_demografiexcel_keunduhan",
-      "label": ".keUnduhan()",
+      "id": "app_services_pencacahkunjungan_pencacahkunjungan_catat",
+      "label": ".catat()",
       "_callable": true,
       "_origin": "ast",
       "community": 1,
       "community_name": "Permohonan",
       "file_type": "code",
-      "norm_label": ".keunduhan()",
-      "source_file": "app/Services/DemografiExcel.php",
-      "source_location": "L136"
+      "norm_label": ".catat()",
+      "source_file": "app/Services/PencacahKunjungan.php",
+      "source_location": "L55"
+    },
+    {
+      "id": "app_services_pencacahkunjungan_pencacahkunjungan_statistik",
+      "label": ".statistik()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "Permohonan",
+      "file_type": "code",
+      "norm_label": ".statistik()",
+      "source_file": "app/Services/PencacahKunjungan.php",
+      "source_location": "L36"
+    },
+    {
+      "id": "app_services_pencacahkunjungan_pencacahkunjungan_tanggalhariini",
+      "label": ".tanggalHariIni()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "Permohonan",
+      "file_type": "code",
+      "norm_label": ".tanggalhariini()",
+      "source_file": "app/Services/PencacahKunjungan.php",
+      "source_location": "L30"
     },
     {
       "id": "app_services_statistikexcel_statistikexcel_bagianvalid",
@@ -1595,6 +1595,18 @@
       "norm_label": ".buat()",
       "source_file": "app/Services/StatistikExcel.php",
       "source_location": "L121"
+    },
+    {
+      "id": "app_services_statistikexcel_statistikexcel_construct",
+      "label": ".__construct()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "Permohonan",
+      "file_type": "code",
+      "norm_label": ".__construct()",
+      "source_file": "app/Services/StatistikExcel.php",
+      "source_location": "L110"
     },
     {
       "id": "app_services_statistikexcel_statistikexcel_dataakun",
@@ -1861,18 +1873,6 @@
       "source_location": "L881"
     },
     {
-      "id": "app_http_controllers_api_admin_pengaduanadmincontroller_pengaduanadmincontroller_update",
-      "label": ".update()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "User",
-      "file_type": "code",
-      "norm_label": ".update()",
-      "source_file": "app/Http/Controllers/Api/Admin/PengaduanAdminController.php",
-      "source_location": "L57"
-    },
-    {
       "id": "app_http_controllers_api_admin_useradmincontroller_useradmincontroller_destroy",
       "label": ".destroy()",
       "_callable": true,
@@ -1919,18 +1919,6 @@
       "norm_label": ".update()",
       "source_file": "app/Http/Controllers/Api/Admin/UserAdminController.php",
       "source_location": "L497"
-    },
-    {
-      "id": "app_http_controllers_auth_registercontroller_registercontroller_daftar",
-      "label": ".daftar()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "User",
-      "file_type": "code",
-      "norm_label": ".daftar()",
-      "source_file": "app/Http/Controllers/Auth/RegisterController.php",
-      "source_location": "L83"
     },
     {
       "id": "app_models_permohonan_permohonan_berkas",
@@ -2017,18 +2005,6 @@
       "source_location": "L80"
     },
     {
-      "id": "app_models_user_user_level",
-      "label": ".level()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "User",
-      "file_type": "code",
-      "norm_label": ".level()",
-      "source_file": "app/Models/User.php",
-      "source_location": "L110"
-    },
-    {
       "id": "app_models_user_user_logaktivitas",
       "label": ".logAktivitas()",
       "_callable": true,
@@ -2089,16 +2065,16 @@
       "source_location": "L136"
     },
     {
-      "id": "app_services_catatanaktivitas_catatanaktivitas_catat",
-      "label": ".catat()",
+      "id": "database_seeders_databaseseeder_databaseseeder_run",
+      "label": ".run()",
       "_callable": true,
       "_origin": "ast",
       "community": 10,
       "community_name": "User",
       "file_type": "code",
-      "norm_label": ".catat()",
-      "source_file": "app/Services/CatatanAktivitas.php",
-      "source_location": "L23"
+      "norm_label": ".run()",
+      "source_file": "database/seeders/DatabaseSeeder.php",
+      "source_location": "L14"
     },
     {
       "id": "database_migrations_2026_08_07_100006_create_m_wilayah_table_down",
@@ -2149,28 +2125,124 @@
       "source_location": "L10"
     },
     {
-      "id": "database_seeders_databaseseeder_databaseseeder_run",
-      "label": ".run()",
+      "id": "app_http_controllers_api_admin_galeriadmincontroller_galeriadmincontroller_construct",
+      "label": ".__construct()",
       "_callable": true,
       "_origin": "ast",
       "community": 102,
-      "community_name": "DatabaseSeeder.php",
+      "community_name": "Gallery",
       "file_type": "code",
-      "norm_label": ".run()",
-      "source_file": "database/seeders/DatabaseSeeder.php",
-      "source_location": "L14"
+      "norm_label": ".__construct()",
+      "source_file": "app/Http/Controllers/Api/Admin/GaleriAdminController.php",
+      "source_location": "L22"
     },
     {
-      "id": "app_http_controllers_api_demograficontroller_demograficontroller_invoke",
-      "label": ".__invoke()",
+      "id": "app_http_controllers_api_admin_galeriadmincontroller_galeriadmincontroller_destroy",
+      "label": ".destroy()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 102,
+      "community_name": "Gallery",
+      "file_type": "code",
+      "norm_label": ".destroy()",
+      "source_file": "app/Http/Controllers/Api/Admin/GaleriAdminController.php",
+      "source_location": "L48"
+    },
+    {
+      "id": "app_http_controllers_api_admin_galeriadmincontroller_galeriadmincontroller_store",
+      "label": ".store()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 102,
+      "community_name": "Gallery",
+      "file_type": "code",
+      "norm_label": ".store()",
+      "source_file": "app/Http/Controllers/Api/Admin/GaleriAdminController.php",
+      "source_location": "L24"
+    },
+    {
+      "id": "app_http_controllers_api_kontencontroller_kontencontroller_galeri",
+      "label": ".galeri()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 102,
+      "community_name": "Gallery",
+      "file_type": "code",
+      "norm_label": ".galeri()",
+      "source_file": "app/Http/Controllers/Api/KontenController.php",
+      "source_location": "L60"
+    },
+    {
+      "id": "app_http_controllers_publikcontroller_publikcontroller_galeri",
+      "label": ".galeri()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 102,
+      "community_name": "Gallery",
+      "file_type": "code",
+      "norm_label": ".galeri()",
+      "source_file": "app/Http/Controllers/PublikController.php",
+      "source_location": "L87"
+    },
+    {
+      "id": "app_http_controllers_api_admin_kontenstatiscontroller_kontenstatiscontroller_simpan",
+      "label": ".simpan()",
       "_callable": true,
       "_origin": "ast",
       "community": 103,
-      "community_name": "DemografiController.php",
+      "community_name": "StaticContent",
       "file_type": "code",
-      "norm_label": ".__invoke()",
-      "source_file": "app/Http/Controllers/Api/DemografiController.php",
-      "source_location": "L23"
+      "norm_label": ".simpan()",
+      "source_file": "app/Http/Controllers/Api/Admin/KontenStatisController.php",
+      "source_location": "L49"
+    },
+    {
+      "id": "app_http_controllers_api_admin_pengaturancontroller_pengaturancontroller_simpanvisibilitas",
+      "label": ".simpanVisibilitas()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 103,
+      "community_name": "StaticContent",
+      "file_type": "code",
+      "norm_label": ".simpanvisibilitas()",
+      "source_file": "app/Http/Controllers/Api/Admin/PengaturanController.php",
+      "source_location": "L77"
+    },
+    {
+      "id": "app_models_staticcontent_staticcontent_casts",
+      "label": ".casts()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 103,
+      "community_name": "StaticContent",
+      "file_type": "code",
+      "norm_label": ".casts()",
+      "source_file": "app/Models/StaticContent.php",
+      "source_location": "L31"
+    },
+    {
+      "id": "app_models_staticcontent_staticcontent_getroutekeyname",
+      "label": ".getRouteKeyName()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 103,
+      "community_name": "StaticContent",
+      "file_type": "code",
+      "norm_label": ".getroutekeyname()",
+      "source_file": "app/Models/StaticContent.php",
+      "source_location": "L36"
+    },
+    {
+      "id": "app_support_konten_konten_ambil",
+      "label": ".ambil()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 103,
+      "community_name": "StaticContent",
+      "file_type": "code",
+      "norm_label": ".ambil()",
+      "source_file": "app/Support/Konten.php",
+      "source_location": "L27"
     },
     {
       "id": "database_migrations_0001_01_01_000002_create_jobs_table_down",
@@ -2317,36 +2389,12 @@
       "source_location": "L16"
     },
     {
-      "id": "app_http_controllers_api_admin_useradmincontroller_useradmincontroller_store",
-      "label": ".store()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "UserLevel",
-      "file_type": "code",
-      "norm_label": ".store()",
-      "source_file": "app/Http/Controllers/Api/Admin/UserAdminController.php",
-      "source_location": "L202"
-    },
-    {
-      "id": "app_models_userlevel_userlevel_users",
-      "label": ".users()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "UserLevel",
-      "file_type": "code",
-      "norm_label": ".users()",
-      "source_file": "app/Models/UserLevel.php",
-      "source_location": "L85"
-    },
-    {
       "id": "tests_feature_exampletest_exampletest_test_the_application_returns_a_successful_response",
       "label": ".test_the_application_returns_a_successful_response()",
       "_callable": true,
       "_origin": "ast",
       "community": 11,
-      "community_name": "UserLevel",
+      "community_name": "TestCase",
       "file_type": "code",
       "norm_label": ".test_the_application_returns_a_successful_response()",
       "source_file": "tests/Feature/ExampleTest.php",
@@ -2603,18 +2651,6 @@
       "norm_label": ".index()",
       "source_file": "app/Http/Controllers/Api/Admin/PermohonanAdminController.php",
       "source_location": "L40"
-    },
-    {
-      "id": "app_http_controllers_auth_registercontroller_registercontroller_tampilkan",
-      "label": ".tampilkan()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 12,
-      "community_name": "Wilayah",
-      "file_type": "code",
-      "norm_label": ".tampilkan()",
-      "source_file": "app/Http/Controllers/Auth/RegisterController.php",
-      "source_location": "L41"
     },
     {
       "id": "app_models_wilayah_wilayah_children",
@@ -3037,234 +3073,6 @@
       "source_location": "L339"
     },
     {
-      "id": "app_http_controllers_api_admin_permohonanadmincontroller_permohonanadmincontroller_show",
-      "label": ".show()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": ".show()",
-      "source_file": "app/Http/Controllers/Api/Admin/PermohonanAdminController.php",
-      "source_location": "L259"
-    },
-    {
-      "id": "app_http_controllers_api_admin_permohonanadmincontroller_permohonanadmincontroller_update",
-      "label": ".update()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": ".update()",
-      "source_file": "app/Http/Controllers/Api/Admin/PermohonanAdminController.php",
-      "source_location": "L338"
-    },
-    {
-      "id": "app_http_controllers_api_permohonancontroller_permohonancontroller_index",
-      "label": ".index()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": ".index()",
-      "source_file": "app/Http/Controllers/Api/PermohonanController.php",
-      "source_location": "L38"
-    },
-    {
-      "id": "app_http_controllers_api_permohonanpdfcontroller_permohonanpdfcontroller_invoke",
-      "label": ".__invoke()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": ".__invoke()",
-      "source_file": "app/Http/Controllers/Api/PermohonanPdfController.php",
-      "source_location": "L44"
-    },
-    {
-      "id": "app_http_controllers_api_permohonanpdfcontroller_permohonanpdfcontroller_kecilkan",
-      "label": ".kecilkan()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": ".kecilkan()",
-      "source_file": "app/Http/Controllers/Api/PermohonanPdfController.php",
-      "source_location": "L108"
-    },
-    {
-      "id": "app_http_controllers_api_permohonanpdfcontroller_permohonanpdfcontroller_logokop",
-      "label": ".logoKop()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": ".logokop()",
-      "source_file": "app/Http/Controllers/Api/PermohonanPdfController.php",
-      "source_location": "L236"
-    },
-    {
-      "id": "app_http_controllers_api_permohonanpdfcontroller_permohonanpdfcontroller_memoritersedia",
-      "label": ".memoriTersedia()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": ".memoritersedia()",
-      "source_file": "app/Http/Controllers/Api/PermohonanPdfController.php",
-      "source_location": "L198"
-    },
-    {
-      "id": "app_http_controllers_api_permohonanpdfcontroller_permohonanpdfcontroller_siapkanlampiran",
-      "label": ".siapkanLampiran()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": ".siapkanlampiran()",
-      "source_file": "app/Http/Controllers/Api/PermohonanPdfController.php",
-      "source_location": "L91"
-    },
-    {
-      "id": "app_http_controllers_api_unggahcontroller_unggahcontroller_folderaman",
-      "label": ".folderAman()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": ".folderaman()",
-      "source_file": "app/Http/Controllers/Api/UnggahController.php",
-      "source_location": "L67"
-    },
-    {
-      "id": "app_http_controllers_api_unggahcontroller_unggahcontroller_invoke",
-      "label": ".__invoke()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": ".__invoke()",
-      "source_file": "app/Http/Controllers/Api/UnggahController.php",
-      "source_location": "L29"
-    },
-    {
-      "id": "app_http_controllers_berkascontroller_berkascontroller_miliknya",
-      "label": ".miliknya()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": ".miliknya()",
-      "source_file": "app/Http/Controllers/BerkasController.php",
-      "source_location": "L119"
-    },
-    {
-      "id": "app_http_controllers_berkascontroller_berkascontroller_tampilkan",
-      "label": ".tampilkan()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": ".tampilkan()",
-      "source_file": "app/Http/Controllers/BerkasController.php",
-      "source_location": "L49"
-    },
-    {
-      "id": "app_http_controllers_mediapublikcontroller_mediapublikcontroller_invoke",
-      "label": ".__invoke()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": ".__invoke()",
-      "source_file": "app/Http/Controllers/MediaPublikController.php",
-      "source_location": "L29"
-    },
-    {
-      "id": "app_http_middleware_pastikanperan_pastikanperan_handle",
-      "label": ".handle()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": ".handle()",
-      "source_file": "app/Http/Middleware/PastikanPeran.php",
-      "source_location": "L38"
-    },
-    {
-      "id": "app_support_alasantolakpermohonan_alasantolakpermohonan_labelsah",
-      "label": ".labelSah()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": ".labelsah()",
-      "source_file": "app/Support/AlasanTolakPermohonan.php",
-      "source_location": "L127"
-    },
-    {
-      "id": "app_support_alasantolakpermohonan_alasantolakpermohonan_perlurincian",
-      "label": ".perluRincian()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": ".perlurincian()",
-      "source_file": "app/Support/AlasanTolakPermohonan.php",
-      "source_location": "L74"
-    },
-    {
-      "id": "app_support_alasantolakpermohonan_alasantolakpermohonan_pilihan",
-      "label": ".pilihan()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": ".pilihan()",
-      "source_file": "app/Support/AlasanTolakPermohonan.php",
-      "source_location": "L94"
-    },
-    {
-      "id": "app_support_alasantolakpermohonan_alasantolakpermohonan_susun",
-      "label": ".susun()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": ".susun()",
-      "source_file": "app/Support/AlasanTolakPermohonan.php",
-      "source_location": "L138"
-    },
-    {
-      "id": "app_support_alasantolakpermohonan_alasantolakpermohonan_uraikan",
-      "label": ".uraikan()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": ".uraikan()",
-      "source_file": "app/Support/AlasanTolakPermohonan.php",
-      "source_location": "L173"
-    },
-    {
       "id": "app_support_layanan_layanan_berkasdaripayload",
       "label": ".berkasDariPayload()",
       "_callable": true,
@@ -3409,7 +3217,7 @@
       "source_location": "L96"
     },
     {
-      "id": "app_http_controllers_api_admin_permohonanadmincontroller_permohonanadmincontroller_construct",
+      "id": "app_http_controllers_api_admin_pengaduanadmincontroller_pengaduanadmincontroller_construct",
       "label": ".__construct()",
       "_callable": true,
       "_origin": "ast",
@@ -3417,11 +3225,35 @@
       "community_name": "Pemberitahuan",
       "file_type": "code",
       "norm_label": ".__construct()",
-      "source_file": "app/Http/Controllers/Api/Admin/PermohonanAdminController.php",
-      "source_location": "L26"
+      "source_file": "app/Http/Controllers/Api/Admin/PengaduanAdminController.php",
+      "source_location": "L22"
     },
     {
-      "id": "app_http_controllers_api_admin_useradmincontroller_useradmincontroller_construct",
+      "id": "app_http_controllers_api_admin_pengaduanadmincontroller_pengaduanadmincontroller_index",
+      "label": ".index()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 16,
+      "community_name": "Pemberitahuan",
+      "file_type": "code",
+      "norm_label": ".index()",
+      "source_file": "app/Http/Controllers/Api/Admin/PengaduanAdminController.php",
+      "source_location": "L28"
+    },
+    {
+      "id": "app_http_controllers_api_admin_pengaduanadmincontroller_pengaduanadmincontroller_update",
+      "label": ".update()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 16,
+      "community_name": "Pemberitahuan",
+      "file_type": "code",
+      "norm_label": ".update()",
+      "source_file": "app/Http/Controllers/Api/Admin/PengaduanAdminController.php",
+      "source_location": "L57"
+    },
+    {
+      "id": "app_http_controllers_api_aspirasicontroller_aspirasicontroller_construct",
       "label": ".__construct()",
       "_callable": true,
       "_origin": "ast",
@@ -3429,80 +3261,68 @@
       "community_name": "Pemberitahuan",
       "file_type": "code",
       "norm_label": ".__construct()",
-      "source_file": "app/Http/Controllers/Api/Admin/UserAdminController.php",
-      "source_location": "L31"
+      "source_file": "app/Http/Controllers/Api/AspirasiController.php",
+      "source_location": "L22"
     },
     {
-      "id": "app_http_controllers_api_admin_useradmincontroller_useradmincontroller_show",
-      "label": ".show()",
+      "id": "app_http_controllers_api_aspirasicontroller_aspirasicontroller_daftarkritik",
+      "label": ".daftarKritik()",
       "_callable": true,
       "_origin": "ast",
       "community": 16,
       "community_name": "Pemberitahuan",
       "file_type": "code",
-      "norm_label": ".show()",
-      "source_file": "app/Http/Controllers/Api/Admin/UserAdminController.php",
-      "source_location": "L146"
+      "norm_label": ".daftarkritik()",
+      "source_file": "app/Http/Controllers/Api/AspirasiController.php",
+      "source_location": "L106"
     },
     {
-      "id": "app_http_controllers_api_admin_useradmincontroller_useradmincontroller_ubahstatus",
-      "label": ".ubahStatus()",
+      "id": "app_http_controllers_api_aspirasicontroller_aspirasicontroller_daftarpengaduan",
+      "label": ".daftarPengaduan()",
       "_callable": true,
       "_origin": "ast",
       "community": 16,
       "community_name": "Pemberitahuan",
       "file_type": "code",
-      "norm_label": ".ubahstatus()",
-      "source_file": "app/Http/Controllers/Api/Admin/UserAdminController.php",
-      "source_location": "L344"
+      "norm_label": ".daftarpengaduan()",
+      "source_file": "app/Http/Controllers/Api/AspirasiController.php",
+      "source_location": "L65"
     },
     {
-      "id": "app_http_controllers_auth_cekstatuscontroller_cekstatuscontroller_ajukanulang",
-      "label": ".ajukanUlang()",
+      "id": "app_http_controllers_api_aspirasicontroller_aspirasicontroller_kirimkritik",
+      "label": ".kirimKritik()",
       "_callable": true,
       "_origin": "ast",
       "community": 16,
       "community_name": "Pemberitahuan",
       "file_type": "code",
-      "norm_label": ".ajukanulang()",
-      "source_file": "app/Http/Controllers/Auth/CekStatusController.php",
-      "source_location": "L85"
+      "norm_label": ".kirimkritik()",
+      "source_file": "app/Http/Controllers/Api/AspirasiController.php",
+      "source_location": "L76"
     },
     {
-      "id": "app_http_controllers_auth_cekstatuscontroller_cekstatuscontroller_construct",
-      "label": ".__construct()",
+      "id": "app_http_controllers_api_aspirasicontroller_aspirasicontroller_kirimpengaduan",
+      "label": ".kirimPengaduan()",
       "_callable": true,
       "_origin": "ast",
       "community": 16,
       "community_name": "Pemberitahuan",
       "file_type": "code",
-      "norm_label": ".__construct()",
-      "source_file": "app/Http/Controllers/Auth/CekStatusController.php",
-      "source_location": "L24"
+      "norm_label": ".kirimpengaduan()",
+      "source_file": "app/Http/Controllers/Api/AspirasiController.php",
+      "source_location": "L29"
     },
     {
-      "id": "app_http_controllers_auth_cekstatuscontroller_cekstatuscontroller_periksa",
-      "label": ".periksa()",
+      "id": "app_http_controllers_api_aspirasicontroller_aspirasicontroller_unsurskm",
+      "label": ".unsurSkm()",
       "_callable": true,
       "_origin": "ast",
       "community": 16,
       "community_name": "Pemberitahuan",
       "file_type": "code",
-      "norm_label": ".periksa()",
-      "source_file": "app/Http/Controllers/Auth/CekStatusController.php",
-      "source_location": "L34"
-    },
-    {
-      "id": "app_http_controllers_auth_cekstatuscontroller_cekstatuscontroller_tampilkan",
-      "label": ".tampilkan()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "Pemberitahuan",
-      "file_type": "code",
-      "norm_label": ".tampilkan()",
-      "source_file": "app/Http/Controllers/Auth/CekStatusController.php",
-      "source_location": "L26"
+      "norm_label": ".unsurskm()",
+      "source_file": "app/Http/Controllers/Api/AspirasiController.php",
+      "source_location": "L206"
     },
     {
       "id": "app_services_pemberitahuan_pemberitahuan_aman",
@@ -3515,54 +3335,6 @@
       "norm_label": ".aman()",
       "source_file": "app/Services/Pemberitahuan.php",
       "source_location": "L62"
-    },
-    {
-      "id": "app_services_surel_surel_kirim",
-      "label": ".kirim()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "Pemberitahuan",
-      "file_type": "code",
-      "norm_label": ".kirim()",
-      "source_file": "app/Services/Surel.php",
-      "source_location": "L17"
-    },
-    {
-      "id": "app_support_alasantolak_alasantolak_label",
-      "label": ".label()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "Pemberitahuan",
-      "file_type": "code",
-      "norm_label": ".label()",
-      "source_file": "app/Support/AlasanTolak.php",
-      "source_location": "L33"
-    },
-    {
-      "id": "app_support_alasantolak_alasantolak_susun",
-      "label": ".susun()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "Pemberitahuan",
-      "file_type": "code",
-      "norm_label": ".susun()",
-      "source_file": "app/Support/AlasanTolak.php",
-      "source_location": "L41"
-    },
-    {
-      "id": "app_support_alasantolak_alasantolak_uraikan",
-      "label": ".uraikan()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "Pemberitahuan",
-      "file_type": "code",
-      "norm_label": ".uraikan()",
-      "source_file": "app/Support/AlasanTolak.php",
-      "source_location": "L59"
     },
     {
       "id": "resources_js_app_setup",
@@ -3647,6 +3419,42 @@
       "norm_label": "penampilgambar()",
       "source_file": "resources/js/Components/PenampilGambar.jsx",
       "source_location": "L32"
+    },
+    {
+      "id": "app_http_controllers_auth_otpcontroller_otpcontroller_construct",
+      "label": ".__construct()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "Otp",
+      "file_type": "code",
+      "norm_label": ".__construct()",
+      "source_file": "app/Http/Controllers/Auth/OtpController.php",
+      "source_location": "L23"
+    },
+    {
+      "id": "app_http_controllers_auth_otpcontroller_otpcontroller_kirim",
+      "label": ".kirim()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "Otp",
+      "file_type": "code",
+      "norm_label": ".kirim()",
+      "source_file": "app/Http/Controllers/Auth/OtpController.php",
+      "source_location": "L25"
+    },
+    {
+      "id": "app_http_controllers_auth_otpcontroller_otpcontroller_verifikasi",
+      "label": ".verifikasi()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "Otp",
+      "file_type": "code",
+      "norm_label": ".verifikasi()",
+      "source_file": "app/Http/Controllers/Auth/OtpController.php",
+      "source_location": "L70"
     },
     {
       "id": "app_services_fonnte_fonnte_aktif",
@@ -4114,7 +3922,7 @@
       "file_type": "code",
       "norm_label": "kritiksaran()",
       "source_file": "resources/js/Pages/Dashboard/KritikSaran.jsx",
-      "source_location": "L17"
+      "source_location": "L18"
     },
     {
       "id": "resources_js_pages_dashboard_master_master",
@@ -4189,16 +3997,76 @@
       "source_location": "L25"
     },
     {
+      "id": "app_http_controllers_api_admin_skmadmincontroller_skmadmincontroller_demografi",
+      "label": ".demografi()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "Controller",
+      "file_type": "code",
+      "norm_label": ".demografi()",
+      "source_file": "app/Http/Controllers/Api/Admin/SkmAdminController.php",
+      "source_location": "L129"
+    },
+    {
+      "id": "app_http_controllers_api_admin_skmadmincontroller_skmadmincontroller_invoke",
+      "label": ".__invoke()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "Controller",
+      "file_type": "code",
+      "norm_label": ".__invoke()",
+      "source_file": "app/Http/Controllers/Api/Admin/SkmAdminController.php",
+      "source_location": "L29"
+    },
+    {
       "id": "app_http_controllers_api_buktipengaduancontroller_buktipengaduancontroller_invoke",
       "label": ".__invoke()",
       "_callable": true,
       "_origin": "ast",
       "community": 19,
-      "community_name": "BuktiPengaduanController.php",
+      "community_name": "Controller",
       "file_type": "code",
       "norm_label": ".__invoke()",
       "source_file": "app/Http/Controllers/Api/BuktiPengaduanController.php",
       "source_location": "L35"
+    },
+    {
+      "id": "app_http_controllers_api_demograficontroller_demograficontroller_invoke",
+      "label": ".__invoke()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "Controller",
+      "file_type": "code",
+      "norm_label": ".__invoke()",
+      "source_file": "app/Http/Controllers/Api/DemografiController.php",
+      "source_location": "L23"
+    },
+    {
+      "id": "app_http_controllers_api_unggahcontroller_unggahcontroller_folderaman",
+      "label": ".folderAman()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "Controller",
+      "file_type": "code",
+      "norm_label": ".folderaman()",
+      "source_file": "app/Http/Controllers/Api/UnggahController.php",
+      "source_location": "L67"
+    },
+    {
+      "id": "app_http_controllers_api_unggahcontroller_unggahcontroller_invoke",
+      "label": ".__invoke()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "Controller",
+      "file_type": "code",
+      "norm_label": ".__invoke()",
+      "source_file": "app/Http/Controllers/Api/UnggahController.php",
+      "source_location": "L29"
     },
     {
       "id": "resources_js_publik_tabeldemografi_tabeldemografi",
@@ -4213,40 +4081,28 @@
       "source_location": "L18"
     },
     {
-      "id": "app_http_controllers_api_admin_beritaadmincontroller_beritaadmincontroller_construct",
-      "label": ".__construct()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "Controller",
-      "file_type": "code",
-      "norm_label": ".__construct()",
-      "source_file": "app/Http/Controllers/Api/Admin/BeritaAdminController.php",
-      "source_location": "L18"
-    },
-    {
-      "id": "app_http_controllers_api_admin_galeriadmincontroller_galeriadmincontroller_construct",
-      "label": ".__construct()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "Controller",
-      "file_type": "code",
-      "norm_label": ".__construct()",
-      "source_file": "app/Http/Controllers/Api/Admin/GaleriAdminController.php",
-      "source_location": "L22"
-    },
-    {
       "id": "app_http_controllers_api_admin_kontenstatiscontroller_kontenstatiscontroller_construct",
       "label": ".__construct()",
       "_callable": true,
       "_origin": "ast",
       "community": 2,
-      "community_name": "Controller",
+      "community_name": "CatatanAktivitas",
       "file_type": "code",
       "norm_label": ".__construct()",
       "source_file": "app/Http/Controllers/Api/Admin/KontenStatisController.php",
       "source_location": "L27"
+    },
+    {
+      "id": "app_http_controllers_api_admin_mastercontroller_mastercontroller_bukakunci",
+      "label": ".bukaKunci()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "CatatanAktivitas",
+      "file_type": "code",
+      "norm_label": ".bukakunci()",
+      "source_file": "app/Http/Controllers/Api/Admin/MasterController.php",
+      "source_location": "L26"
     },
     {
       "id": "app_http_controllers_api_admin_mastercontroller_mastercontroller_construct",
@@ -4254,23 +4110,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 2,
-      "community_name": "Controller",
+      "community_name": "CatatanAktivitas",
       "file_type": "code",
       "norm_label": ".__construct()",
       "source_file": "app/Http/Controllers/Api/Admin/MasterController.php",
       "source_location": "L24"
-    },
-    {
-      "id": "app_http_controllers_api_admin_pengaduanadmincontroller_pengaduanadmincontroller_construct",
-      "label": ".__construct()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "Controller",
-      "file_type": "code",
-      "norm_label": ".__construct()",
-      "source_file": "app/Http/Controllers/Api/Admin/PengaduanAdminController.php",
-      "source_location": "L22"
     },
     {
       "id": "app_http_controllers_api_admin_produkadmincontroller_produkadmincontroller_construct",
@@ -4278,155 +4122,155 @@
       "_callable": true,
       "_origin": "ast",
       "community": 2,
-      "community_name": "Controller",
+      "community_name": "CatatanAktivitas",
       "file_type": "code",
       "norm_label": ".__construct()",
       "source_file": "app/Http/Controllers/Api/Admin/ProdukAdminController.php",
       "source_location": "L20"
     },
     {
-      "id": "app_http_controllers_api_aspirasicontroller_aspirasicontroller_construct",
-      "label": ".__construct()",
+      "id": "app_http_controllers_api_admin_produkadmincontroller_produkadmincontroller_jenissah",
+      "label": ".jenisSah()",
       "_callable": true,
       "_origin": "ast",
-      "community": 20,
-      "community_name": "Recaptcha",
+      "community": 2,
+      "community_name": "CatatanAktivitas",
       "file_type": "code",
-      "norm_label": ".__construct()",
-      "source_file": "app/Http/Controllers/Api/AspirasiController.php",
-      "source_location": "L22"
+      "norm_label": ".jenissah()",
+      "source_file": "app/Http/Controllers/Api/Admin/ProdukAdminController.php",
+      "source_location": "L92"
     },
     {
-      "id": "app_http_controllers_api_permohonancontroller_permohonancontroller_construct",
-      "label": ".__construct()",
+      "id": "app_http_controllers_api_admin_produkadmincontroller_produkadmincontroller_store",
+      "label": ".store()",
       "_callable": true,
       "_origin": "ast",
-      "community": 20,
-      "community_name": "Recaptcha",
+      "community": 2,
+      "community_name": "CatatanAktivitas",
       "file_type": "code",
-      "norm_label": ".__construct()",
-      "source_file": "app/Http/Controllers/Api/PermohonanController.php",
-      "source_location": "L24"
-    },
-    {
-      "id": "app_http_controllers_auth_logincontroller_logincontroller_construct",
-      "label": ".__construct()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "Recaptcha",
-      "file_type": "code",
-      "norm_label": ".__construct()",
-      "source_file": "app/Http/Controllers/Auth/LoginController.php",
-      "source_location": "L33"
-    },
-    {
-      "id": "app_http_controllers_auth_logincontroller_logincontroller_masuk",
-      "label": ".masuk()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "Recaptcha",
-      "file_type": "code",
-      "norm_label": ".masuk()",
-      "source_file": "app/Http/Controllers/Auth/LoginController.php",
-      "source_location": "L44"
-    },
-    {
-      "id": "app_http_controllers_auth_logincontroller_logincontroller_tampilkan",
-      "label": ".tampilkan()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "Recaptcha",
-      "file_type": "code",
-      "norm_label": ".tampilkan()",
-      "source_file": "app/Http/Controllers/Auth/LoginController.php",
+      "norm_label": ".store()",
+      "source_file": "app/Http/Controllers/Api/Admin/ProdukAdminController.php",
       "source_location": "L35"
     },
     {
-      "id": "app_http_controllers_auth_logincontroller_logincontroller_tujuanaman",
-      "label": ".tujuanAman()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "Recaptcha",
-      "file_type": "code",
-      "norm_label": ".tujuanaman()",
-      "source_file": "app/Http/Controllers/Auth/LoginController.php",
-      "source_location": "L129"
-    },
-    {
-      "id": "app_http_controllers_auth_sandicontroller_sandicontroller_construct",
+      "id": "app_http_controllers_api_admin_pengaturancontroller_pengaturancontroller_construct",
       "label": ".__construct()",
       "_callable": true,
       "_origin": "ast",
       "community": 20,
-      "community_name": "Recaptcha",
+      "community_name": "PengaturanController",
       "file_type": "code",
       "norm_label": ".__construct()",
-      "source_file": "app/Http/Controllers/Auth/SandiController.php",
-      "source_location": "L29"
+      "source_file": "app/Http/Controllers/Api/Admin/PengaturanController.php",
+      "source_location": "L23"
     },
     {
-      "id": "app_http_controllers_auth_sandicontroller_sandicontroller_formlupa",
-      "label": ".formLupa()",
+      "id": "app_http_controllers_api_admin_pengaturancontroller_pengaturancontroller_hidden",
+      "label": ".hidden()",
       "_callable": true,
       "_origin": "ast",
       "community": 20,
-      "community_name": "Recaptcha",
+      "community_name": "PengaturanController",
       "file_type": "code",
-      "norm_label": ".formlupa()",
-      "source_file": "app/Http/Controllers/Auth/SandiController.php",
-      "source_location": "L31"
+      "norm_label": ".hidden()",
+      "source_file": "app/Http/Controllers/Api/Admin/PengaturanController.php",
+      "source_location": "L119"
     },
     {
-      "id": "app_http_controllers_auth_sandicontroller_sandicontroller_formreset",
-      "label": ".formReset()",
+      "id": "app_http_controllers_api_admin_pengaturancontroller_pengaturancontroller_jamlayanan",
+      "label": ".jamLayanan()",
       "_callable": true,
       "_origin": "ast",
       "community": 20,
-      "community_name": "Recaptcha",
+      "community_name": "PengaturanController",
       "file_type": "code",
-      "norm_label": ".formreset()",
-      "source_file": "app/Http/Controllers/Auth/SandiController.php",
-      "source_location": "L79"
+      "norm_label": ".jamlayanan()",
+      "source_file": "app/Http/Controllers/Api/Admin/PengaturanController.php",
+      "source_location": "L30"
     },
     {
-      "id": "app_http_controllers_auth_sandicontroller_sandicontroller_kirimtautan",
-      "label": ".kirimTautan()",
+      "id": "app_http_controllers_api_admin_pengaturancontroller_pengaturancontroller_simpanjamlayanan",
+      "label": ".simpanJamLayanan()",
       "_callable": true,
       "_origin": "ast",
       "community": 20,
-      "community_name": "Recaptcha",
+      "community_name": "PengaturanController",
       "file_type": "code",
-      "norm_label": ".kirimtautan()",
-      "source_file": "app/Http/Controllers/Auth/SandiController.php",
-      "source_location": "L36"
+      "norm_label": ".simpanjamlayanan()",
+      "source_file": "app/Http/Controllers/Api/Admin/PengaturanController.php",
+      "source_location": "L35"
     },
     {
-      "id": "app_http_controllers_auth_sandicontroller_sandicontroller_reset",
-      "label": ".reset()",
+      "id": "app_http_controllers_api_admin_pengaturancontroller_pengaturancontroller_tersembunyi",
+      "label": ".tersembunyi()",
       "_callable": true,
       "_origin": "ast",
       "community": 20,
-      "community_name": "Recaptcha",
+      "community_name": "PengaturanController",
       "file_type": "code",
-      "norm_label": ".reset()",
-      "source_file": "app/Http/Controllers/Auth/SandiController.php",
-      "source_location": "L89"
+      "norm_label": ".tersembunyi()",
+      "source_file": "app/Http/Controllers/Api/Admin/PengaturanController.php",
+      "source_location": "L159"
     },
     {
-      "id": "app_services_recaptcha_recaptcha_verifikasi",
-      "label": ".verifikasi()",
+      "id": "app_http_controllers_api_admin_pengaturancontroller_pengaturancontroller_visibilitas",
+      "label": ".visibilitas()",
       "_callable": true,
       "_origin": "ast",
       "community": 20,
-      "community_name": "Recaptcha",
+      "community_name": "PengaturanController",
       "file_type": "code",
-      "norm_label": ".verifikasi()",
-      "source_file": "app/Services/Recaptcha.php",
-      "source_location": "L25"
+      "norm_label": ".visibilitas()",
+      "source_file": "app/Http/Controllers/Api/Admin/PengaturanController.php",
+      "source_location": "L62"
+    },
+    {
+      "id": "app_http_controllers_pengajuancontroller_pengajuancontroller_construct",
+      "label": ".__construct()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 20,
+      "community_name": "PengaturanController",
+      "file_type": "code",
+      "norm_label": ".__construct()",
+      "source_file": "app/Http/Controllers/PengajuanController.php",
+      "source_location": "L20"
+    },
+    {
+      "id": "app_http_controllers_pengajuancontroller_pengajuancontroller_form",
+      "label": ".form()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 20,
+      "community_name": "PengaturanController",
+      "file_type": "code",
+      "norm_label": ".form()",
+      "source_file": "app/Http/Controllers/PengajuanController.php",
+      "source_location": "L84"
+    },
+    {
+      "id": "app_http_controllers_pengajuancontroller_pengajuancontroller_pilih",
+      "label": ".pilih()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 20,
+      "community_name": "PengaturanController",
+      "file_type": "code",
+      "norm_label": ".pilih()",
+      "source_file": "app/Http/Controllers/PengajuanController.php",
+      "source_location": "L54"
+    },
+    {
+      "id": "app_http_controllers_pengajuancontroller_pengajuancontroller_riwayat",
+      "label": ".riwayat()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 20,
+      "community_name": "PengaturanController",
+      "file_type": "code",
+      "norm_label": ".riwayat()",
+      "source_file": "app/Http/Controllers/PengajuanController.php",
+      "source_location": "L23"
     },
     {
       "id": "resources_js_components_editormedan_barisitem",
@@ -4693,6 +4537,114 @@
       "source_location": "L10"
     },
     {
+      "id": "app_http_controllers_api_permohonanpdfcontroller_permohonanpdfcontroller_invoke",
+      "label": ".__invoke()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 248,
+      "community_name": "PermohonanPdfController.php",
+      "file_type": "code",
+      "norm_label": ".__invoke()",
+      "source_file": "app/Http/Controllers/Api/PermohonanPdfController.php",
+      "source_location": "L44"
+    },
+    {
+      "id": "app_http_controllers_api_permohonanpdfcontroller_permohonanpdfcontroller_kecilkan",
+      "label": ".kecilkan()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 248,
+      "community_name": "PermohonanPdfController.php",
+      "file_type": "code",
+      "norm_label": ".kecilkan()",
+      "source_file": "app/Http/Controllers/Api/PermohonanPdfController.php",
+      "source_location": "L108"
+    },
+    {
+      "id": "app_http_controllers_api_permohonanpdfcontroller_permohonanpdfcontroller_logokop",
+      "label": ".logoKop()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 248,
+      "community_name": "PermohonanPdfController.php",
+      "file_type": "code",
+      "norm_label": ".logokop()",
+      "source_file": "app/Http/Controllers/Api/PermohonanPdfController.php",
+      "source_location": "L236"
+    },
+    {
+      "id": "app_http_controllers_api_permohonanpdfcontroller_permohonanpdfcontroller_memoritersedia",
+      "label": ".memoriTersedia()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 248,
+      "community_name": "PermohonanPdfController.php",
+      "file_type": "code",
+      "norm_label": ".memoritersedia()",
+      "source_file": "app/Http/Controllers/Api/PermohonanPdfController.php",
+      "source_location": "L198"
+    },
+    {
+      "id": "app_http_controllers_api_permohonanpdfcontroller_permohonanpdfcontroller_siapkanlampiran",
+      "label": ".siapkanLampiran()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 248,
+      "community_name": "PermohonanPdfController.php",
+      "file_type": "code",
+      "norm_label": ".siapkanlampiran()",
+      "source_file": "app/Http/Controllers/Api/PermohonanPdfController.php",
+      "source_location": "L91"
+    },
+    {
+      "id": "resources_js_lib_waktu_bacazona",
+      "label": "bacaZona()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 249,
+      "community_name": "waktu.js",
+      "file_type": "code",
+      "norm_label": "bacazona()",
+      "source_file": "resources/js/lib/waktu.js",
+      "source_location": "L33"
+    },
+    {
+      "id": "resources_js_lib_waktu_tgljam",
+      "label": "tglJam()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 249,
+      "community_name": "waktu.js",
+      "file_type": "code",
+      "norm_label": "tgljam()",
+      "source_file": "resources/js/lib/waktu.js",
+      "source_location": "L51"
+    },
+    {
+      "id": "resources_js_lib_waktu_tglpanjang",
+      "label": "tglPanjang()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 249,
+      "community_name": "waktu.js",
+      "file_type": "code",
+      "norm_label": "tglpanjang()",
+      "source_file": "resources/js/lib/waktu.js",
+      "source_location": "L60"
+    },
+    {
+      "id": "resources_js_lib_waktu_tglsingkat",
+      "label": "tglSingkat()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 249,
+      "community_name": "waktu.js",
+      "file_type": "code",
+      "norm_label": "tglsingkat()",
+      "source_file": "resources/js/lib/waktu.js",
+      "source_location": "L42"
+    },
+    {
       "id": "resources_js_pages_dashboard_permohonandetail_blokpenolakan",
       "label": "BlokPenolakan()",
       "_callable": true,
@@ -4741,6 +4693,54 @@
       "source_location": "L38"
     },
     {
+      "id": "app_http_controllers_api_admin_permohonanadmincontroller_permohonanadmincontroller_construct",
+      "label": ".__construct()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "FotoProfil",
+      "file_type": "code",
+      "norm_label": ".__construct()",
+      "source_file": "app/Http/Controllers/Api/Admin/PermohonanAdminController.php",
+      "source_location": "L26"
+    },
+    {
+      "id": "app_http_controllers_api_admin_useradmincontroller_useradmincontroller_construct",
+      "label": ".__construct()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "FotoProfil",
+      "file_type": "code",
+      "norm_label": ".__construct()",
+      "source_file": "app/Http/Controllers/Api/Admin/UserAdminController.php",
+      "source_location": "L31"
+    },
+    {
+      "id": "app_http_controllers_api_admin_useradmincontroller_useradmincontroller_show",
+      "label": ".show()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "FotoProfil",
+      "file_type": "code",
+      "norm_label": ".show()",
+      "source_file": "app/Http/Controllers/Api/Admin/UserAdminController.php",
+      "source_location": "L146"
+    },
+    {
+      "id": "app_http_controllers_api_admin_useradmincontroller_useradmincontroller_ubahstatus",
+      "label": ".ubahStatus()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "FotoProfil",
+      "file_type": "code",
+      "norm_label": ".ubahstatus()",
+      "source_file": "app/Http/Controllers/Api/Admin/UserAdminController.php",
+      "source_location": "L344"
+    },
+    {
       "id": "app_http_controllers_api_profilcontroller_profilcontroller_construct",
       "label": ".__construct()",
       "_callable": true,
@@ -4753,16 +4753,16 @@
       "source_location": "L16"
     },
     {
-      "id": "app_http_controllers_auth_registercontroller_registercontroller_construct",
-      "label": ".__construct()",
+      "id": "app_http_controllers_auth_registercontroller_registercontroller_tampilkan",
+      "label": ".tampilkan()",
       "_callable": true,
       "_origin": "ast",
       "community": 26,
       "community_name": "FotoProfil",
       "file_type": "code",
-      "norm_label": ".__construct()",
+      "norm_label": ".tampilkan()",
       "source_file": "app/Http/Controllers/Auth/RegisterController.php",
-      "source_location": "L34"
+      "source_location": "L41"
     },
     {
       "id": "app_services_fotoprofil_fotoprofil_adalahdataurlgambar",
@@ -4835,6 +4835,54 @@
       "norm_label": ".simpanktp()",
       "source_file": "app/Services/FotoProfil.php",
       "source_location": "L104"
+    },
+    {
+      "id": "app_services_surel_surel_kirim",
+      "label": ".kirim()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "FotoProfil",
+      "file_type": "code",
+      "norm_label": ".kirim()",
+      "source_file": "app/Services/Surel.php",
+      "source_location": "L17"
+    },
+    {
+      "id": "app_support_alasantolak_alasantolak_label",
+      "label": ".label()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "FotoProfil",
+      "file_type": "code",
+      "norm_label": ".label()",
+      "source_file": "app/Support/AlasanTolak.php",
+      "source_location": "L33"
+    },
+    {
+      "id": "app_support_alasantolak_alasantolak_susun",
+      "label": ".susun()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "FotoProfil",
+      "file_type": "code",
+      "norm_label": ".susun()",
+      "source_file": "app/Support/AlasanTolak.php",
+      "source_location": "L41"
+    },
+    {
+      "id": "app_support_alasantolak_alasantolak_uraikan",
+      "label": ".uraikan()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "FotoProfil",
+      "file_type": "code",
+      "norm_label": ".uraikan()",
+      "source_file": "app/Support/AlasanTolak.php",
+      "source_location": "L59"
     },
     {
       "id": "resources_js_pages_dashboard_beranda_barisprogres",
@@ -5557,6 +5605,18 @@
       "source_location": "L78"
     },
     {
+      "id": "app_http_controllers_api_admin_beritaadmincontroller_beritaadmincontroller_construct",
+      "label": ".__construct()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 34,
+      "community_name": "News",
+      "file_type": "code",
+      "norm_label": ".__construct()",
+      "source_file": "app/Http/Controllers/Api/Admin/BeritaAdminController.php",
+      "source_location": "L18"
+    },
+    {
       "id": "app_http_controllers_api_admin_beritaadmincontroller_beritaadmincontroller_destroy",
       "label": ".destroy()",
       "_callable": true,
@@ -5629,30 +5689,6 @@
       "source_location": "L50"
     },
     {
-      "id": "app_http_controllers_api_admin_galeriadmincontroller_galeriadmincontroller_destroy",
-      "label": ".destroy()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 34,
-      "community_name": "News",
-      "file_type": "code",
-      "norm_label": ".destroy()",
-      "source_file": "app/Http/Controllers/Api/Admin/GaleriAdminController.php",
-      "source_location": "L48"
-    },
-    {
-      "id": "app_http_controllers_api_admin_galeriadmincontroller_galeriadmincontroller_store",
-      "label": ".store()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 34,
-      "community_name": "News",
-      "file_type": "code",
-      "norm_label": ".store()",
-      "source_file": "app/Http/Controllers/Api/Admin/GaleriAdminController.php",
-      "source_location": "L24"
-    },
-    {
       "id": "app_http_controllers_api_kontencontroller_kontencontroller_berita",
       "label": ".berita()",
       "_callable": true,
@@ -5677,30 +5713,6 @@
       "source_location": "L42"
     },
     {
-      "id": "app_http_controllers_api_kontencontroller_kontencontroller_galeri",
-      "label": ".galeri()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 34,
-      "community_name": "News",
-      "file_type": "code",
-      "norm_label": ".galeri()",
-      "source_file": "app/Http/Controllers/Api/KontenController.php",
-      "source_location": "L60"
-    },
-    {
-      "id": "app_http_controllers_publikcontroller_publikcontroller_galeri",
-      "label": ".galeri()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 34,
-      "community_name": "News",
-      "file_type": "code",
-      "norm_label": ".galeri()",
-      "source_file": "app/Http/Controllers/PublikController.php",
-      "source_location": "L87"
-    },
-    {
       "id": "app_models_news_news_casts",
       "label": ".casts()",
       "_callable": true,
@@ -5723,18 +5735,6 @@
       "norm_label": ".getroutekeyname()",
       "source_file": "app/Models/News.php",
       "source_location": "L32"
-    },
-    {
-      "id": "app_models_news_news_scopeterbit",
-      "label": ".scopeTerbit()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 34,
-      "community_name": "News",
-      "file_type": "code",
-      "norm_label": ".scopeterbit()",
-      "source_file": "app/Models/News.php",
-      "source_location": "L27"
     },
     {
       "id": "resources_js_lib_a11y_bacaprefs",
@@ -5843,90 +5843,6 @@
       "norm_label": "navbar()",
       "source_file": "resources/js/Publik/Navbar.jsx",
       "source_location": "L388"
-    },
-    {
-      "id": "app_http_controllers_api_admin_pengaturancontroller_pengaturancontroller_construct",
-      "label": ".__construct()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 38,
-      "community_name": "JamLayanan",
-      "file_type": "code",
-      "norm_label": ".__construct()",
-      "source_file": "app/Http/Controllers/Api/Admin/PengaturanController.php",
-      "source_location": "L23"
-    },
-    {
-      "id": "app_http_controllers_api_admin_pengaturancontroller_pengaturancontroller_tersembunyi",
-      "label": ".tersembunyi()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 38,
-      "community_name": "JamLayanan",
-      "file_type": "code",
-      "norm_label": ".tersembunyi()",
-      "source_file": "app/Http/Controllers/Api/Admin/PengaturanController.php",
-      "source_location": "L159"
-    },
-    {
-      "id": "app_http_controllers_api_layanancontroller_layanancontroller_construct",
-      "label": ".__construct()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 38,
-      "community_name": "JamLayanan",
-      "file_type": "code",
-      "norm_label": ".__construct()",
-      "source_file": "app/Http/Controllers/Api/LayananController.php",
-      "source_location": "L40"
-    },
-    {
-      "id": "app_http_controllers_pengajuancontroller_pengajuancontroller_construct",
-      "label": ".__construct()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 38,
-      "community_name": "JamLayanan",
-      "file_type": "code",
-      "norm_label": ".__construct()",
-      "source_file": "app/Http/Controllers/PengajuanController.php",
-      "source_location": "L20"
-    },
-    {
-      "id": "app_http_controllers_pengajuancontroller_pengajuancontroller_form",
-      "label": ".form()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 38,
-      "community_name": "JamLayanan",
-      "file_type": "code",
-      "norm_label": ".form()",
-      "source_file": "app/Http/Controllers/PengajuanController.php",
-      "source_location": "L84"
-    },
-    {
-      "id": "app_http_controllers_pengajuancontroller_pengajuancontroller_pilih",
-      "label": ".pilih()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 38,
-      "community_name": "JamLayanan",
-      "file_type": "code",
-      "norm_label": ".pilih()",
-      "source_file": "app/Http/Controllers/PengajuanController.php",
-      "source_location": "L54"
-    },
-    {
-      "id": "app_http_controllers_pengajuancontroller_pengajuancontroller_riwayat",
-      "label": ".riwayat()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 38,
-      "community_name": "JamLayanan",
-      "file_type": "code",
-      "norm_label": ".riwayat()",
-      "source_file": "app/Http/Controllers/PengajuanController.php",
-      "source_location": "L23"
     },
     {
       "id": "app_http_controllers_pengajuanpetugascontroller_pengajuanpetugascontroller_construct",
@@ -6169,18 +6085,6 @@
       "source_location": "L157"
     },
     {
-      "id": "app_http_controllers_api_admin_kontenstatiscontroller_kontenstatiscontroller_simpan",
-      "label": ".simpan()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "PublikController",
-      "file_type": "code",
-      "norm_label": ".simpan()",
-      "source_file": "app/Http/Controllers/Api/Admin/KontenStatisController.php",
-      "source_location": "L49"
-    },
-    {
       "id": "app_http_controllers_api_admin_kontenstatiscontroller_kontenstatiscontroller_skema",
       "label": ".skema()",
       "_callable": true,
@@ -6191,30 +6095,6 @@
       "norm_label": ".skema()",
       "source_file": "app/Http/Controllers/Api/Admin/KontenStatisController.php",
       "source_location": "L34"
-    },
-    {
-      "id": "app_http_controllers_api_admin_pengaturancontroller_pengaturancontroller_hidden",
-      "label": ".hidden()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "PublikController",
-      "file_type": "code",
-      "norm_label": ".hidden()",
-      "source_file": "app/Http/Controllers/Api/Admin/PengaturanController.php",
-      "source_location": "L119"
-    },
-    {
-      "id": "app_http_controllers_api_admin_pengaturancontroller_pengaturancontroller_simpanvisibilitas",
-      "label": ".simpanVisibilitas()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "PublikController",
-      "file_type": "code",
-      "norm_label": ".simpanvisibilitas()",
-      "source_file": "app/Http/Controllers/Api/Admin/PengaturanController.php",
-      "source_location": "L77"
     },
     {
       "id": "app_http_controllers_api_admin_produkadmincontroller_produkadmincontroller_destroy",
@@ -6467,42 +6347,6 @@
       "norm_label": ".wbs()",
       "source_file": "app/Http/Controllers/PublikController.php",
       "source_location": "L168"
-    },
-    {
-      "id": "app_models_staticcontent_staticcontent_casts",
-      "label": ".casts()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "PublikController",
-      "file_type": "code",
-      "norm_label": ".casts()",
-      "source_file": "app/Models/StaticContent.php",
-      "source_location": "L31"
-    },
-    {
-      "id": "app_models_staticcontent_staticcontent_getroutekeyname",
-      "label": ".getRouteKeyName()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "PublikController",
-      "file_type": "code",
-      "norm_label": ".getroutekeyname()",
-      "source_file": "app/Models/StaticContent.php",
-      "source_location": "L36"
-    },
-    {
-      "id": "app_support_konten_konten_ambil",
-      "label": ".ambil()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "PublikController",
-      "file_type": "code",
-      "norm_label": ".ambil()",
-      "source_file": "app/Support/Konten.php",
-      "source_location": "L27"
     },
     {
       "id": "app_support_konten_konten_bawaaninfo",
@@ -6781,19 +6625,55 @@
       "source_location": "L47"
     },
     {
-      "id": "app_http_controllers_api_admin_skmadmincontroller_skmadmincontroller_demografi",
-      "label": ".demografi()",
+      "id": "app_http_controllers_api_admin_useradmincontroller_useradmincontroller_store",
+      "label": ".store()",
       "_callable": true,
       "_origin": "ast",
       "community": 45,
       "community_name": "Illuminate\\Database\\Eloquent\\Model",
       "file_type": "code",
-      "norm_label": ".demografi()",
-      "source_file": "app/Http/Controllers/Api/Admin/SkmAdminController.php",
-      "source_location": "L129"
+      "norm_label": ".store()",
+      "source_file": "app/Http/Controllers/Api/Admin/UserAdminController.php",
+      "source_location": "L202"
     },
     {
-      "id": "app_http_controllers_api_admin_skmadmincontroller_skmadmincontroller_invoke",
+      "id": "app_http_controllers_api_aspirasicontroller_aspirasicontroller_kirimskm",
+      "label": ".kirimSkm()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 45,
+      "community_name": "Illuminate\\Database\\Eloquent\\Model",
+      "file_type": "code",
+      "norm_label": ".kirimskm()",
+      "source_file": "app/Http/Controllers/Api/AspirasiController.php",
+      "source_location": "L127"
+    },
+    {
+      "id": "app_http_controllers_berkascontroller_berkascontroller_miliknya",
+      "label": ".miliknya()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 45,
+      "community_name": "Illuminate\\Database\\Eloquent\\Model",
+      "file_type": "code",
+      "norm_label": ".miliknya()",
+      "source_file": "app/Http/Controllers/BerkasController.php",
+      "source_location": "L119"
+    },
+    {
+      "id": "app_http_controllers_berkascontroller_berkascontroller_tampilkan",
+      "label": ".tampilkan()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 45,
+      "community_name": "Illuminate\\Database\\Eloquent\\Model",
+      "file_type": "code",
+      "norm_label": ".tampilkan()",
+      "source_file": "app/Http/Controllers/BerkasController.php",
+      "source_location": "L49"
+    },
+    {
+      "id": "app_http_controllers_mediapublikcontroller_mediapublikcontroller_invoke",
       "label": ".__invoke()",
       "_callable": true,
       "_origin": "ast",
@@ -6801,44 +6681,20 @@
       "community_name": "Illuminate\\Database\\Eloquent\\Model",
       "file_type": "code",
       "norm_label": ".__invoke()",
-      "source_file": "app/Http/Controllers/Api/Admin/SkmAdminController.php",
+      "source_file": "app/Http/Controllers/MediaPublikController.php",
       "source_location": "L29"
     },
     {
-      "id": "app_http_controllers_api_sistemcontroller_sistemcontroller_construct",
-      "label": ".__construct()",
+      "id": "app_http_middleware_pastikanperan_pastikanperan_handle",
+      "label": ".handle()",
       "_callable": true,
       "_origin": "ast",
       "community": 45,
       "community_name": "Illuminate\\Database\\Eloquent\\Model",
       "file_type": "code",
-      "norm_label": ".__construct()",
-      "source_file": "app/Http/Controllers/Api/SistemController.php",
-      "source_location": "L18"
-    },
-    {
-      "id": "app_http_controllers_dashboardcontroller_dashboardcontroller_beranda",
-      "label": ".beranda()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 45,
-      "community_name": "Illuminate\\Database\\Eloquent\\Model",
-      "file_type": "code",
-      "norm_label": ".beranda()",
-      "source_file": "app/Http/Controllers/DashboardController.php",
-      "source_location": "L42"
-    },
-    {
-      "id": "app_http_controllers_dashboardcontroller_dashboardcontroller_construct",
-      "label": ".__construct()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 45,
-      "community_name": "Illuminate\\Database\\Eloquent\\Model",
-      "file_type": "code",
-      "norm_label": ".__construct()",
-      "source_file": "app/Http/Controllers/DashboardController.php",
-      "source_location": "L40"
+      "norm_label": ".handle()",
+      "source_file": "app/Http/Middleware/PastikanPeran.php",
+      "source_location": "L38"
     },
     {
       "id": "app_models_berkas_berkas_permohonan",
@@ -6887,6 +6743,18 @@
       "norm_label": ".user()",
       "source_file": "app/Models/LogAktivitas.php",
       "source_location": "L35"
+    },
+    {
+      "id": "app_models_news_news_scopeterbit",
+      "label": ".scopeTerbit()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 45,
+      "community_name": "Illuminate\\Database\\Eloquent\\Model",
+      "file_type": "code",
+      "norm_label": ".scopeterbit()",
+      "source_file": "app/Models/News.php",
+      "source_location": "L27"
     },
     {
       "id": "app_models_notifikasi_notifikasi_casts",
@@ -7057,6 +6925,42 @@
       "source_location": "L20"
     },
     {
+      "id": "app_models_user_user_level",
+      "label": ".level()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 45,
+      "community_name": "Illuminate\\Database\\Eloquent\\Model",
+      "file_type": "code",
+      "norm_label": ".level()",
+      "source_file": "app/Models/User.php",
+      "source_location": "L110"
+    },
+    {
+      "id": "app_models_userlevel_userlevel_users",
+      "label": ".users()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 45,
+      "community_name": "Illuminate\\Database\\Eloquent\\Model",
+      "file_type": "code",
+      "norm_label": ".users()",
+      "source_file": "app/Models/UserLevel.php",
+      "source_location": "L85"
+    },
+    {
+      "id": "app_services_catatanaktivitas_catatanaktivitas_catat",
+      "label": ".catat()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 45,
+      "community_name": "Illuminate\\Database\\Eloquent\\Model",
+      "file_type": "code",
+      "norm_label": ".catat()",
+      "source_file": "app/Services/CatatanAktivitas.php",
+      "source_location": "L23"
+    },
+    {
       "id": "app_services_pemberitahuan_pemberitahuan_buat",
       "label": ".buat()",
       "_callable": true,
@@ -7079,54 +6983,6 @@
       "norm_label": ".kepetugas()",
       "source_file": "app/Services/Pemberitahuan.php",
       "source_location": "L34"
-    },
-    {
-      "id": "app_services_pencacahkunjungan_pencacahkunjungan_catat",
-      "label": ".catat()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 45,
-      "community_name": "Illuminate\\Database\\Eloquent\\Model",
-      "file_type": "code",
-      "norm_label": ".catat()",
-      "source_file": "app/Services/PencacahKunjungan.php",
-      "source_location": "L55"
-    },
-    {
-      "id": "app_services_pencacahkunjungan_pencacahkunjungan_statistik",
-      "label": ".statistik()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 45,
-      "community_name": "Illuminate\\Database\\Eloquent\\Model",
-      "file_type": "code",
-      "norm_label": ".statistik()",
-      "source_file": "app/Services/PencacahKunjungan.php",
-      "source_location": "L36"
-    },
-    {
-      "id": "app_services_pencacahkunjungan_pencacahkunjungan_tanggalhariini",
-      "label": ".tanggalHariIni()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 45,
-      "community_name": "Illuminate\\Database\\Eloquent\\Model",
-      "file_type": "code",
-      "norm_label": ".tanggalhariini()",
-      "source_file": "app/Services/PencacahKunjungan.php",
-      "source_location": "L30"
-    },
-    {
-      "id": "app_services_statistikexcel_statistikexcel_construct",
-      "label": ".__construct()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 45,
-      "community_name": "Illuminate\\Database\\Eloquent\\Model",
-      "file_type": "code",
-      "norm_label": ".__construct()",
-      "source_file": "app/Services/StatistikExcel.php",
-      "source_location": "L110"
     },
     {
       "id": "database_migrations_2026_08_07_100008_create_t_galleries_table_down",
@@ -7330,7 +7186,7 @@
       "file_type": "code",
       "norm_label": "ambilkonteks()",
       "source_file": "resources/js/Components/LoncengNotifikasi.jsx",
-      "source_location": "L66"
+      "source_location": "L67"
     },
     {
       "id": "resources_js_components_loncengnotifikasi_bukaaudio",
@@ -7342,7 +7198,7 @@
       "file_type": "code",
       "norm_label": "bukaaudio()",
       "source_file": "resources/js/Components/LoncengNotifikasi.jsx",
-      "source_location": "L79"
+      "source_location": "L80"
     },
     {
       "id": "resources_js_components_loncengnotifikasi_bunyikan",
@@ -7354,7 +7210,7 @@
       "file_type": "code",
       "norm_label": "bunyikan()",
       "source_file": "resources/js/Components/LoncengNotifikasi.jsx",
-      "source_location": "L85"
+      "source_location": "L86"
     },
     {
       "id": "resources_js_components_loncengnotifikasi_loncengnotifikasi",
@@ -7366,7 +7222,7 @@
       "file_type": "code",
       "norm_label": "loncengnotifikasi()",
       "source_file": "resources/js/Components/LoncengNotifikasi.jsx",
-      "source_location": "L114"
+      "source_location": "L115"
     },
     {
       "id": "resources_js_components_loncengnotifikasi_wakturelatif",
@@ -7378,7 +7234,7 @@
       "file_type": "code",
       "norm_label": "wakturelatif()",
       "source_file": "resources/js/Components/LoncengNotifikasi.jsx",
-      "source_location": "L45"
+      "source_location": "L46"
     },
     {
       "id": "resources_js_components_ui_time_picker_isjam",
@@ -7945,6 +7801,18 @@
       "source_location": "L166"
     },
     {
+      "id": "app_services_demografiexcel_demografiexcel_keunduhan",
+      "label": ".keUnduhan()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "DemografiAdminController",
+      "file_type": "code",
+      "norm_label": ".keunduhan()",
+      "source_file": "app/Services/DemografiExcel.php",
+      "source_location": "L136"
+    },
+    {
       "id": "app_services_demografiexcel_demografiexcel_klasifikasikode",
       "label": ".klasifikasiKode()",
       "_callable": true,
@@ -8101,12 +7969,168 @@
       "source_location": "L311"
     },
     {
+      "id": "app_http_controllers_auth_logincontroller_logincontroller_construct",
+      "label": ".__construct()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 64,
+      "community_name": "Recaptcha",
+      "file_type": "code",
+      "norm_label": ".__construct()",
+      "source_file": "app/Http/Controllers/Auth/LoginController.php",
+      "source_location": "L33"
+    },
+    {
+      "id": "app_http_controllers_auth_logincontroller_logincontroller_keluar",
+      "label": ".keluar()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 64,
+      "community_name": "Recaptcha",
+      "file_type": "code",
+      "norm_label": ".keluar()",
+      "source_file": "app/Http/Controllers/Auth/LoginController.php",
+      "source_location": "L119"
+    },
+    {
+      "id": "app_http_controllers_auth_logincontroller_logincontroller_masuk",
+      "label": ".masuk()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 64,
+      "community_name": "Recaptcha",
+      "file_type": "code",
+      "norm_label": ".masuk()",
+      "source_file": "app/Http/Controllers/Auth/LoginController.php",
+      "source_location": "L44"
+    },
+    {
+      "id": "app_http_controllers_auth_logincontroller_logincontroller_tampilkan",
+      "label": ".tampilkan()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 64,
+      "community_name": "Recaptcha",
+      "file_type": "code",
+      "norm_label": ".tampilkan()",
+      "source_file": "app/Http/Controllers/Auth/LoginController.php",
+      "source_location": "L35"
+    },
+    {
+      "id": "app_http_controllers_auth_logincontroller_logincontroller_tujuanaman",
+      "label": ".tujuanAman()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 64,
+      "community_name": "Recaptcha",
+      "file_type": "code",
+      "norm_label": ".tujuanaman()",
+      "source_file": "app/Http/Controllers/Auth/LoginController.php",
+      "source_location": "L129"
+    },
+    {
+      "id": "app_http_controllers_auth_registercontroller_registercontroller_construct",
+      "label": ".__construct()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 64,
+      "community_name": "Recaptcha",
+      "file_type": "code",
+      "norm_label": ".__construct()",
+      "source_file": "app/Http/Controllers/Auth/RegisterController.php",
+      "source_location": "L34"
+    },
+    {
+      "id": "app_http_controllers_auth_registercontroller_registercontroller_daftar",
+      "label": ".daftar()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 64,
+      "community_name": "Recaptcha",
+      "file_type": "code",
+      "norm_label": ".daftar()",
+      "source_file": "app/Http/Controllers/Auth/RegisterController.php",
+      "source_location": "L83"
+    },
+    {
+      "id": "app_http_controllers_auth_sandicontroller_sandicontroller_construct",
+      "label": ".__construct()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 64,
+      "community_name": "Recaptcha",
+      "file_type": "code",
+      "norm_label": ".__construct()",
+      "source_file": "app/Http/Controllers/Auth/SandiController.php",
+      "source_location": "L29"
+    },
+    {
+      "id": "app_http_controllers_auth_sandicontroller_sandicontroller_formlupa",
+      "label": ".formLupa()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 64,
+      "community_name": "Recaptcha",
+      "file_type": "code",
+      "norm_label": ".formlupa()",
+      "source_file": "app/Http/Controllers/Auth/SandiController.php",
+      "source_location": "L31"
+    },
+    {
+      "id": "app_http_controllers_auth_sandicontroller_sandicontroller_formreset",
+      "label": ".formReset()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 64,
+      "community_name": "Recaptcha",
+      "file_type": "code",
+      "norm_label": ".formreset()",
+      "source_file": "app/Http/Controllers/Auth/SandiController.php",
+      "source_location": "L79"
+    },
+    {
+      "id": "app_http_controllers_auth_sandicontroller_sandicontroller_kirimtautan",
+      "label": ".kirimTautan()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 64,
+      "community_name": "Recaptcha",
+      "file_type": "code",
+      "norm_label": ".kirimtautan()",
+      "source_file": "app/Http/Controllers/Auth/SandiController.php",
+      "source_location": "L36"
+    },
+    {
+      "id": "app_http_controllers_auth_sandicontroller_sandicontroller_reset",
+      "label": ".reset()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 64,
+      "community_name": "Recaptcha",
+      "file_type": "code",
+      "norm_label": ".reset()",
+      "source_file": "app/Http/Controllers/Auth/SandiController.php",
+      "source_location": "L89"
+    },
+    {
+      "id": "app_services_recaptcha_recaptcha_verifikasi",
+      "label": ".verifikasi()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 64,
+      "community_name": "Recaptcha",
+      "file_type": "code",
+      "norm_label": ".verifikasi()",
+      "source_file": "app/Services/Recaptcha.php",
+      "source_location": "L25"
+    },
+    {
       "id": "app_support_statusakun_statusakun_info",
       "label": ".info()",
       "_callable": true,
       "_origin": "ast",
       "community": 64,
-      "community_name": "StatusAkun",
+      "community_name": "Recaptcha",
       "file_type": "code",
       "norm_label": ".info()",
       "source_file": "app/Support/StatusAkun.php",
@@ -8118,7 +8142,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 64,
-      "community_name": "StatusAkun",
+      "community_name": "Recaptcha",
       "file_type": "code",
       "norm_label": ".label()",
       "source_file": "app/Support/StatusAkun.php",
@@ -8130,7 +8154,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 64,
-      "community_name": "StatusAkun",
+      "community_name": "Recaptcha",
       "file_type": "code",
       "norm_label": ".pesanlogin()",
       "source_file": "app/Support/StatusAkun.php",
@@ -8142,47 +8166,119 @@
       "_callable": true,
       "_origin": "ast",
       "community": 64,
-      "community_name": "StatusAkun",
+      "community_name": "Recaptcha",
       "file_type": "code",
       "norm_label": ".semua()",
       "source_file": "app/Support/StatusAkun.php",
       "source_location": "L47"
     },
     {
-      "id": "app_http_controllers_auth_otpcontroller_otpcontroller_construct",
+      "id": "app_http_controllers_api_admin_permohonanadmincontroller_permohonanadmincontroller_show",
+      "label": ".show()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 65,
+      "community_name": "AlasanTolakPermohonan",
+      "file_type": "code",
+      "norm_label": ".show()",
+      "source_file": "app/Http/Controllers/Api/Admin/PermohonanAdminController.php",
+      "source_location": "L259"
+    },
+    {
+      "id": "app_http_controllers_api_admin_permohonanadmincontroller_permohonanadmincontroller_update",
+      "label": ".update()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 65,
+      "community_name": "AlasanTolakPermohonan",
+      "file_type": "code",
+      "norm_label": ".update()",
+      "source_file": "app/Http/Controllers/Api/Admin/PermohonanAdminController.php",
+      "source_location": "L338"
+    },
+    {
+      "id": "app_http_controllers_api_permohonancontroller_permohonancontroller_construct",
       "label": ".__construct()",
       "_callable": true,
       "_origin": "ast",
       "community": 65,
-      "community_name": "OtpController",
+      "community_name": "AlasanTolakPermohonan",
       "file_type": "code",
       "norm_label": ".__construct()",
-      "source_file": "app/Http/Controllers/Auth/OtpController.php",
-      "source_location": "L23"
+      "source_file": "app/Http/Controllers/Api/PermohonanController.php",
+      "source_location": "L24"
     },
     {
-      "id": "app_http_controllers_auth_otpcontroller_otpcontroller_kirim",
-      "label": ".kirim()",
+      "id": "app_http_controllers_api_permohonancontroller_permohonancontroller_index",
+      "label": ".index()",
       "_callable": true,
       "_origin": "ast",
       "community": 65,
-      "community_name": "OtpController",
+      "community_name": "AlasanTolakPermohonan",
       "file_type": "code",
-      "norm_label": ".kirim()",
-      "source_file": "app/Http/Controllers/Auth/OtpController.php",
-      "source_location": "L25"
+      "norm_label": ".index()",
+      "source_file": "app/Http/Controllers/Api/PermohonanController.php",
+      "source_location": "L38"
     },
     {
-      "id": "app_http_controllers_auth_otpcontroller_otpcontroller_verifikasi",
-      "label": ".verifikasi()",
+      "id": "app_support_alasantolakpermohonan_alasantolakpermohonan_labelsah",
+      "label": ".labelSah()",
       "_callable": true,
       "_origin": "ast",
       "community": 65,
-      "community_name": "OtpController",
+      "community_name": "AlasanTolakPermohonan",
       "file_type": "code",
-      "norm_label": ".verifikasi()",
-      "source_file": "app/Http/Controllers/Auth/OtpController.php",
-      "source_location": "L70"
+      "norm_label": ".labelsah()",
+      "source_file": "app/Support/AlasanTolakPermohonan.php",
+      "source_location": "L127"
+    },
+    {
+      "id": "app_support_alasantolakpermohonan_alasantolakpermohonan_perlurincian",
+      "label": ".perluRincian()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 65,
+      "community_name": "AlasanTolakPermohonan",
+      "file_type": "code",
+      "norm_label": ".perlurincian()",
+      "source_file": "app/Support/AlasanTolakPermohonan.php",
+      "source_location": "L74"
+    },
+    {
+      "id": "app_support_alasantolakpermohonan_alasantolakpermohonan_pilihan",
+      "label": ".pilihan()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 65,
+      "community_name": "AlasanTolakPermohonan",
+      "file_type": "code",
+      "norm_label": ".pilihan()",
+      "source_file": "app/Support/AlasanTolakPermohonan.php",
+      "source_location": "L94"
+    },
+    {
+      "id": "app_support_alasantolakpermohonan_alasantolakpermohonan_susun",
+      "label": ".susun()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 65,
+      "community_name": "AlasanTolakPermohonan",
+      "file_type": "code",
+      "norm_label": ".susun()",
+      "source_file": "app/Support/AlasanTolakPermohonan.php",
+      "source_location": "L138"
+    },
+    {
+      "id": "app_support_alasantolakpermohonan_alasantolakpermohonan_uraikan",
+      "label": ".uraikan()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 65,
+      "community_name": "AlasanTolakPermohonan",
+      "file_type": "code",
+      "norm_label": ".uraikan()",
+      "source_file": "app/Support/AlasanTolakPermohonan.php",
+      "source_location": "L173"
     },
     {
       "id": "resources_js_components_grafiktampak_grafiktampak",
@@ -8209,112 +8305,64 @@
       "source_location": "L27"
     },
     {
-      "id": "app_http_controllers_api_admin_pengaturancontroller_pengaturancontroller_jamlayanan",
-      "label": ".jamLayanan()",
+      "id": "app_http_controllers_api_notifikasicontroller_notifikasicontroller_index",
+      "label": ".index()",
       "_callable": true,
       "_origin": "ast",
       "community": 7,
       "community_name": "Balasan",
       "file_type": "code",
-      "norm_label": ".jamlayanan()",
-      "source_file": "app/Http/Controllers/Api/Admin/PengaturanController.php",
-      "source_location": "L30"
+      "norm_label": ".index()",
+      "source_file": "app/Http/Controllers/Api/NotifikasiController.php",
+      "source_location": "L13"
     },
     {
-      "id": "app_http_controllers_api_admin_pengaturancontroller_pengaturancontroller_simpanjamlayanan",
-      "label": ".simpanJamLayanan()",
+      "id": "app_http_controllers_api_notifikasicontroller_notifikasicontroller_tandaisatu",
+      "label": ".tandaiSatu()",
       "_callable": true,
       "_origin": "ast",
       "community": 7,
       "community_name": "Balasan",
       "file_type": "code",
-      "norm_label": ".simpanjamlayanan()",
-      "source_file": "app/Http/Controllers/Api/Admin/PengaturanController.php",
-      "source_location": "L35"
+      "norm_label": ".tandaisatu()",
+      "source_file": "app/Http/Controllers/Api/NotifikasiController.php",
+      "source_location": "L53"
     },
     {
-      "id": "app_http_controllers_api_admin_pengaturancontroller_pengaturancontroller_visibilitas",
-      "label": ".visibilitas()",
+      "id": "app_http_controllers_api_notifikasicontroller_notifikasicontroller_tandaisemua",
+      "label": ".tandaiSemua()",
       "_callable": true,
       "_origin": "ast",
       "community": 7,
       "community_name": "Balasan",
       "file_type": "code",
-      "norm_label": ".visibilitas()",
-      "source_file": "app/Http/Controllers/Api/Admin/PengaturanController.php",
-      "source_location": "L62"
+      "norm_label": ".tandaisemua()",
+      "source_file": "app/Http/Controllers/Api/NotifikasiController.php",
+      "source_location": "L39"
     },
     {
-      "id": "app_http_controllers_api_aspirasicontroller_aspirasicontroller_daftarkritik",
-      "label": ".daftarKritik()",
+      "id": "app_http_controllers_api_pendudukcontroller_pendudukcontroller_cek",
+      "label": ".cek()",
       "_callable": true,
       "_origin": "ast",
       "community": 7,
       "community_name": "Balasan",
       "file_type": "code",
-      "norm_label": ".daftarkritik()",
-      "source_file": "app/Http/Controllers/Api/AspirasiController.php",
-      "source_location": "L106"
-    },
-    {
-      "id": "app_http_controllers_api_aspirasicontroller_aspirasicontroller_daftarpengaduan",
-      "label": ".daftarPengaduan()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "Balasan",
-      "file_type": "code",
-      "norm_label": ".daftarpengaduan()",
-      "source_file": "app/Http/Controllers/Api/AspirasiController.php",
-      "source_location": "L65"
-    },
-    {
-      "id": "app_http_controllers_api_aspirasicontroller_aspirasicontroller_kirimkritik",
-      "label": ".kirimKritik()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "Balasan",
-      "file_type": "code",
-      "norm_label": ".kirimkritik()",
-      "source_file": "app/Http/Controllers/Api/AspirasiController.php",
-      "source_location": "L76"
-    },
-    {
-      "id": "app_http_controllers_api_aspirasicontroller_aspirasicontroller_kirimpengaduan",
-      "label": ".kirimPengaduan()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "Balasan",
-      "file_type": "code",
-      "norm_label": ".kirimpengaduan()",
-      "source_file": "app/Http/Controllers/Api/AspirasiController.php",
+      "norm_label": ".cek()",
+      "source_file": "app/Http/Controllers/Api/PendudukController.php",
       "source_location": "L29"
     },
     {
-      "id": "app_http_controllers_api_aspirasicontroller_aspirasicontroller_kirimskm",
-      "label": ".kirimSkm()",
+      "id": "app_http_controllers_api_pendudukcontroller_pendudukcontroller_ceknikkk",
+      "label": ".cekNikKk()",
       "_callable": true,
       "_origin": "ast",
       "community": 7,
       "community_name": "Balasan",
       "file_type": "code",
-      "norm_label": ".kirimskm()",
-      "source_file": "app/Http/Controllers/Api/AspirasiController.php",
-      "source_location": "L127"
-    },
-    {
-      "id": "app_http_controllers_api_aspirasicontroller_aspirasicontroller_unsurskm",
-      "label": ".unsurSkm()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "Balasan",
-      "file_type": "code",
-      "norm_label": ".unsurskm()",
-      "source_file": "app/Http/Controllers/Api/AspirasiController.php",
-      "source_location": "L206"
+      "norm_label": ".ceknikkk()",
+      "source_file": "app/Http/Controllers/Api/PendudukController.php",
+      "source_location": "L65"
     },
     {
       "id": "app_http_controllers_api_sistemcontroller_sistemcontroller_health",
@@ -8770,7 +8818,7 @@
       "file_type": "code",
       "norm_label": "alasanditolak()",
       "source_file": "resources/js/Pages/Pengajuan/Riwayat.jsx",
-      "source_location": "L182"
+      "source_location": "L183"
     },
     {
       "id": "resources_js_pages_pengajuan_riwayat_hero",
@@ -8782,7 +8830,7 @@
       "file_type": "code",
       "norm_label": "hero()",
       "source_file": "resources/js/Pages/Pengajuan/Riwayat.jsx",
-      "source_location": "L25"
+      "source_location": "L26"
     },
     {
       "id": "resources_js_pages_pengajuan_riwayat_riwayat",
@@ -8794,7 +8842,7 @@
       "file_type": "code",
       "norm_label": "riwayat()",
       "source_file": "resources/js/Pages/Pengajuan/Riwayat.jsx",
-      "source_location": "L59"
+      "source_location": "L60"
     },
     {
       "id": "resources_js_components_dasbor_angka",
@@ -8806,7 +8854,7 @@
       "file_type": "code",
       "norm_label": "angka()",
       "source_file": "resources/js/Components/Dasbor.jsx",
-      "source_location": "L415"
+      "source_location": "L417"
     },
     {
       "id": "resources_js_components_dasbor_filterbanyak",
@@ -8818,7 +8866,7 @@
       "file_type": "code",
       "norm_label": "filterbanyak()",
       "source_file": "resources/js/Components/Dasbor.jsx",
-      "source_location": "L429"
+      "source_location": "L431"
     },
     {
       "id": "resources_js_components_dasbor_filterperiode",
@@ -8951,30 +8999,6 @@
       "norm_label": "pesan()",
       "source_file": "resources/js/Components/Dasbor.jsx",
       "source_location": "L186"
-    },
-    {
-      "id": "resources_js_components_dasbor_tgljam",
-      "label": "tglJam()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "Dasbor.jsx",
-      "file_type": "code",
-      "norm_label": "tgljam()",
-      "source_file": "resources/js/Components/Dasbor.jsx",
-      "source_location": "L411"
-    },
-    {
-      "id": "resources_js_components_dasbor_tglsingkat",
-      "label": "tglSingkat()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "Dasbor.jsx",
-      "file_type": "code",
-      "norm_label": "tglsingkat()",
-      "source_file": "resources/js/Components/Dasbor.jsx",
-      "source_location": "L407"
     },
     {
       "id": "resources_js_components_dasbor_tombol",
@@ -9637,28 +9661,6 @@
       "source_location": "L18"
     },
     {
-      "id": "app_http_controllers_api_notifikasicontroller",
-      "label": "NotifikasiController.php",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "Illuminate\\Http\\Request",
-      "file_type": "code",
-      "norm_label": "notifikasicontroller.php",
-      "source_file": "app/Http/Controllers/Api/NotifikasiController.php",
-      "source_location": "L1"
-    },
-    {
-      "id": "app_http_controllers_api_pendudukcontroller",
-      "label": "PendudukController.php",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "Illuminate\\Http\\Request",
-      "file_type": "code",
-      "norm_label": "pendudukcontroller.php",
-      "source_file": "app/Http/Controllers/Api/PendudukController.php",
-      "source_location": "L1"
-    },
-    {
       "id": "app_http_controllers_api_profilcontroller",
       "label": "ProfilController.php",
       "_origin": "ast",
@@ -9714,6 +9716,17 @@
       "source_location": "L1"
     },
     {
+      "id": "app_http_controllers_dashboardcontroller",
+      "label": "DashboardController.php",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "Permohonan",
+      "file_type": "code",
+      "norm_label": "dashboardcontroller.php",
+      "source_file": "app/Http/Controllers/DashboardController.php",
+      "source_location": "L1"
+    },
+    {
       "id": "app_models_jenispermohonan",
       "label": "JenisPermohonan.php",
       "_origin": "ast",
@@ -9725,15 +9738,15 @@
       "source_location": "L1"
     },
     {
-      "id": "app_services_demografiexcel_php_streamedresponse",
-      "label": "StreamedResponse",
+      "id": "app_services_pencacahkunjungan",
+      "label": "PencacahKunjungan.php",
       "_origin": "ast",
       "community": 1,
       "community_name": "Permohonan",
       "file_type": "code",
-      "norm_label": "streamedresponse",
-      "source_file": "",
-      "source_location": ""
+      "norm_label": "pencacahkunjungan.php",
+      "source_file": "app/Services/PencacahKunjungan.php",
+      "source_location": "L1"
     },
     {
       "id": "app_services_statistikexcel",
@@ -9787,6 +9800,17 @@
       "community_name": "Permohonan",
       "file_type": "code",
       "norm_label": "illuminate\\support\\carbon",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "illuminate_support_facades_cookie",
+      "label": "Illuminate\\Support\\Facades\\Cookie",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "Permohonan",
+      "file_type": "code",
+      "norm_label": "illuminate\\support\\facades\\cookie",
       "source_file": "",
       "source_location": ""
     },
@@ -9901,6 +9925,17 @@
       "source_location": "L1"
     },
     {
+      "id": "database_seeders_databaseseeder",
+      "label": "DatabaseSeeder.php",
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": "databaseseeder.php",
+      "source_file": "database/seeders/DatabaseSeeder.php",
+      "source_location": "L1"
+    },
+    {
       "id": "illuminate_database_eloquent_relations_hasmany",
       "label": "Illuminate\\Database\\Eloquent\\Relations\\HasMany",
       "_origin": "ast",
@@ -9908,6 +9943,17 @@
       "community_name": "User",
       "file_type": "code",
       "norm_label": "illuminate\\database\\eloquent\\relations\\hasmany",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "illuminate_database_seeder",
+      "label": "Illuminate\\Database\\Seeder",
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": "illuminate\\database\\seeder",
       "source_file": "",
       "source_location": ""
     },
@@ -9956,36 +10002,58 @@
       "source_location": "L1"
     },
     {
-      "id": "database_seeders_databaseseeder",
-      "label": "DatabaseSeeder.php",
+      "id": "app_http_controllers_api_admin_galeriadmincontroller",
+      "label": "GaleriAdminController.php",
       "_origin": "ast",
       "community": 102,
-      "community_name": "DatabaseSeeder.php",
+      "community_name": "Gallery",
       "file_type": "code",
-      "norm_label": "databaseseeder.php",
-      "source_file": "database/seeders/DatabaseSeeder.php",
+      "norm_label": "galeriadmincontroller.php",
+      "source_file": "app/Http/Controllers/Api/Admin/GaleriAdminController.php",
       "source_location": "L1"
     },
     {
-      "id": "illuminate_database_seeder",
-      "label": "Illuminate\\Database\\Seeder",
+      "id": "app_http_controllers_publikcontroller",
+      "label": "PublikController.php",
       "_origin": "ast",
       "community": 102,
-      "community_name": "DatabaseSeeder.php",
+      "community_name": "Gallery",
       "file_type": "code",
-      "norm_label": "illuminate\\database\\seeder",
-      "source_file": "",
-      "source_location": ""
+      "norm_label": "publikcontroller.php",
+      "source_file": "app/Http/Controllers/PublikController.php",
+      "source_location": "L1"
     },
     {
-      "id": "app_http_controllers_api_demograficontroller",
-      "label": "DemografiController.php",
+      "id": "app_models_gallery",
+      "label": "Gallery.php",
+      "_origin": "ast",
+      "community": 102,
+      "community_name": "Gallery",
+      "file_type": "code",
+      "norm_label": "gallery.php",
+      "source_file": "app/Models/Gallery.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_models_staticcontent",
+      "label": "StaticContent.php",
       "_origin": "ast",
       "community": 103,
-      "community_name": "DemografiController.php",
+      "community_name": "StaticContent",
       "file_type": "code",
-      "norm_label": "demograficontroller.php",
-      "source_file": "app/Http/Controllers/Api/DemografiController.php",
+      "norm_label": "staticcontent.php",
+      "source_file": "app/Models/StaticContent.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_support_konten",
+      "label": "Konten.php",
+      "_origin": "ast",
+      "community": 103,
+      "community_name": "StaticContent",
+      "file_type": "code",
+      "norm_label": "konten.php",
+      "source_file": "app/Support/Konten.php",
       "source_location": "L1"
     },
     {
@@ -10055,22 +10123,11 @@
       "source_location": "L1"
     },
     {
-      "id": "app_services_catatanaktivitas",
-      "label": "CatatanAktivitas.php",
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "UserLevel",
-      "file_type": "code",
-      "norm_label": "catatanaktivitas.php",
-      "source_file": "app/Services/CatatanAktivitas.php",
-      "source_location": "L1"
-    },
-    {
       "id": "illuminate_foundation_testing_testcase",
       "label": "Illuminate\\Foundation\\Testing\\TestCase",
       "_origin": "ast",
       "community": 11,
-      "community_name": "UserLevel",
+      "community_name": "TestCase",
       "file_type": "code",
       "norm_label": "illuminate\\foundation\\testing\\testcase",
       "source_file": "",
@@ -10081,7 +10138,7 @@
       "label": "Feature/ExampleTest.php",
       "_origin": "ast",
       "community": 11,
-      "community_name": "UserLevel",
+      "community_name": "TestCase",
       "file_type": "code",
       "norm_label": "feature/exampletest.php",
       "source_file": "tests/Feature/ExampleTest.php",
@@ -10092,7 +10149,7 @@
       "label": "LayananNonaktifTest.php",
       "_origin": "ast",
       "community": 11,
-      "community_name": "UserLevel",
+      "community_name": "TestCase",
       "file_type": "code",
       "norm_label": "layanannonaktiftest.php",
       "source_file": "tests/Feature/LayananNonaktifTest.php",
@@ -10103,7 +10160,7 @@
       "label": "PeranOpdTest.php",
       "_origin": "ast",
       "community": 11,
-      "community_name": "UserLevel",
+      "community_name": "TestCase",
       "file_type": "code",
       "norm_label": "peranopdtest.php",
       "source_file": "tests/Feature/PeranOpdTest.php",
@@ -10114,7 +10171,7 @@
       "label": "TestCase.php",
       "_origin": "ast",
       "community": 11,
-      "community_name": "UserLevel",
+      "community_name": "TestCase",
       "file_type": "code",
       "norm_label": "testcase.php",
       "source_file": "tests/TestCase.php",
@@ -10272,6 +10329,17 @@
       "file_type": "code",
       "norm_label": "isiwilayahakun.php",
       "source_file": "app/Console/Commands/IsiWilayahAkun.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_models_wilayah",
+      "label": "Wilayah.php",
+      "_origin": "ast",
+      "community": 12,
+      "community_name": "Wilayah",
+      "file_type": "code",
+      "norm_label": "wilayah.php",
+      "source_file": "app/Models/Wilayah.php",
       "source_location": "L1"
     },
     {
@@ -11012,83 +11080,6 @@
       "source_location": "L47"
     },
     {
-      "id": "app_http_controllers_api_permohonanpdfcontroller",
-      "label": "PermohonanPdfController.php",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": "permohonanpdfcontroller.php",
-      "source_file": "app/Http/Controllers/Api/PermohonanPdfController.php",
-      "source_location": "L1"
-    },
-    {
-      "id": "app_http_controllers_api_unggahcontroller",
-      "label": "UnggahController.php",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": "unggahcontroller.php",
-      "source_file": "app/Http/Controllers/Api/UnggahController.php",
-      "source_location": "L1"
-    },
-    {
-      "id": "app_http_controllers_berkascontroller",
-      "label": "BerkasController.php",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": "berkascontroller.php",
-      "source_file": "app/Http/Controllers/BerkasController.php",
-      "source_location": "L1"
-    },
-    {
-      "id": "app_http_controllers_mediapublikcontroller",
-      "label": "MediaPublikController.php",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": "mediapublikcontroller.php",
-      "source_file": "app/Http/Controllers/MediaPublikController.php",
-      "source_location": "L1"
-    },
-    {
-      "id": "app_http_middleware_pastikanperan",
-      "label": "PastikanPeran.php",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": "pastikanperan.php",
-      "source_file": "app/Http/Middleware/PastikanPeran.php",
-      "source_location": "L1"
-    },
-    {
-      "id": "app_services_fotoprofil",
-      "label": "FotoProfil.php",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": "fotoprofil.php",
-      "source_file": "app/Services/FotoProfil.php",
-      "source_location": "L1"
-    },
-    {
-      "id": "app_support_alasantolakpermohonan",
-      "label": "AlasanTolakPermohonan.php",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": "alasantolakpermohonan.php",
-      "source_file": "app/Support/AlasanTolakPermohonan.php",
-      "source_location": "L1"
-    },
-    {
       "id": "app_support_layanan",
       "label": "Layanan.php",
       "_origin": "ast",
@@ -11098,50 +11089,6 @@
       "norm_label": "layanan.php",
       "source_file": "app/Support/Layanan.php",
       "source_location": "L1"
-    },
-    {
-      "id": "barryvdh_dompdf_facade_pdf",
-      "label": "Barryvdh\\DomPDF\\Facade\\Pdf",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": "barryvdh\\dompdf\\facade\\pdf",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "closure",
-      "label": "Closure",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": "closure",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "illuminate_support_facades_storage",
-      "label": "Illuminate\\Support\\Facades\\Storage",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": "illuminate\\support\\facades\\storage",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "symfony_component_httpfoundation_response",
-      "label": "Symfony\\Component\\HttpFoundation\\Response",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "Layanan",
-      "file_type": "code",
-      "norm_label": "symfony\\component\\httpfoundation\\response",
-      "source_file": "",
-      "source_location": ""
     },
     {
       "id": "package_dependencies_react_leaflet",
@@ -11364,47 +11311,47 @@
       "source_location": "L32"
     },
     {
-      "id": "app_http_controllers_api_admin_permohonanadmincontroller",
-      "label": "PermohonanAdminController.php",
+      "id": "app_http_controllers_api_admin_pengaduanadmincontroller",
+      "label": "PengaduanAdminController.php",
       "_origin": "ast",
       "community": 16,
       "community_name": "Pemberitahuan",
       "file_type": "code",
-      "norm_label": "permohonanadmincontroller.php",
-      "source_file": "app/Http/Controllers/Api/Admin/PermohonanAdminController.php",
+      "norm_label": "pengaduanadmincontroller.php",
+      "source_file": "app/Http/Controllers/Api/Admin/PengaduanAdminController.php",
       "source_location": "L1"
     },
     {
-      "id": "app_http_controllers_api_admin_useradmincontroller",
-      "label": "UserAdminController.php",
+      "id": "app_http_controllers_api_aspirasicontroller",
+      "label": "AspirasiController.php",
       "_origin": "ast",
       "community": 16,
       "community_name": "Pemberitahuan",
       "file_type": "code",
-      "norm_label": "useradmincontroller.php",
-      "source_file": "app/Http/Controllers/Api/Admin/UserAdminController.php",
+      "norm_label": "aspirasicontroller.php",
+      "source_file": "app/Http/Controllers/Api/AspirasiController.php",
       "source_location": "L1"
     },
     {
-      "id": "app_http_controllers_auth_cekstatuscontroller",
-      "label": "CekStatusController.php",
+      "id": "app_models_kritiksaran",
+      "label": "KritikSaran.php",
       "_origin": "ast",
       "community": 16,
       "community_name": "Pemberitahuan",
       "file_type": "code",
-      "norm_label": "cekstatuscontroller.php",
-      "source_file": "app/Http/Controllers/Auth/CekStatusController.php",
+      "norm_label": "kritiksaran.php",
+      "source_file": "app/Models/KritikSaran.php",
       "source_location": "L1"
     },
     {
-      "id": "app_support_alasantolak",
-      "label": "AlasanTolak.php",
+      "id": "app_models_pengaduan",
+      "label": "Pengaduan.php",
       "_origin": "ast",
       "community": 16,
       "community_name": "Pemberitahuan",
       "file_type": "code",
-      "norm_label": "alasantolak.php",
-      "source_file": "app/Support/AlasanTolak.php",
+      "norm_label": "pengaduan.php",
+      "source_file": "app/Models/Pengaduan.php",
       "source_location": "L1"
     },
     {
@@ -11551,57 +11498,24 @@
       "source_location": "L1"
     },
     {
-      "id": "app_services_fonnte",
-      "label": "Fonnte.php",
+      "id": "app_http_controllers_auth_otpcontroller",
+      "label": "OtpController.php",
       "_origin": "ast",
       "community": 17,
       "community_name": "Otp",
       "file_type": "code",
-      "norm_label": "fonnte.php",
-      "source_file": "app/Services/Fonnte.php",
+      "norm_label": "otpcontroller.php",
+      "source_file": "app/Http/Controllers/Auth/OtpController.php",
       "source_location": "L1"
     },
     {
-      "id": "app_services_pemberitahuan",
-      "label": "Pemberitahuan.php",
+      "id": "illuminate_support_facades_cache",
+      "label": "Illuminate\\Support\\Facades\\Cache",
       "_origin": "ast",
       "community": 17,
       "community_name": "Otp",
       "file_type": "code",
-      "norm_label": "pemberitahuan.php",
-      "source_file": "app/Services/Pemberitahuan.php",
-      "source_location": "L1"
-    },
-    {
-      "id": "app_services_recaptcha",
-      "label": "Recaptcha.php",
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "Otp",
-      "file_type": "code",
-      "norm_label": "recaptcha.php",
-      "source_file": "app/Services/Recaptcha.php",
-      "source_location": "L1"
-    },
-    {
-      "id": "illuminate_support_facades_http",
-      "label": "Illuminate\\Support\\Facades\\Http",
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "Otp",
-      "file_type": "code",
-      "norm_label": "illuminate\\support\\facades\\http",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "illuminate_support_facades_log",
-      "label": "Illuminate\\Support\\Facades\\Log",
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "Otp",
-      "file_type": "code",
-      "norm_label": "illuminate\\support\\facades\\log",
+      "norm_label": "illuminate\\support\\facades\\cache",
       "source_file": "",
       "source_location": ""
     },
@@ -11881,15 +11795,92 @@
       "source_location": "L1"
     },
     {
+      "id": "app_http_controllers_api_admin_skmadmincontroller",
+      "label": "SkmAdminController.php",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "Controller",
+      "file_type": "code",
+      "norm_label": "skmadmincontroller.php",
+      "source_file": "app/Http/Controllers/Api/Admin/SkmAdminController.php",
+      "source_location": "L1"
+    },
+    {
       "id": "app_http_controllers_api_buktipengaduancontroller",
       "label": "BuktiPengaduanController.php",
       "_origin": "ast",
       "community": 19,
-      "community_name": "BuktiPengaduanController.php",
+      "community_name": "Controller",
       "file_type": "code",
       "norm_label": "buktipengaduancontroller.php",
       "source_file": "app/Http/Controllers/Api/BuktiPengaduanController.php",
       "source_location": "L1"
+    },
+    {
+      "id": "app_http_controllers_api_demograficontroller",
+      "label": "DemografiController.php",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "Controller",
+      "file_type": "code",
+      "norm_label": "demograficontroller.php",
+      "source_file": "app/Http/Controllers/Api/DemografiController.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_http_controllers_api_layanancontroller",
+      "label": "LayananController.php",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "Controller",
+      "file_type": "code",
+      "norm_label": "layanancontroller.php",
+      "source_file": "app/Http/Controllers/Api/LayananController.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_http_controllers_api_unggahcontroller",
+      "label": "UnggahController.php",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "Controller",
+      "file_type": "code",
+      "norm_label": "unggahcontroller.php",
+      "source_file": "app/Http/Controllers/Api/UnggahController.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_http_controllers_controller",
+      "label": "Controller.php",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "Controller",
+      "file_type": "code",
+      "norm_label": "controller.php",
+      "source_file": "app/Http/Controllers/Controller.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_services_fotoprofil",
+      "label": "FotoProfil.php",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "Controller",
+      "file_type": "code",
+      "norm_label": "fotoprofil.php",
+      "source_file": "app/Services/FotoProfil.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "illuminate_support_facades_storage",
+      "label": "Illuminate\\Support\\Facades\\Storage",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "Controller",
+      "file_type": "code",
+      "norm_label": "illuminate\\support\\facades\\storage",
+      "source_file": "",
+      "source_location": ""
     },
     {
       "id": "resources_js_publik_tabeldemografi",
@@ -12013,33 +12004,11 @@
       "source_location": "L1"
     },
     {
-      "id": "app_http_controllers_api_admin_beritaadmincontroller",
-      "label": "BeritaAdminController.php",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "Controller",
-      "file_type": "code",
-      "norm_label": "beritaadmincontroller.php",
-      "source_file": "app/Http/Controllers/Api/Admin/BeritaAdminController.php",
-      "source_location": "L1"
-    },
-    {
-      "id": "app_http_controllers_api_admin_galeriadmincontroller",
-      "label": "GaleriAdminController.php",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "Controller",
-      "file_type": "code",
-      "norm_label": "galeriadmincontroller.php",
-      "source_file": "app/Http/Controllers/Api/Admin/GaleriAdminController.php",
-      "source_location": "L1"
-    },
-    {
       "id": "app_http_controllers_api_admin_kontenstatiscontroller",
       "label": "KontenStatisController.php",
       "_origin": "ast",
       "community": 2,
-      "community_name": "Controller",
+      "community_name": "CatatanAktivitas",
       "file_type": "code",
       "norm_label": "kontenstatiscontroller.php",
       "source_file": "app/Http/Controllers/Api/Admin/KontenStatisController.php",
@@ -12050,10 +12019,21 @@
       "label": "MasterController.php",
       "_origin": "ast",
       "community": 2,
-      "community_name": "Controller",
+      "community_name": "CatatanAktivitas",
       "file_type": "code",
       "norm_label": "mastercontroller.php",
       "source_file": "app/Http/Controllers/Api/Admin/MasterController.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_http_controllers_api_admin_pengaturancontroller",
+      "label": "PengaturanController.php",
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "CatatanAktivitas",
+      "file_type": "code",
+      "norm_label": "pengaturancontroller.php",
+      "source_file": "app/Http/Controllers/Api/Admin/PengaturanController.php",
       "source_location": "L1"
     },
     {
@@ -12061,76 +12041,43 @@
       "label": "ProdukAdminController.php",
       "_origin": "ast",
       "community": 2,
-      "community_name": "Controller",
+      "community_name": "CatatanAktivitas",
       "file_type": "code",
       "norm_label": "produkadmincontroller.php",
       "source_file": "app/Http/Controllers/Api/Admin/ProdukAdminController.php",
       "source_location": "L1"
     },
     {
-      "id": "app_http_controllers_controller",
-      "label": "Controller.php",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "Controller",
-      "file_type": "code",
-      "norm_label": "controller.php",
-      "source_file": "app/Http/Controllers/Controller.php",
-      "source_location": "L1"
-    },
-    {
-      "id": "routes_api",
-      "label": "api.php",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "Controller",
-      "file_type": "code",
-      "norm_label": "api.php",
-      "source_file": "routes/api.php",
-      "source_location": "L1"
-    },
-    {
-      "id": "app_http_controllers_api_permohonancontroller",
-      "label": "PermohonanController.php",
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "Recaptcha",
-      "file_type": "code",
-      "norm_label": "permohonancontroller.php",
-      "source_file": "app/Http/Controllers/Api/PermohonanController.php",
-      "source_location": "L1"
-    },
-    {
       "id": "illuminate_support_facades_route",
       "label": "Illuminate\\Support\\Facades\\Route",
       "_origin": "ast",
-      "community": 20,
-      "community_name": "Recaptcha",
+      "community": 2,
+      "community_name": "CatatanAktivitas",
       "file_type": "code",
       "norm_label": "illuminate\\support\\facades\\route",
       "source_file": "",
       "source_location": ""
     },
     {
-      "id": "inertia_response",
-      "label": "Inertia\\Response",
+      "id": "routes_api",
+      "label": "api.php",
       "_origin": "ast",
-      "community": 20,
-      "community_name": "Recaptcha",
+      "community": 2,
+      "community_name": "CatatanAktivitas",
       "file_type": "code",
-      "norm_label": "inertia\\response",
-      "source_file": "",
-      "source_location": ""
+      "norm_label": "api.php",
+      "source_file": "routes/api.php",
+      "source_location": "L1"
     },
     {
-      "id": "routes_web",
-      "label": "web.php",
+      "id": "app_http_controllers_pengajuancontroller",
+      "label": "PengajuanController.php",
       "_origin": "ast",
       "community": 20,
-      "community_name": "Recaptcha",
+      "community_name": "PengaturanController",
       "file_type": "code",
-      "norm_label": "web.php",
-      "source_file": "routes/web.php",
+      "norm_label": "pengajuancontroller.php",
+      "source_file": "app/Http/Controllers/PengajuanController.php",
       "source_location": "L1"
     },
     {
@@ -13327,15 +13274,48 @@
       "source_location": "L1"
     },
     {
-      "id": "tesseract_js_tesseract_js",
-      "label": "tesseract.js",
+      "id": "app_http_controllers_api_permohonanpdfcontroller",
+      "label": "PermohonanPdfController.php",
       "_origin": "ast",
       "community": 248,
-      "community_name": "tesseract.js",
-      "confidence": "EXTRACTED",
+      "community_name": "PermohonanPdfController.php",
       "file_type": "code",
-      "norm_label": "tesseract.js",
-      "source_file": "tesseract.js"
+      "norm_label": "permohonanpdfcontroller.php",
+      "source_file": "app/Http/Controllers/Api/PermohonanPdfController.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "barryvdh_dompdf_facade_pdf",
+      "label": "Barryvdh\\DomPDF\\Facade\\Pdf",
+      "_origin": "ast",
+      "community": 248,
+      "community_name": "PermohonanPdfController.php",
+      "file_type": "code",
+      "norm_label": "barryvdh\\dompdf\\facade\\pdf",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "resources_js_lib_waktu",
+      "label": "waktu.js",
+      "_origin": "ast",
+      "community": 249,
+      "community_name": "waktu.js",
+      "file_type": "code",
+      "norm_label": "waktu.js",
+      "source_file": "resources/js/lib/waktu.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "resources_js_lib_waktu_zona_waktu",
+      "label": "ZONA_WAKTU",
+      "_origin": "ast",
+      "community": 249,
+      "community_name": "waktu.js",
+      "file_type": "code",
+      "norm_label": "zona_waktu",
+      "source_file": "resources/js/lib/waktu.js",
+      "source_location": "L39"
     },
     {
       "id": "claude",
@@ -13360,6 +13340,17 @@
       "norm_label": "graphify",
       "source_file": "CLAUDE.md",
       "source_location": "L1"
+    },
+    {
+      "id": "tesseract_js_tesseract_js",
+      "label": "tesseract.js",
+      "_origin": "ast",
+      "community": 250,
+      "community_name": "tesseract.js",
+      "confidence": "EXTRACTED",
+      "file_type": "code",
+      "norm_label": "tesseract.js",
+      "source_file": "tesseract.js"
     },
     {
       "id": "readme",
@@ -13523,6 +13514,50 @@
       "norm_label": "pilihrincian.jsx",
       "source_file": "resources/js/Components/PilihRincian.jsx",
       "source_location": "L1"
+    },
+    {
+      "id": "app_http_controllers_api_admin_permohonanadmincontroller",
+      "label": "PermohonanAdminController.php",
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "FotoProfil",
+      "file_type": "code",
+      "norm_label": "permohonanadmincontroller.php",
+      "source_file": "app/Http/Controllers/Api/Admin/PermohonanAdminController.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_http_controllers_api_admin_useradmincontroller",
+      "label": "UserAdminController.php",
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "FotoProfil",
+      "file_type": "code",
+      "norm_label": "useradmincontroller.php",
+      "source_file": "app/Http/Controllers/Api/Admin/UserAdminController.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_support_alasantolak",
+      "label": "AlasanTolak.php",
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "FotoProfil",
+      "file_type": "code",
+      "norm_label": "alasantolak.php",
+      "source_file": "app/Support/AlasanTolak.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "illuminate_support_facades_hash",
+      "label": "Illuminate\\Support\\Facades\\Hash",
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "FotoProfil",
+      "file_type": "code",
+      "norm_label": "illuminate\\support\\facades\\hash",
+      "source_file": "",
+      "source_location": ""
     },
     {
       "id": "composer",
@@ -13987,6 +14022,17 @@
       "source_location": "L44"
     },
     {
+      "id": "app_http_controllers_api_admin_beritaadmincontroller",
+      "label": "BeritaAdminController.php",
+      "_origin": "ast",
+      "community": 34,
+      "community_name": "News",
+      "file_type": "code",
+      "norm_label": "beritaadmincontroller.php",
+      "source_file": "app/Http/Controllers/Api/Admin/BeritaAdminController.php",
+      "source_location": "L1"
+    },
+    {
       "id": "app_http_controllers_api_kontencontroller",
       "label": "KontenController.php",
       "_origin": "ast",
@@ -13995,17 +14041,6 @@
       "file_type": "code",
       "norm_label": "kontencontroller.php",
       "source_file": "app/Http/Controllers/Api/KontenController.php",
-      "source_location": "L1"
-    },
-    {
-      "id": "app_http_controllers_publikcontroller",
-      "label": "PublikController.php",
-      "_origin": "ast",
-      "community": 34,
-      "community_name": "News",
-      "file_type": "code",
-      "norm_label": "publikcontroller.php",
-      "source_file": "app/Http/Controllers/PublikController.php",
       "source_location": "L1"
     },
     {
@@ -14207,39 +14242,6 @@
       "source_location": "L45"
     },
     {
-      "id": "app_http_controllers_api_admin_pengaturancontroller",
-      "label": "PengaturanController.php",
-      "_origin": "ast",
-      "community": 38,
-      "community_name": "JamLayanan",
-      "file_type": "code",
-      "norm_label": "pengaturancontroller.php",
-      "source_file": "app/Http/Controllers/Api/Admin/PengaturanController.php",
-      "source_location": "L1"
-    },
-    {
-      "id": "app_http_controllers_api_layanancontroller",
-      "label": "LayananController.php",
-      "_origin": "ast",
-      "community": 38,
-      "community_name": "JamLayanan",
-      "file_type": "code",
-      "norm_label": "layanancontroller.php",
-      "source_file": "app/Http/Controllers/Api/LayananController.php",
-      "source_location": "L1"
-    },
-    {
-      "id": "app_http_controllers_pengajuancontroller",
-      "label": "PengajuanController.php",
-      "_origin": "ast",
-      "community": 38,
-      "community_name": "JamLayanan",
-      "file_type": "code",
-      "norm_label": "pengajuancontroller.php",
-      "source_file": "app/Http/Controllers/PengajuanController.php",
-      "source_location": "L1"
-    },
-    {
       "id": "app_http_controllers_pengajuanpetugascontroller",
       "label": "PengajuanPetugasController.php",
       "_origin": "ast",
@@ -14262,14 +14264,14 @@
       "source_location": ""
     },
     {
-      "id": "app_support_konten",
-      "label": "Konten.php",
+      "id": "app_models_produk",
+      "label": "Produk.php",
       "_origin": "ast",
       "community": 4,
       "community_name": "PublikController",
       "file_type": "code",
-      "norm_label": "konten.php",
-      "source_file": "app/Support/Konten.php",
+      "norm_label": "produk.php",
+      "source_file": "app/Models/Produk.php",
       "source_location": "L1"
     },
     {
@@ -14515,36 +14517,36 @@
       "source_location": "L12"
     },
     {
-      "id": "app_http_controllers_api_admin_skmadmincontroller",
-      "label": "SkmAdminController.php",
+      "id": "app_http_controllers_berkascontroller",
+      "label": "BerkasController.php",
       "_origin": "ast",
       "community": 45,
       "community_name": "Illuminate\\Database\\Eloquent\\Model",
       "file_type": "code",
-      "norm_label": "skmadmincontroller.php",
-      "source_file": "app/Http/Controllers/Api/Admin/SkmAdminController.php",
+      "norm_label": "berkascontroller.php",
+      "source_file": "app/Http/Controllers/BerkasController.php",
       "source_location": "L1"
     },
     {
-      "id": "app_http_controllers_api_aspirasicontroller",
-      "label": "AspirasiController.php",
+      "id": "app_http_controllers_mediapublikcontroller",
+      "label": "MediaPublikController.php",
       "_origin": "ast",
       "community": 45,
       "community_name": "Illuminate\\Database\\Eloquent\\Model",
       "file_type": "code",
-      "norm_label": "aspirasicontroller.php",
-      "source_file": "app/Http/Controllers/Api/AspirasiController.php",
+      "norm_label": "mediapublikcontroller.php",
+      "source_file": "app/Http/Controllers/MediaPublikController.php",
       "source_location": "L1"
     },
     {
-      "id": "app_http_controllers_dashboardcontroller",
-      "label": "DashboardController.php",
+      "id": "app_http_middleware_pastikanperan",
+      "label": "PastikanPeran.php",
       "_origin": "ast",
       "community": 45,
       "community_name": "Illuminate\\Database\\Eloquent\\Model",
       "file_type": "code",
-      "norm_label": "dashboardcontroller.php",
-      "source_file": "app/Http/Controllers/DashboardController.php",
+      "norm_label": "pastikanperan.php",
+      "source_file": "app/Http/Middleware/PastikanPeran.php",
       "source_location": "L1"
     },
     {
@@ -14578,28 +14580,6 @@
       "file_type": "code",
       "norm_label": "demografiwilayah.php",
       "source_file": "app/Models/DemografiWilayah.php",
-      "source_location": "L1"
-    },
-    {
-      "id": "app_models_gallery",
-      "label": "Gallery.php",
-      "_origin": "ast",
-      "community": 45,
-      "community_name": "Illuminate\\Database\\Eloquent\\Model",
-      "file_type": "code",
-      "norm_label": "gallery.php",
-      "source_file": "app/Models/Gallery.php",
-      "source_location": "L1"
-    },
-    {
-      "id": "app_models_kritiksaran",
-      "label": "KritikSaran.php",
-      "_origin": "ast",
-      "community": 45,
-      "community_name": "Illuminate\\Database\\Eloquent\\Model",
-      "file_type": "code",
-      "norm_label": "kritiksaran.php",
-      "source_file": "app/Models/KritikSaran.php",
       "source_location": "L1"
     },
     {
@@ -14658,17 +14638,6 @@
       "source_location": "L1"
     },
     {
-      "id": "app_models_pengaduan",
-      "label": "Pengaduan.php",
-      "_origin": "ast",
-      "community": 45,
-      "community_name": "Illuminate\\Database\\Eloquent\\Model",
-      "file_type": "code",
-      "norm_label": "pengaduan.php",
-      "source_file": "app/Models/Pengaduan.php",
-      "source_location": "L1"
-    },
-    {
       "id": "app_models_permohonan",
       "label": "Permohonan.php",
       "_origin": "ast",
@@ -14680,17 +14649,6 @@
       "source_location": "L1"
     },
     {
-      "id": "app_models_produk",
-      "label": "Produk.php",
-      "_origin": "ast",
-      "community": 45,
-      "community_name": "Illuminate\\Database\\Eloquent\\Model",
-      "file_type": "code",
-      "norm_label": "produk.php",
-      "source_file": "app/Models/Produk.php",
-      "source_location": "L1"
-    },
-    {
       "id": "app_models_skmjawaban",
       "label": "SkmJawaban.php",
       "_origin": "ast",
@@ -14699,17 +14657,6 @@
       "file_type": "code",
       "norm_label": "skmjawaban.php",
       "source_file": "app/Models/SkmJawaban.php",
-      "source_location": "L1"
-    },
-    {
-      "id": "app_models_staticcontent",
-      "label": "StaticContent.php",
-      "_origin": "ast",
-      "community": 45,
-      "community_name": "Illuminate\\Database\\Eloquent\\Model",
-      "file_type": "code",
-      "norm_label": "staticcontent.php",
-      "source_file": "app/Models/StaticContent.php",
       "source_location": "L1"
     },
     {
@@ -14746,26 +14693,59 @@
       "source_location": "L1"
     },
     {
-      "id": "app_models_wilayah",
-      "label": "Wilayah.php",
+      "id": "app_services_catatanaktivitas",
+      "label": "CatatanAktivitas.php",
       "_origin": "ast",
       "community": 45,
       "community_name": "Illuminate\\Database\\Eloquent\\Model",
       "file_type": "code",
-      "norm_label": "wilayah.php",
-      "source_file": "app/Models/Wilayah.php",
+      "norm_label": "catatanaktivitas.php",
+      "source_file": "app/Services/CatatanAktivitas.php",
       "source_location": "L1"
     },
     {
-      "id": "app_services_pencacahkunjungan",
-      "label": "PencacahKunjungan.php",
+      "id": "app_services_fonnte",
+      "label": "Fonnte.php",
       "_origin": "ast",
       "community": 45,
       "community_name": "Illuminate\\Database\\Eloquent\\Model",
       "file_type": "code",
-      "norm_label": "pencacahkunjungan.php",
-      "source_file": "app/Services/PencacahKunjungan.php",
+      "norm_label": "fonnte.php",
+      "source_file": "app/Services/Fonnte.php",
       "source_location": "L1"
+    },
+    {
+      "id": "app_services_pemberitahuan",
+      "label": "Pemberitahuan.php",
+      "_origin": "ast",
+      "community": 45,
+      "community_name": "Illuminate\\Database\\Eloquent\\Model",
+      "file_type": "code",
+      "norm_label": "pemberitahuan.php",
+      "source_file": "app/Services/Pemberitahuan.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_services_recaptcha",
+      "label": "Recaptcha.php",
+      "_origin": "ast",
+      "community": 45,
+      "community_name": "Illuminate\\Database\\Eloquent\\Model",
+      "file_type": "code",
+      "norm_label": "recaptcha.php",
+      "source_file": "app/Services/Recaptcha.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "closure",
+      "label": "Closure",
+      "_origin": "ast",
+      "community": 45,
+      "community_name": "Illuminate\\Database\\Eloquent\\Model",
+      "file_type": "code",
+      "norm_label": "closure",
+      "source_file": "",
+      "source_location": ""
     },
     {
       "id": "illuminate_database_eloquent_builder",
@@ -14801,13 +14781,35 @@
       "source_location": ""
     },
     {
-      "id": "illuminate_support_facades_cookie",
-      "label": "Illuminate\\Support\\Facades\\Cookie",
+      "id": "illuminate_support_facades_http",
+      "label": "Illuminate\\Support\\Facades\\Http",
       "_origin": "ast",
       "community": 45,
       "community_name": "Illuminate\\Database\\Eloquent\\Model",
       "file_type": "code",
-      "norm_label": "illuminate\\support\\facades\\cookie",
+      "norm_label": "illuminate\\support\\facades\\http",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "illuminate_support_facades_log",
+      "label": "Illuminate\\Support\\Facades\\Log",
+      "_origin": "ast",
+      "community": 45,
+      "community_name": "Illuminate\\Database\\Eloquent\\Model",
+      "file_type": "code",
+      "norm_label": "illuminate\\support\\facades\\log",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "symfony_component_httpfoundation_response",
+      "label": "Symfony\\Component\\HttpFoundation\\Response",
+      "_origin": "ast",
+      "community": 45,
+      "community_name": "Illuminate\\Database\\Eloquent\\Model",
+      "file_type": "code",
+      "norm_label": "symfony\\component\\httpfoundation\\response",
       "source_file": "",
       "source_location": ""
     },
@@ -15381,7 +15383,7 @@
       "file_type": "code",
       "norm_label": "tipe_ikon",
       "source_file": "resources/js/Components/LoncengNotifikasi.jsx",
-      "source_location": "L34"
+      "source_location": "L35"
     },
     {
       "id": "resources_js_components_ui_time_picker",
@@ -15692,6 +15694,17 @@
       "source_location": ""
     },
     {
+      "id": "app_services_demografiexcel_php_streamedresponse",
+      "label": "StreamedResponse",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "DemografiAdminController",
+      "file_type": "code",
+      "norm_label": "streamedresponse",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
       "id": "phpoffice_phpspreadsheet_iofactory",
       "label": "PhpOffice\\PhpSpreadsheet\\IOFactory",
       "_origin": "ast",
@@ -15846,14 +15859,14 @@
       "source_location": "L20"
     },
     {
-      "id": "app_http_controllers_api_admin_pengaduanadmincontroller",
-      "label": "PengaduanAdminController.php",
+      "id": "app_http_controllers_auth_cekstatuscontroller",
+      "label": "CekStatusController.php",
       "_origin": "ast",
       "community": 64,
-      "community_name": "StatusAkun",
+      "community_name": "Recaptcha",
       "file_type": "code",
-      "norm_label": "pengaduanadmincontroller.php",
-      "source_file": "app/Http/Controllers/Api/Admin/PengaduanAdminController.php",
+      "norm_label": "cekstatuscontroller.php",
+      "source_file": "app/Http/Controllers/Auth/CekStatusController.php",
       "source_location": "L1"
     },
     {
@@ -15861,7 +15874,7 @@
       "label": "LoginController.php",
       "_origin": "ast",
       "community": 64,
-      "community_name": "StatusAkun",
+      "community_name": "Recaptcha",
       "file_type": "code",
       "norm_label": "logincontroller.php",
       "source_file": "app/Http/Controllers/Auth/LoginController.php",
@@ -15872,7 +15885,7 @@
       "label": "RegisterController.php",
       "_origin": "ast",
       "community": 64,
-      "community_name": "StatusAkun",
+      "community_name": "Recaptcha",
       "file_type": "code",
       "norm_label": "registercontroller.php",
       "source_file": "app/Http/Controllers/Auth/RegisterController.php",
@@ -15883,7 +15896,7 @@
       "label": "SandiController.php",
       "_origin": "ast",
       "community": 64,
-      "community_name": "StatusAkun",
+      "community_name": "Recaptcha",
       "file_type": "code",
       "norm_label": "sandicontroller.php",
       "source_file": "app/Http/Controllers/Auth/SandiController.php",
@@ -15894,7 +15907,7 @@
       "label": "Otp.php",
       "_origin": "ast",
       "community": 64,
-      "community_name": "StatusAkun",
+      "community_name": "Recaptcha",
       "file_type": "code",
       "norm_label": "otp.php",
       "source_file": "app/Services/Otp.php",
@@ -15905,7 +15918,7 @@
       "label": "Surel.php",
       "_origin": "ast",
       "community": 64,
-      "community_name": "StatusAkun",
+      "community_name": "Recaptcha",
       "file_type": "code",
       "norm_label": "surel.php",
       "source_file": "app/Services/Surel.php",
@@ -15916,29 +15929,18 @@
       "label": "StatusAkun.php",
       "_origin": "ast",
       "community": 64,
-      "community_name": "StatusAkun",
+      "community_name": "Recaptcha",
       "file_type": "code",
       "norm_label": "statusakun.php",
       "source_file": "app/Support/StatusAkun.php",
       "source_location": "L1"
     },
     {
-      "id": "illuminate_support_facades_hash",
-      "label": "Illuminate\\Support\\Facades\\Hash",
-      "_origin": "ast",
-      "community": 64,
-      "community_name": "StatusAkun",
-      "file_type": "code",
-      "norm_label": "illuminate\\support\\facades\\hash",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
       "id": "illuminate_support_facades_mail",
       "label": "Illuminate\\Support\\Facades\\Mail",
       "_origin": "ast",
       "community": 64,
-      "community_name": "StatusAkun",
+      "community_name": "Recaptcha",
       "file_type": "code",
       "norm_label": "illuminate\\support\\facades\\mail",
       "source_file": "",
@@ -15949,7 +15951,7 @@
       "label": "Illuminate\\Validation\\ValidationException",
       "_origin": "ast",
       "community": 64,
-      "community_name": "StatusAkun",
+      "community_name": "Recaptcha",
       "file_type": "code",
       "norm_label": "illuminate\\validation\\validationexception",
       "source_file": "",
@@ -15960,33 +15962,55 @@
       "label": "Inertia\\Inertia",
       "_origin": "ast",
       "community": 64,
-      "community_name": "StatusAkun",
+      "community_name": "Recaptcha",
       "file_type": "code",
       "norm_label": "inertia\\inertia",
       "source_file": "",
       "source_location": ""
     },
     {
-      "id": "app_http_controllers_auth_otpcontroller",
-      "label": "OtpController.php",
+      "id": "inertia_response",
+      "label": "Inertia\\Response",
       "_origin": "ast",
-      "community": 65,
-      "community_name": "OtpController",
+      "community": 64,
+      "community_name": "Recaptcha",
       "file_type": "code",
-      "norm_label": "otpcontroller.php",
-      "source_file": "app/Http/Controllers/Auth/OtpController.php",
+      "norm_label": "inertia\\response",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "routes_web",
+      "label": "web.php",
+      "_origin": "ast",
+      "community": 64,
+      "community_name": "Recaptcha",
+      "file_type": "code",
+      "norm_label": "web.php",
+      "source_file": "routes/web.php",
       "source_location": "L1"
     },
     {
-      "id": "illuminate_support_facades_cache",
-      "label": "Illuminate\\Support\\Facades\\Cache",
+      "id": "app_http_controllers_api_permohonancontroller",
+      "label": "PermohonanController.php",
       "_origin": "ast",
       "community": 65,
-      "community_name": "OtpController",
+      "community_name": "AlasanTolakPermohonan",
       "file_type": "code",
-      "norm_label": "illuminate\\support\\facades\\cache",
-      "source_file": "",
-      "source_location": ""
+      "norm_label": "permohonancontroller.php",
+      "source_file": "app/Http/Controllers/Api/PermohonanController.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_support_alasantolakpermohonan",
+      "label": "AlasanTolakPermohonan.php",
+      "_origin": "ast",
+      "community": 65,
+      "community_name": "AlasanTolakPermohonan",
+      "file_type": "code",
+      "norm_label": "alasantolakpermohonan.php",
+      "source_file": "app/Support/AlasanTolakPermohonan.php",
+      "source_location": "L1"
     },
     {
       "id": "composer_autoload",
@@ -16187,6 +16211,28 @@
       "source_location": "L21"
     },
     {
+      "id": "app_http_controllers_api_notifikasicontroller",
+      "label": "NotifikasiController.php",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "Balasan",
+      "file_type": "code",
+      "norm_label": "notifikasicontroller.php",
+      "source_file": "app/Http/Controllers/Api/NotifikasiController.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_http_controllers_api_pendudukcontroller",
+      "label": "PendudukController.php",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "Balasan",
+      "file_type": "code",
+      "norm_label": "pendudukcontroller.php",
+      "source_file": "app/Http/Controllers/Api/PendudukController.php",
+      "source_location": "L1"
+    },
+    {
       "id": "app_http_controllers_api_sistemcontroller",
       "label": "SistemController.php",
       "_origin": "ast",
@@ -16371,7 +16417,7 @@
       "file_type": "code",
       "norm_label": "tab",
       "source_file": "resources/js/Pages/Pengajuan/Riwayat.jsx",
-      "source_location": "L14"
+      "source_location": "L15"
     },
     {
       "id": "resources_js_pages_pengajuan_riwayat_warna",
@@ -16382,7 +16428,7 @@
       "file_type": "code",
       "norm_label": "warna",
       "source_file": "resources/js/Pages/Pengajuan/Riwayat.jsx",
-      "source_location": "L7"
+      "source_location": "L8"
     },
     {
       "id": "resources_views_publik_ppid_layanan_blade",
@@ -21340,7 +21386,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "resources/js/Components/LoncengNotifikasi.jsx",
-      "source_location": "L80",
+      "source_location": "L81",
       "weight": 1.0
     },
     {
@@ -21352,7 +21398,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "resources/js/Components/LoncengNotifikasi.jsx",
-      "source_location": "L86",
+      "source_location": "L87",
       "weight": 1.0
     },
     {
@@ -21364,7 +21410,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "resources/js/Components/LoncengNotifikasi.jsx",
-      "source_location": "L151",
+      "source_location": "L152",
       "weight": 1.0
     },
     {
@@ -21376,7 +21422,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "resources/js/Components/LoncengNotifikasi.jsx",
-      "source_location": "L288",
+      "source_location": "L289",
       "weight": 1.0
     },
     {
@@ -36168,35 +36214,13 @@
     },
     {
       "source": "resources_js_components_dasbor",
-      "target": "resources_js_components_dasbor_tglsingkat",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "resources/js/Components/Dasbor.jsx",
-      "source_location": "L407",
-      "weight": 1.0
-    },
-    {
-      "source": "resources_js_components_dasbor",
-      "target": "resources_js_components_dasbor_tgljam",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "resources/js/Components/Dasbor.jsx",
-      "source_location": "L411",
-      "weight": 1.0
-    },
-    {
-      "source": "resources_js_components_dasbor",
       "target": "resources_js_components_dasbor_angka",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "resources/js/Components/Dasbor.jsx",
-      "source_location": "L415",
+      "source_location": "L417",
       "weight": 1.0
     },
     {
@@ -36207,7 +36231,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "resources/js/Components/Dasbor.jsx",
-      "source_location": "L429",
+      "source_location": "L431",
       "weight": 1.0
     },
     {
@@ -36636,7 +36660,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "resources/js/Components/LoncengNotifikasi.jsx",
-      "source_location": "L114",
+      "source_location": "L115",
       "weight": 1.0
     },
     {
@@ -36647,7 +36671,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "resources/js/Components/LoncengNotifikasi.jsx",
-      "source_location": "L34",
+      "source_location": "L35",
       "weight": 1.0
     },
     {
@@ -36658,7 +36682,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "resources/js/Components/LoncengNotifikasi.jsx",
-      "source_location": "L45",
+      "source_location": "L46",
       "weight": 1.0
     },
     {
@@ -36669,7 +36693,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "resources/js/Components/LoncengNotifikasi.jsx",
-      "source_location": "L66",
+      "source_location": "L67",
       "weight": 1.0
     },
     {
@@ -36680,7 +36704,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "resources/js/Components/LoncengNotifikasi.jsx",
-      "source_location": "L79",
+      "source_location": "L80",
       "weight": 1.0
     },
     {
@@ -36691,7 +36715,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "resources/js/Components/LoncengNotifikasi.jsx",
-      "source_location": "L85",
+      "source_location": "L86",
       "weight": 1.0
     },
     {
@@ -38400,6 +38424,61 @@
       "weight": 1.0
     },
     {
+      "source": "resources_js_lib_waktu",
+      "target": "resources_js_lib_waktu_bacazona",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "resources/js/lib/waktu.js",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "resources_js_lib_waktu",
+      "target": "resources_js_lib_waktu_zona_waktu",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "resources/js/lib/waktu.js",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "resources_js_lib_waktu",
+      "target": "resources_js_lib_waktu_tglsingkat",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "resources/js/lib/waktu.js",
+      "source_location": "L42",
+      "weight": 1.0
+    },
+    {
+      "source": "resources_js_lib_waktu",
+      "target": "resources_js_lib_waktu_tgljam",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "resources/js/lib/waktu.js",
+      "source_location": "L51",
+      "weight": 1.0
+    },
+    {
+      "source": "resources_js_lib_waktu",
+      "target": "resources_js_lib_waktu_tglpanjang",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "resources/js/lib/waktu.js",
+      "source_location": "L60",
+      "weight": 1.0
+    },
+    {
       "source": "resources_js_pages_auth_cekstatus",
       "target": "resources_js_pages_auth_cekstatus_warna",
       "relation": "contains",
@@ -38858,7 +38937,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "resources/js/Pages/Dashboard/KritikSaran.jsx",
-      "source_location": "L17",
+      "source_location": "L18",
       "weight": 1.0
     },
     {
@@ -39177,7 +39256,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "resources/js/Pages/Pengajuan/Riwayat.jsx",
-      "source_location": "L14",
+      "source_location": "L15",
       "weight": 1.0
     },
     {
@@ -39188,7 +39267,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "resources/js/Pages/Pengajuan/Riwayat.jsx",
-      "source_location": "L182",
+      "source_location": "L183",
       "weight": 1.0
     },
     {
@@ -39199,7 +39278,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "resources/js/Pages/Pengajuan/Riwayat.jsx",
-      "source_location": "L25",
+      "source_location": "L26",
       "weight": 1.0
     },
     {
@@ -39210,7 +39289,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "resources/js/Pages/Pengajuan/Riwayat.jsx",
-      "source_location": "L59",
+      "source_location": "L60",
       "weight": 1.0
     },
     {
@@ -39221,7 +39300,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "resources/js/Pages/Pengajuan/Riwayat.jsx",
-      "source_location": "L7",
+      "source_location": "L8",
       "weight": 1.0
     },
     {
@@ -45311,7 +45390,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "resources/js/Components/LoncengNotifikasi.jsx",
-      "source_location": "L129",
+      "source_location": "L130",
       "weight": 1.0
     },
     {
@@ -45448,5 +45527,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "d50c9739c3d1c1d13fa4636ededa4903888d69d5"
+  "built_at_commit": "0420d65d068f9a08af62e124190027966fcfbee4"
 }

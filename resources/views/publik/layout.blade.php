@@ -13,6 +13,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    {{-- Zona kantor untuk penulisan tanggal/jam di klien. Tanpa ini
+         `toLocaleString` memakai zona PERAMBAN: petugas di zona lain
+         membaca jam yang meleset dari yang tercetak di tanda terima.
+         Dibaca `resources/js/lib/waktu.js`. --}}
+    <meta name="zona-waktu" content="{{ config('app.timezone') }}">
 
     <title>@yield('judul', 'SAIBATIN - Disdukcapil Pesisir Barat')</title>
     <meta name="description" content="@yield('deskripsi', 'Portal layanan administrasi kependudukan & pencatatan sipil Kabupaten Pesisir Barat (SAIBATIN).')">

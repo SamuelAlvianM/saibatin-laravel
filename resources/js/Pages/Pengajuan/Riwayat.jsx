@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { CheckCircle2, ClipboardList, Download, FilePlus2, Loader2 } from 'lucide-react';
 import LayoutPengguna from '@/Components/LayoutPengguna';
 import { ambilJson } from '@/lib/api';
+import { tglSingkat } from '@/lib/waktu';
 
 const WARNA = {
   MENUNGGU: 'bg-amber-50 text-amber-700 ring-amber-200',
@@ -121,7 +122,7 @@ export default function Riwayat({ baru }) {
               </div>
               <div className="flex items-center gap-3">
                 <span className="text-xs text-slate-400">
-                  {new Date(p.createdAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}
+                  {tglSingkat(p.createdAt)}
                 </span>
                 <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ring-1 ${WARNA[p.status] ?? WARNA.MENUNGGU}`}>
                   {p.status}

@@ -5,6 +5,7 @@ import { Kartu, Memuat, Pesan } from '@/Components/Dasbor';
 import { ambilJson } from '@/lib/api';
 import { kelasSorot, useSorot } from '@/lib/sorot';
 import { Input } from '@/Components/ui/input';
+import { tglPanjang } from '@/lib/waktu';
 
 /**
  * Kritik & saran — port `app/dashboard/kritik-saran/AdminKritikSaran.tsx`.
@@ -82,7 +83,7 @@ export default function KritikSaran({ sorot }) {
                     <p className="truncate font-semibold text-slate-900">{it.nama}</p>
                     <p className="flex items-center gap-1 text-[0.7rem] text-slate-400">
                       <CalendarDays className="h-3 w-3" />
-                      {new Date(it.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
+                      {tglPanjang(it.created_at)}
                     </p>
                   </div>
                 </div>

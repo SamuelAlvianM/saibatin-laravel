@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { ambilJson, kirimJson } from '@/lib/api';
 import { cn } from '@/lib/utils';
+import { tglSingkat } from '@/lib/waktu';
 
 /**
  * Lonceng notifikasi in-app — port `components/shared/notification-bell.tsx`.
@@ -51,7 +52,7 @@ function waktuRelatif(iso) {
   if (jam < 24) return `${jam} jam lalu`;
   const hari = Math.floor(jam / 24);
   if (hari < 7) return `${hari} hari lalu`;
-  return new Date(iso).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+  return tglSingkat(iso);
 }
 
 /**

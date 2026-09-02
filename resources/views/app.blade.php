@@ -6,6 +6,11 @@
     {{-- Dibaca komponen yang memanggil endpoint lewat fetch (mis. Cek Status),
          di luar jalur form Inertia yang menyisipkan tokennya sendiri. --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    {{-- Zona kantor untuk penulisan tanggal/jam di klien. Tanpa ini
+         `toLocaleString` memakai zona PERAMBAN: petugas di zona lain
+         membaca jam yang meleset dari yang tercetak di tanda terima.
+         Dibaca `resources/js/lib/waktu.js`. --}}
+    <meta name="zona-waktu" content="{{ config('app.timezone') }}">
     <title inertia>{{ config('app.name') }}</title>
 
     {{-- Ikon tab peramban. `favicon.ico` bawaan Laravel sengaja DIBUANG: berkas
