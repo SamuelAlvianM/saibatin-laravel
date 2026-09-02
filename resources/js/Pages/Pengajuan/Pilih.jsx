@@ -3,6 +3,7 @@ import { useState } from 'react';
 import LayoutPengguna from '@/Components/LayoutPengguna';
 import { ikon as ikonDari } from '@/lib/ikon';
 import { Input } from '@/Components/ui/input';
+import { warnaKategori as warna } from '@/lib/kategori';
 
 export default function Pilih({ daftar, kategori, kataKunciAwal = '' }) {
   const [aktif, setAktif] = useState('all');
@@ -40,8 +41,10 @@ export default function Pilih({ daftar, kategori, kataKunciAwal = '' }) {
             const I = ikonDari(k.icon);
             return (
               <button key={k.id} onClick={() => setAktif(k.id)}
-                      className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${
-                        aktif === k.id ? 'bg-brand text-white' : 'border border-slate-300 bg-white text-slate-600 hover:border-brand hover:text-brand'
+                      className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm font-medium transition-colors ${
+                        aktif === k.id
+                          ? warna(k.id).tab
+                          : 'border-slate-300 bg-white text-slate-600 hover:border-slate-400'
                       }`}>
                 <I className="h-4 w-4" />{k.name}
               </button>
@@ -58,10 +61,17 @@ export default function Pilih({ daftar, kategori, kataKunciAwal = '' }) {
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {tampil.map((l) => {
             const I = ikonDari(l.icon);
+            const w = warna(l.category);
+
             return (
               <Link key={l.slug} href={`/user/pengajuan/baru/${l.slug}`}
                     className="group rounded-xl border border-slate-200 bg-white p-4 transition-all hover:-translate-y-0.5 hover:border-brand/40 hover:shadow-md">
-                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-brand/10 text-brand transition-colors group-hover:bg-brand group-hover:text-white">
+                {/* Warna kategori TERBATAS pada glif ikonnya; kotak di belakangnya
+                    tetap `bg-brand/10` untuk semua kategori. Halaman ini dan
+                    pemilih layanan petugas membaca peta yang SAMA
+                    (`lib/kategori.js`) supaya dua halaman berisi daftar layanan
+                    yang sama tidak terlihat seperti dua aplikasi berbeda. */}
+                <div className={`mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-brand/10 transition-colors group-hover:bg-brand group-hover:text-white ${w.ikon}`}>
                   <I className="h-5 w-5" />
                 </div>
                 <h2 className="text-sm font-semibold leading-snug text-slate-800">{l.title}</h2>

@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, Clock, EyeOff, FilePlus2, Search, SlidersHorizon
 import LayoutDashboard from '@/Components/LayoutDashboard';
 import PengaturanLayanan from '@/Components/PengaturanLayanan';
 import { Pesan, Tombol } from '@/Components/Dasbor';
+import { warnaKategori as warna, WARNA_NETRAL } from '@/lib/kategori';
 import { ikon as ikonDari } from '@/lib/ikon';
 import { Input } from '@/Components/ui/input';
 
@@ -23,7 +24,7 @@ import { Input } from '@/Components/ui/input';
  *    ketersediaan layanan — di portal lama pun pengaturan itu tinggal di sini,
  *    bukan di halaman tersendiri.
  */
-export default function PengajuanBaru({ daftar, jam, tersembunyi = [] }) {
+export default function PengajuanBaru({ daftar, jam, tersembunyi = [], kategori = [] }) {
   const { auth } = usePage().props;
   const admin = (auth?.user?.level ?? 3) === 1;
 
@@ -35,16 +36,30 @@ export default function PengajuanBaru({ daftar, jam, tersembunyi = [] }) {
   const mati = new Set(tersembunyi);
 
   const [cari, setCari] = useState('');
+  const [kat, setKat] = useState('all');
   const [pengaturan, setPengaturan] = useState(false);
   const [pesan, setPesan] = useState(null);
 
   const q = cari.trim().toLowerCase();
-  const tampil = (q
-    ? daftar.filter((l) => l.title.toLowerCase().includes(q) || l.description.toLowerCase().includes(q))
-    : daftar
-  )
-    // Layanan tidak aktif selalu turun ke bawah. Hanya terasa bagi Super Admin;
-    // peran lain tidak menerima layanan mati sama sekali.
+  const cocokCari = (l) =>
+    !q || l.title.toLowerCase().includes(q) || l.description.toLowerCase().includes(q);
+
+  /*
+   * Jumlah per tab dihitung dari hasil PENCARIAN, bukan dari seluruh daftar.
+   * Kalau dihitung dari semua, tab bisa menunjukkan "Akta 5" lalu terbuka
+   * kosong karena kata kuncinya tidak cocok satu pun — angka yang berbohong.
+   */
+  const hasilCari = daftar.filter(cocokCari);
+  const jumlahKat = hasilCari.reduce((a, l) => ({ ...a, [l.category]: (a[l.category] ?? 0) + 1 }), {});
+
+  // Tab hanya untuk kategori yang benar-benar punya layanan; `all` selalu ada.
+  const tabs = kategori.filter((k) => k.id === 'all' || (jumlahKat[k.id] ?? 0) > 0);
+
+  const tampil = hasilCari
+    .filter((l) => kat === 'all' || l.category === kat)
+    // Layanan tidak aktif selalu turun ke bawah. `sort` di JS stabil, jadi
+    // urutan yang disetel petugas tetap dipakai untuk sisanya. Hanya terasa
+    // bagi Super Admin; peran lain tidak menerima layanan mati sama sekali.
     .slice()
     .sort((a, b) => (mati.has(a.kunci) ? 1 : 0) - (mati.has(b.kunci) ? 1 : 0));
 
@@ -93,9 +108,35 @@ export default function PengajuanBaru({ daftar, jam, tersembunyi = [] }) {
         </div>
       )}
 
+
+      {tabs.length > 1 && (
+        <div className="mb-4 flex flex-wrap gap-2" role="tablist" aria-label="Kategori layanan">
+          {tabs.map((k) => {
+            const aktif = kat === k.id;
+            const n = k.id === 'all' ? hasilCari.length : (jumlahKat[k.id] ?? 0);
+            const w = warna(k.id);
+
+            // Tab tidak aktif dibiarkan netral: kalau semuanya berwarna, tidak
+            // ada lagi yang menandakan mana yang sedang dipilih.
+            return (
+              <button key={k.id} type="button" role="tab" aria-selected={aktif}
+                      onClick={() => setKat(k.id)}
+                      className={`inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors ${
+                        aktif ? w.tab : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'
+                      }`}>
+                {k.name}
+                <span className={`rounded-full px-1.5 text-xs tabular-nums ${
+                  aktif ? w.hitung : 'bg-slate-100 text-slate-500'
+                }`}>{n}</span>
+              </button>
+            );
+          })}
+        </div>
+      )}
+
       {tampil.length === 0 ? (
         <div className="py-16 text-center text-sm text-slate-500">
-          Tidak ada layanan cocok &quot;{cari}&quot;.
+          {q ? <>Tidak ada layanan cocok &quot;{cari}&quot;.</> : <>Tidak ada layanan di kategori ini.</>}
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -104,10 +145,17 @@ export default function PengajuanBaru({ daftar, jam, tersembunyi = [] }) {
             const nonaktif = mati.has(l.kunci);
 
             /*
-             * 🔴 Kartu nonaktif SELALU abu-abu, tanpa warna merek sama sekali.
+             * 🔴 Kartu nonaktif SELALU abu-abu, MENGABAIKAN warna kategorinya.
              * Kalau ia ikut berwarna seperti yang lain, satu-satunya penanda
              * "tidak aktif" tinggal teks kecil — dan itu terlewat.
+             *
+             * ⚠️ Warna kategori dipakai TERBATAS: cuma glif ikonnya. Badan kartu
+             * tetap putih dan kotak di belakang ikon tetap `bg-brand/10` untuk
+             * semua kategori. Kartu berwarna penuh membuat halaman ramai dan
+             * melemahkan satu-satunya warna yang memang harus menonjol, yaitu
+             * penanda layanan tidak aktif.
              */
+            const w = nonaktif ? WARNA_NETRAL : warna(l.category);
             return (
               <Link key={l.slug} href={`/dashboard/pengajuan-baru/${l.slug}`}
                     title={nonaktif
@@ -119,7 +167,7 @@ export default function PengajuanBaru({ daftar, jam, tersembunyi = [] }) {
                         : 'border-slate-200 bg-white hover:border-brand/40'
                     }`}>
                 <div className={`flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl transition-transform group-hover:scale-105 ${
-                  nonaktif ? 'bg-slate-200 text-slate-500' : 'bg-brand/10 text-brand'
+                  nonaktif ? 'bg-slate-200 text-slate-500' : `bg-brand/10 ${w.ikon}`
                 }`}>
                   <I className="h-5 w-5" />
                 </div>

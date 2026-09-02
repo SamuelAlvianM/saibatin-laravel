@@ -57,6 +57,11 @@ class PengajuanPetugasController extends Controller
         return Inertia::render('Dashboard/PengajuanBaru', [
             'daftar' => $daftar,
             'tersembunyi' => $admin ? $mati : [],
+            // Daftar kategori dikirim dari server, bukan disimpulkan dari
+            // `daftar` — supaya urutan dan namanya sama persis dengan yang
+            // dipakai halaman pemohon, dan kategori kosong tidak diam-diam
+            // hilang dari tab hanya karena layanannya sedang dimatikan.
+            'kategori' => config('layanan.kategori'),
             'jam' => $this->jam->status(),
         ]);
     }
