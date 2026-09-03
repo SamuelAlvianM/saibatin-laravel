@@ -193,10 +193,28 @@ function KartuDemografi({ kartu, onKlik }) {
       </div>
 
       <div>
-        <p className="mb-2 text-[1.7rem] font-bold leading-none tracking-tight text-slate-900">
-          <AngkaNaik nilai={kartu.value} />
-        </p>
+        {/*
+          🔴 `null` = DATANYA BELUM ADA, dan itu berbeda dari nol.
+
+          Nol adalah pernyataan — "kabupaten ini punya 0 kepala keluarga".
+          Kartu yang kolom sumbernya tidak ditemukan tidak boleh membuat
+          pernyataan itu; ia menampilkan "—". Lihat `jumlahKolom()` di
+          StatistikController.
+        */}
+        {kartu.value === null || kartu.value === undefined ? (
+          <p className="mb-2 text-[1.7rem] font-bold leading-none tracking-tight text-slate-300"
+             title="Data untuk kartu ini belum tersedia — hubungi admin untuk mengatur sumber datanya">
+            &mdash;
+          </p>
+        ) : (
+          <p className="mb-2 text-[1.7rem] font-bold leading-none tracking-tight text-slate-900">
+            <AngkaNaik nilai={kartu.value} />
+          </p>
+        )}
         <p className="text-[0.66rem] font-semibold uppercase tracking-widest text-slate-500">{kartu.title}</p>
+        {(kartu.value === null || kartu.value === undefined) && (
+          <p className="mt-1 text-[0.6rem] font-medium text-slate-400">Belum ada data</p>
+        )}
       </div>
     </button>
   );

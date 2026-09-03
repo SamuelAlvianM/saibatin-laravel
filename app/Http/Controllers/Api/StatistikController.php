@@ -78,13 +78,19 @@ class StatistikController extends Controller
             'pelayanan' => $pelayanan,
             'totalBerita' => News::terbit()->count(),
             'kartuDemografi' => collect($kartuKonfig)->map(function ($k) use ($barisDemografi) {
+                /*
+                 * 🔴 `null` = DATANYA BELUM ADA, dan itu berbeda dari nol.
+                 * Nol adalah pernyataan — "kabupaten ini punya 0 kepala
+                 * keluarga". Beranda menampilkan "—" untuk null, bukan angka.
+                 */
                 $nilai = ($k['kategori'] && $k['kolom'])
-                    ? $this->jumlahKolom($barisDemografi, $k['kategori'], $k['kolom']) : 0;
+                    ? $this->jumlahKolom($barisDemografi, $k['kategori'], $k['kolom'])
+                    : null;
 
                 $badge = null;
-                if (! empty($k['badgeKolom'])) {
+                if (! empty($k['badgeKolom']) && $nilai !== null) {
                     $dasar = $this->jumlahKolom($barisDemografi, $k['kategori'], $k['badgeKolom']);
-                    $badge = $dasar > 0 ? round($nilai / $dasar * 100).'%' : null;
+                    $badge = ($dasar !== null && $dasar > 0) ? round($nilai / $dasar * 100).'%' : null;
                 }
 
                 return [
@@ -111,13 +117,77 @@ class StatistikController extends Controller
      * (level 4) bila belum. Kalau keduanya dijumlah sekaligus, angkanya jadi
      * DUA KALI LIPAT — kecamatan adalah total pekon di bawahnya.
      */
-    private function jumlahKolom($baris, string $kategori, string $kolom): int
+    private function jumlahKolom($baris, string $kategori, string $kolom): ?int
     {
         $sekategori = $baris->where('kategori', $kategori);
         $pekon = $sekategori->where('level', DemografiWilayah::LEVEL_KELURAHAN);
         $dipakai = $pekon->isNotEmpty() ? $pekon : $sekategori;
 
-        return (int) $dipakai->sum(fn ($d) => (float) ($d->data[$kolom] ?? 0));
+        if ($dipakai->isEmpty()) {
+            return null;
+        }
+
+        $nyata = $this->kolomNyata(array_keys($dipakai->first()->data ?? []), $kolom);
+
+        if ($nyata === null) {
+            return null;
+        }
+
+        return (int) $dipakai->sum(fn ($d) => (float) ($d->data[$nyata] ?? 0));
+    }
+
+    /**
+     * Ejaan header yang menyebut KUANTITAS YANG SAMA di berkas agregat Dukcapil.
+     *
+     * 🔴 KENAPA PERLU. Importer mengambil nama kolom apa adanya dari header
+     * Excel, dan header itu tidak seragam antar berkas maupun antar kabupaten:
+     * berkas KK satu daerah menulis `KK_JML`, daerah lain `JML`, daerah lain
+     * lagi `Total`. Kartu beranda menuntut satu nama pasti, jadi kartu yang
+     * benar pun membaca kolom yang tidak ada — lalu menampilkan **0**.
+     *
+     * ⚠️ INI PENYETARAAN EJAAN, BUKAN TEBAKAN. Yang disetarakan hanya nama
+     * yang benar-benar menyebut hal sama: "jumlah seluruhnya".
+     *
+     * 🔴 `JML_WKTP` SENGAJA TIDAK IKUT. "Sudah rekam KTP-el" kuantitas yang
+     * BERBEDA dari "jumlah wajib KTP". Menyetarakannya akan menampilkan seolah
+     * SELURUH wajib KTP sudah merekam — angka resmi yang salah, dan jauh lebih
+     * berbahaya daripada kolom yang kosong.
+     */
+    private const SINONIM_JUMLAH = ['JML', 'JUMLAH', 'TOTAL', 'KK_JML', 'JML_KK'];
+
+    /**
+     * Cari nama kolom yang benar-benar ada di sebuah baris data.
+     *
+     * Urutannya menyempit: persis → abaikan besar-kecil huruf → sinonim
+     * "jumlah". `null` bila tidak ketemu — dan itu HARUS dibedakan dari nol
+     * oleh pemanggilnya.
+     */
+    private function kolomNyata(array $kunciData, string $kolom): ?string
+    {
+        if ($kolom === '') {
+            return null;
+        }
+        if (in_array($kolom, $kunciData, true)) {
+            return $kolom;
+        }
+
+        $naik = strtoupper($kolom);
+
+        foreach ($kunciData as $k) {
+            if (strtoupper($k) === $naik) {
+                return $k;
+            }
+        }
+
+        if (in_array($naik, self::SINONIM_JUMLAH, true)) {
+            foreach ($kunciData as $k) {
+                if (in_array(strtoupper($k), self::SINONIM_JUMLAH, true)) {
+                    return $k;
+                }
+            }
+        }
+
+        return null;
     }
 
     /**
