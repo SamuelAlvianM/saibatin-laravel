@@ -1,40 +1,41 @@
-# Graph Report - saibatin-laravel  (2026-09-02)
+# Graph Report - saibatin-laravel  (2026-09-04)
 
 ## Corpus Check
-- 296 files · ~174,355 words
+- 296 files · ~174,759 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1455 nodes · 2475 edges · 253 communities (59 shown, 80 thin omitted)
-- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 15 edges (avg confidence: 0.85)
+- 1456 nodes · 2476 edges · 257 communities (63 shown, 80 thin omitted)
+- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 20 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `4d3c9950`
+- Built from commit: `86dc4630`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
-- Notifikasi
-- Permohonan
 - Controller
+- Permohonan
+- CatatanAktivitas
 - Media
 - PublikController
 - devDependencies
 - DemografiAdminController
-- Illuminate\Http\Request
+- Balasan
 - Dasbor.jsx
 - LayananNonaktifTest
 - User
 - StatusAkun
-- Wilayah
+- IsiWilayahAkun.php
+- Illuminate\Database\Migrations\Migration
 - Statistik.jsx
 - Layanan
-- UserLevel
+- TestCase
 - Otp
 - ProfilTabs.jsx
 - PeranOpdTest
-- PengaturanController
+- JamLayanan
 - EditorMedan.jsx
 - ocr-ktp.js
 - scripts
@@ -49,21 +50,21 @@
 - dependencies
 - a11y.js
 - Navbar.jsx
-- StaticContent
+- Illuminate\Http\Request
 - kategori.js
 - AppServiceProvider.php
 - require-dev
 - PengaturanLayanan.jsx
 - geo.js
 - Illuminate\Database\Eloquent\Model
-- Illuminate\Support\Facades\Schema
 - config
 - require
+- Illuminate\Database\Schema\Blueprint
 - FotoProfil
 - Grafik.jsx
 - LoncengNotifikasi.jsx
 - time-picker.jsx
-- PermohonanPdfController.php
+- LayananController.php
 - SuntingAkunTest
 - info.blade.php
 - LayoutDashboard.jsx
@@ -73,8 +74,8 @@
 - Skm.jsx
 - Profil.jsx
 - salin-aset-ocr.mjs
-- JamLayanan
-- AlasanTolakPermohonan
+- Recaptcha
+- AlasanTolak
 - psr-4
 - extra
 - logging.php
@@ -99,11 +100,12 @@
 - WidgetAksesibilitas.jsx
 - autoload-dev
 - post-autoload-dump
-- Illuminate\Database\Schema\Blueprint
+- Illuminate\Support\Facades\Schema
 - 2026_09_02_100001_tambah_wilayah_akun.php
-- Illuminate\Database\Migrations\Migration
-- Periode
-- PengajuanPetugasController
+- Pemberitahuan
+- AspirasiController
+- Gallery
+- LoginController
 - Berita.jsx
 - console.php
 - FooterPublik.jsx
@@ -152,49 +154,55 @@
 - navigasi.js
 - ppid-indeks.blade.php
 - waktu.js
+- MediaController
 - README.md
+- DatabaseSeeder.php
 - PermohonanDetail.jsx
 
 ## God Nodes (most connected - your core abstractions)
-1. `Balasan` - 112 edges
+1. `Balasan` - 111 edges
 2. `User` - 73 edges
-3. `Controller` - 71 edges
+3. `Controller` - 69 edges
 4. `CatatanAktivitas` - 38 edges
 5. `PresisiMilidetik` - 38 edges
-6. `Permohonan` - 37 edges
+6. `Permohonan` - 36 edges
 7. `StatistikExcel` - 32 edges
 8. `Pemberitahuan` - 28 edges
-9. `News` - 26 edges
-10. `Layanan` - 25 edges
+9. `Layanan` - 25 edges
+10. `News` - 25 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `SuntingAkunTest` --references--> `User`  [EXTRACTED]
   tests/Feature/SuntingAkunTest.php → app/Models/User.php
 - `NotifikasiController` --inherits--> `Controller`  [EXTRACTED]
   app/Http/Controllers/Api/NotifikasiController.php → app/Http/Controllers/Controller.php
-- `ProfilController` --inherits--> `Controller`  [EXTRACTED]
-  app/Http/Controllers/Api/ProfilController.php → app/Http/Controllers/Controller.php
-- `ProfilController` --references--> `FotoProfil`  [EXTRACTED]
-  app/Http/Controllers/Api/ProfilController.php → app/Services/FotoProfil.php
-- `OtpController` --inherits--> `Controller`  [EXTRACTED]
-  app/Http/Controllers/Auth/OtpController.php → app/Http/Controllers/Controller.php
+- `StatistikEksporController` --references--> `StatistikExcel`  [EXTRACTED]
+  app/Http/Controllers/Api/Admin/StatistikEksporController.php → app/Services/StatistikExcel.php
+- `Permohonan` --mixes_in--> `PresisiMilidetik`  [EXTRACTED]
+  app/Models/Permohonan.php → app/Models/Concerns/PresisiMilidetik.php
+- `DemografiAdminController` --references--> `DemografiExcel`  [EXTRACTED]
+  app/Http/Controllers/Api/Admin/DemografiAdminController.php → app/Services/DemografiExcel.php
 
 ## Import Cycles
 - None detected.
 
-## Communities (253 total, 80 thin omitted)
+## Communities (257 total, 80 thin omitted)
+
+### Community 0 - "Controller"
+Cohesion: 0.13
+Nodes (7): LogAktivitasController, SkmAdminController, StatistikEksporController, BuktiPengaduanController, PendudukController, UnggahController, Controller
 
 ### Community 1 - "Permohonan"
 Cohesion: 0.07
-Nodes (22): StatistikEksporController, StatistikController, JenisPermohonan, Permohonan, DemografiExcel, Spreadsheet, StreamedResponse, Spreadsheet (+14 more)
+Nodes (24): DashboardController, Pengaduan, Permohonan, SkmJawaban, DemografiExcel, Spreadsheet, StreamedResponse, PencacahKunjungan (+16 more)
 
-### Community 2 - "Controller"
-Cohesion: 0.15
-Nodes (12): KontenStatisController, MasterController, PengaduanAdminController, PermohonanAdminController, ProdukAdminController, UserAdminController, LayananController, Controller (+4 more)
+### Community 2 - "CatatanAktivitas"
+Cohesion: 0.17
+Nodes (6): KontenStatisController, MasterController, PengaduanAdminController, App\Http\Controllers\Api\Admin\PengaturanController, ProdukAdminController, CatatanAktivitas
 
 ### Community 3 - "Media"
-Cohesion: 0.13
-Nodes (8): MediaController, Media, PustakaMedia, UserFactory, Illuminate\Database\Eloquent\Factories\Factory, Illuminate\Http\UploadedFile, Illuminate\Support\Str, static
+Cohesion: 0.14
+Nodes (7): Media, PustakaMedia, UserFactory, Illuminate\Database\Eloquent\Factories\Factory, Illuminate\Http\UploadedFile, Illuminate\Support\Str, static
 
 ### Community 4 - "PublikController"
 Cohesion: 0.09
@@ -208,37 +216,45 @@ Nodes (25): axios, concurrently, laravel-vite-plugin, devDependencies, axios, co
 Cohesion: 0.23
 Nodes (3): DemografiAdminController, DemografiController, DemografiWilayah
 
-### Community 7 - "Illuminate\Http\Request"
-Cohesion: 0.09
-Nodes (10): LogAktivitasController, AspirasiController, BuktiPengaduanController, PendudukController, ProfilController, SistemController, ProfilPageController, Balasan (+2 more)
+### Community 7 - "Balasan"
+Cohesion: 0.17
+Nodes (5): NotifikasiController, SistemController, App\Support\Balasan, Balasan, Illuminate\Http\JsonResponse
 
 ### Community 8 - "Dasbor.jsx"
 Cohesion: 0.11
 Nodes (8): FilterPeriode(), geser(), labelAcuan(), nomorHalaman(), Paginasi(), PERIODE, STATUS_FINAL, STATUS_PERMOHONAN
 
 ### Community 10 - "User"
-Cohesion: 0.10
-Nodes (6): User, DatabaseSeeder, Illuminate\Database\Eloquent\Relations\HasMany, Illuminate\Database\Seeder, Illuminate\Foundation\Auth\User, Illuminate\Notifications\Notifiable
+Cohesion: 0.13
+Nodes (4): User, Illuminate\Database\Eloquent\Relations\HasMany, Illuminate\Foundation\Auth\User, Illuminate\Notifications\Notifiable
 
 ### Community 11 - "StatusAkun"
-Cohesion: 0.10
-Nodes (7): CekStatusController, AlasanTolak, StatusAkun, Illuminate\Support\Facades\Hash, Illuminate\Support\Facades\Mail, Illuminate\Validation\ValidationException, Inertia\Inertia
+Cohesion: 0.14
+Nodes (6): Wilayah, StatusAkun, Illuminate\Support\Facades\Auth, Illuminate\Support\Facades\Hash, Illuminate\Support\Facades\Mail, Illuminate\Validation\ValidationException
 
-### Community 12 - "Wilayah"
-Cohesion: 0.23
-Nodes (4): IsiWilayahAkun, Wilayah, Illuminate\Console\Command, Illuminate\Support\Collection
+### Community 12 - "IsiWilayahAkun.php"
+Cohesion: 0.43
+Nodes (3): IsiWilayahAkun, Illuminate\Console\Command, Illuminate\Support\Collection
 
 ### Community 14 - "Statistik.jsx"
 Cohesion: 0.14
 Nodes (9): penanda, angka(), RincianDemografi(), angka(), AngkaNaik(), AWAL, KartuPelayanan(), PetaKantor (+1 more)
 
-### Community 16 - "UserLevel"
-Cohesion: 0.20
-Nodes (4): UserLevel, Illuminate\Foundation\Testing\TestCase, ExampleTest, TestCase
+### Community 15 - "Layanan"
+Cohesion: 0.08
+Nodes (4): PermohonanPdfController, AlasanTolakPermohonan, Layanan, Barryvdh\DomPDF\Facade\Pdf
+
+### Community 16 - "TestCase"
+Cohesion: 0.29
+Nodes (3): Illuminate\Foundation\Testing\TestCase, ExampleTest, TestCase
 
 ### Community 17 - "Otp"
-Cohesion: 0.11
-Nodes (6): OtpController, Fonnte, Otp, Illuminate\Support\Facades\Cache, Illuminate\Support\Facades\Http, Illuminate\Support\Facades\Log
+Cohesion: 0.14
+Nodes (4): OtpController, Fonnte, Otp, Illuminate\Support\Facades\Cache
+
+### Community 20 - "JamLayanan"
+Cohesion: 0.07
+Nodes (12): PengaturanController, PengajuanController, PengajuanPetugasController, StaticContent, App\Services\JamLayanan, JamLayanan, CarbonImmutable, App\Support\Layanan (+4 more)
 
 ### Community 21 - "EditorMedan.jsx"
 Cohesion: 0.25
@@ -273,8 +289,8 @@ Cohesion: 0.13
 Nodes (8): FORM_KOSONG, GRUP, INFO_STATUS, KOLOM_TOLAK, MASUK_NIK, STATUS_AKUN, WAJIB_WILAYAH, WARNA_PERMOHONAN
 
 ### Community 34 - "News"
-Cohesion: 0.13
-Nodes (5): BeritaAdminController, GaleriAdminController, KontenController, Gallery, News
+Cohesion: 0.20
+Nodes (3): BeritaAdminController, KontenController, News
 
 ### Community 35 - "dependencies"
 Cohesion: 0.22
@@ -284,9 +300,13 @@ Nodes (9): class-variance-authority, dependencies, class-variance-authority, @ra
 Cohesion: 0.22
 Nodes (5): FONT_BAWAAN_IDX, KUNCI_A11Y, LANGKAH_FONT, PREFS_BAWAAN, SPASI_MAKS
 
+### Community 38 - "Illuminate\Http\Request"
+Cohesion: 0.18
+Nodes (4): UserAdminController, ProfilController, ProfilPageController, Illuminate\Http\Request
+
 ### Community 40 - "AppServiceProvider.php"
-Cohesion: 0.33
-Nodes (4): AppServiceProvider, Illuminate\Support\Facades\Auth, Illuminate\Support\Facades\View, Illuminate\Support\ServiceProvider
+Cohesion: 0.40
+Nodes (3): AppServiceProvider, Illuminate\Support\Facades\View, Illuminate\Support\ServiceProvider
 
 ### Community 41 - "require-dev"
 Cohesion: 0.25
@@ -298,7 +318,7 @@ Nodes (7): ALIAS, geoWilayah(), KECAMATAN_GEO, norm(), PETA_NAMA, PUSAT_PETA, ZO
 
 ### Community 45 - "Illuminate\Database\Eloquent\Model"
 Cohesion: 0.06
-Nodes (17): SkmAdminController, BerkasController, DashboardController, Berkas, PresisiMilidetik, KritikSaran, Kunjungan, LogAktivitas (+9 more)
+Nodes (20): StatistikController, App\Http\Controllers\Controller, Berkas, PresisiMilidetik, App\Models\DemografiWilayah, App\Models\JenisPermohonan, Kunjungan, LogAktivitas (+12 more)
 
 ### Community 47 - "config"
 Cohesion: 0.29
@@ -320,9 +340,9 @@ Nodes (6): ambilKonteks(), bukaAudio(), bunyikan(), LoncengNotifikasi(), TIPE_IK
 Cohesion: 0.38
 Nodes (5): HOURS, isJam(), masker(), MINUTES, TimePicker()
 
-### Community 54 - "PermohonanPdfController.php"
-Cohesion: 0.12
-Nodes (8): PermohonanPdfController, UnggahController, MediaPublikController, PastikanPeran, Barryvdh\DomPDF\Facade\Pdf, Closure, Illuminate\Support\Facades\Storage, Symfony\Component\HttpFoundation\Response
+### Community 54 - "LayananController.php"
+Cohesion: 0.14
+Nodes (7): LayananController, BerkasController, MediaPublikController, PastikanPeran, Closure, Illuminate\Support\Facades\Storage, Symfony\Component\HttpFoundation\Response
 
 ### Community 56 - "info.blade.php"
 Cohesion: 0.33
@@ -344,9 +364,13 @@ Nodes (3): mutu(), Skm(), warnaNilai()
 Cohesion: 0.33
 Nodes (5): akar, berkas, hilang, tessdata, tujuan
 
-### Community 64 - "JamLayanan"
-Cohesion: 0.09
-Nodes (9): App\Http\Controllers\Api\Admin\PengaturanController, PermohonanController, LoginController, RegisterController, SandiController, JamLayanan, CarbonImmutable, Recaptcha (+1 more)
+### Community 64 - "Recaptcha"
+Cohesion: 0.24
+Nodes (3): PermohonanController, SandiController, Recaptcha
+
+### Community 65 - "AlasanTolak"
+Cohesion: 0.14
+Nodes (4): CekStatusController, AlasanTolak, Illuminate\Support\Facades\Route, Inertia\Inertia
 
 ### Community 66 - "psr-4"
 Cohesion: 0.40
@@ -400,13 +424,9 @@ Nodes (3): autoload-dev, psr-4, Tests\\
 Cohesion: 0.67
 Nodes (3): post-autoload-dump, Illuminate\\Foundation\\ComposerScripts::postAutoloadDump, @php artisan package:discover --ansi
 
-### Community 102 - "Periode"
-Cohesion: 0.43
-Nodes (3): Periode, CarbonImmutable, Carbon\CarbonImmutable
-
-### Community 103 - "PengajuanPetugasController"
-Cohesion: 0.47
-Nodes (4): PengajuanPetugasController, App\Services\JamLayanan, App\Support\Layanan, Controller
+### Community 102 - "Pemberitahuan"
+Cohesion: 0.23
+Nodes (4): PermohonanAdminController, JenisPermohonan, Pemberitahuan, Surel
 
 ### Community 108 - "Berita.jsx"
 Cohesion: 0.50
@@ -421,24 +441,24 @@ Cohesion: 0.33
 Nodes (5): ALASAN_TOLAK, perluRincian(), PermohonanDetail(), STATUS_URUT, WAJIB_RINCIAN
 
 ## Knowledge Gaps
-- **219 isolated node(s):** `WARNA_KATEGORI`, `WARNA_NETRAL`, `bawaan`, `IKON`, `WARNA` (+214 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 668 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **219 isolated node(s):** `AWAL`, `bawaan`, `KOSONG`, `PenyuntingKaya`, `IKON` (+214 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 667 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **80 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `User` connect `User` to `JamLayanan`, `Notifikasi`, `Controller`, `Media`, `Permohonan`, `Illuminate\Http\Request`, `LayananNonaktifTest`, `StatusAkun`, `Wilayah`, `Illuminate\Database\Eloquent\Model`, `UserLevel`, `Otp`, `PeranOpdTest`, `PermohonanPdfController.php`, `SuntingAkunTest`?**
-  _High betweenness centrality (0.054) - this node is a cross-community bridge._
-- **Why does `Balasan` connect `Illuminate\Http\Request` to `JamLayanan`, `AlasanTolakPermohonan`, `News`, `Controller`, `PublikController`, `Media`, `StaticContent`, `DemografiAdminController`, `Permohonan`, `Notifikasi`, `User`, `StatusAkun`, `Wilayah`, `Illuminate\Database\Eloquent\Model`, `UserLevel`, `Otp`, `PengaturanController`, `PermohonanPdfController.php`?**
+- **Why does `User` connect `User` to `Controller`, `AlasanTolak`, `CatatanAktivitas`, `Recaptcha`, `Permohonan`, `Media`, `Illuminate\Http\Request`, `LayananNonaktifTest`, `StatusAkun`, `IsiWilayahAkun.php`, `LoginController`, `Illuminate\Database\Eloquent\Model`, `TestCase`, `FotoProfil`, `PeranOpdTest`, `SuntingAkunTest`, `DatabaseSeeder.php`?**
+  _High betweenness centrality (0.041) - this node is a cross-community bridge._
+- **Why does `Controller` connect `Controller` to `Permohonan`, `CatatanAktivitas`, `PublikController`, `DemografiAdminController`, `Balasan`, `StatusAkun`, `Layanan`, `Otp`, `JamLayanan`, `News`, `Illuminate\Http\Request`, `Illuminate\Database\Eloquent\Model`, `FotoProfil`, `LayananController.php`, `Recaptcha`, `AlasanTolak`, `Pemberitahuan`, `AspirasiController`, `Gallery`, `LoginController`, `MediaController`?**
   _High betweenness centrality (0.035) - this node is a cross-community bridge._
-- **Why does `Controller` connect `Controller` to `JamLayanan`, `Permohonan`, `News`, `Media`, `Notifikasi`, `PublikController`, `DemografiAdminController`, `Illuminate\Http\Request`, `StatusAkun`, `Illuminate\Database\Eloquent\Model`, `Otp`, `PengaturanController`, `PermohonanPdfController.php`?**
-  _High betweenness centrality (0.028) - this node is a cross-community bridge._
-- **What connects `WARNA_KATEGORI`, `WARNA_NETRAL`, `bawaan` to the rest of the system?**
+- **Why does `Permohonan` connect `Permohonan` to `Recaptcha`, `CatatanAktivitas`, `Pemberitahuan`, `User`, `Illuminate\Database\Eloquent\Model`, `Layanan`, `TestCase`, `PeranOpdTest`, `JamLayanan`, `LayananController.php`?**
+  _High betweenness centrality (0.025) - this node is a cross-community bridge._
+- **What connects `AWAL`, `bawaan`, `KOSONG` to the rest of the system?**
   _219 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `Controller` be split into smaller, more focused modules?**
+  _Cohesion score 0.12681159420289856 - nodes in this community are weakly interconnected._
 - **Should `Permohonan` be split into smaller, more focused modules?**
-  _Cohesion score 0.07236544549977386 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07122153209109731 - nodes in this community are weakly interconnected._
 - **Should `Media` be split into smaller, more focused modules?**
-  _Cohesion score 0.12615384615384614 - nodes in this community are weakly interconnected._
-- **Should `PublikController` be split into smaller, more focused modules?**
-  _Cohesion score 0.0907258064516129 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.14210526315789473 - nodes in this community are weakly interconnected._

@@ -156,10 +156,10 @@
     "semantic_hash": "dab3d91cd1846a3437865cd6c10618d2"
   },
   "app/Http/Controllers/Api/StatistikController.php": {
-    "mtime": 1786646552.892785,
-    "seen": 1788252599.7620635,
-    "ast_hash": "84a3410ebdf7202706f021b33a1e1c2e",
-    "semantic_hash": "84a3410ebdf7202706f021b33a1e1c2e"
+    "mtime": 1788461403.7699623,
+    "seen": 1788461691.1835098,
+    "ast_hash": "bda68870d32aa463a2c36db83a1e02c9",
+    "semantic_hash": ""
   },
   "app/Http/Controllers/Api/UnggahController.php": {
     "mtime": 1786195360.5263157,
@@ -1314,10 +1314,10 @@
     "semantic_hash": "1f4c8aafd4ea38a8b2fb7d3a1b95f1f5"
   },
   "resources/js/Publik/Statistik.jsx": {
-    "mtime": 1786697025.6834128,
-    "seen": 1788252599.762419,
-    "ast_hash": "f3ca9a5b0ea0d207690d8c8da65cf04c",
-    "semantic_hash": "f3ca9a5b0ea0d207690d8c8da65cf04c"
+    "mtime": 1788461541.829513,
+    "seen": 1788461691.1838732,
+    "ast_hash": "ea13fb2c62b711f56dd1589267205b0a",
+    "semantic_hash": ""
   },
   "resources/js/Publik/StrukturBagan.jsx": {
     "mtime": 1786645952.058966,

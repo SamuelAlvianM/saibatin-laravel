@@ -2,10 +2,12 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import {
   AlertTriangle, ArrowLeft, Check, Download, FileUp, Layers, Loader2, Plus,
-  Trash2, X,
+  Star, Trash2, X,
 } from 'lucide-react';
 import { Pesan, Tombol } from '@/Components/Dasbor';
 import { ambilJson, kirimBerkas, kirimJson } from '@/lib/api';
+import { KARTU_BAWAAN, WARNA_PRESET, labelKolom, warnaPreset } from '@/lib/statistik-kartu';
+import { NAMA_IKON, ikon as ikonDari } from '@/lib/ikon';
 import { Input } from '@/Components/ui/input';
 
 /**
@@ -17,7 +19,10 @@ import { Input } from '@/Components/ui/input';
  * tabel dilepas & dipasang ulang: fokus input hilang setiap satu huruf.
  * Pola yang sama pernah ada di `Pages/Auth/Register.jsx`.
  */
-function TabelDemografi({ baris, kosongTeks, kolom, jkOtomatis, children }) {
+function TabelDemografi({
+  baris, kosongTeks, kolom, jkOtomatis, children,
+  sorotKolom, onSorot,
+}) {
   return (
     <div className="min-h-0 flex-1 overflow-auto rounded-2xl border border-slate-200 bg-white">
       {baris.length === 0 ? (
@@ -28,11 +33,45 @@ function TabelDemografi({ baris, kosongTeks, kolom, jkOtomatis, children }) {
             <tr className="border-b border-slate-200 text-left text-slate-500">
               <th className="px-3 py-2 font-medium">Kode</th>
               <th className="px-3 py-2 font-medium">Wilayah</th>
-              {kolom.map((k) => (
-                <th key={k} className="px-3 py-2 text-right font-medium">
-                  {k}{jkOtomatis && k === 'JML' && <span className="ml-1 text-[0.6rem] font-normal text-slate-400">(otomatis)</span>}
-                </th>
-              ))}
+              {kolom.map((k) => {
+                const disorot = sorotKolom === k;
+                return (
+                  <th key={k} className={`px-3 py-2 text-right font-medium ${disorot ? 'bg-amber-50' : ''}`}>
+                    <span className="inline-flex items-center justify-end gap-1.5">
+                      {/*
+                        Bintang = "jadikan nilai utama". Satu kolom saja per
+                        kategori — kolom inilah yang jadi kartu di beranda.
+
+                        ⚠️ Judulnya diberi warna & latar amber saat terpilih, bukan
+                        cuma ikon bintangnya. Petugas memindai baris header dari
+                        kejauhan; ikon 16px sendirian terlalu mudah terlewat, dan
+                        pertanyaan "yang mana yang tampil di beranda?" harus
+                        terjawab dalam sekali lihat.
+                      */}
+                      <span className={disorot ? 'font-bold text-amber-700' : ''}>{k}</span>
+                      {jkOtomatis && k === 'JML' && (
+                        <span className="text-[0.6rem] font-normal text-slate-400">(otomatis)</span>
+                      )}
+                      {onSorot && (
+                        <button
+                          type="button"
+                          onClick={() => onSorot(k)}
+                          title={disorot
+                            ? `Kolom ${k} sedang tampil sebagai kartu di beranda — klik untuk melepas`
+                            : `Jadikan kolom ${k} nilai utama yang tampil di beranda (hanya satu kolom)`}
+                          className={`flex h-6 w-6 shrink-0 items-center justify-center rounded border transition-colors ${
+                            disorot
+                              ? 'border-amber-400 bg-amber-100 text-amber-500 hover:bg-amber-200'
+                              : 'border-slate-200 bg-white text-slate-300 hover:border-amber-300 hover:text-amber-400'
+                          }`}
+                        >
+                          <Star className={`h-3.5 w-3.5 ${disorot ? 'fill-amber-400' : ''}`} />
+                        </button>
+                      )}
+                    </span>
+                  </th>
+                );
+              })}
               <th className="px-3 py-2" />
             </tr>
           </thead>
@@ -63,6 +102,105 @@ function TabelDemografi({ baris, kosongTeks, kolom, jkOtomatis, children }) {
 const angka = (n) => Number(n ?? 0).toLocaleString('id-ID');
 const digit = (s) => String(s ?? '').replace(/\D/g, '');
 
+/**
+ * Panel "Nilai Utama" — apa yang akan tampil di beranda dari kategori ini.
+ *
+ * 🔴 Ini bagian yang selama ini TIDAK ADA di portal Laravel. Editor bisa
+ * menyunting angka, tapi tidak ada satu pun cara memilih angka mana yang jadi
+ * kartu beranda — susunannya hanya bisa diubah lewat kode.
+ *
+ * ⚠️ Sengaja menampilkan PRATINJAU kartunya, bukan sekadar nama kolom. Petugas
+ * yang menekan bintang sedang memutuskan apa yang dibaca warga di halaman
+ * depan; memperlihatkan hasil akhirnya di tempat ia memilih menghilangkan
+ * tebak-tebakan "yang mana tadi yang saya pilih".
+ */
+function PanelKartuBeranda({
+  sorot, total, judul, onJudul, ikonNama, onIkon, warna, onWarna,
+}) {
+  const w = warnaPreset(warna);
+  const Ikon = ikonDari(ikonNama);
+
+  if (!sorot) {
+    return (
+      <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50/60 p-4">
+        <p className="flex items-center gap-2 text-sm font-semibold text-slate-700">
+          <Star className="h-4 w-4 text-slate-400" />
+          Nilai utama belum dipilih
+        </p>
+        <p className="mt-1 text-xs text-slate-500">
+          Tekan <Star className="inline h-3 w-3 -mt-0.5 fill-amber-300 text-amber-400" /> pada
+          judul kolom di tabel untuk menjadikannya kartu di beranda. Satu kolom saja per kategori.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-2xl border border-amber-300 bg-amber-50/60 p-4">
+      <p className="mb-3 flex items-center gap-2 text-sm font-semibold text-amber-900">
+        <Star className="h-4 w-4 fill-amber-400 text-amber-500" />
+        Nilai utama: kolom <span className="rounded bg-amber-200/70 px-1.5 py-0.5 font-mono">{sorot}</span>
+      </p>
+
+      <div className="grid gap-4 lg:grid-cols-[minmax(0,15rem)_1fr]">
+        {/* Pratinjau kartu — bentuknya sama dengan yang tampil di beranda. */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+          <div className={`mb-3 flex h-11 w-11 items-center justify-center rounded-2xl ${w.latar}`}>
+            <Ikon className="h-5 w-5 text-white" />
+          </div>
+          <p className="text-[1.6rem] font-bold leading-none tracking-tight text-slate-900">
+            {total === null ? '—' : angka(total)}
+          </p>
+          <p className="mt-1.5 text-[0.66rem] font-semibold uppercase tracking-widest text-slate-500">
+            {judul || labelKolom(sorot)}
+          </p>
+          <p className="mt-2 text-[0.6rem] text-slate-400">Pratinjau kartu beranda</p>
+        </div>
+
+        <div className="space-y-3">
+          <div>
+            <label className="mb-1 block text-xs font-medium text-slate-600">Judul kartu</label>
+            <Input value={judul} onChange={(e) => onJudul(e.target.value)}
+                   placeholder={labelKolom(sorot)} className="h-9" />
+          </div>
+
+          <div>
+            <label className="mb-1 block text-xs font-medium text-slate-600">Warna</label>
+            <div className="flex flex-wrap gap-1.5">
+              {Object.entries(WARNA_PRESET).map(([nama, pre]) => (
+                <button key={nama} type="button" onClick={() => onWarna(nama)}
+                        title={pre.label}
+                        className={`h-7 w-7 rounded-lg ${pre.latar} ${
+                          warna === nama ? 'ring-2 ring-slate-900 ring-offset-2' : ''
+                        }`} />
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <label className="mb-1 block text-xs font-medium text-slate-600">Ikon</label>
+            <div className="flex max-h-24 flex-wrap gap-1 overflow-y-auto rounded-lg border border-slate-200 bg-white p-1.5">
+              {NAMA_IKON.map((nama) => {
+                const I = ikonDari(nama);
+                return (
+                  <button key={nama} type="button" onClick={() => onIkon(nama)} title={nama}
+                          className={`flex h-7 w-7 items-center justify-center rounded transition-colors ${
+                            ikonNama === nama
+                              ? 'bg-slate-900 text-white'
+                              : 'text-slate-500 hover:bg-slate-100'
+                          }`}>
+                    <I className="h-4 w-4" />
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function EditorDemografi({ kategori, label, onTutup, onTersimpan }) {
   const [memuat, setMemuat] = useState(true);
   const [menyimpan, setMenyimpan] = useState(false);
@@ -72,6 +210,29 @@ export default function EditorDemografi({ kategori, label, onTutup, onTersimpan 
   const [detail, setDetail] = useState(null); // kecamatan yang dibuka rinciannya
   const [konflik, setKonflik] = useState(null); // {conflicts, rows, kolom, ringkas, pilihan}
   const [pesan, setPesan] = useState(null);
+
+  /*
+   * Kolom yang dijadikan NILAI UTAMA — satu saja per kategori. Kolom inilah
+   * yang jadi kartu "Statistik Demografi" di beranda publik.
+   *
+   * 🔴 Sebelum ini editor Laravel sama sekali tidak punya cara mengaturnya:
+   * baris bisa disunting, tapi kartu beranda hanya bisa diubah lewat susunan
+   * bawaan di kode. Petugas dinas tidak punya jalan sama sekali.
+   */
+  const [sorot, setSorot] = useState(null);
+  const [kartuIkon, setKartuIkon] = useState('Users');
+  const [kartuWarna, setKartuWarna] = useState('biru');
+  const [kartuJudul, setKartuJudul] = useState('');
+
+  /*
+   * Seluruh kartu beranda apa adanya — kartu kategori LAIN harus ikut dikirim
+   * saat menyimpan, kalau tidak ia terhapus. Disimpan di ref, bukan state:
+   * nilainya tidak pernah dirender, dan menjadikannya state hanya menambah
+   * render ulang tabel yang isinya ratusan baris.
+   */
+  const kartuRef = useRef([]);
+  /** Kolom yang kartunya sedang diedit — identitas kartu sebelum diganti. */
+  const kolomTargetRef = useRef(null);
 
   const berkasUtama = useRef(null);
   const berkasDetail = useRef(null);
@@ -92,6 +253,43 @@ export default function EditorDemografi({ kategori, label, onTutup, onTersimpan 
 
   useEffect(() => { muat(); }, [muat]);
 
+  /*
+   * Muat konfigurasi kartu beranda sekali saat editor dibuka.
+   *
+   * ⚠️ Gagal memuat TIDAK menghentikan editor: data demografinya tetap bisa
+   * disunting. Yang hilang cuma kemampuan mengubah kartu — dan itu jauh lebih
+   * baik daripada editor yang menolak terbuka karena satu permintaan meleset.
+   */
+  useEffect(() => {
+    let batal = false;
+    (async () => {
+      const j = await ambilJson('/api/static-content?keys=beranda.statistik');
+      if (batal) return;
+
+      const tersimpan = j.data?.items?.['beranda.statistik']?.kartu;
+      const daftar = Array.isArray(tersimpan) && tersimpan.length ? tersimpan : KARTU_BAWAAN;
+      kartuRef.current = daftar.map((k) => ({ ...k }));
+
+      const milik = daftar.find((k) => k.kategori === kategori);
+      kolomTargetRef.current = milik?.kolom ?? null;
+      setSorot(milik?.kolom ?? null);
+      setKartuIkon(milik?.icon ?? 'Users');
+      setKartuWarna(milik?.warna ?? 'biru');
+      setKartuJudul(milik?.title ?? '');
+    })();
+    return () => { batal = true; };
+  }, [kategori]);
+
+  /** Hanya SATU kolom yang bisa jadi nilai utama — klik kolom lain memindahkannya. */
+  const alihkanSorot = (k) => {
+    setSorot((lama) => {
+      const baru = lama === k ? null : k;
+      // Judul mengikuti kolom baru, KECUALI petugas sudah menuliskannya sendiri.
+      setKartuJudul((j) => (!j || j === labelKolom(lama) ? (baru ? labelKolom(baru) : '') : j));
+      return baru;
+    });
+  };
+
   // Kunci gulir halaman di belakang selama editor terbuka.
   useEffect(() => {
     const semula = document.body.style.overflow;
@@ -100,6 +298,19 @@ export default function EditorDemografi({ kategori, label, onTutup, onTersimpan 
   }, []);
 
   const kecamatan = useMemo(() => rows.filter((r) => r.level === 4), [rows]);
+
+  /*
+   * Angka pratinjau kartu — dihitung persis seperti beranda: dari baris PEKON
+   * bila ada, jatuh ke kecamatan bila belum. Menjumlah keduanya sekaligus
+   * membuat angkanya DUA KALI LIPAT, sebab kecamatan adalah total pekon di
+   * bawahnya.
+   */
+  const totalSorot = useMemo(() => {
+    if (!sorot) return null;
+    const pekon = rows.filter((r) => r.level === 5);
+    const dipakai = pekon.length ? pekon : rows.filter((r) => r.level === 4);
+    return dipakai.reduce((a, r) => a + (Number(r.data?.[sorot]) || 0), 0);
+  }, [sorot, rows]);
   const pekonDetail = useMemo(
     () => (detail ? rows.filter((r) => r.level === 5 && r.parentKode === detail.kode) : []),
     [rows, detail],
@@ -202,9 +413,58 @@ export default function EditorDemografi({ kategori, label, onTutup, onTersimpan 
 
     if (j.error?.length) { setPesan({ tipe: 'galat', teks: j.error[0] }); return; }
 
-    setPesan({ tipe: 'sukses', teks: j.success?.[0] ?? 'Data demografi disimpan' });
+    try {
+      await simpanKartu();
+      setPesan({ tipe: 'sukses', teks: 'Data demografi & kartu beranda disimpan' });
+    } catch (e) {
+      // Datanya SUDAH tersimpan — jangan berkata gagal. Yang gagal cuma kartunya.
+      setPesan({ tipe: 'galat', teks: `Data tersimpan, tetapi kartu beranda gagal diperbarui: ${e.message}` });
+    }
+
     onTersimpan?.();
     muat();
+  };
+
+  /**
+   * Perbarui HANYA kartu milik kategori ini; kartu kategori lain dibiarkan utuh.
+   *
+   * 🔴 Kartu lain WAJIB ikut dikirim. Endpoint `static-content` MENGGANTI isi
+   * kuncinya, bukan menggabungkan — mengirim satu kartu saja akan menghapus
+   * lima kartu beranda lainnya.
+   *
+   * - ada sorot  : kartu kategori ini diganti kolom/ikon/warna/judul terbaru
+   * - tanpa sorot: kartu kategori ini dihapus dari beranda
+   */
+  const simpanKartu = async () => {
+    const sebelum = kartuRef.current;
+    const target = kolomTargetRef.current;
+    const posisi = sebelum.findIndex((c) => c.kategori === kategori && c.kolom === target);
+    const lamaKartu = posisi >= 0 ? sebelum[posisi] : undefined;
+
+    const kartu = sebelum.filter((c) => !(c.kategori === kategori && c.kolom === target));
+
+    if (sorot) {
+      const entri = {
+        ...(lamaKartu ?? {}),
+        title: (kartuJudul || '').trim() || labelKolom(sorot),
+        icon: kartuIkon,
+        kategori,
+        kolom: sorot,
+        warna: kartuWarna,
+      };
+      kartu.splice(posisi >= 0 ? Math.min(posisi, kartu.length) : kartu.length, 0, entri);
+    }
+
+    const j = await kirimJson('/api/admin/static-content', {
+      kunci: 'beranda.statistik',
+      konten: { kartu },
+    }, 'PUT');
+
+    if (j.error?.length) throw new Error(j.error[0]);
+
+    // Kartu target kini beridentitas kolom terbaru.
+    kolomTargetRef.current = sorot;
+    kartuRef.current = kartu;
   };
 
   // Sel tabel: bentuk dasarnya dari `Components/ui/input`, di sini hanya
@@ -319,6 +579,7 @@ export default function EditorDemografi({ kategori, label, onTutup, onTersimpan 
             </div>
 
             <TabelDemografi baris={pekonDetail} kolom={kolom} jkOtomatis={jkOtomatis}
+                            sorotKolom={sorot} onSorot={alihkanSorot}
                             kosongTeks="Belum ada desa. Import Excel detail atau klik “Tambah Desa”.">
               {pekonDetail.map((r) => barisTabel(r))}
             </TabelDemografi>
@@ -340,7 +601,19 @@ export default function EditorDemografi({ kategori, label, onTutup, onTersimpan 
               </p>
             </div>
 
+            <PanelKartuBeranda
+              sorot={sorot}
+              total={totalSorot}
+              judul={kartuJudul}
+              onJudul={setKartuJudul}
+              ikonNama={kartuIkon}
+              onIkon={setKartuIkon}
+              warna={kartuWarna}
+              onWarna={setKartuWarna}
+            />
+
             <TabelDemografi baris={kecamatan} kolom={kolom} jkOtomatis={jkOtomatis}
+                            sorotKolom={sorot} onSorot={alihkanSorot}
                             kosongTeks="Belum ada kecamatan. Import Excel atau klik “Tambah Kecamatan”.">
               {kecamatan.map((r) => barisTabel(r, (baris) => (
                 <button onClick={() => setDetail(baris)}

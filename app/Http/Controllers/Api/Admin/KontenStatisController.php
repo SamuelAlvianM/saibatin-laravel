@@ -52,7 +52,27 @@ class KontenStatisController extends Controller
         $konten = $request->input('konten');
         $skema = Konten::skema($kunci);
 
-        if (! $skema) {
+        /*
+         * 🔴 BLOK TANPA SKEMA MEDAN TETAP BOLEH DISIMPAN.
+         *
+         * `Konten::skema()` hanya mengenal blok yang punya bentuk FORMULIR di
+         * `config/konten.medan` — dan sebagian blok memang sengaja tidak punya:
+         * `beranda.statistik` dirakit editor demografi layar penuh,
+         * `pelayanan.jam` & `pelayanan.visibilitas` dirakit drawer Pengaturan.
+         * Semuanya blok sah yang terdaftar di `config/konten.blok`.
+         *
+         * Sebelum ini ketiadaan skema langsung ditolak "Kunci konten tidak
+         * dikenal". Akibatnya susunan kartu beranda TIDAK PERNAH BISA
+         * DISIMPAN — termasuk lewat tombol "Reset Kartu Beranda" yang sudah
+         * ada di halaman Data Demografi, yang karena itu tidak pernah bekerja
+         * sekali pun.
+         *
+         * Yang menentukan sah-tidaknya sebuah kunci adalah `konten.blok`;
+         * `konten.medan` cuma menentukan apakah ia punya formulir generik.
+         */
+        $judulBlok = config('konten.blok', [])[$kunci] ?? null;
+
+        if (! $skema && ! $judulBlok) {
             return Balasan::gagal(['Kunci konten tidak dikenal']);
         }
         if (! is_array($konten)) {
@@ -61,12 +81,12 @@ class KontenStatisController extends Controller
 
         StaticContent::updateOrCreate(
             ['kunci' => $kunci],
-            ['judul' => $skema['judul'], 'konten' => $konten, 'updated_by' => $request->user()->id],
+            ['judul' => $skema['judul'] ?? $judulBlok, 'konten' => $konten, 'updated_by' => $request->user()->id],
         );
 
         $this->log->catat(
             $request->user(), 'UBAH', 'Konten',
-            "Menyimpan blok konten \"{$skema['judul']}\"", $kunci, $request,
+            'Menyimpan blok konten "'.($skema['judul'] ?? $judulBlok).'"', $kunci, $request,
         );
 
         return Balasan::ok(null, ['Konten berhasil disimpan']);

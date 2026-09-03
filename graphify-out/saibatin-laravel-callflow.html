@@ -60,7 +60,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
 <div class="container">
 
 <h1>saibatin-laravel — Complete Call Flow &amp; Architecture Documentation</h1>
-<p class="subtitle">Generated from graphify knowledge graph: 1455 nodes, 2475 edges, 253 communities. Commit: 4d3c995</p>
+<p class="subtitle">Generated from graphify knowledge graph: 1456 nodes, 2476 edges, 257 communities. Commit: 86dc463</p>
 
 <div class="nav">
     <a href="#overview">Architecture Overview</a>
@@ -72,12 +72,12 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
     <a href="#handoff-saibatin-laravel">HANDOFF — SAIBATIN Laravel</a>
     <a href="#otp">Otp</a>
     <a href="#dasbor-jsx">Dasbor.jsx</a>
+    <a href="#user">User</a>
+    <a href="#statusakun">StatusAkun</a>
     <a href="#statistik-jsx">Statistik.jsx</a>
     <a href="#profiltabs-jsx">ProfilTabs.jsx</a>
     <a href="#akun-jsx">Akun.jsx</a>
-    <a href="#layanan">Layanan</a>
     <a href="#ocr-ktp-js">ocr-ktp.js</a>
-    <a href="#dialog-jsx">dialog.jsx</a>
     <a href="#other">Other</a>
 </div>
 
@@ -88,48 +88,48 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
 
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    BUILD_GRAPH_321CBB04("Graph Build<br/><small>166 nodes</small>")
+    BUILD_GRAPH_321CBB04("Graph Build<br/><small>159 nodes</small>")
     class BUILD_GRAPH_321CBB04 module;
     CLI_SKILLS_9964CBB8("CLI &amp; Skill Installers<br/><small>2 nodes</small>")
     class CLI_SKILLS_9964CBB8 module;
-    INGEST_CACHE_UPDATE_FF457338("Ingestion &amp; Updates<br/><small>3 nodes</small>")
+    INGEST_CACHE_UPDATE_FF457338("Ingestion &amp; Updates<br/><small>27 nodes</small>")
     class INGEST_CACHE_UPDATE_FF457338 module;
-    SERVE_API_35EC8E86("Serving API<br/><small>486 nodes</small>")
+    SERVE_API_35EC8E86("Serving API<br/><small>443 nodes</small>")
     class SERVE_API_35EC8E86 module;
-    TESTS_FIXTURES_B84B1DCC("Tests &amp; Fixtures<br/><small>58 nodes</small>")
+    TESTS_FIXTURES_B84B1DCC("Tests &amp; Fixtures<br/><small>54 nodes</small>")
     class TESTS_FIXTURES_B84B1DCC module;
     HANDOFF_SAIBATIN_LARAVEL_C431D990("HANDOFF — SAIBATIN Laravel<br/><small>38 nodes</small>")
     class HANDOFF_SAIBATIN_LARAVEL_C431D990 module;
-    OTP_7A20AECD("Otp<br/><small>27 nodes</small>")
+    OTP_7A20AECD("Otp<br/><small>22 nodes</small>")
     class OTP_7A20AECD module;
     DASBOR_JSX_78F65111("Dasbor.jsx<br/><small>21 nodes</small>")
     class DASBOR_JSX_78F65111 module;
+    USER_12DEA96F("User<br/><small>20 nodes</small>")
+    class USER_12DEA96F module;
+    STATUSAKUN_9EBB54D1("StatusAkun<br/><small>20 nodes</small>")
+    class STATUSAKUN_9EBB54D1 module;
     STATISTIK_JSX_93D6C363("Statistik.jsx<br/><small>18 nodes</small>")
     class STATISTIK_JSX_93D6C363 module;
     PROFILTABS_JSX_25CA0A8A("ProfilTabs.jsx<br/><small>16 nodes</small>")
     class PROFILTABS_JSX_25CA0A8A module;
     AKUN_JSX_1FD84A90("Akun.jsx<br/><small>15 nodes</small>")
     class AKUN_JSX_1FD84A90 module;
-    LAYANAN_5799F674("Layanan<br/><small>13 nodes</small>")
-    class LAYANAN_5799F674 module;
     OCR_KTP_JS_FBCCCD4D("ocr-ktp.js<br/><small>13 nodes</small>")
     class OCR_KTP_JS_FBCCCD4D module;
-    DIALOG_JSX_9A56A2CC("dialog.jsx<br/><small>11 nodes</small>")
-    class DIALOG_JSX_9A56A2CC module;
-    OTHER_D0941E68("Other<br/><small>568 nodes</small>")
+    OTHER_D0941E68("Other<br/><small>588 nodes</small>")
     class OTHER_D0941E68 module;
-    OTHER_D0941E68 -->|imports x43| BUILD_GRAPH_321CBB04
-    TESTS_FIXTURES_B84B1DCC -->|calls x33| SERVE_API_35EC8E86
-    SERVE_API_35EC8E86 -->|imports x22| OTHER_D0941E68
-    SERVE_API_35EC8E86 -->|imports x14| TESTS_FIXTURES_B84B1DCC
-    OTP_7A20AECD -->|imports x12| SERVE_API_35EC8E86
-    SERVE_API_35EC8E86 -->|calls x12| LAYANAN_5799F674
-    OTHER_D0941E68 -->|imports x11| SERVE_API_35EC8E86
-    SERVE_API_35EC8E86 -->|references x5| OTP_7A20AECD
-    BUILD_GRAPH_321CBB04 -->|imports x4| OTHER_D0941E68
-    INGEST_CACHE_UPDATE_FF457338 -->|imports x2| BUILD_GRAPH_321CBB04
-    OTHER_D0941E68 -->|calls| TESTS_FIXTURES_B84B1DCC
-    OTHER_D0941E68 -->|contains| LAYANAN_5799F674
+    SERVE_API_35EC8E86 -->|calls x38| USER_12DEA96F
+    STATUSAKUN_9EBB54D1 -->|imports x26| SERVE_API_35EC8E86
+    OTHER_D0941E68 -->|imports x23| INGEST_CACHE_UPDATE_FF457338
+    OTHER_D0941E68 -->|imports x22| BUILD_GRAPH_321CBB04
+    OTHER_D0941E68 -->|references x18| SERVE_API_35EC8E86
+    SERVE_API_35EC8E86 -->|imports x13| OTHER_D0941E68
+    TESTS_FIXTURES_B84B1DCC -->|references constant x13| USER_12DEA96F
+    SERVE_API_35EC8E86 -->|imports x13| STATUSAKUN_9EBB54D1
+    TESTS_FIXTURES_B84B1DCC -->|calls x11| SERVE_API_35EC8E86
+    SERVE_API_35EC8E86 -->|imports x10| INGEST_CACHE_UPDATE_FF457338
+    USER_12DEA96F -->|calls x8| SERVE_API_35EC8E86
+    OTP_7A20AECD -->|imports x8| SERVE_API_35EC8E86
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -146,43 +146,43 @@ flowchart LR
     <h4>Architecture Layers</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>Layer</th><th>Nodes</th><th>Communities</th></tr>
-      <tr><td>Graph Build</td><td>166</td><td><code>5, 23, 27, 35, 41, 46, 47, 48, 96, 66, 67, 93, 94, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160</code></td></tr><tr><td>CLI &amp; Skill Installers</td><td>2</td><td><code>25</code></td></tr><tr><td>Ingestion &amp; Updates</td><td>3</td><td><code>95</code></td></tr><tr><td>Serving API</td><td>486</td><td><code>45, 1, 7, 2, 4, 64, 11, 10, 3, 34, 54, 6, 20, 12, 65, 0, 38, 76</code></td></tr><tr><td>Tests &amp; Fixtures</td><td>58</td><td><code>55, 9, 16, 19, 80</code></td></tr><tr><td>HANDOFF — SAIBATIN Laravel</td><td>38</td><td><code>24</code></td></tr><tr><td>Otp</td><td>27</td><td><code>17</code></td></tr><tr><td>Dasbor.jsx</td><td>21</td><td><code>8</code></td></tr><tr><td>Statistik.jsx</td><td>18</td><td><code>14</code></td></tr><tr><td>ProfilTabs.jsx</td><td>16</td><td><code>18</code></td></tr><tr><td>Akun.jsx</td><td>15</td><td><code>32</code></td></tr><tr><td>Layanan</td><td>13</td><td><code>15</code></td></tr><tr><td>ocr-ktp.js</td><td>13</td><td><code>22</code></td></tr><tr><td>dialog.jsx</td><td>11</td><td><code>29</code></td></tr><tr><td>Other</td><td>568</td><td><code>30, 31, 26, 28, 33, 21, 251, 36, 37, 42, 43, 44, 50, 57, 102, 253, 40, 51, 52, 53, 99, 103, 249, 56, 58, 59, 60, 61, 62, 63, 78, 108, 68, 70, 71, 72, 73, 74, 75, 79, 39, 69, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 97, 100, 101, 104, 105, 106, 107, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 13, 130, 131, 132, 246, 248, 49, 77, 81, 98, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 257, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 247</code></td></tr>
+      <tr><td>Graph Build</td><td>159</td><td><code>5, 23, 27, 35, 41, 47, 48, 49, 66, 67, 93, 94, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160</code></td></tr><tr><td>CLI &amp; Skill Installers</td><td>2</td><td><code>25</code></td></tr><tr><td>Ingestion &amp; Updates</td><td>27</td><td><code>3, 95</code></td></tr><tr><td>Serving API</td><td>443</td><td><code>1, 45, 20, 4, 15, 0, 54, 7, 2, 38, 34, 6, 65, 102, 64, 103, 104, 250, 76</code></td></tr><tr><td>Tests &amp; Fixtures</td><td>54</td><td><code>55, 9, 19, 16, 80</code></td></tr><tr><td>HANDOFF — SAIBATIN Laravel</td><td>38</td><td><code>24</code></td></tr><tr><td>Otp</td><td>22</td><td><code>17</code></td></tr><tr><td>Dasbor.jsx</td><td>21</td><td><code>8</code></td></tr><tr><td>User</td><td>20</td><td><code>10</code></td></tr><tr><td>StatusAkun</td><td>20</td><td><code>11</code></td></tr><tr><td>Statistik.jsx</td><td>18</td><td><code>14</code></td></tr><tr><td>ProfilTabs.jsx</td><td>16</td><td><code>18</code></td></tr><tr><td>Akun.jsx</td><td>15</td><td><code>32</code></td></tr><tr><td>ocr-ktp.js</td><td>13</td><td><code>22</code></td></tr><tr><td>Other</td><td>588</td><td><code>29, 30, 31, 26, 28, 33, 50, 21, 251, 36, 37, 42, 43, 44, 57, 107, 12, 13, 253, 51, 52, 53, 249, 40, 56, 58, 59, 60, 61, 62, 63, 78, 108, 68, 70, 71, 72, 73, 74, 75, 79, 252, 39, 69, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 97, 100, 101, 105, 106, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 246, 248, 254, 255, 46, 77, 81, 96, 98, 99, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 257, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 247</code></td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Core Flow</h4>
-    <div class="arrow-chain">CLI &amp; Skill Installers -&gt; Graph Build -&gt; Other -&gt; Serving API -&gt; Tests &amp; Fixtures -&gt; Ingestion &amp; Updates -&gt; HANDOFF — SAIBATIN Laravel</div>
+    <div class="arrow-chain">CLI &amp; Skill Installers -&gt; Graph Build -&gt; Other -&gt; Ingestion &amp; Updates -&gt; Serving API -&gt; User -&gt; Tests &amp; Fixtures</div>
   </div>
 </div>
 <div class="grid">
   <div class="card">
     <h4>Graph Report Highlights</h4>
     <ul>
-      <li>1455 nodes · 2475 edges · 253 communities (59 shown, 80 thin omitted)</li>
-      <li>Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 15 edges (avg confidence: 0.85)</li>
+      <li>1456 nodes · 2476 edges · 257 communities (63 shown, 80 thin omitted)</li>
+      <li>Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 20 edges (avg confidence: 0.85)</li>
       <li>Token cost: 0 input · 0 output</li>
-      <li>1. `Balasan` - 112 edges</li>
+      <li>1. `Balasan` - 111 edges</li>
       <li>2. `User` - 73 edges</li>
-      <li>3. `Controller` - 71 edges</li>
+      <li>3. `Controller` - 69 edges</li>
     </ul>
   </div>
 </div>
 <hr>
 <!-- ====== 2. Graph Build ====== -->
 <h2 id="build-graph">2. Graph Build</h2>
-<p>Graph Build groups implementation around packagejson, composerjson, react, create, mostly in package.json, composer.json, database/migrations/2026_08_07_100008_create_t_galleries_table.php. This section covers 166 nodes and 166 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Graph Build groups implementation around packagejson, composerjson, react, tiptap, mostly in package.json, composer.json, database/migrations/0001_01_01_000000_create_sessions_table.php. This section covers 159 nodes and 156 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Graph Build (166 nodes, 166 edges)
+    %% Section: Graph Build (159 nodes, 156 edges)
     subgraph build_graph_package_json_4e40bfbd["package.json"]
         package_dependencies_class_variance_authority_28e7f25f("class-variance-authority<br/><small>package.json</small>")
         package_dependencies_clsx_4bc09135("clsx<br/><small>package.json</small>")
-        clsx_ed67b7e7("clsx<br/><small>package.json</small>")
         package_dependencies_date_fns_18a69064("date-fns<br/><small>package.json</small>")
-        date_fns_3907a132("date-fns<br/><small>package.json</small>")
         package_dependencies_framer_motion_02587384("framer-motion<br/><small>package.json</small>")
+        clsx_ed67b7e7("clsx<br/><small>package.json</small>")
+        date_fns_3907a132("date-fns<br/><small>package.json</small>")
         framer_motion_61ed6a3c("framer-motion<br/><small>package.json</small>")
         package_dependencies_highcharts_c6e7a75f("highcharts<br/><small>package.json</small>")
         highcharts_9861ca48("highcharts<br/><small>package.json</small>")
@@ -191,24 +191,25 @@ flowchart LR
         package_dependencies_inertiajs_react_0eafdf3d("@inertiajs/react<br/><small>package.json</small>")
         inertiajs_react_0bb94bbe("@inertiajs/react<br/><small>package.json</small>")
         package_dependencies_leaflet_e1b9b00b("leaflet<br/><small>package.json</small>")
+        leaflet_5f5555f4("leaflet<br/><small>package.json</small>")
+        package_dependencies_lucide_react_17f0074f("lucide-react<br/><small>package.json</small>")
     end
-    database_migrations_2026_08_07_100002_create_use_b96742d2("create users table.php<br/><small>database/migrations/2026_08_07_100002_create_users_table.php</small>")
-    database_migrations_2026_08_07_100003_create_m_j_ad6ec1a4("jenis permohonan table.php<br/><small>database/migrations/2026_08_07_100003_create_m_jenis_permohonan_table.php</small>")
-    database_migrations_2026_08_07_100008_create_t_g_63070d58("t galleries table.php<br/><small>database/migrations/2026_08_07_100008_create_t_galleries_table.php</small>")
-    database_migrations_2026_08_07_100009_create_t_p_c416ac6e("t produk table.php<br/><small>database/migrations/2026_08_07_100009_create_t_produk_table.php</small>")
+    database_migrations_0001_01_01_000000_create_ses_6ff8415b("create sessions table.php<br/><small>database/migrations/0001_01_01_000000_create_sessions_table.php</small>")
+    database_migrations_2026_08_07_100014_create_t_m_56c52b41("t media table.php<br/><small>database/migrations/2026_08_07_100014_create_t_media_table.php</small>")
     package_dependencies_clsx_4bc09135 -->|imports| clsx_ed67b7e7
     package_dependencies_date_fns_18a69064 -->|imports| date_fns_3907a132
     package_dependencies_framer_motion_02587384 -->|imports| framer_motion_61ed6a3c
     package_dependencies_highcharts_c6e7a75f -->|imports| highcharts_9861ca48
     package_dependencies_highcharts_react_official_3a855226 -->|imports| highcharts_react_official_305e872f
     package_dependencies_inertiajs_react_0eafdf3d -->|imports| inertiajs_react_0bb94bbe
-    %% Omitted for readability: 148 nodes, 0 edges
+    package_dependencies_leaflet_e1b9b00b -->|imports| leaflet_5f5555f4
+    %% Omitted for readability: 141 nodes, 0 edges
     class package_dependencies_class_variance_authority_28e7f25f function;
     class package_dependencies_clsx_4bc09135 function;
-    class clsx_ed67b7e7 function;
     class package_dependencies_date_fns_18a69064 function;
-    class date_fns_3907a132 function;
     class package_dependencies_framer_motion_02587384 function;
+    class clsx_ed67b7e7 function;
+    class date_fns_3907a132 function;
     class framer_motion_61ed6a3c function;
     class package_dependencies_highcharts_c6e7a75f function;
     class highcharts_9861ca48 function;
@@ -217,10 +218,10 @@ flowchart LR
     class package_dependencies_inertiajs_react_0eafdf3d function;
     class inertiajs_react_0bb94bbe function;
     class package_dependencies_leaflet_e1b9b00b function;
-    class database_migrations_2026_08_07_100002_create_use_b96742d2 module;
-    class database_migrations_2026_08_07_100003_create_m_j_ad6ec1a4 module;
-    class database_migrations_2026_08_07_100008_create_t_g_63070d58 module;
-    class database_migrations_2026_08_07_100009_create_t_p_c416ac6e module;
+    class leaflet_5f5555f4 function;
+    class package_dependencies_lucide_react_17f0074f function;
+    class database_migrations_0001_01_01_000000_create_ses_6ff8415b module;
+    class database_migrations_2026_08_07_100014_create_t_m_56c52b41 module;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -491,15 +492,13 @@ flowchart LR
       <tr><th>File</th><th>Coverage</th></tr>
       <tr><td><code>package.json</code></td><td>91 nodes</td></tr>
 <tr><td><code>composer.json</code></td><td>61 nodes</td></tr>
-<tr><td><code>database/migrations/2026_08_07_100002_create_users_table.php</code></td><td>3 nodes</td></tr>
-<tr><td><code>database/migrations/2026_08_07_100003_create_m_jenis_permohonan_table.php</code></td><td>3 nodes</td></tr>
-<tr><td><code>database/migrations/2026_08_07_100008_create_t_galleries_table.php</code></td><td>3 nodes</td></tr>
-<tr><td><code>database/migrations/2026_08_07_100009_create_t_produk_table.php</code></td><td>3 nodes</td></tr>
+<tr><td><code>database/migrations/0001_01_01_000000_create_sessions_table.php</code></td><td>3 nodes</td></tr>
+<tr><td><code>database/migrations/2026_08_07_100014_create_t_media_table.php</code></td><td>3 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x106, imports x49, extends x11. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x102, imports x43, extends x11. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -573,20 +572,75 @@ flowchart LR
 
 <!-- ====== 4. Ingestion & Updates ====== -->
 <h2 id="ingest-cache-update">4. Ingestion &amp; Updates</h2>
-<p>Ingestion &amp; Updates groups implementation around 0001, 000001, create, cache, mostly in database/migrations/0001_01_01_000001_create_cache_table.php. This section covers 3 nodes and 2 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Ingestion &amp; Updates groups implementation around database, app, create, tablephp, mostly in app/Services/PustakaMedia.php, database/factories/UserFactory.php, database/migrations/0001_01_01_000001_create_cache_table.php. This section covers 27 nodes and 33 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Ingestion &amp; Updates (3 nodes, 2 edges)
-    database_migrations_0001_01_01_000001_create_cac_6db17f8e("create cache table.php<br/><small>database/migrations/0001_01_01_000001_create_cache_table.php</small>")
-    database_migrations_0001_01_01_000001_create_cac_216815b8("up()<br/><small>database/migrations/0001_01_01_000001_create_cache_table.php</small>")
-    database_migrations_0001_01_01_000001_create_cac_17af4085("down()<br/><small>database/migrations/0001_01_01_000001_create_cache_table.php</small>")
-    database_migrations_0001_01_01_000001_create_cac_6db17f8e -->|contains| database_migrations_0001_01_01_000001_create_cac_216815b8
-    database_migrations_0001_01_01_000001_create_cac_6db17f8e -->|contains| database_migrations_0001_01_01_000001_create_cac_17af4085
-    class database_migrations_0001_01_01_000001_create_cac_6db17f8e module;
-    class database_migrations_0001_01_01_000001_create_cac_216815b8 function;
-    class database_migrations_0001_01_01_000001_create_cac_17af4085 function;
+    %% Section: Ingestion &amp; Updates (27 nodes, 33 edges)
+    subgraph ingest_cache_update_app_Services_PustakaMedia_ph_2b7aec09["app/Services/PustakaMedia.php"]
+        app_services_pustakamedia_pustakamedia_36dfcfe9("PustakaMedia<br/><small>app/Services/PustakaMedia.php</small>")
+        app_services_pustakamedia_a94b56e2("PustakaMedia.php")
+        app_services_pustakamedia_pustakamedia_simpan_c84df397("simpan()<br/><small>app/Services/PustakaMedia.php</small>")
+        app_services_pustakamedia_pustakamedia_kewebp_56a8f040("keWebp()<br/><small>app/Services/PustakaMedia.php</small>")
+        app_services_pustakamedia_pustakamedia_ukuran_6934c604("ukuran()<br/><small>app/Services/PustakaMedia.php</small>")
+        app_services_pustakamedia_pustakamedia_hapusberk_9d5aaf94("hapusBerkas()<br/><small>app/Services/PustakaMedia.php</small>")
+    end
+    subgraph ingest_cache_update_database_factories_UserFacto_5944a5ac["database/factories/UserFactory.php"]
+        database_factories_userfactory_75091bb9("UserFactory.php")
+        database_factories_userfactory_userfactory_1503b0df("UserFactory<br/><small>database/factories/UserFactory.php</small>")
+        database_factories_userfactory_userfactory_defin_42c5fc6f("definition()<br/><small>database/factories/UserFactory.php</small>")
+        database_factories_userfactory_userfactory_unver_a0243d61("unverified()<br/><small>database/factories/UserFactory.php</small>")
+    end
+    subgraph ingest_cache_update_External_generated_9d67cab5["External / generated"]
+        illuminate_http_uploadedfile_3feff95a("Illuminate\Http\UploadedFile")
+        illuminate_support_str_598b3917("Illuminate\Support\Str")
+    end
+    subgraph ingest_cache_update_app_Models_Media_php_f1b42693["app/Models/Media.php"]
+        app_models_media_media_8c8d549f("Media<br/><small>app/Models/Media.php</small>")
+        app_models_media_media_casts_d4a467ee("casts()<br/><small>app/Models/Media.php</small>")
+    end
+    app_http_controllers_api_admin_mediacontroller_m_c8c0e4a1("hapus()<br/><small>Api/Admin/MediaController.php</small>")
+    config_cache_2edc2f90("cache.php")
+    config_database_4356feaa("database.php")
+    config_session_8c734b9c("session.php")
+    app_models_media_media_8c8d549f -->|method| app_models_media_media_casts_d4a467ee
+    app_services_pustakamedia_pustakamedia_36dfcfe9 -->|method| app_services_pustakamedia_pustakamedia_kewebp_56a8f040
+    app_services_pustakamedia_pustakamedia_36dfcfe9 -->|method| app_services_pustakamedia_pustakamedia_ukuran_6934c604
+    app_services_pustakamedia_pustakamedia_36dfcfe9 -->|method| app_services_pustakamedia_pustakamedia_simpan_c84df397
+    app_services_pustakamedia_pustakamedia_36dfcfe9 -->|method| app_services_pustakamedia_pustakamedia_hapusberk_9d5aaf94
+    database_factories_userfactory_userfactory_1503b0df -->|method| database_factories_userfactory_userfactory_defin_42c5fc6f
+    database_factories_userfactory_userfactory_1503b0df -->|method| database_factories_userfactory_userfactory_unver_a0243d61
+    app_http_controllers_api_admin_mediacontroller_m_c8c0e4a1 -->|calls| app_models_media_media_8c8d549f
+    app_services_pustakamedia_pustakamedia_simpan_c84df397 -->|calls| app_services_pustakamedia_pustakamedia_kewebp_56a8f040
+    app_services_pustakamedia_pustakamedia_simpan_c84df397 -->|calls| app_services_pustakamedia_pustakamedia_ukuran_6934c604
+    app_services_pustakamedia_pustakamedia_simpan_c84df397 -->|calls| app_models_media_media_8c8d549f
+    app_services_pustakamedia_a94b56e2 -->|imports| app_models_media_media_8c8d549f
+    app_services_pustakamedia_a94b56e2 -->|imports| illuminate_http_uploadedfile_3feff95a
+    app_services_pustakamedia_a94b56e2 -->|imports| illuminate_support_str_598b3917
+    config_cache_2edc2f90 -->|imports| illuminate_support_str_598b3917
+    config_database_4356feaa -->|imports| illuminate_support_str_598b3917
+    config_session_8c734b9c -->|imports| illuminate_support_str_598b3917
+    database_factories_userfactory_75091bb9 -->|imports| illuminate_support_str_598b3917
+    %% Omitted for readability: 9 nodes, 0 edges
+    class app_services_pustakamedia_pustakamedia_36dfcfe9 klass;
+    class app_services_pustakamedia_a94b56e2 klass;
+    class app_services_pustakamedia_pustakamedia_simpan_c84df397 function;
+    class app_services_pustakamedia_pustakamedia_kewebp_56a8f040 function;
+    class app_services_pustakamedia_pustakamedia_ukuran_6934c604 function;
+    class app_services_pustakamedia_pustakamedia_hapusberk_9d5aaf94 function;
+    class database_factories_userfactory_75091bb9 klass;
+    class database_factories_userfactory_userfactory_1503b0df klass;
+    class database_factories_userfactory_userfactory_defin_42c5fc6f function;
+    class database_factories_userfactory_userfactory_unver_a0243d61 function;
+    class illuminate_http_uploadedfile_3feff95a klass;
+    class illuminate_support_str_598b3917 klass;
+    class app_models_media_media_8c8d549f klass;
+    class app_models_media_media_casts_d4a467ee function;
+    class app_http_controllers_api_admin_mediacontroller_m_c8c0e4a1 function;
+    class config_cache_2edc2f90 module;
+    class config_database_4356feaa module;
+    class config_session_8c734b9c module;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -610,6 +664,166 @@ flowchart LR
 </tr>
 <tr>
   <td>1</td>
+  <td><code>Media</code><br><small style="color:var(--muted)">app/Models/Media.php</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>hapus()</code><br><small style="color:var(--muted)">Api/Admin/MediaController.php</small><br><code>index()</code><br><small style="color:var(--muted)">Api/Admin/MediaController.php</small><br><code>MediaController.php</code><br><small style="color:var(--muted)">Api/Admin/MediaController.php</small><br>+2 more</td>
+  <td><code>casts()</code><br><small style="color:var(--muted)">app/Models/Media.php</small></td>
+  <td>Media node in app/Models/Media.php.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>PustakaMedia</code><br><small style="color:var(--muted)">app/Services/PustakaMedia.php</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>MediaController.php</code><br><small style="color:var(--muted)">Api/Admin/MediaController.php</small></td>
+  <td><code>hapusBerkas()</code><br><small style="color:var(--muted)">app/Services/PustakaMedia.php</small><br><code>keWebp()</code><br><small style="color:var(--muted)">app/Services/PustakaMedia.php</small><br><code>simpan()</code><br><small style="color:var(--muted)">app/Services/PustakaMedia.php</small><br>+1 more</td>
+  <td>PustakaMedia node in app/Services/PustakaMedia.php.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>UserFactory</code><br><small style="color:var(--muted)">database/factories/UserFactory.php</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>definition()</code><br><small style="color:var(--muted)">database/factories/UserFactory.php</small><br><code>unverified()</code><br><small style="color:var(--muted)">database/factories/UserFactory.php</small></td>
+  <td>UserFactory node in database/factories/UserFactory.php.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>.hapus()</code><br><small style="color:var(--muted)">Api/Admin/MediaController.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>MediaController</code><br><small style="color:var(--muted)">Api/Admin/MediaController.php</small></td>
+  <td><code>Balasan</code><br><small style="color:var(--muted)">app/Support/Balasan.php</small><br><code>Media</code><br><small style="color:var(--muted)">app/Models/Media.php</small></td>
+  <td>.hapus() node in Api/Admin/MediaController.php.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>.casts()</code><br><small style="color:var(--muted)">app/Models/Media.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>Media</code><br><small style="color:var(--muted)">app/Models/Media.php</small></td>
+  <td>No direct outbound edge</td>
+  <td>.casts() node in app/Models/Media.php.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>.hapusBerkas()</code><br><small style="color:var(--muted)">app/Services/PustakaMedia.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>PustakaMedia</code><br><small style="color:var(--muted)">app/Services/PustakaMedia.php</small></td>
+  <td>No direct outbound edge</td>
+  <td>.hapusBerkas() node in app/Services/PustakaMedia.php.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>.keWebp()</code><br><small style="color:var(--muted)">app/Services/PustakaMedia.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>PustakaMedia</code><br><small style="color:var(--muted)">app/Services/PustakaMedia.php</small><br><code>simpan()</code><br><small style="color:var(--muted)">app/Services/PustakaMedia.php</small></td>
+  <td>No direct outbound edge</td>
+  <td>.keWebp() node in app/Services/PustakaMedia.php.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>.simpan()</code><br><small style="color:var(--muted)">app/Services/PustakaMedia.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>PustakaMedia</code><br><small style="color:var(--muted)">app/Services/PustakaMedia.php</small></td>
+  <td><code>keWebp()</code><br><small style="color:var(--muted)">app/Services/PustakaMedia.php</small><br><code>Media</code><br><small style="color:var(--muted)">app/Models/Media.php</small><br><code>ukuran()</code><br><small style="color:var(--muted)">app/Services/PustakaMedia.php</small></td>
+  <td>.simpan() node in app/Services/PustakaMedia.php.</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><code>.ukuran()</code><br><small style="color:var(--muted)">app/Services/PustakaMedia.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>PustakaMedia</code><br><small style="color:var(--muted)">app/Services/PustakaMedia.php</small><br><code>simpan()</code><br><small style="color:var(--muted)">app/Services/PustakaMedia.php</small></td>
+  <td>No direct outbound edge</td>
+  <td>.ukuran() node in app/Services/PustakaMedia.php.</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><code>.definition()</code><br><small style="color:var(--muted)">database/factories/UserFactory.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>UserFactory</code><br><small style="color:var(--muted)">database/factories/UserFactory.php</small></td>
+  <td>No direct outbound edge</td>
+  <td>.definition() node in database/factories/UserFactory.php.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>.unverified()</code><br><small style="color:var(--muted)">database/factories/UserFactory.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>UserFactory</code><br><small style="color:var(--muted)">database/factories/UserFactory.php</small></td>
+  <td>No direct outbound edge</td>
+  <td>.unverified() node in database/factories/UserFactory.php.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>PustakaMedia.php</code><br><small style="color:var(--muted)">app/Services/PustakaMedia.php</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>Illuminate\Http\UploadedFile</code><br><code>Illuminate\Support\Facades\Storage</code><br><code>Illuminate\Support\Str</code><br>+2 more</td>
+  <td>PustakaMedia.php node in app/Services/PustakaMedia.php.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>cache.php</code><br><small style="color:var(--muted)">config/cache.php</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>Illuminate\Support\Str</code></td>
+  <td>Caches analysis results or computes cache keys.</td>
+</tr>
+<tr>
+  <td>14</td>
+  <td><code>database.php</code><br><small style="color:var(--muted)">config/database.php</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>Illuminate\Support\Str</code></td>
+  <td>database.php node in config/database.php.</td>
+</tr>
+<tr>
+  <td>15</td>
+  <td><code>session.php</code><br><small style="color:var(--muted)">config/session.php</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>Illuminate\Support\Str</code></td>
+  <td>session.php node in config/session.php.</td>
+</tr>
+<tr>
+  <td>16</td>
+  <td><code>UserFactory.php</code><br><small style="color:var(--muted)">database/factories/UserFactory.php</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>Illuminate\Database\Eloquent\Factories\...</code><br><code>Illuminate\Support\Facades\Hash</code><br><code>Illuminate\Support\Str</code></td>
+  <td>UserFactory.php node in database/factories/UserFactory.php.</td>
+</tr>
+<tr>
+  <td>17</td>
+  <td><code>Illuminate\Database\Eloquent\Factories\Factory</code><br><small style="color:var(--muted)"></small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>UserFactory.php</code><br><small style="color:var(--muted)">database/factories/UserFactory.php</small></td>
+  <td>No direct outbound edge</td>
+  <td>Illuminate\Database\Eloquent\Factories\Factory node in project.</td>
+</tr>
+<tr>
+  <td>18</td>
+  <td><code>Illuminate\Http\UploadedFile</code><br><small style="color:var(--muted)"></small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>PustakaMedia.php</code><br><small style="color:var(--muted)">app/Services/PustakaMedia.php</small></td>
+  <td>No direct outbound edge</td>
+  <td>Illuminate\Http\UploadedFile node in project.</td>
+</tr>
+<tr>
+  <td>19</td>
+  <td><code>Illuminate\Support\Str</code><br><small style="color:var(--muted)"></small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>BuktiPengaduanController.php</code><br><small style="color:var(--muted)">Controllers/Api/BuktiPengaduanController.php</small><br><code>cache.php</code><br><small style="color:var(--muted)">config/cache.php</small><br><code>database.php</code><br><small style="color:var(--muted)">config/database.php</small><br>+5 more</td>
+  <td>No direct outbound edge</td>
+  <td>Illuminate\Support\Str node in project.</td>
+</tr>
+<tr>
+  <td>20</td>
+  <td><code>static</code><br><small style="color:var(--muted)"></small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>static node in project.</td>
+</tr>
+<tr>
+  <td>21</td>
   <td><code>down()</code><br><small style="color:var(--muted)">database/migrations/0001_01_01_000001_create_cache_table.php</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -617,7 +831,7 @@ flowchart LR
   <td>down() node in database/migrations/0001_01_01_000001_create_cache_table.php.</td>
 </tr>
 <tr>
-  <td>2</td>
+  <td>22</td>
   <td><code>up()</code><br><small style="color:var(--muted)">database/migrations/0001_01_01_000001_create_cache_table.php</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -625,12 +839,44 @@ flowchart LR
   <td>up() node in database/migrations/0001_01_01_000001_create_cache_table.php.</td>
 </tr>
 <tr>
-  <td>3</td>
+  <td>23</td>
+  <td><code>down()</code><br><small style="color:var(--muted)">database/migrations/2026_08_07_100001_create_m_userlevels_table.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>down() node in database/migrations/2026_08_07_100001_create_m_userlevels_table.php.</td>
+</tr>
+<tr>
+  <td>24</td>
+  <td><code>up()</code><br><small style="color:var(--muted)">database/migrations/2026_08_07_100001_create_m_userlevels_table.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>up() node in database/migrations/2026_08_07_100001_create_m_userlevels_table.php.</td>
+</tr>
+<tr>
+  <td>25</td>
   <td><code>0001_01_01_000001_create_cache_table.php</code><br><small style="color:var(--muted)">database/migrations/0001_01_01_000001_create_cache_table.php</small></td>
   <td><span class="tag tag-class">Module</span></td>
   <td>External entry / no inbound edge</td>
   <td><code>Illuminate\Database\Migrations\Migration</code><br><code>Illuminate\Database\Schema\Blueprint</code><br><code>Illuminate\Support\Facades\Schema</code></td>
   <td>Caches analysis results or computes cache keys.</td>
+</tr>
+<tr>
+  <td>26</td>
+  <td><code>2026_08_07_100001_create_m_userlevels_table.php</code><br><small style="color:var(--muted)">database/migrations/2026_08_07_100001_create_m_userlevels_table.php</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>Illuminate\Database\Migrations\Migration</code><br><code>Illuminate\Database\Schema\Blueprint</code><br><code>Illuminate\Support\Facades\Schema</code></td>
+  <td>2026_08_07_100001_create_m_userlevels_table.php node in database/migrations/2026_08_07_100001_create_m_userlevels_table.php.</td>
+</tr>
+<tr>
+  <td>27</td>
+  <td><code>Illuminate\Support\Facades\Schema</code><br><small style="color:var(--muted)"></small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>AppServiceProvider.php</code><br><small style="color:var(--muted)">app/Providers/AppServiceProvider.php</small><br><code>create cache table.php</code><br><small style="color:var(--muted)">database/migrations/0001_01_01_000001_create_cache_table.php</small><br><code>create jobs table.php</code><br><small style="color:var(--muted)">database/migrations/0001_01_01_000002_create_jobs_table.php</small><br>+24 more</td>
+  <td>No direct outbound edge</td>
+  <td>Illuminate\Support\Facades\Schema node in project.</td>
 </tr>
 </table>
 
@@ -639,81 +885,90 @@ flowchart LR
     <h4>Key Files</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>database/migrations/0001_01_01_000001_create_cache_table.php</code></td><td>3 nodes</td></tr>
+      <tr><td><code>app/Services/PustakaMedia.php</code></td><td>6 nodes</td></tr>
+<tr><td><code>database/factories/UserFactory.php</code></td><td>4 nodes</td></tr>
+<tr><td><code>database/migrations/0001_01_01_000001_create_cache_table.php</code></td><td>3 nodes</td></tr>
+<tr><td><code>database/migrations/2026_08_07_100001_create_m_userlevels_table.php</code></td><td>3 nodes</td></tr>
+<tr><td><code>app/Models/Media.php</code></td><td>2 nodes</td></tr>
+<tr><td><code>Api/Admin/MediaController.php</code></td><td>1 nodes</td></tr>
+<tr><td><code>config/cache.php</code></td><td>1 nodes</td></tr>
+<tr><td><code>config/database.php</code></td><td>1 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x2. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: imports x10, method x7, contains x6, calls x4. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
 
 <!-- ====== 5. Serving API ====== -->
 <h2 id="serve-api">5. Serving API</h2>
-<p>Serving API groups implementation around app, http, controllers, api, mostly in app/Services/StatistikExcel.php, Http/Controllers/PublikController.php, app/Models/User.php. This section covers 486 nodes and 1376 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Serving API groups implementation around app, http, controllers, api, mostly in app/Services/StatistikExcel.php, Http/Controllers/PublikController.php, Api/Admin/DemografiAdminController.php. This section covers 443 nodes and 1227 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Serving API (486 nodes, 1376 edges)
-    subgraph serve_api_Controllers_Api_NotifikasiController_p_7f892450["Controllers/Api/NotifikasiController.php"]
-        app_http_controllers_api_notifikasicontroller_no_eaf3ab3f("NotifikasiController<br/><small>Controllers/Api/NotifikasiController.php</small>")
-        app_http_controllers_api_notifikasicontroller_no_7bd04a35("index()<br/><small>Controllers/Api/NotifikasiController.php</small>")
-        app_http_controllers_api_notifikasicontroller_no_463fa038("tandaiSemua()<br/><small>Controllers/Api/NotifikasiController.php</small>")
-        app_http_controllers_api_notifikasicontroller_no_e7429989("tandaiSatu()<br/><small>Controllers/Api/NotifikasiController.php</small>")
-    end
-    subgraph serve_api_app_Models_Notifikasi_php_856cc83b["app/Models/Notifikasi.php"]
-        app_models_notifikasi_notifikasi_5046a4dc("Notifikasi<br/><small>app/Models/Notifikasi.php</small>")
-        app_models_notifikasi_notifikasi_casts_611e829e("casts()<br/><small>app/Models/Notifikasi.php</small>")
-        app_models_notifikasi_notifikasi_scopebelumdibac_fc4706da("scopeBelumDibaca()<br/><small>app/Models/Notifikasi.php</small>")
-        app_models_notifikasi_notifikasi_user_9b9b54ac("user()<br/><small>app/Models/Notifikasi.php</small>")
+    %% Section: Serving API (443 nodes, 1227 edges)
+    subgraph serve_api_Api_Admin_SkmAdminController_php_7d66c023["Api/Admin/SkmAdminController.php"]
+        app_http_controllers_api_admin_skmadmincontrolle_8e295646("SkmAdminController<br/><small>Api/Admin/SkmAdminController.php</small>")
+        app_http_controllers_api_admin_skmadmincontrolle_ea93ffe0("demografi()<br/><small>Api/Admin/SkmAdminController.php</small>")
+        app_http_controllers_api_admin_skmadmincontrolle_4954d7b2("__invoke()<br/><small>Api/Admin/SkmAdminController.php</small>")
     end
     subgraph serve_api_Api_Admin_StatistikEksporController_ph_29a5705e["Api/Admin/StatistikEksporController.php"]
         app_http_controllers_api_admin_statistikeksporco_da50415d("StatistikEksporController<br/><small>Api/Admin/StatistikEksporController.php</small>")
         app_http_controllers_api_admin_statistikeksporco_0da156cc("__construct()<br/><small>Api/Admin/StatistikEksporController.php</small>")
         app_http_controllers_api_admin_statistikeksporco_47afcda4("__invoke()<br/><small>Api/Admin/StatistikEksporController.php</small>")
     end
+    subgraph serve_api_Api_Admin_LogAktivitasController_php_1225ffd7["Api/Admin/LogAktivitasController.php"]
+        app_http_controllers_api_admin_logaktivitascontr_b22f6eea("LogAktivitasController<br/><small>Api/Admin/LogAktivitasController.php</small>")
+        app_http_controllers_api_admin_logaktivitascontr_ef9b4b28("index()<br/><small>Api/Admin/LogAktivitasController.php</small>")
+    end
+    subgraph serve_api_Controllers_Api_BuktiPengaduanControll_b9ca72d8["Controllers/Api/BuktiPengaduanController.php"]
+        app_http_controllers_api_buktipengaduancontrolle_67663a54("BuktiPengaduanController<br/><small>Controllers/Api/BuktiPengaduanController.php</small>")
+        app_http_controllers_api_buktipengaduancontrolle_a514541b("__invoke()<br/><small>Controllers/Api/BuktiPengaduanController.php</small>")
+    end
+    subgraph serve_api_Controllers_Api_PendudukController_php_8126b5e1["Controllers/Api/PendudukController.php"]
+        app_http_controllers_api_pendudukcontroller_pend_3139db99("PendudukController<br/><small>Controllers/Api/PendudukController.php</small>")
+        app_http_controllers_api_pendudukcontroller_pend_81da71fe("cek()<br/><small>Controllers/Api/PendudukController.php</small>")
+    end
     subgraph serve_api_app_Services_StatistikExcel_php_027448b1["app/Services/StatistikExcel.php"]
         app_services_statistikexcel_statistikexcel_81765bd2("StatistikExcel<br/><small>app/Services/StatistikExcel.php</small>")
         app_services_statistikexcel_29fd1156("StatistikExcel.php")
     end
-    app_http_controllers_api_statistikcontroller_sta_9b0b07c2("StatistikController<br/><small>Controllers/Api/StatistikController.php</small>")
-    app_http_controllers_auth_registercontroller_0b320d0f("RegisterController.php")
+    app_http_controllers_api_layanancontroller_cff980d3("LayananController.php")
     app_http_controllers_dashboardcontroller_fdc99541("DashboardController.php")
     app_http_controllers_publikcontroller_publikcont_a07fcba9("PublikController<br/><small>Http/Controllers/PublikController.php</small>")
     routes_api_f343bdc2("api.php")
-    app_http_controllers_api_notifikasicontroller_no_eaf3ab3f -->|method| app_http_controllers_api_notifikasicontroller_no_7bd04a35
-    app_http_controllers_api_notifikasicontroller_no_eaf3ab3f -->|method| app_http_controllers_api_notifikasicontroller_no_463fa038
-    app_http_controllers_api_notifikasicontroller_no_eaf3ab3f -->|method| app_http_controllers_api_notifikasicontroller_no_e7429989
-    app_models_notifikasi_notifikasi_5046a4dc -->|method| app_models_notifikasi_notifikasi_casts_611e829e
-    app_models_notifikasi_notifikasi_5046a4dc -->|method| app_models_notifikasi_notifikasi_scopebelumdibac_fc4706da
-    app_models_notifikasi_notifikasi_5046a4dc -->|method| app_models_notifikasi_notifikasi_user_9b9b54ac
+    app_http_controllers_api_admin_logaktivitascontr_b22f6eea -->|method| app_http_controllers_api_admin_logaktivitascontr_ef9b4b28
+    app_http_controllers_api_admin_skmadmincontrolle_8e295646 -->|method| app_http_controllers_api_admin_skmadmincontrolle_ea93ffe0
+    app_http_controllers_api_admin_skmadmincontrolle_8e295646 -->|method| app_http_controllers_api_admin_skmadmincontrolle_4954d7b2
     app_http_controllers_api_admin_statistikeksporco_da50415d -->|method| app_http_controllers_api_admin_statistikeksporco_0da156cc
     app_http_controllers_api_admin_statistikeksporco_da50415d -->|method| app_http_controllers_api_admin_statistikeksporco_47afcda4
-    app_http_controllers_api_notifikasicontroller_no_7bd04a35 -->|calls| app_models_notifikasi_notifikasi_5046a4dc
-    app_http_controllers_api_notifikasicontroller_no_e7429989 -->|calls| app_models_notifikasi_notifikasi_5046a4dc
-    app_http_controllers_api_notifikasicontroller_no_463fa038 -->|calls| app_models_notifikasi_notifikasi_5046a4dc
+    app_http_controllers_api_buktipengaduancontrolle_67663a54 -->|method| app_http_controllers_api_buktipengaduancontrolle_a514541b
+    app_http_controllers_api_pendudukcontroller_pend_3139db99 -->|method| app_http_controllers_api_pendudukcontroller_pend_81da71fe
+    app_http_controllers_api_admin_skmadmincontrolle_4954d7b2 -->|calls| app_http_controllers_api_admin_skmadmincontrolle_ea93ffe0
     app_http_controllers_api_admin_statistikeksporco_47afcda4 -->|calls| app_services_statistikexcel_statistikexcel_81765bd2
+    routes_api_f343bdc2 -->|imports| app_http_controllers_api_admin_skmadmincontrolle_8e295646
     routes_api_f343bdc2 -->|imports| app_http_controllers_api_admin_statistikeksporco_da50415d
-    routes_api_f343bdc2 -->|imports| app_http_controllers_api_notifikasicontroller_no_eaf3ab3f
-    routes_api_f343bdc2 -->|imports| app_http_controllers_api_statistikcontroller_sta_9b0b07c2
-    %% Omitted for readability: 468 nodes, 0 edges
-    class app_http_controllers_api_notifikasicontroller_no_eaf3ab3f klass;
-    class app_http_controllers_api_notifikasicontroller_no_7bd04a35 function;
-    class app_http_controllers_api_notifikasicontroller_no_463fa038 function;
-    class app_http_controllers_api_notifikasicontroller_no_e7429989 function;
-    class app_models_notifikasi_notifikasi_5046a4dc klass;
-    class app_models_notifikasi_notifikasi_casts_611e829e function;
-    class app_models_notifikasi_notifikasi_scopebelumdibac_fc4706da function;
-    class app_models_notifikasi_notifikasi_user_9b9b54ac function;
+    routes_api_f343bdc2 -->|imports| app_http_controllers_api_pendudukcontroller_pend_3139db99
+    routes_api_f343bdc2 -->|imports| app_http_controllers_api_admin_logaktivitascontr_b22f6eea
+    %% Omitted for readability: 425 nodes, 0 edges
+    class app_http_controllers_api_admin_skmadmincontrolle_8e295646 klass;
+    class app_http_controllers_api_admin_skmadmincontrolle_ea93ffe0 function;
+    class app_http_controllers_api_admin_skmadmincontrolle_4954d7b2 function;
     class app_http_controllers_api_admin_statistikeksporco_da50415d klass;
     class app_http_controllers_api_admin_statistikeksporco_0da156cc function;
     class app_http_controllers_api_admin_statistikeksporco_47afcda4 function;
+    class app_http_controllers_api_admin_logaktivitascontr_b22f6eea klass;
+    class app_http_controllers_api_admin_logaktivitascontr_ef9b4b28 function;
+    class app_http_controllers_api_buktipengaduancontrolle_67663a54 klass;
+    class app_http_controllers_api_buktipengaduancontrolle_a514541b function;
+    class app_http_controllers_api_pendudukcontroller_pend_3139db99 klass;
+    class app_http_controllers_api_pendudukcontroller_pend_81da71fe function;
     class app_services_statistikexcel_statistikexcel_81765bd2 klass;
     class app_services_statistikexcel_29fd1156 klass;
-    class app_http_controllers_api_statistikcontroller_sta_9b0b07c2 klass;
-    class app_http_controllers_auth_registercontroller_0b320d0f klass;
+    class app_http_controllers_api_layanancontroller_cff980d3 klass;
     class app_http_controllers_dashboardcontroller_fdc99541 klass;
     class app_http_controllers_publikcontroller_publikcont_a07fcba9 klass;
     class routes_api_f343bdc2 api;
@@ -740,22 +995,6 @@ flowchart LR
 </tr>
 <tr>
   <td>1</td>
-  <td><code>SkmAdminController</code><br><small style="color:var(--muted)">Api/Admin/SkmAdminController.php</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>api.php</code><br><small style="color:var(--muted)">routes/api.php</small></td>
-  <td><code>__invoke()</code><br><small style="color:var(--muted)">Api/Admin/SkmAdminController.php</small><br><code>demografi()</code><br><small style="color:var(--muted)">Api/Admin/SkmAdminController.php</small></td>
-  <td>SkmAdminController node in Api/Admin/SkmAdminController.php.</td>
-</tr>
-<tr>
-  <td>2</td>
-  <td><code>BerkasController</code><br><small style="color:var(--muted)">Http/Controllers/BerkasController.php</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>miliknya()</code><br><small style="color:var(--muted)">Http/Controllers/BerkasController.php</small><br><code>tampilkan()</code><br><small style="color:var(--muted)">Http/Controllers/BerkasController.php</small></td>
-  <td>BerkasController node in Http/Controllers/BerkasController.php.</td>
-</tr>
-<tr>
-  <td>3</td>
   <td><code>DashboardController</code><br><small style="color:var(--muted)">Http/Controllers/DashboardController.php</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td><code>web.php</code><br><small style="color:var(--muted)">routes/web.php</small></td>
@@ -763,47 +1002,7 @@ flowchart LR
   <td>DashboardController node in Http/Controllers/DashboardController.php.</td>
 </tr>
 <tr>
-  <td>4</td>
-  <td><code>Berkas</code><br><small style="color:var(--muted)">app/Models/Berkas.php</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>BerkasController.php</code><br><small style="color:var(--muted)">Http/Controllers/BerkasController.php</small><br><code>buat()</code><br><small style="color:var(--muted)">Controllers/Api/LayananController.php</small><br><code>LayananController.php</code><br><small style="color:var(--muted)">Controllers/Api/LayananController.php</small><br>+1 more</td>
-  <td><code>permohonan()</code><br><small style="color:var(--muted)">app/Models/Berkas.php</small></td>
-  <td>Berkas node in app/Models/Berkas.php.</td>
-</tr>
-<tr>
-  <td>5</td>
-  <td><code>PresisiMilidetik</code><br><small style="color:var(--muted)">Models/Concerns/PresisiMilidetik.php</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>Berkas.php</code><br><small style="color:var(--muted)">app/Models/Berkas.php</small><br><code>DemografiWilayah.php</code><br><small style="color:var(--muted)">app/Models/DemografiWilayah.php</small><br><code>Gallery.php</code><br><small style="color:var(--muted)">app/Models/Gallery.php</small><br>+15 more</td>
-  <td><code>initializePresisiMilidetik()</code><br><small style="color:var(--muted)">Models/Concerns/PresisiMilidetik.php</small></td>
-  <td>PresisiMilidetik node in Models/Concerns/PresisiMilidetik.php.</td>
-</tr>
-<tr>
-  <td>6</td>
-  <td><code>KritikSaran</code><br><small style="color:var(--muted)">app/Models/KritikSaran.php</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>AspirasiController.php</code><br><small style="color:var(--muted)">Controllers/Api/AspirasiController.php</small><br><code>beranda()</code><br><small style="color:var(--muted)">Http/Controllers/DashboardController.php</small><br><code>daftarKritik()</code><br><small style="color:var(--muted)">Controllers/Api/AspirasiController.php</small><br>+4 more</td>
-  <td>No direct outbound edge</td>
-  <td>KritikSaran node in app/Models/KritikSaran.php.</td>
-</tr>
-<tr>
-  <td>7</td>
-  <td><code>Kunjungan</code><br><small style="color:var(--muted)">app/Models/Kunjungan.php</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>catat()</code><br><small style="color:var(--muted)">app/Services/PencacahKunjungan.php</small><br><code>PencacahKunjungan.php</code><br><small style="color:var(--muted)">app/Services/PencacahKunjungan.php</small><br><code>statistik()</code><br><small style="color:var(--muted)">app/Services/PencacahKunjungan.php</small></td>
-  <td><code>casts()</code><br><small style="color:var(--muted)">app/Models/Kunjungan.php</small></td>
-  <td>Kunjungan node in app/Models/Kunjungan.php.</td>
-</tr>
-<tr>
-  <td>8</td>
-  <td><code>LogAktivitas</code><br><small style="color:var(--muted)">app/Models/LogAktivitas.php</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>beranda()</code><br><small style="color:var(--muted)">Http/Controllers/DashboardController.php</small><br><code>catat()</code><br><small style="color:var(--muted)">app/Services/CatatanAktivitas.php</small><br><code>CatatanAktivitas.php</code><br><small style="color:var(--muted)">app/Services/CatatanAktivitas.php</small><br>+3 more</td>
-  <td><code>user()</code><br><small style="color:var(--muted)">app/Models/LogAktivitas.php</small></td>
-  <td>LogAktivitas node in app/Models/LogAktivitas.php.</td>
-</tr>
-<tr>
-  <td>9</td>
+  <td>2</td>
   <td><code>Pengaduan</code><br><small style="color:var(--muted)">app/Models/Pengaduan.php</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td><code>AspirasiController.php</code><br><small style="color:var(--muted)">Controllers/Api/AspirasiController.php</small><br><code>beranda()</code><br><small style="color:var(--muted)">Http/Controllers/DashboardController.php</small><br><code>daftarPengaduan()</code><br><small style="color:var(--muted)">Controllers/Api/AspirasiController.php</small><br>+8 more</td>
@@ -811,7 +1010,15 @@ flowchart LR
   <td>Pengaduan node in app/Models/Pengaduan.php.</td>
 </tr>
 <tr>
-  <td>10</td>
+  <td>3</td>
+  <td><code>Permohonan</code><br><small style="color:var(--muted)">app/Models/Permohonan.php</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>__invoke()</code><br><small style="color:var(--muted)">Controllers/Api/StatistikController.php</small><br><code>__invoke()</code><br><small style="color:var(--muted)">Controllers/Api/PermohonanPdfController.php</small><br><code>beranda()</code><br><small style="color:var(--muted)">Http/Controllers/DashboardController.php</small><br>+26 more</td>
+  <td><code>berkas()</code><br><small style="color:var(--muted)">app/Models/Permohonan.php</small><br><code>casts()</code><br><small style="color:var(--muted)">app/Models/Permohonan.php</small><br><code>jenis()</code><br><small style="color:var(--muted)">app/Models/Permohonan.php</small><br>+1 more</td>
+  <td>Permohonan node in app/Models/Permohonan.php.</td>
+</tr>
+<tr>
+  <td>4</td>
   <td><code>SkmJawaban</code><br><small style="color:var(--muted)">app/Models/SkmJawaban.php</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td><code>__invoke()</code><br><small style="color:var(--muted)">Api/Admin/SkmAdminController.php</small><br><code>AspirasiController.php</code><br><small style="color:var(--muted)">Controllers/Api/AspirasiController.php</small><br><code>beranda()</code><br><small style="color:var(--muted)">Http/Controllers/DashboardController.php</small><br>+5 more</td>
@@ -819,23 +1026,15 @@ flowchart LR
   <td>SkmJawaban node in app/Models/SkmJawaban.php.</td>
 </tr>
 <tr>
-  <td>11</td>
-  <td><code>Tiket</code><br><small style="color:var(--muted)">app/Models/Tiket.php</small></td>
+  <td>5</td>
+  <td><code>DemografiExcel</code><br><small style="color:var(--muted)">app/Services/DemografiExcel.php</small></td>
   <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>casts()</code><br><small style="color:var(--muted)">app/Models/Tiket.php</small><br><code>pesan()</code><br><small style="color:var(--muted)">app/Models/Tiket.php</small><br><code>scopeUntuk()</code><br><small style="color:var(--muted)">app/Models/Tiket.php</small><br>+1 more</td>
-  <td>Tiket node in app/Models/Tiket.php.</td>
+  <td><code>DemografiAdminController.php</code><br><small style="color:var(--muted)">Api/Admin/DemografiAdminController.php</small></td>
+  <td><code>baca()</code><br><small style="color:var(--muted)">app/Services/DemografiExcel.php</small><br><code>keAngka()</code><br><small style="color:var(--muted)">app/Services/DemografiExcel.php</small><br><code>keUnduhan()</code><br><small style="color:var(--muted)">app/Services/DemografiExcel.php</small><br>+2 more</td>
+  <td>DemografiExcel node in app/Services/DemografiExcel.php.</td>
 </tr>
 <tr>
-  <td>12</td>
-  <td><code>TiketPesan</code><br><small style="color:var(--muted)">app/Models/TiketPesan.php</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>pengirim()</code><br><small style="color:var(--muted)">app/Models/TiketPesan.php</small><br><code>tiket()</code><br><small style="color:var(--muted)">app/Models/TiketPesan.php</small></td>
-  <td>TiketPesan node in app/Models/TiketPesan.php.</td>
-</tr>
-<tr>
-  <td>13</td>
+  <td>6</td>
   <td><code>PencacahKunjungan</code><br><small style="color:var(--muted)">app/Services/PencacahKunjungan.php</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td><code>DashboardController.php</code><br><small style="color:var(--muted)">Http/Controllers/DashboardController.php</small><br><code>SistemController.php</code><br><small style="color:var(--muted)">Controllers/Api/SistemController.php</small></td>
@@ -843,39 +1042,31 @@ flowchart LR
   <td>PencacahKunjungan node in app/Services/PencacahKunjungan.php.</td>
 </tr>
 <tr>
-  <td>14</td>
-  <td><code>.demografi()</code><br><small style="color:var(--muted)">Api/Admin/SkmAdminController.php</small></td>
+  <td>7</td>
+  <td><code>StatistikExcel</code><br><small style="color:var(--muted)">app/Services/StatistikExcel.php</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>__invoke()</code><br><small style="color:var(--muted)">Api/Admin/StatistikEksporController.php</small><br><code>StatistikEksporController.php</code><br><small style="color:var(--muted)">Api/Admin/StatistikEksporController.php</small></td>
+  <td><code>__construct()</code><br><small style="color:var(--muted)">app/Services/StatistikExcel.php</small><br><code>bagianValid()</code><br><small style="color:var(--muted)">app/Services/StatistikExcel.php</small><br><code>bernomor()</code><br><small style="color:var(--muted)">app/Services/StatistikExcel.php</small><br>+23 more</td>
+  <td>StatistikExcel node in app/Services/StatistikExcel.php.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>.__construct()</code><br><small style="color:var(--muted)">Api/Admin/DemografiAdminController.php</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>__invoke()</code><br><small style="color:var(--muted)">Api/Admin/SkmAdminController.php</small><br><code>SkmAdminController</code><br><small style="color:var(--muted)">Api/Admin/SkmAdminController.php</small></td>
+  <td><code>DemografiAdminController</code><br><small style="color:var(--muted)">Api/Admin/DemografiAdminController.php</small></td>
   <td>No direct outbound edge</td>
-  <td>.demografi() node in Api/Admin/SkmAdminController.php.</td>
+  <td>.__construct() node in Api/Admin/DemografiAdminController.php.</td>
 </tr>
 <tr>
-  <td>15</td>
-  <td><code>.__invoke()</code><br><small style="color:var(--muted)">Api/Admin/SkmAdminController.php</small></td>
+  <td>9</td>
+  <td><code>.kirimSkm()</code><br><small style="color:var(--muted)">Controllers/Api/AspirasiController.php</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>SkmAdminController</code><br><small style="color:var(--muted)">Api/Admin/SkmAdminController.php</small></td>
-  <td><code>Balasan</code><br><small style="color:var(--muted)">app/Support/Balasan.php</small><br><code>demografi()</code><br><small style="color:var(--muted)">Api/Admin/SkmAdminController.php</small><br><code>SkmJawaban</code><br><small style="color:var(--muted)">app/Models/SkmJawaban.php</small></td>
-  <td>.__invoke() node in Api/Admin/SkmAdminController.php.</td>
+  <td><code>AspirasiController</code><br><small style="color:var(--muted)">Controllers/Api/AspirasiController.php</small></td>
+  <td><code>Balasan</code><br><small style="color:var(--muted)">app/Support/Balasan.php</small><br><code>SkmJawaban</code><br><small style="color:var(--muted)">app/Models/SkmJawaban.php</small></td>
+  <td>.kirimSkm() node in Controllers/Api/AspirasiController.php.</td>
 </tr>
 <tr>
-  <td>16</td>
-  <td><code>.__construct()</code><br><small style="color:var(--muted)">Controllers/Api/SistemController.php</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>SistemController</code><br><small style="color:var(--muted)">Controllers/Api/SistemController.php</small></td>
-  <td>No direct outbound edge</td>
-  <td>.__construct() node in Controllers/Api/SistemController.php.</td>
-</tr>
-<tr>
-  <td>17</td>
-  <td><code>.miliknya()</code><br><small style="color:var(--muted)">Http/Controllers/BerkasController.php</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>BerkasController</code><br><small style="color:var(--muted)">Http/Controllers/BerkasController.php</small></td>
-  <td><code>Berkas</code><br><small style="color:var(--muted)">app/Models/Berkas.php</small></td>
-  <td>.miliknya() node in Http/Controllers/BerkasController.php.</td>
-</tr>
-<tr>
-  <td>18</td>
+  <td>10</td>
   <td><code>.beranda()</code><br><small style="color:var(--muted)">Http/Controllers/DashboardController.php</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>DashboardController</code><br><small style="color:var(--muted)">Http/Controllers/DashboardController.php</small></td>
@@ -883,7 +1074,7 @@ flowchart LR
   <td>.beranda() node in Http/Controllers/DashboardController.php.</td>
 </tr>
 <tr>
-  <td>19</td>
+  <td>11</td>
   <td><code>.__construct()</code><br><small style="color:var(--muted)">Http/Controllers/DashboardController.php</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>DashboardController</code><br><small style="color:var(--muted)">Http/Controllers/DashboardController.php</small></td>
@@ -891,79 +1082,15 @@ flowchart LR
   <td>.__construct() node in Http/Controllers/DashboardController.php.</td>
 </tr>
 <tr>
-  <td>20</td>
-  <td><code>.permohonan()</code><br><small style="color:var(--muted)">app/Models/Berkas.php</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>Berkas</code><br><small style="color:var(--muted)">app/Models/Berkas.php</small></td>
-  <td>No direct outbound edge</td>
-  <td>.permohonan() node in app/Models/Berkas.php.</td>
-</tr>
-<tr>
-  <td>21</td>
-  <td><code>.initializePresisiMilidetik()</code><br><small style="color:var(--muted)">Models/Concerns/PresisiMilidetik.php</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>PresisiMilidetik</code><br><small style="color:var(--muted)">Models/Concerns/PresisiMilidetik.php</small></td>
-  <td>No direct outbound edge</td>
-  <td>.initializePresisiMilidetik() node in Models/Concerns/PresisiMilidetik.php.</td>
-</tr>
-<tr>
-  <td>22</td>
-  <td><code>.casts()</code><br><small style="color:var(--muted)">app/Models/Kunjungan.php</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>Kunjungan</code><br><small style="color:var(--muted)">app/Models/Kunjungan.php</small></td>
-  <td>No direct outbound edge</td>
-  <td>.casts() node in app/Models/Kunjungan.php.</td>
-</tr>
-<tr>
-  <td>23</td>
-  <td><code>.user()</code><br><small style="color:var(--muted)">app/Models/LogAktivitas.php</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>LogAktivitas</code><br><small style="color:var(--muted)">app/Models/LogAktivitas.php</small></td>
-  <td>No direct outbound edge</td>
-  <td>.user() node in app/Models/LogAktivitas.php.</td>
-</tr>
-<tr>
-  <td>24</td>
-  <td><code>.scopeTerbit()</code><br><small style="color:var(--muted)">app/Models/News.php</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>News</code><br><small style="color:var(--muted)">app/Models/News.php</small></td>
-  <td>No direct outbound edge</td>
-  <td>.scopeTerbit() node in app/Models/News.php.</td>
-</tr>
-<tr>
-  <td>25</td>
-  <td><code>.scopeBelumDibaca()</code><br><small style="color:var(--muted)">app/Models/Notifikasi.php</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>Notifikasi</code><br><small style="color:var(--muted)">app/Models/Notifikasi.php</small></td>
-  <td>No direct outbound edge</td>
-  <td>.scopeBelumDibaca() node in app/Models/Notifikasi.php.</td>
-</tr>
-<tr>
-  <td>26</td>
-  <td><code>.user()</code><br><small style="color:var(--muted)">app/Models/Notifikasi.php</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>Notifikasi</code><br><small style="color:var(--muted)">app/Models/Notifikasi.php</small></td>
-  <td>No direct outbound edge</td>
-  <td>.user() node in app/Models/Notifikasi.php.</td>
-</tr>
-<tr>
-  <td>27</td>
-  <td><code>.jenis()</code><br><small style="color:var(--muted)">app/Models/Permohonan.php</small></td>
+  <td>12</td>
+  <td><code>.casts()</code><br><small style="color:var(--muted)">app/Models/Permohonan.php</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>Permohonan</code><br><small style="color:var(--muted)">app/Models/Permohonan.php</small></td>
   <td>No direct outbound edge</td>
-  <td>.jenis() node in app/Models/Permohonan.php.</td>
+  <td>.casts() node in app/Models/Permohonan.php.</td>
 </tr>
 <tr>
-  <td>28</td>
-  <td><code>.user()</code><br><small style="color:var(--muted)">app/Models/Permohonan.php</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>Permohonan</code><br><small style="color:var(--muted)">app/Models/Permohonan.php</small></td>
-  <td>No direct outbound edge</td>
-  <td>.user() node in app/Models/Permohonan.php.</td>
-</tr>
-<tr>
-  <td>29</td>
+  <td>13</td>
   <td><code>.casts()</code><br><small style="color:var(--muted)">app/Models/SkmJawaban.php</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>SkmJawaban</code><br><small style="color:var(--muted)">app/Models/SkmJawaban.php</small></td>
@@ -971,12 +1098,140 @@ flowchart LR
   <td>.casts() node in app/Models/SkmJawaban.php.</td>
 </tr>
 <tr>
-  <td>30</td>
+  <td>14</td>
   <td><code>.nilaiTerbaca()</code><br><small style="color:var(--muted)">app/Models/SkmJawaban.php</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>rataSkor()</code><br><small style="color:var(--muted)">app/Models/SkmJawaban.php</small><br><code>SkmJawaban</code><br><small style="color:var(--muted)">app/Models/SkmJawaban.php</small></td>
   <td>No direct outbound edge</td>
   <td>.nilaiTerbaca() node in app/Models/SkmJawaban.php.</td>
+</tr>
+<tr>
+  <td>15</td>
+  <td><code>.rataSkor()</code><br><small style="color:var(--muted)">app/Models/SkmJawaban.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>SkmJawaban</code><br><small style="color:var(--muted)">app/Models/SkmJawaban.php</small></td>
+  <td><code>nilaiTerbaca()</code><br><small style="color:var(--muted)">app/Models/SkmJawaban.php</small></td>
+  <td>.rataSkor() node in app/Models/SkmJawaban.php.</td>
+</tr>
+<tr>
+  <td>16</td>
+  <td><code>.baca()</code><br><small style="color:var(--muted)">app/Services/DemografiExcel.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>DemografiExcel</code><br><small style="color:var(--muted)">app/Services/DemografiExcel.php</small></td>
+  <td><code>keAngka()</code><br><small style="color:var(--muted)">app/Services/DemografiExcel.php</small><br><code>klasifikasiKode()</code><br><small style="color:var(--muted)">app/Services/DemografiExcel.php</small></td>
+  <td>.baca() node in app/Services/DemografiExcel.php.</td>
+</tr>
+<tr>
+  <td>17</td>
+  <td><code>.keAngka()</code><br><small style="color:var(--muted)">app/Services/DemografiExcel.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>baca()</code><br><small style="color:var(--muted)">app/Services/DemografiExcel.php</small><br><code>DemografiExcel</code><br><small style="color:var(--muted)">app/Services/DemografiExcel.php</small></td>
+  <td>No direct outbound edge</td>
+  <td>.keAngka() node in app/Services/DemografiExcel.php.</td>
+</tr>
+<tr>
+  <td>18</td>
+  <td><code>.keUnduhan()</code><br><small style="color:var(--muted)">app/Services/DemografiExcel.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>DemografiExcel</code><br><small style="color:var(--muted)">app/Services/DemografiExcel.php</small></td>
+  <td>No direct outbound edge</td>
+  <td>.keUnduhan() node in app/Services/DemografiExcel.php.</td>
+</tr>
+<tr>
+  <td>19</td>
+  <td><code>.klasifikasiKode()</code><br><small style="color:var(--muted)">app/Services/DemografiExcel.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>baca()</code><br><small style="color:var(--muted)">app/Services/DemografiExcel.php</small><br><code>DemografiExcel</code><br><small style="color:var(--muted)">app/Services/DemografiExcel.php</small></td>
+  <td>No direct outbound edge</td>
+  <td>.klasifikasiKode() node in app/Services/DemografiExcel.php.</td>
+</tr>
+<tr>
+  <td>20</td>
+  <td><code>.tulis()</code><br><small style="color:var(--muted)">app/Services/DemografiExcel.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>DemografiExcel</code><br><small style="color:var(--muted)">app/Services/DemografiExcel.php</small></td>
+  <td><code>DemografiWilayah</code><br><small style="color:var(--muted)">app/Models/DemografiWilayah.php</small><br><code>Spreadsheet</code></td>
+  <td>.tulis() node in app/Services/DemografiExcel.php.</td>
+</tr>
+<tr>
+  <td>21</td>
+  <td><code>.catat()</code><br><small style="color:var(--muted)">app/Services/PencacahKunjungan.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>PencacahKunjungan</code><br><small style="color:var(--muted)">app/Services/PencacahKunjungan.php</small></td>
+  <td><code>Carbon</code><br><code>Kunjungan</code><br><small style="color:var(--muted)">app/Models/Kunjungan.php</small><br><code>tanggalHariIni()</code><br><small style="color:var(--muted)">app/Services/PencacahKunjungan.php</small></td>
+  <td>.catat() node in app/Services/PencacahKunjungan.php.</td>
+</tr>
+<tr>
+  <td>22</td>
+  <td><code>.statistik()</code><br><small style="color:var(--muted)">app/Services/PencacahKunjungan.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>PencacahKunjungan</code><br><small style="color:var(--muted)">app/Services/PencacahKunjungan.php</small></td>
+  <td><code>Carbon</code><br><code>Kunjungan</code><br><small style="color:var(--muted)">app/Models/Kunjungan.php</small><br><code>tanggalHariIni()</code><br><small style="color:var(--muted)">app/Services/PencacahKunjungan.php</small></td>
+  <td>.statistik() node in app/Services/PencacahKunjungan.php.</td>
+</tr>
+<tr>
+  <td>23</td>
+  <td><code>.tanggalHariIni()</code><br><small style="color:var(--muted)">app/Services/PencacahKunjungan.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>catat()</code><br><small style="color:var(--muted)">app/Services/PencacahKunjungan.php</small><br><code>PencacahKunjungan</code><br><small style="color:var(--muted)">app/Services/PencacahKunjungan.php</small><br><code>statistik()</code><br><small style="color:var(--muted)">app/Services/PencacahKunjungan.php</small></td>
+  <td><code>Carbon</code></td>
+  <td>.tanggalHariIni() node in app/Services/PencacahKunjungan.php.</td>
+</tr>
+<tr>
+  <td>24</td>
+  <td><code>.bagianValid()</code><br><small style="color:var(--muted)">app/Services/StatistikExcel.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>StatistikExcel</code><br><small style="color:var(--muted)">app/Services/StatistikExcel.php</small></td>
+  <td>No direct outbound edge</td>
+  <td>.bagianValid() node in app/Services/StatistikExcel.php.</td>
+</tr>
+<tr>
+  <td>25</td>
+  <td><code>.bernomor()</code><br><small style="color:var(--muted)">app/Services/StatistikExcel.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>dataAkun()</code><br><small style="color:var(--muted)">app/Services/StatistikExcel.php</small><br><code>dataAspirasi()</code><br><small style="color:var(--muted)">app/Services/StatistikExcel.php</small><br><code>dataHarian()</code><br><small style="color:var(--muted)">app/Services/StatistikExcel.php</small><br>+6 more</td>
+  <td>No direct outbound edge</td>
+  <td>.bernomor() node in app/Services/StatistikExcel.php.</td>
+</tr>
+<tr>
+  <td>26</td>
+  <td><code>.buat()</code><br><small style="color:var(--muted)">app/Services/StatistikExcel.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>StatistikExcel</code><br><small style="color:var(--muted)">app/Services/StatistikExcel.php</small></td>
+  <td><code>Carbon</code><br><code>rincianAkun()</code><br><small style="color:var(--muted)">app/Services/StatistikExcel.php</small><br><code>rincianAspirasi()</code><br><small style="color:var(--muted)">app/Services/StatistikExcel.php</small><br>+6 more</td>
+  <td>.buat() node in app/Services/StatistikExcel.php.</td>
+</tr>
+<tr>
+  <td>27</td>
+  <td><code>.__construct()</code><br><small style="color:var(--muted)">app/Services/StatistikExcel.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>StatistikExcel</code><br><small style="color:var(--muted)">app/Services/StatistikExcel.php</small></td>
+  <td>No direct outbound edge</td>
+  <td>.__construct() node in app/Services/StatistikExcel.php.</td>
+</tr>
+<tr>
+  <td>28</td>
+  <td><code>.dataAkun()</code><br><small style="color:var(--muted)">app/Services/StatistikExcel.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>ringkas()</code><br><small style="color:var(--muted)">app/Services/StatistikExcel.php</small><br><code>StatistikExcel</code><br><small style="color:var(--muted)">app/Services/StatistikExcel.php</small></td>
+  <td><code>bernomor()</code><br><small style="color:var(--muted)">app/Services/StatistikExcel.php</small><br><code>tanggalPanjang()</code><br><small style="color:var(--muted)">app/Services/StatistikExcel.php</small><br><code>User</code><br><small style="color:var(--muted)">app/Models/User.php</small></td>
+  <td>.dataAkun() node in app/Services/StatistikExcel.php.</td>
+</tr>
+<tr>
+  <td>29</td>
+  <td><code>.dataAspirasi()</code><br><small style="color:var(--muted)">app/Services/StatistikExcel.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>ringkas()</code><br><small style="color:var(--muted)">app/Services/StatistikExcel.php</small><br><code>StatistikExcel</code><br><small style="color:var(--muted)">app/Services/StatistikExcel.php</small></td>
+  <td><code>bernomor()</code><br><small style="color:var(--muted)">app/Services/StatistikExcel.php</small><br><code>KritikSaran</code><br><small style="color:var(--muted)">app/Models/KritikSaran.php</small><br><code>Pengaduan</code><br><small style="color:var(--muted)">app/Models/Pengaduan.php</small><br>+2 more</td>
+  <td>.dataAspirasi() node in app/Services/StatistikExcel.php.</td>
+</tr>
+<tr>
+  <td>30</td>
+  <td><code>.dataHarian()</code><br><small style="color:var(--muted)">app/Services/StatistikExcel.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>ringkas()</code><br><small style="color:var(--muted)">app/Services/StatistikExcel.php</small><br><code>StatistikExcel</code><br><small style="color:var(--muted)">app/Services/StatistikExcel.php</small></td>
+  <td><code>bernomor()</code><br><small style="color:var(--muted)">app/Services/StatistikExcel.php</small><br><code>Carbon</code><br><code>Permohonan</code><br><small style="color:var(--muted)">app/Models/Permohonan.php</small></td>
+  <td>.dataHarian() node in app/Services/StatistikExcel.php.</td>
 </tr>
 </table>
 
@@ -987,29 +1242,29 @@ flowchart LR
       <tr><th>File</th><th>Coverage</th></tr>
       <tr><td><code>app/Services/StatistikExcel.php</code></td><td>28 nodes</td></tr>
 <tr><td><code>Http/Controllers/PublikController.php</code></td><td>22 nodes</td></tr>
-<tr><td><code>app/Models/User.php</code></td><td>14 nodes</td></tr>
 <tr><td><code>Api/Admin/DemografiAdminController.php</code></td><td>13 nodes</td></tr>
+<tr><td><code>app/Support/Layanan.php</code></td><td>13 nodes</td></tr>
 <tr><td><code>Controllers/Api/SistemController.php</code></td><td>11 nodes</td></tr>
+<tr><td><code>Api/Admin/UserAdminController.php</code></td><td>10 nodes</td></tr>
 <tr><td><code>app/Support/Konten.php</code></td><td>10 nodes</td></tr>
 <tr><td><code>Api/Admin/BeritaAdminController.php</code></td><td>9 nodes</td></tr>
-<tr><td><code>Api/Admin/UserAdminController.php</code></td><td>9 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: imports x379, calls x338, method x275, references x225. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: imports x317, calls x310, method x256, references x198. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
 
 <!-- ====== 6. Tests & Fixtures ====== -->
 <h2 id="tests-fixtures">6. Tests &amp; Fixtures</h2>
-<p>Tests &amp; Fixtures groups implementation around tests, feature, test, suntingakuntestphp, mostly in tests/Feature/SuntingAkunTest.php, tests/Feature/PeranOpdTest.php, tests/Feature/LayananNonaktifTest.php. This section covers 58 nodes and 109 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Tests &amp; Fixtures groups implementation around tests, feature, test, suntingakuntestphp, mostly in tests/Feature/SuntingAkunTest.php, tests/Feature/PeranOpdTest.php, tests/Feature/LayananNonaktifTest.php. This section covers 54 nodes and 104 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Tests &amp; Fixtures (58 nodes, 109 edges)
+    %% Section: Tests &amp; Fixtures (54 nodes, 104 edges)
     subgraph tests_fixtures_tests_Feature_PeranOpdTest_php_5149b8a0["tests/Feature/PeranOpdTest.php"]
         tests_feature_peranopdtest_peranopdtest_e7a9b430("PeranOpdTest<br/><small>tests/Feature/PeranOpdTest.php</small>")
         tests_feature_peranopdtest_peranopdtest_test_hit_1dda6ef6("test_hitungan_per_status_ikut_disaring()<br/><small>tests/Feature/PeranOpdTest.php</small>")
@@ -1020,6 +1275,8 @@ flowchart LR
         tests_feature_peranopdtest_peranopdtest_opd_6707833d("opd()<br/><small>tests/Feature/PeranOpdTest.php</small>")
         tests_feature_peranopdtest_peranopdtest_test_opd_c1acfb71("test_opd_mendarat_di_daftar_permohonannya_sendiri()<br/><small>tests/Feature/PeranOpdTest.php</small>")
         tests_feature_peranopdtest_peranopdtest_test_opd_7c4a46aa("test_opd_boleh_membuka_halaman_yang_dipakai_bersama()<br/><small>tests/Feature/PeranOpdTest.php</small>")
+        tests_feature_peranopdtest_peranopdtest_test_opd_e82e703e("test_opd_ditolak_di_halaman_khusus_petugas()<br/><small>tests/Feature/PeranOpdTest.php</small>")
+        tests_feature_peranopdtest_peranopdtest_test_hal_e31d7450("test_halaman_master_kini_khusus_super_admin()<br/><small>tests/Feature/PeranOpdTest.php</small>")
     end
     subgraph tests_fixtures_tests_Feature_SuntingAkunTest_php_4657efb7["tests/Feature/SuntingAkunTest.php"]
         tests_feature_suntingakuntest_suntingakuntest_9771f16f("SuntingAkunTest<br/><small>tests/Feature/SuntingAkunTest.php</small>")
@@ -1027,16 +1284,11 @@ flowchart LR
         tests_feature_suntingakuntest_suntingakuntest_te_bab12774("test_akun_lama_tanpa_kecamatan_tetap_bisa_disunting()<br/><small>tests/Feature/SuntingAkunTest.php</small>")
         tests_feature_suntingakuntest_suntingakuntest_te_c4a1d548("test_level_super_admin_tidak_bisa_diberikan_dari_sini()<br/><small>tests/Feature/SuntingAkunTest.php</small>")
     end
-    subgraph tests_fixtures_app_Models_UserLevel_php_b027b6f0["app/Models/UserLevel.php"]
-        app_models_userlevel_userlevel_95e878f5("UserLevel<br/><small>app/Models/UserLevel.php</small>")
-        app_models_userlevel_userlevel_users_0e5a3dae("users()<br/><small>app/Models/UserLevel.php</small>")
-    end
     subgraph tests_fixtures_tests_Feature_ExampleTest_php_f3dfa6a6["tests/Feature/ExampleTest.php"]
         tests_feature_exampletest_exampletest_d7999836("ExampleTest<br/><small>tests/Feature/ExampleTest.php</small>")
         tests_feature_exampletest_exampletest_test_the_a_a1888ca0("test_the_application_returns_a_successful_response()<br/><small>tests/Feature/ExampleTest.php</small>")
     end
     tests_feature_layanannonaktiftest_layanannonakti_ff285008("LayananNonaktifTest<br/><small>tests/Feature/LayananNonaktifTest.php</small>")
-    app_models_userlevel_userlevel_95e878f5 -->|method| app_models_userlevel_userlevel_users_0e5a3dae
     tests_feature_exampletest_exampletest_d7999836 -->|method| tests_feature_exampletest_exampletest_test_the_a_a1888ca0
     tests_feature_peranopdtest_peranopdtest_e7a9b430 -->|method| tests_feature_peranopdtest_peranopdtest_test_hit_1dda6ef6
     tests_feature_peranopdtest_peranopdtest_e7a9b430 -->|method| tests_feature_peranopdtest_peranopdtest_test_det_0b0079b9
@@ -1046,6 +1298,8 @@ flowchart LR
     tests_feature_peranopdtest_peranopdtest_e7a9b430 -->|method| tests_feature_peranopdtest_peranopdtest_opd_6707833d
     tests_feature_peranopdtest_peranopdtest_e7a9b430 -->|method| tests_feature_peranopdtest_peranopdtest_test_opd_c1acfb71
     tests_feature_peranopdtest_peranopdtest_e7a9b430 -->|method| tests_feature_peranopdtest_peranopdtest_test_opd_7c4a46aa
+    tests_feature_peranopdtest_peranopdtest_e7a9b430 -->|method| tests_feature_peranopdtest_peranopdtest_test_opd_e82e703e
+    tests_feature_peranopdtest_peranopdtest_e7a9b430 -->|method| tests_feature_peranopdtest_peranopdtest_test_hal_e31d7450
     tests_feature_suntingakuntest_suntingakuntest_9771f16f -->|method| tests_feature_suntingakuntest_suntingakuntest_te_c4a1d548
     tests_feature_suntingakuntest_suntingakuntest_9771f16f -->|method| tests_feature_suntingakuntest_suntingakuntest_te_bab12774
     tests_feature_suntingakuntest_suntingakuntest_9771f16f -->|method| tests_feature_suntingakuntest_suntingakuntest_te_ba7966f4
@@ -1053,9 +1307,10 @@ flowchart LR
     tests_feature_peranopdtest_peranopdtest_test_det_0b0079b9 -->|calls| tests_feature_peranopdtest_peranopdtest_opd_6707833d
     tests_feature_peranopdtest_peranopdtest_test_hit_1dda6ef6 -->|calls| tests_feature_peranopdtest_peranopdtest_opd_6707833d
     tests_feature_peranopdtest_peranopdtest_test_opd_7c4a46aa -->|calls| tests_feature_peranopdtest_peranopdtest_opd_6707833d
+    tests_feature_peranopdtest_peranopdtest_test_opd_e82e703e -->|calls| tests_feature_peranopdtest_peranopdtest_opd_6707833d
     tests_feature_peranopdtest_peranopdtest_test_opd_c1acfb71 -->|calls| tests_feature_peranopdtest_peranopdtest_opd_6707833d
     tests_feature_peranopdtest_peranopdtest_test_opd_36dc1eb0 -->|calls| tests_feature_peranopdtest_peranopdtest_opd_6707833d
-    %% Omitted for readability: 40 nodes, 0 edges
+    %% Omitted for readability: 36 nodes, 0 edges
     class tests_feature_peranopdtest_peranopdtest_e7a9b430 test;
     class tests_feature_peranopdtest_peranopdtest_test_hit_1dda6ef6 test;
     class tests_feature_peranopdtest_peranopdtest_test_det_0b0079b9 test;
@@ -1065,12 +1320,12 @@ flowchart LR
     class tests_feature_peranopdtest_peranopdtest_opd_6707833d test;
     class tests_feature_peranopdtest_peranopdtest_test_opd_c1acfb71 test;
     class tests_feature_peranopdtest_peranopdtest_test_opd_7c4a46aa test;
+    class tests_feature_peranopdtest_peranopdtest_test_opd_e82e703e test;
+    class tests_feature_peranopdtest_peranopdtest_test_hal_e31d7450 test;
     class tests_feature_suntingakuntest_suntingakuntest_9771f16f test;
     class tests_feature_suntingakuntest_suntingakuntest_te_ba7966f4 test;
     class tests_feature_suntingakuntest_suntingakuntest_te_bab12774 test;
     class tests_feature_suntingakuntest_suntingakuntest_te_c4a1d548 test;
-    class app_models_userlevel_userlevel_95e878f5 klass;
-    class app_models_userlevel_userlevel_users_0e5a3dae function;
     class tests_feature_exampletest_exampletest_d7999836 test;
     class tests_feature_exampletest_exampletest_test_the_a_a1888ca0 test;
     class tests_feature_layanannonaktiftest_layanannonakti_ff285008 test;
@@ -1347,14 +1602,13 @@ flowchart LR
 <tr><td><code>tests/Feature/LayananNonaktifTest.php</code></td><td>12 nodes</td></tr>
 <tr><td><code>tests/Feature/ExampleTest.php</code></td><td>3 nodes</td></tr>
 <tr><td><code>tests/Unit/ExampleTest.php</code></td><td>3 nodes</td></tr>
-<tr><td><code>app/Models/UserLevel.php</code></td><td>2 nodes</td></tr>
 <tr><td><code>tests/TestCase.php</code></td><td>2 nodes</td></tr>
-<tr><td><code>Api/Admin/UserAdminController.php</code></td><td>1 nodes</td></tr>
+<tr><td><code>app/Models/Wilayah.php</code></td><td>1 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: calls x50, method x41, imports x8, inherits x6. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: calls x49, method x40, inherits x6, imports x5. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -1706,14 +1960,15 @@ flowchart LR
 
 <!-- ====== 8. Otp ====== -->
 <h2 id="otp">8. Otp</h2>
-<p>Otp groups implementation around app, services, otpphp, otpcontrollerphp, mostly in app/Services/Otp.php, Controllers/Auth/OtpController.php, app/Services/Fonnte.php. This section covers 27 nodes and 38 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Otp groups implementation around app, services, otpphp, otpcontrollerphp, mostly in app/Services/Otp.php, Controllers/Auth/OtpController.php, app/Services/Fonnte.php. This section covers 22 nodes and 32 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Otp (27 nodes, 38 edges)
+    %% Section: Otp (22 nodes, 32 edges)
     subgraph otp_app_Services_Otp_php_b4ce41c3["app/Services/Otp.php"]
         app_services_otp_otp_80c00e0b("Otp<br/><small>app/Services/Otp.php</small>")
+        app_services_otp_otp_buat_1e458c5f("buat()<br/><small>app/Services/Otp.php</small>")
         app_services_otp_otp_verifikasi_1c32818d("verifikasi()<br/><small>app/Services/Otp.php</small>")
         app_services_otp_otp_buatbukti_6a7fe90f("buatBukti()<br/><small>app/Services/Otp.php</small>")
         app_services_otp_otp_cekbukti_5cf4f05a("cekBukti()<br/><small>app/Services/Otp.php</small>")
@@ -1721,6 +1976,7 @@ flowchart LR
         app_services_otp_otp_kirim_307e7e25("kirim()<br/><small>app/Services/Otp.php</small>")
         app_services_otp_otp_hmac_8884a34f("hmac()<br/><small>app/Services/Otp.php</small>")
         app_services_otp_otp_construct_d353153f("__construct()<br/><small>app/Services/Otp.php</small>")
+        app_services_otp_otp_normalisasihp_be1824f2("normalisasiHp()<br/><small>app/Services/Otp.php</small>")
     end
     subgraph otp_Controllers_Auth_OtpController_php_ec7165dc["Controllers/Auth/OtpController.php"]
         app_http_controllers_auth_otpcontroller_otpcontr_dccfdb91("OtpController<br/><small>Controllers/Auth/OtpController.php</small>")
@@ -1730,12 +1986,10 @@ flowchart LR
         app_http_controllers_auth_otpcontroller_otpcontr_e53739c3("verifikasi()<br/><small>Controllers/Auth/OtpController.php</small>")
     end
     subgraph otp_app_Services_Fonnte_php_6d55f627["app/Services/Fonnte.php"]
-        app_services_fonnte_75125feb("Fonnte.php")
         app_services_fonnte_fonnte_41b25262("Fonnte<br/><small>app/Services/Fonnte.php</small>")
-        app_services_fonnte_fonnte_aktif_4bc81ee0("aktif()<br/><small>app/Services/Fonnte.php</small>")
         app_services_fonnte_fonnte_kirim_d78f4634("kirim()<br/><small>app/Services/Fonnte.php</small>")
+        app_services_fonnte_fonnte_aktif_4bc81ee0("aktif()<br/><small>app/Services/Fonnte.php</small>")
     end
-    app_services_recaptcha_34d2913e("Recaptcha.php")
     app_http_controllers_auth_otpcontroller_otpcontr_dccfdb91 -->|method| app_http_controllers_auth_otpcontroller_otpcontr_bcb1effc
     app_http_controllers_auth_otpcontroller_otpcontr_dccfdb91 -->|method| app_http_controllers_auth_otpcontroller_otpcontr_ffe40ddc
     app_http_controllers_auth_otpcontroller_otpcontr_dccfdb91 -->|method| app_http_controllers_auth_otpcontroller_otpcontr_e53739c3
@@ -1748,14 +2002,18 @@ flowchart LR
     app_services_otp_otp_80c00e0b -->|method| app_services_otp_otp_kirim_307e7e25
     app_services_otp_otp_80c00e0b -->|method| app_services_otp_otp_hmac_8884a34f
     app_services_otp_otp_80c00e0b -->|method| app_services_otp_otp_construct_d353153f
+    app_services_otp_otp_80c00e0b -->|method| app_services_otp_otp_normalisasihp_be1824f2
+    app_services_otp_otp_80c00e0b -->|method| app_services_otp_otp_buat_1e458c5f
     app_services_fonnte_fonnte_kirim_d78f4634 -->|calls| app_services_fonnte_fonnte_aktif_4bc81ee0
+    app_services_otp_otp_buat_1e458c5f -->|calls| app_services_otp_otp_hmac_8884a34f
     app_services_otp_otp_buatbukti_6a7fe90f -->|calls| app_services_otp_otp_hmac_8884a34f
     app_services_otp_otp_cekbukti_5cf4f05a -->|calls| app_services_otp_otp_hmac_8884a34f
     app_services_otp_otp_kirim_307e7e25 -->|calls| app_services_otp_otp_emailsiap_4834b40f
     app_services_otp_otp_verifikasi_1c32818d -->|calls| app_services_otp_otp_hmac_8884a34f
     app_http_controllers_auth_otpcontroller_97074acd -->|imports| app_services_otp_otp_80c00e0b
-    %% Omitted for readability: 9 nodes, 0 edges
+    %% Omitted for readability: 4 nodes, 0 edges
     class app_services_otp_otp_80c00e0b klass;
+    class app_services_otp_otp_buat_1e458c5f function;
     class app_services_otp_otp_verifikasi_1c32818d function;
     class app_services_otp_otp_buatbukti_6a7fe90f function;
     class app_services_otp_otp_cekbukti_5cf4f05a function;
@@ -1763,16 +2021,15 @@ flowchart LR
     class app_services_otp_otp_kirim_307e7e25 function;
     class app_services_otp_otp_hmac_8884a34f function;
     class app_services_otp_otp_construct_d353153f function;
+    class app_services_otp_otp_normalisasihp_be1824f2 function;
     class app_http_controllers_auth_otpcontroller_otpcontr_dccfdb91 klass;
     class app_http_controllers_auth_otpcontroller_97074acd klass;
     class app_http_controllers_auth_otpcontroller_otpcontr_bcb1effc function;
     class app_http_controllers_auth_otpcontroller_otpcontr_ffe40ddc function;
     class app_http_controllers_auth_otpcontroller_otpcontr_e53739c3 function;
-    class app_services_fonnte_75125feb klass;
     class app_services_fonnte_fonnte_41b25262 klass;
-    class app_services_fonnte_fonnte_aktif_4bc81ee0 function;
     class app_services_fonnte_fonnte_kirim_d78f4634 function;
-    class app_services_recaptcha_34d2913e klass;
+    class app_services_fonnte_fonnte_aktif_4bc81ee0 function;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -1964,51 +2221,11 @@ flowchart LR
 </tr>
 <tr>
   <td>22</td>
-  <td><code>Fonnte.php</code><br><small style="color:var(--muted)">app/Services/Fonnte.php</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>Illuminate\Support\Facades\Http</code><br><code>Illuminate\Support\Facades\Log</code></td>
-  <td>Fonnte.php node in app/Services/Fonnte.php.</td>
-</tr>
-<tr>
-  <td>23</td>
-  <td><code>Pemberitahuan.php</code><br><small style="color:var(--muted)">app/Services/Pemberitahuan.php</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>Illuminate\Support\Facades\Log</code><br><code>Notifikasi</code><br><small style="color:var(--muted)">app/Models/Notifikasi.php</small><br><code>User</code><br><small style="color:var(--muted)">app/Models/User.php</small><br>+1 more</td>
-  <td>Pemberitahuan.php node in app/Services/Pemberitahuan.php.</td>
-</tr>
-<tr>
-  <td>24</td>
-  <td><code>Recaptcha.php</code><br><small style="color:var(--muted)">app/Services/Recaptcha.php</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>Illuminate\Support\Facades\Http</code><br><code>Illuminate\Support\Facades\Log</code></td>
-  <td>Recaptcha.php node in app/Services/Recaptcha.php.</td>
-</tr>
-<tr>
-  <td>25</td>
   <td><code>Illuminate\Support\Facades\Cache</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td><code>OtpController.php</code><br><small style="color:var(--muted)">Controllers/Auth/OtpController.php</small></td>
   <td>No direct outbound edge</td>
   <td>Caches analysis results or computes cache keys.</td>
-</tr>
-<tr>
-  <td>26</td>
-  <td><code>Illuminate\Support\Facades\Http</code><br><small style="color:var(--muted)"></small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>Fonnte.php</code><br><small style="color:var(--muted)">app/Services/Fonnte.php</small><br><code>Recaptcha.php</code><br><small style="color:var(--muted)">app/Services/Recaptcha.php</small></td>
-  <td>No direct outbound edge</td>
-  <td>Illuminate\Support\Facades\Http node in project.</td>
-</tr>
-<tr>
-  <td>27</td>
-  <td><code>Illuminate\Support\Facades\Log</code><br><small style="color:var(--muted)"></small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>Fonnte.php</code><br><small style="color:var(--muted)">app/Services/Fonnte.php</small><br><code>Pemberitahuan.php</code><br><small style="color:var(--muted)">app/Services/Pemberitahuan.php</small><br><code>Recaptcha.php</code><br><small style="color:var(--muted)">app/Services/Recaptcha.php</small></td>
-  <td>No direct outbound edge</td>
-  <td>Illuminate\Support\Facades\Log node in project.</td>
 </tr>
 </table>
 
@@ -2019,14 +2236,12 @@ flowchart LR
       <tr><th>File</th><th>Coverage</th></tr>
       <tr><td><code>app/Services/Otp.php</code></td><td>13 nodes</td></tr>
 <tr><td><code>Controllers/Auth/OtpController.php</code></td><td>5 nodes</td></tr>
-<tr><td><code>app/Services/Fonnte.php</code></td><td>4 nodes</td></tr>
-<tr><td><code>app/Services/Pemberitahuan.php</code></td><td>1 nodes</td></tr>
-<tr><td><code>app/Services/Recaptcha.php</code></td><td>1 nodes</td></tr>
+<tr><td><code>app/Services/Fonnte.php</code></td><td>3 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: method x17, calls x8, imports x7, references x4. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: method x17, calls x8, references x4, imports x2. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -2285,8 +2500,554 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 10. Statistik.jsx ====== -->
-<h2 id="statistik-jsx">10. Statistik.jsx</h2>
+<!-- ====== 10. User ====== -->
+<h2 id="user">10. User</h2>
+<p>User groups implementation around app, models, userphp, http, mostly in app/Models/User.php, Api/Admin/PengaduanAdminController.php, Controllers/Auth/RegisterController.php. This section covers 20 nodes and 25 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: User (20 nodes, 25 edges)
+    subgraph user_app_Models_User_php_ecb78329["app/Models/User.php"]
+        app_models_user_user_aa08ab99("User<br/><small>app/Models/User.php</small>")
+        app_models_user_701410f0("User.php")
+        app_models_user_user_isaktif_d7bf5a46("isAktif()<br/><small>app/Models/User.php</small>")
+        app_models_user_user_permohonan_eb1a8f37("permohonan()<br/><small>app/Models/User.php</small>")
+        app_models_user_user_tiket_331a8334("tiket()<br/><small>app/Models/User.php</small>")
+        app_models_user_user_tiketpesan_df6d7be4("tiketPesan()<br/><small>app/Models/User.php</small>")
+        app_models_user_user_notifikasi_d9b2a1ef("notifikasi()<br/><small>app/Models/User.php</small>")
+        app_models_user_user_logaktivitas_36b70fc4("logAktivitas()<br/><small>app/Models/User.php</small>")
+        app_models_user_user_casts_da5adfe5("casts()<br/><small>app/Models/User.php</small>")
+        app_models_user_user_ispetugas_f81984fa("isPetugas()<br/><small>app/Models/User.php</small>")
+        app_models_user_user_issuperadmin_4ce27f87("isSuperAdmin()<br/><small>app/Models/User.php</small>")
+        app_models_user_user_iswarga_0684a441("isWarga()<br/><small>app/Models/User.php</small>")
+        app_models_user_user_isopd_5d6667e2("isOpd()<br/><small>app/Models/User.php</small>")
+    end
+    subgraph user_External_generated_fcd9ee5d["External / generated"]
+        illuminate_database_eloquent_relations_hasmany_8aa011dd("Illuminate\Database\Eloquent\Relations\...")
+        illuminate_notifications_notifiable_f686ef25("Illuminate\Notifications\Notifiable")
+        illuminate_foundation_auth_user_6340cb3b("Illuminate\Foundation\Auth\User")
+    end
+    app_http_controllers_api_admin_pengaduanadmincon_0b18f8a6("update()<br/><small>Api/Admin/PengaduanAdminController.php</small>")
+    app_http_controllers_auth_registercontroller_reg_c510692f("daftar()<br/><small>Controllers/Auth/RegisterController.php</small>")
+    app_models_user_user_aa08ab99 -->|method| app_models_user_user_isaktif_d7bf5a46
+    app_models_user_user_aa08ab99 -->|method| app_models_user_user_permohonan_eb1a8f37
+    app_models_user_user_aa08ab99 -->|method| app_models_user_user_tiket_331a8334
+    app_models_user_user_aa08ab99 -->|method| app_models_user_user_tiketpesan_df6d7be4
+    app_models_user_user_aa08ab99 -->|method| app_models_user_user_notifikasi_d9b2a1ef
+    app_models_user_user_aa08ab99 -->|method| app_models_user_user_logaktivitas_36b70fc4
+    app_models_user_user_aa08ab99 -->|method| app_models_user_user_casts_da5adfe5
+    app_models_user_user_aa08ab99 -->|method| app_models_user_user_ispetugas_f81984fa
+    app_models_user_user_aa08ab99 -->|method| app_models_user_user_issuperadmin_4ce27f87
+    app_models_user_user_aa08ab99 -->|method| app_models_user_user_iswarga_0684a441
+    app_models_user_user_aa08ab99 -->|method| app_models_user_user_isopd_5d6667e2
+    app_http_controllers_api_admin_pengaduanadmincon_0b18f8a6 -->|calls| app_models_user_user_aa08ab99
+    app_http_controllers_auth_registercontroller_reg_c510692f -->|calls| app_models_user_user_aa08ab99
+    app_models_user_701410f0 -->|imports| illuminate_database_eloquent_relations_hasmany_8aa011dd
+    app_models_user_701410f0 -->|imports| illuminate_notifications_notifiable_f686ef25
+    %% Omitted for readability: 2 nodes, 0 edges
+    class app_models_user_user_aa08ab99 klass;
+    class app_models_user_701410f0 klass;
+    class app_models_user_user_isaktif_d7bf5a46 function;
+    class app_models_user_user_permohonan_eb1a8f37 function;
+    class app_models_user_user_tiket_331a8334 function;
+    class app_models_user_user_tiketpesan_df6d7be4 function;
+    class app_models_user_user_notifikasi_d9b2a1ef function;
+    class app_models_user_user_logaktivitas_36b70fc4 function;
+    class app_models_user_user_casts_da5adfe5 function;
+    class app_models_user_user_ispetugas_f81984fa function;
+    class app_models_user_user_issuperadmin_4ce27f87 function;
+    class app_models_user_user_iswarga_0684a441 function;
+    class app_models_user_user_isopd_5d6667e2 function;
+    class illuminate_database_eloquent_relations_hasmany_8aa011dd klass;
+    class illuminate_notifications_notifiable_f686ef25 klass;
+    class illuminate_foundation_auth_user_6340cb3b klass;
+    class app_http_controllers_api_admin_pengaduanadmincon_0b18f8a6 function;
+    class app_http_controllers_auth_registercontroller_reg_c510692f function;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>User</code><br><small style="color:var(--muted)">app/Models/User.php</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>ajukanUlang()</code><br><small style="color:var(--muted)">Controllers/Auth/CekStatusController.php</small><br><code>beranda()</code><br><small style="color:var(--muted)">Http/Controllers/DashboardController.php</small><br><code>CatatanAktivitas.php</code><br><small style="color:var(--muted)">app/Services/CatatanAktivitas.php</small><br>+43 more</td>
+  <td><code>casts()</code><br><small style="color:var(--muted)">app/Models/User.php</small><br><code>isAktif()</code><br><small style="color:var(--muted)">app/Models/User.php</small><br><code>isOpd()</code><br><small style="color:var(--muted)">app/Models/User.php</small><br>+9 more</td>
+  <td>User node in app/Models/User.php.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>.update()</code><br><small style="color:var(--muted)">Api/Admin/PengaduanAdminController.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>PengaduanAdminController</code><br><small style="color:var(--muted)">Api/Admin/PengaduanAdminController.php</small></td>
+  <td><code>Balasan</code><br><small style="color:var(--muted)">app/Support/Balasan.php</small><br><code>Pengaduan</code><br><small style="color:var(--muted)">app/Models/Pengaduan.php</small><br><code>User</code><br><small style="color:var(--muted)">app/Models/User.php</small></td>
+  <td>.update() node in Api/Admin/PengaduanAdminController.php.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>.daftar()</code><br><small style="color:var(--muted)">Controllers/Auth/RegisterController.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>RegisterController</code><br><small style="color:var(--muted)">Controllers/Auth/RegisterController.php</small></td>
+  <td><code>User</code><br><small style="color:var(--muted)">app/Models/User.php</small></td>
+  <td>.daftar() node in Controllers/Auth/RegisterController.php.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>.berkas()</code><br><small style="color:var(--muted)">app/Models/Permohonan.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>Permohonan</code><br><small style="color:var(--muted)">app/Models/Permohonan.php</small></td>
+  <td>No direct outbound edge</td>
+  <td>.berkas() node in app/Models/Permohonan.php.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>.casts()</code><br><small style="color:var(--muted)">app/Models/User.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>User</code><br><small style="color:var(--muted)">app/Models/User.php</small></td>
+  <td>No direct outbound edge</td>
+  <td>.casts() node in app/Models/User.php.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>.isAktif()</code><br><small style="color:var(--muted)">app/Models/User.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>User</code><br><small style="color:var(--muted)">app/Models/User.php</small></td>
+  <td>No direct outbound edge</td>
+  <td>.isAktif() node in app/Models/User.php.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>.isOpd()</code><br><small style="color:var(--muted)">app/Models/User.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>User</code><br><small style="color:var(--muted)">app/Models/User.php</small></td>
+  <td>No direct outbound edge</td>
+  <td>.isOpd() node in app/Models/User.php.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>.isPetugas()</code><br><small style="color:var(--muted)">app/Models/User.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>User</code><br><small style="color:var(--muted)">app/Models/User.php</small></td>
+  <td>No direct outbound edge</td>
+  <td>.isPetugas() node in app/Models/User.php.</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><code>.isSuperAdmin()</code><br><small style="color:var(--muted)">app/Models/User.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>User</code><br><small style="color:var(--muted)">app/Models/User.php</small></td>
+  <td>No direct outbound edge</td>
+  <td>.isSuperAdmin() node in app/Models/User.php.</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><code>.isWarga()</code><br><small style="color:var(--muted)">app/Models/User.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>User</code><br><small style="color:var(--muted)">app/Models/User.php</small></td>
+  <td>No direct outbound edge</td>
+  <td>.isWarga() node in app/Models/User.php.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>.logAktivitas()</code><br><small style="color:var(--muted)">app/Models/User.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>User</code><br><small style="color:var(--muted)">app/Models/User.php</small></td>
+  <td>No direct outbound edge</td>
+  <td>.logAktivitas() node in app/Models/User.php.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>.notifikasi()</code><br><small style="color:var(--muted)">app/Models/User.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>User</code><br><small style="color:var(--muted)">app/Models/User.php</small></td>
+  <td>No direct outbound edge</td>
+  <td>.notifikasi() node in app/Models/User.php.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>.permohonan()</code><br><small style="color:var(--muted)">app/Models/User.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>User</code><br><small style="color:var(--muted)">app/Models/User.php</small></td>
+  <td>No direct outbound edge</td>
+  <td>.permohonan() node in app/Models/User.php.</td>
+</tr>
+<tr>
+  <td>14</td>
+  <td><code>.tiket()</code><br><small style="color:var(--muted)">app/Models/User.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>User</code><br><small style="color:var(--muted)">app/Models/User.php</small></td>
+  <td>No direct outbound edge</td>
+  <td>.tiket() node in app/Models/User.php.</td>
+</tr>
+<tr>
+  <td>15</td>
+  <td><code>.tiketPesan()</code><br><small style="color:var(--muted)">app/Models/User.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>User</code><br><small style="color:var(--muted)">app/Models/User.php</small></td>
+  <td>No direct outbound edge</td>
+  <td>.tiketPesan() node in app/Models/User.php.</td>
+</tr>
+<tr>
+  <td>16</td>
+  <td><code>.users()</code><br><small style="color:var(--muted)">app/Models/UserLevel.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>UserLevel</code><br><small style="color:var(--muted)">app/Models/UserLevel.php</small></td>
+  <td>No direct outbound edge</td>
+  <td>.users() node in app/Models/UserLevel.php.</td>
+</tr>
+<tr>
+  <td>17</td>
+  <td><code>User.php</code><br><small style="color:var(--muted)">app/Models/User.php</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>Illuminate\Database\Eloquent\Relations\...</code><br><code>Illuminate\Database\Eloquent\Relations\...</code><br><code>Illuminate\Notifications\Notifiable</code><br>+1 more</td>
+  <td>User.php node in app/Models/User.php.</td>
+</tr>
+<tr>
+  <td>18</td>
+  <td><code>Illuminate\Database\Eloquent\Relations\HasMany</code><br><small style="color:var(--muted)"></small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>App\Models\JenisPermohonan</code><br><code>App\Models\Permohonan</code><br><code>Tiket.php</code><br><small style="color:var(--muted)">app/Models/Tiket.php</small><br>+3 more</td>
+  <td>No direct outbound edge</td>
+  <td>Illuminate\Database\Eloquent\Relations\HasMany node in project.</td>
+</tr>
+<tr>
+  <td>19</td>
+  <td><code>Illuminate\Foundation\Auth\User</code><br><small style="color:var(--muted)"></small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Illuminate\Foundation\Auth\User node in project.</td>
+</tr>
+<tr>
+  <td>20</td>
+  <td><code>Illuminate\Notifications\Notifiable</code><br><small style="color:var(--muted)"></small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>User.php</code><br><small style="color:var(--muted)">app/Models/User.php</small></td>
+  <td>No direct outbound edge</td>
+  <td>Illuminate\Notifications\Notifiable node in project.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>app/Models/User.php</code></td><td>13 nodes</td></tr>
+<tr><td><code>Api/Admin/PengaduanAdminController.php</code></td><td>1 nodes</td></tr>
+<tr><td><code>Controllers/Auth/RegisterController.php</code></td><td>1 nodes</td></tr>
+<tr><td><code>app/Models/Permohonan.php</code></td><td>1 nodes</td></tr>
+<tr><td><code>app/Models/UserLevel.php</code></td><td>1 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: method x11, references x7, calls x2, imports x2. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 11. StatusAkun ====== -->
+<h2 id="statusakun">11. StatusAkun</h2>
+<p>StatusAkun groups implementation around app, statusakunphp, support, wilayahphp, mostly in app/Support/StatusAkun.php, app/Models/Wilayah.php, Controllers/Api/ProfilController.php. This section covers 20 nodes and 26 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: StatusAkun (20 nodes, 26 edges)
+    subgraph statusakun_app_Support_StatusAkun_php_40b8e83a["app/Support/StatusAkun.php"]
+        app_support_statusakun_statusakun_cc2075ad("StatusAkun<br/><small>app/Support/StatusAkun.php</small>")
+        app_support_statusakun_statusakun_info_91ffd0bc("info()<br/><small>app/Support/StatusAkun.php</small>")
+        app_support_statusakun_statusakun_pesanlogin_e2d79fd6("pesanLogin()<br/><small>app/Support/StatusAkun.php</small>")
+        app_support_statusakun_statusakun_label_88017a10("label()<br/><small>app/Support/StatusAkun.php</small>")
+        app_support_statusakun_statusakun_semua_4c42670a("semua()<br/><small>app/Support/StatusAkun.php</small>")
+    end
+    subgraph statusakun_External_generated_a463ebb4["External / generated"]
+        illuminate_support_facades_hash_634e7852("Illuminate\Support\Facades\Hash")
+        illuminate_support_facades_auth_a037615a("Illuminate\Support\Facades\Auth")
+        illuminate_validation_validationexception_aff9a001("Illuminate\Validation\ValidationException")
+        illuminate_support_facades_mail_a0343bf6("Illuminate\Support\Facades\Mail")
+    end
+    subgraph statusakun_app_Models_Wilayah_php_850af8b3["app/Models/Wilayah.php"]
+        app_models_wilayah_wilayah_95694f82("Wilayah<br/><small>app/Models/Wilayah.php</small>")
+        app_models_wilayah_wilayah_children_43caaf58("children()<br/><small>app/Models/Wilayah.php</small>")
+    end
+    app_http_controllers_api_profilcontroller_9f3f0ee2("ProfilController.php")
+    app_http_controllers_auth_logincontroller_faaa59b6("LoginController.php")
+    app_http_controllers_auth_registercontroller_0b320d0f("RegisterController.php")
+    app_http_controllers_auth_sandicontroller_c45e573d("SandiController.php")
+    app_services_otp_db74d282("Otp.php")
+    app_services_surel_e0e99ff6("Surel.php")
+    tests_feature_suntingakuntest_4abee72e("SuntingAkunTest.php")
+    app_models_wilayah_wilayah_95694f82 -->|method| app_models_wilayah_wilayah_children_43caaf58
+    app_support_statusakun_statusakun_cc2075ad -->|method| app_support_statusakun_statusakun_info_91ffd0bc
+    app_support_statusakun_statusakun_cc2075ad -->|method| app_support_statusakun_statusakun_pesanlogin_e2d79fd6
+    app_support_statusakun_statusakun_cc2075ad -->|method| app_support_statusakun_statusakun_label_88017a10
+    app_support_statusakun_statusakun_cc2075ad -->|method| app_support_statusakun_statusakun_semua_4c42670a
+    app_http_controllers_api_profilcontroller_9f3f0ee2 -->|imports| illuminate_support_facades_hash_634e7852
+    app_http_controllers_api_profilcontroller_9f3f0ee2 -->|imports| app_support_statusakun_statusakun_cc2075ad
+    app_http_controllers_auth_logincontroller_faaa59b6 -->|imports| illuminate_support_facades_auth_a037615a
+    app_http_controllers_auth_logincontroller_faaa59b6 -->|imports| illuminate_support_facades_hash_634e7852
+    app_http_controllers_auth_logincontroller_faaa59b6 -->|imports| illuminate_validation_validationexception_aff9a001
+    app_http_controllers_auth_logincontroller_faaa59b6 -->|imports| app_support_statusakun_statusakun_cc2075ad
+    app_http_controllers_auth_registercontroller_0b320d0f -->|imports| app_support_statusakun_statusakun_cc2075ad
+    app_http_controllers_auth_registercontroller_0b320d0f -->|imports| illuminate_support_facades_hash_634e7852
+    app_http_controllers_auth_registercontroller_0b320d0f -->|imports| illuminate_support_facades_mail_a0343bf6
+    app_http_controllers_auth_registercontroller_0b320d0f -->|imports| illuminate_validation_validationexception_aff9a001
+    app_http_controllers_auth_registercontroller_0b320d0f -->|imports| app_models_wilayah_wilayah_95694f82
+    app_http_controllers_auth_sandicontroller_c45e573d -->|imports| illuminate_support_facades_hash_634e7852
+    app_http_controllers_auth_sandicontroller_c45e573d -->|imports| illuminate_support_facades_mail_a0343bf6
+    app_http_controllers_auth_sandicontroller_c45e573d -->|imports| illuminate_validation_validationexception_aff9a001
+    app_http_controllers_auth_sandicontroller_c45e573d -->|imports| app_support_statusakun_statusakun_cc2075ad
+    app_services_otp_db74d282 -->|imports| illuminate_support_facades_mail_a0343bf6
+    app_services_surel_e0e99ff6 -->|imports| illuminate_support_facades_mail_a0343bf6
+    tests_feature_suntingakuntest_4abee72e -->|imports| app_models_wilayah_wilayah_95694f82
+    tests_feature_suntingakuntest_4abee72e -->|imports| illuminate_support_facades_hash_634e7852
+    %% Omitted for readability: 2 nodes, 0 edges
+    class app_support_statusakun_statusakun_cc2075ad klass;
+    class app_support_statusakun_statusakun_info_91ffd0bc function;
+    class app_support_statusakun_statusakun_pesanlogin_e2d79fd6 function;
+    class app_support_statusakun_statusakun_label_88017a10 function;
+    class app_support_statusakun_statusakun_semua_4c42670a function;
+    class illuminate_support_facades_hash_634e7852 klass;
+    class illuminate_support_facades_auth_a037615a klass;
+    class illuminate_validation_validationexception_aff9a001 klass;
+    class illuminate_support_facades_mail_a0343bf6 klass;
+    class app_models_wilayah_wilayah_95694f82 klass;
+    class app_models_wilayah_wilayah_children_43caaf58 function;
+    class app_http_controllers_api_profilcontroller_9f3f0ee2 klass;
+    class app_http_controllers_auth_logincontroller_faaa59b6 klass;
+    class app_http_controllers_auth_registercontroller_0b320d0f klass;
+    class app_http_controllers_auth_sandicontroller_c45e573d klass;
+    class app_services_otp_db74d282 klass;
+    class app_services_surel_e0e99ff6 klass;
+    class tests_feature_suntingakuntest_4abee72e test;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>Wilayah</code><br><small style="color:var(--muted)">app/Models/Wilayah.php</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>handle()</code><br><small style="color:var(--muted)">Console/Commands/IsiWilayahAkun.php</small><br><code>index()</code><br><small style="color:var(--muted)">Api/Admin/PermohonanAdminController.php</small><br><code>IsiWilayahAkun.php</code><br><small style="color:var(--muted)">Console/Commands/IsiWilayahAkun.php</small><br>+8 more</td>
+  <td><code>children()</code><br><small style="color:var(--muted)">app/Models/Wilayah.php</small><br><code>parent()</code><br><small style="color:var(--muted)">app/Models/Wilayah.php</small></td>
+  <td>Wilayah node in app/Models/Wilayah.php.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>StatusAkun</code><br><small style="color:var(--muted)">app/Support/StatusAkun.php</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>CekStatusController.php</code><br><small style="color:var(--muted)">Controllers/Auth/CekStatusController.php</small><br><code>DashboardController.php</code><br><small style="color:var(--muted)">Http/Controllers/DashboardController.php</small><br><code>LoginController.php</code><br><small style="color:var(--muted)">Controllers/Auth/LoginController.php</small><br>+9 more</td>
+  <td><code>info()</code><br><small style="color:var(--muted)">app/Support/StatusAkun.php</small><br><code>label()</code><br><small style="color:var(--muted)">app/Support/StatusAkun.php</small><br><code>pesanLogin()</code><br><small style="color:var(--muted)">app/Support/StatusAkun.php</small><br>+1 more</td>
+  <td>StatusAkun node in app/Support/StatusAkun.php.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>.children()</code><br><small style="color:var(--muted)">app/Models/Wilayah.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>Wilayah</code><br><small style="color:var(--muted)">app/Models/Wilayah.php</small></td>
+  <td>No direct outbound edge</td>
+  <td>.children() node in app/Models/Wilayah.php.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>.info()</code><br><small style="color:var(--muted)">app/Support/StatusAkun.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>StatusAkun</code><br><small style="color:var(--muted)">app/Support/StatusAkun.php</small></td>
+  <td>No direct outbound edge</td>
+  <td>.info() node in app/Support/StatusAkun.php.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>.label()</code><br><small style="color:var(--muted)">app/Support/StatusAkun.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>StatusAkun</code><br><small style="color:var(--muted)">app/Support/StatusAkun.php</small></td>
+  <td>No direct outbound edge</td>
+  <td>.label() node in app/Support/StatusAkun.php.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>.pesanLogin()</code><br><small style="color:var(--muted)">app/Support/StatusAkun.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>StatusAkun</code><br><small style="color:var(--muted)">app/Support/StatusAkun.php</small></td>
+  <td>No direct outbound edge</td>
+  <td>.pesanLogin() node in app/Support/StatusAkun.php.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>.semua()</code><br><small style="color:var(--muted)">app/Support/StatusAkun.php</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>StatusAkun</code><br><small style="color:var(--muted)">app/Support/StatusAkun.php</small></td>
+  <td>No direct outbound edge</td>
+  <td>.semua() node in app/Support/StatusAkun.php.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>ProfilController.php</code><br><small style="color:var(--muted)">Controllers/Api/ProfilController.php</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>Balasan</code><br><small style="color:var(--muted)">app/Support/Balasan.php</small><br><code>Controller</code><br><small style="color:var(--muted)">Http/Controllers/Controller.php</small><br><code>FotoProfil</code><br><small style="color:var(--muted)">app/Services/FotoProfil.php</small><br>+4 more</td>
+  <td>ProfilController.php node in Controllers/Api/ProfilController.php.</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><code>LoginController.php</code><br><small style="color:var(--muted)">Controllers/Auth/LoginController.php</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>Controller</code><br><small style="color:var(--muted)">Http/Controllers/Controller.php</small><br><code>Illuminate\Http\Request</code><br><code>Illuminate\Support\Facades\Auth</code><br>+7 more</td>
+  <td>LoginController.php node in Controllers/Auth/LoginController.php.</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><code>RegisterController.php</code><br><small style="color:var(--muted)">Controllers/Auth/RegisterController.php</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>AlasanTolak</code><br><small style="color:var(--muted)">app/Support/AlasanTolak.php</small><br><code>Controller</code><br><small style="color:var(--muted)">Http/Controllers/Controller.php</small><br><code>FotoProfil</code><br><small style="color:var(--muted)">app/Services/FotoProfil.php</small><br>+12 more</td>
+  <td>RegisterController.php node in Controllers/Auth/RegisterController.php.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>SandiController.php</code><br><small style="color:var(--muted)">Controllers/Auth/SandiController.php</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>Controller</code><br><small style="color:var(--muted)">Http/Controllers/Controller.php</small><br><code>Illuminate\Http\Request</code><br><code>Illuminate\Support\Facades\Hash</code><br>+7 more</td>
+  <td>SandiController.php node in Controllers/Auth/SandiController.php.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>Wilayah.php</code><br><small style="color:var(--muted)">app/Models/Wilayah.php</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>Illuminate\Database\Eloquent\Model</code><br><code>Illuminate\Database\Eloquent\Relations\...</code><br><code>Illuminate\Database\Eloquent\Relations\...</code></td>
+  <td>Wilayah.php node in app/Models/Wilayah.php.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>Otp.php</code><br><small style="color:var(--muted)">app/Services/Otp.php</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>Illuminate\Support\Facades\Mail</code></td>
+  <td>Otp.php node in app/Services/Otp.php.</td>
+</tr>
+<tr>
+  <td>14</td>
+  <td><code>Surel.php</code><br><small style="color:var(--muted)">app/Services/Surel.php</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>Illuminate\Support\Facades\Mail</code></td>
+  <td>Surel.php node in app/Services/Surel.php.</td>
+</tr>
+<tr>
+  <td>15</td>
+  <td><code>StatusAkun.php</code><br><small style="color:var(--muted)">app/Support/StatusAkun.php</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>StatusAkun.php node in app/Support/StatusAkun.php.</td>
+</tr>
+<tr>
+  <td>16</td>
+  <td><code>Illuminate\Support\Facades\Auth</code><br><small style="color:var(--muted)"></small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>AppServiceProvider.php</code><br><small style="color:var(--muted)">app/Providers/AppServiceProvider.php</small><br><code>LoginController.php</code><br><small style="color:var(--muted)">Controllers/Auth/LoginController.php</small></td>
+  <td>No direct outbound edge</td>
+  <td>Illuminate\Support\Facades\Auth node in project.</td>
+</tr>
+<tr>
+  <td>17</td>
+  <td><code>Illuminate\Support\Facades\Hash</code><br><small style="color:var(--muted)"></small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>LoginController.php</code><br><small style="color:var(--muted)">Controllers/Auth/LoginController.php</small><br><code>ProfilController.php</code><br><small style="color:var(--muted)">Controllers/Api/ProfilController.php</small><br><code>RegisterController.php</code><br><small style="color:var(--muted)">Controllers/Auth/RegisterController.php</small><br>+4 more</td>
+  <td>No direct outbound edge</td>
+  <td>Caches analysis results or computes cache keys.</td>
+</tr>
+<tr>
+  <td>18</td>
+  <td><code>Illuminate\Support\Facades\Mail</code><br><small style="color:var(--muted)"></small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>Otp.php</code><br><small style="color:var(--muted)">app/Services/Otp.php</small><br><code>RegisterController.php</code><br><small style="color:var(--muted)">Controllers/Auth/RegisterController.php</small><br><code>SandiController.php</code><br><small style="color:var(--muted)">Controllers/Auth/SandiController.php</small><br>+1 more</td>
+  <td>No direct outbound edge</td>
+  <td>Illuminate\Support\Facades\Mail node in project.</td>
+</tr>
+<tr>
+  <td>19</td>
+  <td><code>Illuminate\Validation\ValidationException</code><br><small style="color:var(--muted)"></small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>LoginController.php</code><br><small style="color:var(--muted)">Controllers/Auth/LoginController.php</small><br><code>RegisterController.php</code><br><small style="color:var(--muted)">Controllers/Auth/RegisterController.php</small><br><code>SandiController.php</code><br><small style="color:var(--muted)">Controllers/Auth/SandiController.php</small></td>
+  <td>No direct outbound edge</td>
+  <td>Illuminate\Validation\ValidationException node in project.</td>
+</tr>
+<tr>
+  <td>20</td>
+  <td><code>SuntingAkunTest.php</code><br><small style="color:var(--muted)">tests/Feature/SuntingAkunTest.php</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>Illuminate\Support\Facades\Hash</code><br><code>TestCase</code><br><small style="color:var(--muted)">tests/TestCase.php</small><br><code>User</code><br><small style="color:var(--muted)">app/Models/User.php</small><br>+2 more</td>
+  <td>Verifies imports, entry points, or version behavior.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>app/Support/StatusAkun.php</code></td><td>6 nodes</td></tr>
+<tr><td><code>app/Models/Wilayah.php</code></td><td>3 nodes</td></tr>
+<tr><td><code>Controllers/Api/ProfilController.php</code></td><td>1 nodes</td></tr>
+<tr><td><code>Controllers/Auth/LoginController.php</code></td><td>1 nodes</td></tr>
+<tr><td><code>Controllers/Auth/RegisterController.php</code></td><td>1 nodes</td></tr>
+<tr><td><code>Controllers/Auth/SandiController.php</code></td><td>1 nodes</td></tr>
+<tr><td><code>app/Services/Otp.php</code></td><td>1 nodes</td></tr>
+<tr><td><code>app/Services/Surel.php</code></td><td>1 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: imports x19, method x5, contains x2. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 12. Statistik.jsx ====== -->
+<h2 id="statistik-jsx">12. Statistik.jsx</h2>
 <p>Statistik.jsx groups implementation around resources, publik, statistikjsx, petakantorjsx, mostly in js/Publik/Statistik.jsx, js/Publik/PetaKantor.jsx, js/Publik/RincianDemografi.jsx. This section covers 18 nodes and 22 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -2524,8 +3285,8 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 11. ProfilTabs.jsx ====== -->
-<h2 id="profiltabs-jsx">11. ProfilTabs.jsx</h2>
+<!-- ====== 13. ProfilTabs.jsx ====== -->
+<h2 id="profiltabs-jsx">13. ProfilTabs.jsx</h2>
 <p>ProfilTabs.jsx groups implementation around resources, publik, profiltabsjsx, strukturbaganjsx, mostly in js/Publik/ProfilTabs.jsx, js/Publik/StrukturBagan.jsx. This section covers 16 nodes and 16 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -2736,8 +3497,8 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 12. Akun.jsx ====== -->
-<h2 id="akun-jsx">12. Akun.jsx</h2>
+<!-- ====== 14. Akun.jsx ====== -->
+<h2 id="akun-jsx">14. Akun.jsx</h2>
 <p>Akun.jsx groups implementation around akunjsx, resources, pages, dashboard, mostly in Pages/Dashboard/Akun.jsx. This section covers 15 nodes and 14 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -2946,195 +3707,8 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 13. Layanan ====== -->
-<h2 id="layanan">13. Layanan</h2>
-<p>Layanan groups implementation around app, support, layananphp, layanan, mostly in app/Support/Layanan.php. This section covers 13 nodes and 12 internal edges; the diagram shows only representative relationships to stay readable.</p>
-
-<div class="mermaid">
-%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
-flowchart LR
-    %% Section: Layanan (13 nodes, 12 edges)
-    app_support_layanan_layanan_aeff6d0f("Layanan<br/><small>app/Support/Layanan.php</small>")
-    app_support_layanan_layanan_semuafield_fede8099("semuaField()<br/><small>app/Support/Layanan.php</small>")
-    app_support_layanan_layanan_periksafield_9546d408("periksaField()<br/><small>app/Support/Layanan.php</small>")
-    app_support_layanan_layanan_periksatanggal_9218a53f("periksaTanggal()<br/><small>app/Support/Layanan.php</small>")
-    app_support_layanan_layanan_periksajam_9ac8a5bd("periksaJam()<br/><small>app/Support/Layanan.php</small>")
-    app_support_layanan_layanan_periksapayload_fcca87c5("periksaPayload()<br/><small>app/Support/Layanan.php</small>")
-    app_support_layanan_layanan_berkasdaripayload_57a72257("berkasDariPayload()<br/><small>app/Support/Layanan.php</small>")
-    app_support_layanan_layanan_form_c6742ba4("form()<br/><small>app/Support/Layanan.php</small>")
-    app_support_layanan_layanan_formdarirute_379eba2b("formDariRute()<br/><small>app/Support/Layanan.php</small>")
-    app_support_layanan_layanan_kode_2e26a0a5("kode()<br/><small>app/Support/Layanan.php</small>")
-    app_support_layanan_layanan_labelkode_b050a9e8("labelKode()<br/><small>app/Support/Layanan.php</small>")
-    app_support_layanan_layanan_tampilkanpayload_45060af5("tampilkanPayload()<br/><small>app/Support/Layanan.php</small>")
-    app_support_layanan_layanan_formdarikode_82413931("formDariKode()<br/><small>app/Support/Layanan.php</small>")
-    app_support_layanan_layanan_aeff6d0f -->|method| app_support_layanan_layanan_semuafield_fede8099
-    app_support_layanan_layanan_aeff6d0f -->|method| app_support_layanan_layanan_periksafield_9546d408
-    app_support_layanan_layanan_aeff6d0f -->|method| app_support_layanan_layanan_periksatanggal_9218a53f
-    app_support_layanan_layanan_aeff6d0f -->|method| app_support_layanan_layanan_periksajam_9ac8a5bd
-    app_support_layanan_layanan_aeff6d0f -->|method| app_support_layanan_layanan_periksapayload_fcca87c5
-    app_support_layanan_layanan_aeff6d0f -->|method| app_support_layanan_layanan_berkasdaripayload_57a72257
-    app_support_layanan_layanan_aeff6d0f -->|method| app_support_layanan_layanan_form_c6742ba4
-    app_support_layanan_layanan_aeff6d0f -->|method| app_support_layanan_layanan_formdarirute_379eba2b
-    app_support_layanan_layanan_aeff6d0f -->|method| app_support_layanan_layanan_kode_2e26a0a5
-    app_support_layanan_layanan_aeff6d0f -->|method| app_support_layanan_layanan_labelkode_b050a9e8
-    app_support_layanan_layanan_aeff6d0f -->|method| app_support_layanan_layanan_tampilkanpayload_45060af5
-    class app_support_layanan_layanan_aeff6d0f klass;
-    class app_support_layanan_layanan_semuafield_fede8099 function;
-    class app_support_layanan_layanan_periksafield_9546d408 function;
-    class app_support_layanan_layanan_periksatanggal_9218a53f function;
-    class app_support_layanan_layanan_periksajam_9ac8a5bd function;
-    class app_support_layanan_layanan_periksapayload_fcca87c5 function;
-    class app_support_layanan_layanan_berkasdaripayload_57a72257 function;
-    class app_support_layanan_layanan_form_c6742ba4 function;
-    class app_support_layanan_layanan_formdarirute_379eba2b function;
-    class app_support_layanan_layanan_kode_2e26a0a5 function;
-    class app_support_layanan_layanan_labelkode_b050a9e8 function;
-    class app_support_layanan_layanan_tampilkanpayload_45060af5 function;
-    class app_support_layanan_layanan_formdarikode_82413931 function;
-    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
-    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
-    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
-    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
-    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
-    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
-    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
-    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
-    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
-</div>
-
-<h3>Call Details</h3>
-<table class="call-table">
-<tr>
-  <th style="width:5%">#</th>
-  <th style="width:28%">Node</th>
-  <th style="width:10%">Type</th>
-  <th style="width:17%">Caller</th>
-  <th style="width:20%">Callees</th>
-  <th style="width:20%">Description</th>
-</tr>
-<tr>
-  <td>1</td>
-  <td><code>Layanan</code><br><small style="color:var(--muted)">app/Support/Layanan.php</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>__invoke()</code><br><small style="color:var(--muted)">Controllers/Api/LayananController.php</small><br><code>__invoke()</code><br><small style="color:var(--muted)">Controllers/Api/PermohonanPdfController.php</small><br><code>buat()</code><br><small style="color:var(--muted)">Controllers/Api/LayananController.php</small><br>+9 more</td>
-  <td><code>berkasDariPayload()</code><br><small style="color:var(--muted)">app/Support/Layanan.php</small><br><code>form()</code><br><small style="color:var(--muted)">app/Support/Layanan.php</small><br><code>formDariRute()</code><br><small style="color:var(--muted)">app/Support/Layanan.php</small><br>+8 more</td>
-  <td>Layanan node in app/Support/Layanan.php.</td>
-</tr>
-<tr>
-  <td>2</td>
-  <td><code>.berkasDariPayload()</code><br><small style="color:var(--muted)">app/Support/Layanan.php</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>Layanan</code><br><small style="color:var(--muted)">app/Support/Layanan.php</small></td>
-  <td>No direct outbound edge</td>
-  <td>.berkasDariPayload() node in app/Support/Layanan.php.</td>
-</tr>
-<tr>
-  <td>3</td>
-  <td><code>.form()</code><br><small style="color:var(--muted)">app/Support/Layanan.php</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>Layanan</code><br><small style="color:var(--muted)">app/Support/Layanan.php</small></td>
-  <td>No direct outbound edge</td>
-  <td>.form() node in app/Support/Layanan.php.</td>
-</tr>
-<tr>
-  <td>4</td>
-  <td><code>.formDariKode()</code><br><small style="color:var(--muted)">app/Support/Layanan.php</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>.formDariKode() node in app/Support/Layanan.php.</td>
-</tr>
-<tr>
-  <td>5</td>
-  <td><code>.formDariRute()</code><br><small style="color:var(--muted)">app/Support/Layanan.php</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>Layanan</code><br><small style="color:var(--muted)">app/Support/Layanan.php</small></td>
-  <td>No direct outbound edge</td>
-  <td>.formDariRute() node in app/Support/Layanan.php.</td>
-</tr>
-<tr>
-  <td>6</td>
-  <td><code>.kode()</code><br><small style="color:var(--muted)">app/Support/Layanan.php</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>Layanan</code><br><small style="color:var(--muted)">app/Support/Layanan.php</small></td>
-  <td>No direct outbound edge</td>
-  <td>.kode() node in app/Support/Layanan.php.</td>
-</tr>
-<tr>
-  <td>7</td>
-  <td><code>.labelKode()</code><br><small style="color:var(--muted)">app/Support/Layanan.php</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>Layanan</code><br><small style="color:var(--muted)">app/Support/Layanan.php</small></td>
-  <td>No direct outbound edge</td>
-  <td>.labelKode() node in app/Support/Layanan.php.</td>
-</tr>
-<tr>
-  <td>8</td>
-  <td><code>.periksaField()</code><br><small style="color:var(--muted)">app/Support/Layanan.php</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>Layanan</code><br><small style="color:var(--muted)">app/Support/Layanan.php</small></td>
-  <td>No direct outbound edge</td>
-  <td>.periksaField() node in app/Support/Layanan.php.</td>
-</tr>
-<tr>
-  <td>9</td>
-  <td><code>.periksaJam()</code><br><small style="color:var(--muted)">app/Support/Layanan.php</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>Layanan</code><br><small style="color:var(--muted)">app/Support/Layanan.php</small></td>
-  <td>No direct outbound edge</td>
-  <td>.periksaJam() node in app/Support/Layanan.php.</td>
-</tr>
-<tr>
-  <td>10</td>
-  <td><code>.periksaPayload()</code><br><small style="color:var(--muted)">app/Support/Layanan.php</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>Layanan</code><br><small style="color:var(--muted)">app/Support/Layanan.php</small></td>
-  <td>No direct outbound edge</td>
-  <td>.periksaPayload() node in app/Support/Layanan.php.</td>
-</tr>
-<tr>
-  <td>11</td>
-  <td><code>.periksaTanggal()</code><br><small style="color:var(--muted)">app/Support/Layanan.php</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>Layanan</code><br><small style="color:var(--muted)">app/Support/Layanan.php</small></td>
-  <td>No direct outbound edge</td>
-  <td>.periksaTanggal() node in app/Support/Layanan.php.</td>
-</tr>
-<tr>
-  <td>12</td>
-  <td><code>.semuaField()</code><br><small style="color:var(--muted)">app/Support/Layanan.php</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>Layanan</code><br><small style="color:var(--muted)">app/Support/Layanan.php</small></td>
-  <td>No direct outbound edge</td>
-  <td>.semuaField() node in app/Support/Layanan.php.</td>
-</tr>
-<tr>
-  <td>13</td>
-  <td><code>.tampilkanPayload()</code><br><small style="color:var(--muted)">app/Support/Layanan.php</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>Layanan</code><br><small style="color:var(--muted)">app/Support/Layanan.php</small></td>
-  <td>No direct outbound edge</td>
-  <td>.tampilkanPayload() node in app/Support/Layanan.php.</td>
-</tr>
-</table>
-
-<div class="grid">
-  <div class="card">
-    <h4>Key Files</h4>
-    <table style="width:100%;font-size:0.85rem;">
-      <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>app/Support/Layanan.php</code></td><td>13 nodes</td></tr>
-    </table>
-  </div>
-  <div class="card">
-    <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: method x11, uses config x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
-  </div>
-</div>
-<hr>
-
-<!-- ====== 14. ocr-ktp.js ====== -->
-<h2 id="ocr-ktp-js">14. ocr-ktp.js</h2>
+<!-- ====== 15. ocr-ktp.js ====== -->
+<h2 id="ocr-ktp-js">15. ocr-ktp.js</h2>
 <p>ocr-ktp.js groups implementation around ocr, ktpjs, resources, ocrgagal, mostly in js/lib/ocr-ktp.js. This section covers 13 nodes and 23 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -3320,46 +3894,74 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 15. dialog.jsx ====== -->
-<h2 id="dialog-jsx">15. dialog.jsx</h2>
-<p>dialog.jsx groups implementation around dialogjsx, resources, components, dialog, mostly in Components/ui/dialog.jsx. This section covers 11 nodes and 10 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<!-- ====== 16. Other ====== -->
+<h2 id="other">16. Other</h2>
+<p>Other groups implementation around resources, components, pages, 2026, mostly in Components/ui/dialog.jsx, Components/ui/select.jsx, Components/ui/sheet.jsx. This section covers 588 nodes and 483 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: dialog.jsx (11 nodes, 10 edges)
-    resources_js_components_ui_dialog_f71d710d("dialog.jsx")
-    resources_js_components_ui_dialog_dialogtitle_d0d0776c("DialogTitle()<br/><small>Components/ui/dialog.jsx</small>")
-    resources_js_components_ui_dialog_dialogtrigger_87663f4f("DialogTrigger()<br/><small>Components/ui/dialog.jsx</small>")
-    resources_js_components_ui_dialog_dialogdescript_23d7475f("DialogDescription()<br/><small>Components/ui/dialog.jsx</small>")
-    resources_js_components_ui_dialog_dialogportal_4dafeab1("DialogPortal()<br/><small>Components/ui/dialog.jsx</small>")
-    resources_js_components_ui_dialog_dialogclose_8f255d6d("DialogClose()<br/><small>Components/ui/dialog.jsx</small>")
-    resources_js_components_ui_dialog_dialogoverlay_a49f1e85("DialogOverlay()<br/><small>Components/ui/dialog.jsx</small>")
-    resources_js_components_ui_dialog_dialogcontent_dbf2955c("DialogContent()<br/><small>Components/ui/dialog.jsx</small>")
-    resources_js_components_ui_dialog_dialog_a9be1aa9("Dialog()<br/><small>Components/ui/dialog.jsx</small>")
-    resources_js_components_ui_dialog_dialogheader_66b0c1fe("DialogHeader()<br/><small>Components/ui/dialog.jsx</small>")
-    resources_js_components_ui_dialog_dialogfooter_d1e654d1("DialogFooter()<br/><small>Components/ui/dialog.jsx</small>")
-    resources_js_components_ui_dialog_f71d710d -->|contains| resources_js_components_ui_dialog_dialogtitle_d0d0776c
-    resources_js_components_ui_dialog_f71d710d -->|contains| resources_js_components_ui_dialog_dialogtrigger_87663f4f
-    resources_js_components_ui_dialog_f71d710d -->|contains| resources_js_components_ui_dialog_dialogdescript_23d7475f
-    resources_js_components_ui_dialog_f71d710d -->|contains| resources_js_components_ui_dialog_dialogportal_4dafeab1
-    resources_js_components_ui_dialog_f71d710d -->|contains| resources_js_components_ui_dialog_dialogclose_8f255d6d
-    resources_js_components_ui_dialog_f71d710d -->|contains| resources_js_components_ui_dialog_dialogoverlay_a49f1e85
-    resources_js_components_ui_dialog_f71d710d -->|contains| resources_js_components_ui_dialog_dialogcontent_dbf2955c
-    resources_js_components_ui_dialog_f71d710d -->|contains| resources_js_components_ui_dialog_dialog_a9be1aa9
-    resources_js_components_ui_dialog_f71d710d -->|contains| resources_js_components_ui_dialog_dialogheader_66b0c1fe
-    resources_js_components_ui_dialog_f71d710d -->|contains| resources_js_components_ui_dialog_dialogfooter_d1e654d1
-    class resources_js_components_ui_dialog_f71d710d ui;
-    class resources_js_components_ui_dialog_dialogtitle_d0d0776c ui;
-    class resources_js_components_ui_dialog_dialogtrigger_87663f4f ui;
-    class resources_js_components_ui_dialog_dialogdescript_23d7475f ui;
-    class resources_js_components_ui_dialog_dialogportal_4dafeab1 ui;
-    class resources_js_components_ui_dialog_dialogclose_8f255d6d ui;
-    class resources_js_components_ui_dialog_dialogoverlay_a49f1e85 ui;
-    class resources_js_components_ui_dialog_dialogcontent_dbf2955c ui;
-    class resources_js_components_ui_dialog_dialog_a9be1aa9 ui;
-    class resources_js_components_ui_dialog_dialogheader_66b0c1fe ui;
-    class resources_js_components_ui_dialog_dialogfooter_d1e654d1 ui;
+    %% Section: Other (588 nodes, 483 edges)
+    subgraph other_Controllers_Auth_LoginController_php_cabd7dfd["Controllers/Auth/LoginController.php"]
+        app_http_controllers_auth_logincontroller_loginc_7bcc0bc9("LoginController<br/><small>Controllers/Auth/LoginController.php</small>")
+        app_http_controllers_auth_logincontroller_loginc_10e2a094("keluar()<br/><small>Controllers/Auth/LoginController.php</small>")
+        app_http_controllers_auth_logincontroller_loginc_df88090c("tujuanAman()<br/><small>Controllers/Auth/LoginController.php</small>")
+        app_http_controllers_auth_logincontroller_loginc_0417aaa8("__construct()<br/><small>Controllers/Auth/LoginController.php</small>")
+        app_http_controllers_auth_logincontroller_loginc_37cee44b("tampilkan()<br/><small>Controllers/Auth/LoginController.php</small>")
+        app_http_controllers_auth_logincontroller_loginc_3bd814fd("masuk()<br/><small>Controllers/Auth/LoginController.php</small>")
+    end
+    subgraph other_Console_Commands_IsiWilayahAkun_php_f5862218["Console/Commands/IsiWilayahAkun.php"]
+        app_console_commands_isiwilayahakun_isiwilayahak_2ceb7ad6("IsiWilayahAkun<br/><small>Console/Commands/IsiWilayahAkun.php</small>")
+        app_console_commands_isiwilayahakun_isiwilayahak_4c199d54("pecah()<br/><small>Console/Commands/IsiWilayahAkun.php</small>")
+        app_console_commands_isiwilayahakun_isiwilayahak_af75c765("normal()<br/><small>Console/Commands/IsiWilayahAkun.php</small>")
+        app_console_commands_isiwilayahakun_isiwilayahak_8f8c34f3("handle()<br/><small>Console/Commands/IsiWilayahAkun.php</small>")
+    end
+    subgraph other_Http_Middleware_HandleInertiaRequests_php_0b33fdea["Http/Middleware/HandleInertiaRequests.php"]
+        app_http_middleware_handleinertiarequests_handle_ad813e5f("HandleInertiaRequests<br/><small>Http/Middleware/HandleInertiaRequests.php</small>")
+        app_http_middleware_handleinertiarequests_handle_dad7423c("share()<br/><small>Http/Middleware/HandleInertiaRequests.php</small>")
+    end
+    subgraph other_database_seeders_DatabaseSeeder_php_aa3c40ab["database/seeders/DatabaseSeeder.php"]
+        database_seeders_databaseseeder_databaseseeder_c45215ab("DatabaseSeeder<br/><small>database/seeders/DatabaseSeeder.php</small>")
+        database_seeders_databaseseeder_databaseseeder_r_39ebf05f("run()<br/><small>database/seeders/DatabaseSeeder.php</small>")
+    end
+    resources_js_components_ui_date_picker_datepicke_eacb3d0a("DatePicker()<br/><small>Components/ui/date-picker.jsx</small>")
+    app_services_fotoprofil_fotoprofil_484c2979("FotoProfil<br/><small>app/Services/FotoProfil.php</small>")
+    bootstrap_app_1478e130("bootstrap/app.php")
+    config_logging_9dbb9867("logging.php")
+    app_http_controllers_auth_logincontroller_loginc_7bcc0bc9 -->|method| app_http_controllers_auth_logincontroller_loginc_10e2a094
+    app_http_controllers_auth_logincontroller_loginc_7bcc0bc9 -->|method| app_http_controllers_auth_logincontroller_loginc_df88090c
+    app_http_controllers_auth_logincontroller_loginc_7bcc0bc9 -->|method| app_http_controllers_auth_logincontroller_loginc_0417aaa8
+    app_http_controllers_auth_logincontroller_loginc_7bcc0bc9 -->|method| app_http_controllers_auth_logincontroller_loginc_37cee44b
+    app_http_controllers_auth_logincontroller_loginc_7bcc0bc9 -->|method| app_http_controllers_auth_logincontroller_loginc_3bd814fd
+    app_console_commands_isiwilayahakun_isiwilayahak_2ceb7ad6 -->|method| app_console_commands_isiwilayahakun_isiwilayahak_4c199d54
+    app_console_commands_isiwilayahakun_isiwilayahak_2ceb7ad6 -->|method| app_console_commands_isiwilayahakun_isiwilayahak_af75c765
+    app_console_commands_isiwilayahakun_isiwilayahak_2ceb7ad6 -->|method| app_console_commands_isiwilayahakun_isiwilayahak_8f8c34f3
+    database_seeders_databaseseeder_databaseseeder_c45215ab -->|method| database_seeders_databaseseeder_databaseseeder_r_39ebf05f
+    app_http_middleware_handleinertiarequests_handle_ad813e5f -->|method| app_http_middleware_handleinertiarequests_handle_dad7423c
+    app_http_controllers_auth_logincontroller_loginc_3bd814fd -->|calls| app_http_controllers_auth_logincontroller_loginc_df88090c
+    app_http_controllers_auth_logincontroller_loginc_37cee44b -->|calls| app_http_controllers_auth_logincontroller_loginc_df88090c
+    app_console_commands_isiwilayahakun_isiwilayahak_8f8c34f3 -->|calls| app_console_commands_isiwilayahakun_isiwilayahak_af75c765
+    app_console_commands_isiwilayahakun_isiwilayahak_8f8c34f3 -->|calls| app_console_commands_isiwilayahakun_isiwilayahak_4c199d54
+    bootstrap_app_1478e130 -->|imports| app_http_middleware_handleinertiarequests_handle_ad813e5f
+    %% Omitted for readability: 570 nodes, 0 edges
+    class app_http_controllers_auth_logincontroller_loginc_7bcc0bc9 klass;
+    class app_http_controllers_auth_logincontroller_loginc_10e2a094 function;
+    class app_http_controllers_auth_logincontroller_loginc_df88090c function;
+    class app_http_controllers_auth_logincontroller_loginc_0417aaa8 function;
+    class app_http_controllers_auth_logincontroller_loginc_37cee44b function;
+    class app_http_controllers_auth_logincontroller_loginc_3bd814fd function;
+    class app_console_commands_isiwilayahakun_isiwilayahak_2ceb7ad6 klass;
+    class app_console_commands_isiwilayahakun_isiwilayahak_4c199d54 function;
+    class app_console_commands_isiwilayahakun_isiwilayahak_af75c765 function;
+    class app_console_commands_isiwilayahakun_isiwilayahak_8f8c34f3 function;
+    class app_http_middleware_handleinertiarequests_handle_ad813e5f klass;
+    class app_http_middleware_handleinertiarequests_handle_dad7423c function;
+    class database_seeders_databaseseeder_databaseseeder_c45215ab klass;
+    class database_seeders_databaseseeder_databaseseeder_r_39ebf05f function;
+    class resources_js_components_ui_date_picker_datepicke_eacb3d0a ui;
+    class app_services_fotoprofil_fotoprofil_484c2979 klass;
+    class bootstrap_app_1478e130 module;
+    class config_logging_9dbb9867 module;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -3469,6 +4071,158 @@ flowchart LR
   <td>No direct outbound edge</td>
   <td>dialog.jsx node in Components/ui/dialog.jsx.</td>
 </tr>
+<tr>
+  <td>12</td>
+  <td><code>Select()</code><br><small style="color:var(--muted)">Components/ui/select.jsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Select() node in Components/ui/select.jsx.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>SelectContent()</code><br><small style="color:var(--muted)">Components/ui/select.jsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>SelectContent() node in Components/ui/select.jsx.</td>
+</tr>
+<tr>
+  <td>14</td>
+  <td><code>SelectGroup()</code><br><small style="color:var(--muted)">Components/ui/select.jsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>SelectGroup() node in Components/ui/select.jsx.</td>
+</tr>
+<tr>
+  <td>15</td>
+  <td><code>SelectItem()</code><br><small style="color:var(--muted)">Components/ui/select.jsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>SelectItem() node in Components/ui/select.jsx.</td>
+</tr>
+<tr>
+  <td>16</td>
+  <td><code>SelectLabel()</code><br><small style="color:var(--muted)">Components/ui/select.jsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>SelectLabel() node in Components/ui/select.jsx.</td>
+</tr>
+<tr>
+  <td>17</td>
+  <td><code>SelectScrollDownButton()</code><br><small style="color:var(--muted)">Components/ui/select.jsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>SelectScrollDownButton() node in Components/ui/select.jsx.</td>
+</tr>
+<tr>
+  <td>18</td>
+  <td><code>SelectScrollUpButton()</code><br><small style="color:var(--muted)">Components/ui/select.jsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>SelectScrollUpButton() node in Components/ui/select.jsx.</td>
+</tr>
+<tr>
+  <td>19</td>
+  <td><code>SelectSeparator()</code><br><small style="color:var(--muted)">Components/ui/select.jsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>SelectSeparator() node in Components/ui/select.jsx.</td>
+</tr>
+<tr>
+  <td>20</td>
+  <td><code>SelectTrigger()</code><br><small style="color:var(--muted)">Components/ui/select.jsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>SelectTrigger() node in Components/ui/select.jsx.</td>
+</tr>
+<tr>
+  <td>21</td>
+  <td><code>SelectValue()</code><br><small style="color:var(--muted)">Components/ui/select.jsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>SelectValue() node in Components/ui/select.jsx.</td>
+</tr>
+<tr>
+  <td>22</td>
+  <td><code>select.jsx</code><br><small style="color:var(--muted)">Components/ui/select.jsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>select.jsx node in Components/ui/select.jsx.</td>
+</tr>
+<tr>
+  <td>23</td>
+  <td><code>Sheet()</code><br><small style="color:var(--muted)">Components/ui/sheet.jsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Sheet() node in Components/ui/sheet.jsx.</td>
+</tr>
+<tr>
+  <td>24</td>
+  <td><code>SheetClose()</code><br><small style="color:var(--muted)">Components/ui/sheet.jsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>SheetClose() node in Components/ui/sheet.jsx.</td>
+</tr>
+<tr>
+  <td>25</td>
+  <td><code>SheetContent()</code><br><small style="color:var(--muted)">Components/ui/sheet.jsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>SheetContent() node in Components/ui/sheet.jsx.</td>
+</tr>
+<tr>
+  <td>26</td>
+  <td><code>SheetDescription()</code><br><small style="color:var(--muted)">Components/ui/sheet.jsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>SheetDescription() node in Components/ui/sheet.jsx.</td>
+</tr>
+<tr>
+  <td>27</td>
+  <td><code>SheetFooter()</code><br><small style="color:var(--muted)">Components/ui/sheet.jsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>SheetFooter() node in Components/ui/sheet.jsx.</td>
+</tr>
+<tr>
+  <td>28</td>
+  <td><code>SheetHeader()</code><br><small style="color:var(--muted)">Components/ui/sheet.jsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>SheetHeader() node in Components/ui/sheet.jsx.</td>
+</tr>
+<tr>
+  <td>29</td>
+  <td><code>SheetOverlay()</code><br><small style="color:var(--muted)">Components/ui/sheet.jsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>SheetOverlay() node in Components/ui/sheet.jsx.</td>
+</tr>
+<tr>
+  <td>30</td>
+  <td><code>SheetPortal()</code><br><small style="color:var(--muted)">Components/ui/sheet.jsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>SheetPortal() node in Components/ui/sheet.jsx.</td>
+</tr>
 </table>
 
 <div class="grid">
@@ -3477,361 +4231,18 @@ flowchart LR
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
       <tr><td><code>Components/ui/dialog.jsx</code></td><td>11 nodes</td></tr>
-    </table>
-  </div>
-  <div class="card">
-    <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x10. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
-  </div>
-</div>
-<hr>
-
-<!-- ====== 16. Other ====== -->
-<h2 id="other">16. Other</h2>
-<p>Other groups implementation around resources, components, pages, 2026, mostly in Components/ui/select.jsx, Components/ui/sheet.jsx, Pages/Dashboard/Beranda.jsx. This section covers 568 nodes and 464 internal edges; the diagram shows only representative relationships to stay readable.</p>
-
-<div class="mermaid">
-%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
-flowchart LR
-    %% Section: Other (568 nodes, 464 edges)
-    subgraph other_app_Providers_AppServiceProvider_php_c4d1412e["app/Providers/AppServiceProvider.php"]
-        app_providers_appserviceprovider_db1ed144("AppServiceProvider.php")
-        app_providers_appserviceprovider_appserviceprovi_473d74a4("AppServiceProvider<br/><small>app/Providers/AppServiceProvider.php</small>")
-        app_providers_appserviceprovider_appserviceprovi_1192fb2b("register()<br/><small>app/Providers/AppServiceProvider.php</small>")
-        app_providers_appserviceprovider_appserviceprovi_d2133661("boot()<br/><small>app/Providers/AppServiceProvider.php</small>")
-    end
-    subgraph other_app_Support_Periode_php_1d41478d["app/Support/Periode.php"]
-        app_support_periode_periode_78fe7fe0("Periode<br/><small>app/Support/Periode.php</small>")
-        app_support_periode_periode_rentang_701492b6("rentang()<br/><small>app/Support/Periode.php</small>")
-        app_support_periode_periode_bacaacuan_a0d24ba8("bacaAcuan()<br/><small>app/Support/Periode.php</small>")
-        app_support_periode_periode_saring_dc6e36ec("saring()<br/><small>app/Support/Periode.php</small>")
-    end
-    subgraph other_app_Services_FotoProfil_php_e9c541c2["app/Services/FotoProfil.php"]
-        app_services_fotoprofil_fotoprofil_484c2979("FotoProfil<br/><small>app/Services/FotoProfil.php</small>")
-        app_services_fotoprofil_fotoprofil_simpanktp_e142bdb6("simpanKtp()<br/><small>app/Services/FotoProfil.php</small>")
-        app_services_fotoprofil_fotoprofil_hapus_5d5954a4("hapus()<br/><small>app/Services/FotoProfil.php</small>")
-    end
-    subgraph other_Http_Controllers_PengajuanPetugasControlle_fe538a90["Http/Controllers/PengajuanPetugasController.php"]
-        app_http_controllers_pengajuanpetugascontroller_2f06222c("PengajuanPetugasController<br/><small>Http/Controllers/PengajuanPetugasController.php</small>")
-        app_http_controllers_pengajuanpetugascontroller_d2b6d2f8("__construct()<br/><small>Http/Controllers/PengajuanPetugasController.php</small>")
-    end
-    subgraph other_Http_Middleware_HandleInertiaRequests_php_0b33fdea["Http/Middleware/HandleInertiaRequests.php"]
-        app_http_middleware_handleinertiarequests_handle_ad813e5f("HandleInertiaRequests<br/><small>Http/Middleware/HandleInertiaRequests.php</small>")
-        app_http_middleware_handleinertiarequests_handle_dad7423c("share()<br/><small>Http/Middleware/HandleInertiaRequests.php</small>")
-    end
-    resources_js_components_ui_date_picker_datepicke_eacb3d0a("DatePicker()<br/><small>Components/ui/date-picker.jsx</small>")
-    bootstrap_app_1478e130("bootstrap/app.php")
-    config_logging_9dbb9867("logging.php")
-    app_support_periode_periode_78fe7fe0 -->|method| app_support_periode_periode_rentang_701492b6
-    app_support_periode_periode_78fe7fe0 -->|method| app_support_periode_periode_bacaacuan_a0d24ba8
-    app_support_periode_periode_78fe7fe0 -->|method| app_support_periode_periode_saring_dc6e36ec
-    app_http_controllers_pengajuanpetugascontroller_2f06222c -->|method| app_http_controllers_pengajuanpetugascontroller_d2b6d2f8
-    app_http_middleware_handleinertiarequests_handle_ad813e5f -->|method| app_http_middleware_handleinertiarequests_handle_dad7423c
-    app_providers_appserviceprovider_appserviceprovi_473d74a4 -->|method| app_providers_appserviceprovider_appserviceprovi_1192fb2b
-    app_providers_appserviceprovider_appserviceprovi_473d74a4 -->|method| app_providers_appserviceprovider_appserviceprovi_d2133661
-    app_services_fotoprofil_fotoprofil_484c2979 -->|method| app_services_fotoprofil_fotoprofil_simpanktp_e142bdb6
-    app_services_fotoprofil_fotoprofil_484c2979 -->|method| app_services_fotoprofil_fotoprofil_hapus_5d5954a4
-    bootstrap_app_1478e130 -->|imports| app_http_middleware_handleinertiarequests_handle_ad813e5f
-    %% Omitted for readability: 550 nodes, 0 edges
-    class app_providers_appserviceprovider_db1ed144 klass;
-    class app_providers_appserviceprovider_appserviceprovi_473d74a4 klass;
-    class app_providers_appserviceprovider_appserviceprovi_1192fb2b function;
-    class app_providers_appserviceprovider_appserviceprovi_d2133661 function;
-    class app_support_periode_periode_78fe7fe0 klass;
-    class app_support_periode_periode_rentang_701492b6 function;
-    class app_support_periode_periode_bacaacuan_a0d24ba8 function;
-    class app_support_periode_periode_saring_dc6e36ec function;
-    class app_services_fotoprofil_fotoprofil_484c2979 klass;
-    class app_services_fotoprofil_fotoprofil_simpanktp_e142bdb6 function;
-    class app_services_fotoprofil_fotoprofil_hapus_5d5954a4 function;
-    class app_http_controllers_pengajuanpetugascontroller_2f06222c klass;
-    class app_http_controllers_pengajuanpetugascontroller_d2b6d2f8 function;
-    class app_http_middleware_handleinertiarequests_handle_ad813e5f klass;
-    class app_http_middleware_handleinertiarequests_handle_dad7423c function;
-    class resources_js_components_ui_date_picker_datepicke_eacb3d0a ui;
-    class bootstrap_app_1478e130 module;
-    class config_logging_9dbb9867 module;
-    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
-    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
-    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
-    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
-    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
-    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
-    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
-    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
-    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
-</div>
-
-<h3>Call Details</h3>
-<table class="call-table">
-<tr>
-  <th style="width:5%">#</th>
-  <th style="width:28%">Node</th>
-  <th style="width:10%">Type</th>
-  <th style="width:17%">Caller</th>
-  <th style="width:20%">Callees</th>
-  <th style="width:20%">Description</th>
-</tr>
-<tr>
-  <td>1</td>
-  <td><code>Select()</code><br><small style="color:var(--muted)">Components/ui/select.jsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Select() node in Components/ui/select.jsx.</td>
-</tr>
-<tr>
-  <td>2</td>
-  <td><code>SelectContent()</code><br><small style="color:var(--muted)">Components/ui/select.jsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>SelectContent() node in Components/ui/select.jsx.</td>
-</tr>
-<tr>
-  <td>3</td>
-  <td><code>SelectGroup()</code><br><small style="color:var(--muted)">Components/ui/select.jsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>SelectGroup() node in Components/ui/select.jsx.</td>
-</tr>
-<tr>
-  <td>4</td>
-  <td><code>SelectItem()</code><br><small style="color:var(--muted)">Components/ui/select.jsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>SelectItem() node in Components/ui/select.jsx.</td>
-</tr>
-<tr>
-  <td>5</td>
-  <td><code>SelectLabel()</code><br><small style="color:var(--muted)">Components/ui/select.jsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>SelectLabel() node in Components/ui/select.jsx.</td>
-</tr>
-<tr>
-  <td>6</td>
-  <td><code>SelectScrollDownButton()</code><br><small style="color:var(--muted)">Components/ui/select.jsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>SelectScrollDownButton() node in Components/ui/select.jsx.</td>
-</tr>
-<tr>
-  <td>7</td>
-  <td><code>SelectScrollUpButton()</code><br><small style="color:var(--muted)">Components/ui/select.jsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>SelectScrollUpButton() node in Components/ui/select.jsx.</td>
-</tr>
-<tr>
-  <td>8</td>
-  <td><code>SelectSeparator()</code><br><small style="color:var(--muted)">Components/ui/select.jsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>SelectSeparator() node in Components/ui/select.jsx.</td>
-</tr>
-<tr>
-  <td>9</td>
-  <td><code>SelectTrigger()</code><br><small style="color:var(--muted)">Components/ui/select.jsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>SelectTrigger() node in Components/ui/select.jsx.</td>
-</tr>
-<tr>
-  <td>10</td>
-  <td><code>SelectValue()</code><br><small style="color:var(--muted)">Components/ui/select.jsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>SelectValue() node in Components/ui/select.jsx.</td>
-</tr>
-<tr>
-  <td>11</td>
-  <td><code>select.jsx</code><br><small style="color:var(--muted)">Components/ui/select.jsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>select.jsx node in Components/ui/select.jsx.</td>
-</tr>
-<tr>
-  <td>12</td>
-  <td><code>Sheet()</code><br><small style="color:var(--muted)">Components/ui/sheet.jsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Sheet() node in Components/ui/sheet.jsx.</td>
-</tr>
-<tr>
-  <td>13</td>
-  <td><code>SheetClose()</code><br><small style="color:var(--muted)">Components/ui/sheet.jsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>SheetClose() node in Components/ui/sheet.jsx.</td>
-</tr>
-<tr>
-  <td>14</td>
-  <td><code>SheetContent()</code><br><small style="color:var(--muted)">Components/ui/sheet.jsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>SheetContent() node in Components/ui/sheet.jsx.</td>
-</tr>
-<tr>
-  <td>15</td>
-  <td><code>SheetDescription()</code><br><small style="color:var(--muted)">Components/ui/sheet.jsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>SheetDescription() node in Components/ui/sheet.jsx.</td>
-</tr>
-<tr>
-  <td>16</td>
-  <td><code>SheetFooter()</code><br><small style="color:var(--muted)">Components/ui/sheet.jsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>SheetFooter() node in Components/ui/sheet.jsx.</td>
-</tr>
-<tr>
-  <td>17</td>
-  <td><code>SheetHeader()</code><br><small style="color:var(--muted)">Components/ui/sheet.jsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>SheetHeader() node in Components/ui/sheet.jsx.</td>
-</tr>
-<tr>
-  <td>18</td>
-  <td><code>SheetOverlay()</code><br><small style="color:var(--muted)">Components/ui/sheet.jsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>SheetOverlay() node in Components/ui/sheet.jsx.</td>
-</tr>
-<tr>
-  <td>19</td>
-  <td><code>SheetPortal()</code><br><small style="color:var(--muted)">Components/ui/sheet.jsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>SheetPortal() node in Components/ui/sheet.jsx.</td>
-</tr>
-<tr>
-  <td>20</td>
-  <td><code>SheetTitle()</code><br><small style="color:var(--muted)">Components/ui/sheet.jsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>SheetTitle() node in Components/ui/sheet.jsx.</td>
-</tr>
-<tr>
-  <td>21</td>
-  <td><code>SheetTrigger()</code><br><small style="color:var(--muted)">Components/ui/sheet.jsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>SheetTrigger() node in Components/ui/sheet.jsx.</td>
-</tr>
-<tr>
-  <td>22</td>
-  <td><code>sheet.jsx</code><br><small style="color:var(--muted)">Components/ui/sheet.jsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>sheet.jsx node in Components/ui/sheet.jsx.</td>
-</tr>
-<tr>
-  <td>23</td>
-  <td><code>HandleInertiaRequests</code><br><small style="color:var(--muted)">Http/Middleware/HandleInertiaRequests.php</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>bootstrap/app.php</code><br><small style="color:var(--muted)">bootstrap/app.php</small></td>
-  <td><code>share()</code><br><small style="color:var(--muted)">Http/Middleware/HandleInertiaRequests.php</small></td>
-  <td>HandleInertiaRequests node in Http/Middleware/HandleInertiaRequests.php.</td>
-</tr>
-<tr>
-  <td>24</td>
-  <td><code>.share()</code><br><small style="color:var(--muted)">Http/Middleware/HandleInertiaRequests.php</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>HandleInertiaRequests</code><br><small style="color:var(--muted)">Http/Middleware/HandleInertiaRequests.php</small></td>
-  <td><code>parent()</code><br><small style="color:var(--muted)">app/Models/Wilayah.php</small></td>
-  <td>.share() node in Http/Middleware/HandleInertiaRequests.php.</td>
-</tr>
-<tr>
-  <td>25</td>
-  <td><code>HandleInertiaRequests.php</code><br><small style="color:var(--muted)">Http/Middleware/HandleInertiaRequests.php</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>Illuminate\Http\Request</code><br><code>Inertia\Middleware</code></td>
-  <td>HandleInertiaRequests.php node in Http/Middleware/HandleInertiaRequests.php.</td>
-</tr>
-<tr>
-  <td>26</td>
-  <td><code>bootstrap/app.php</code><br><small style="color:var(--muted)">bootstrap/app.php</small></td>
-  <td><span class="tag tag-class">Module</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>HandleInertiaRequests</code><br><small style="color:var(--muted)">Http/Middleware/HandleInertiaRequests.php</small><br><code>Illuminate\Foundation\Application</code><br><code>Illuminate\Foundation\Configuration\Exc...</code><br>+2 more</td>
-  <td>bootstrap/app.php node in bootstrap/app.php.</td>
-</tr>
-<tr>
-  <td>27</td>
-  <td><code>Illuminate\Foundation\Application</code><br><small style="color:var(--muted)"></small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>bootstrap/app.php</code><br><small style="color:var(--muted)">bootstrap/app.php</small><br><code>index.php</code><br><small style="color:var(--muted)">public/index.php</small></td>
-  <td>No direct outbound edge</td>
-  <td>Illuminate\Foundation\Application node in project.</td>
-</tr>
-<tr>
-  <td>28</td>
-  <td><code>Illuminate\Foundation\Configuration\Exceptions</code><br><small style="color:var(--muted)"></small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>bootstrap/app.php</code><br><small style="color:var(--muted)">bootstrap/app.php</small></td>
-  <td>No direct outbound edge</td>
-  <td>Reads, resolves, or persists project configuration.</td>
-</tr>
-<tr>
-  <td>29</td>
-  <td><code>Illuminate\Foundation\Configuration\Middleware</code><br><small style="color:var(--muted)"></small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>bootstrap/app.php</code><br><small style="color:var(--muted)">bootstrap/app.php</small></td>
-  <td>No direct outbound edge</td>
-  <td>Reads, resolves, or persists project configuration.</td>
-</tr>
-<tr>
-  <td>30</td>
-  <td><code>Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets</code><br><small style="color:var(--muted)"></small></td>
-  <td><span class="tag tag-async">Async</span></td>
-  <td><code>bootstrap/app.php</code><br><small style="color:var(--muted)">bootstrap/app.php</small></td>
-  <td>No direct outbound edge</td>
-  <td>Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets node in project.</td>
-</tr>
-</table>
-
-<div class="grid">
-  <div class="card">
-    <h4>Key Files</h4>
-    <table style="width:100%;font-size:0.85rem;">
-      <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>Components/ui/select.jsx</code></td><td>11 nodes</td></tr>
+<tr><td><code>Components/ui/select.jsx</code></td><td>11 nodes</td></tr>
 <tr><td><code>Components/ui/sheet.jsx</code></td><td>11 nodes</td></tr>
 <tr><td><code>Components/ui/navigation-menu.jsx</code></td><td>10 nodes</td></tr>
 <tr><td><code>Pages/Dashboard/Beranda.jsx</code></td><td>10 nodes</td></tr>
 <tr><td><code>README.md</code></td><td>9 nodes</td></tr>
 <tr><td><code>js/Components/EditorMedan.jsx</code></td><td>9 nodes</td></tr>
 <tr><td><code>js/Publik/Navbar.jsx</code></td><td>9 nodes</td></tr>
-<tr><td><code>js/lib/a11y.js</code></td><td>9 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x337, calls x48, imports x42, method x13. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x349, calls x50, imports x41, method x20. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -3842,18 +4253,18 @@ flowchart LR
   <div class="card">
     <h4>Graph</h4>
     <table style="width:100%;font-size:0.85rem;">
-      <tr><td>Nodes</td><td>1455</td></tr>
-      <tr><td>Edges</td><td>2475</td></tr>
+      <tr><td>Nodes</td><td>1456</td></tr>
+      <tr><td>Edges</td><td>2476</td></tr>
       <tr><td>Hyperedges</td><td>0</td></tr>
-      <tr><td>Communities</td><td>253</td></tr>
+      <tr><td>Communities</td><td>257</td></tr>
       <tr><td>Documented Sections</td><td>15</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Edge Confidence</h4>
     <table style="width:100%;font-size:0.85rem;">
-      <tr><td>EXTRACTED</td><td>2460</td></tr>
-      <tr><td>INFERRED</td><td>15</td></tr>
+      <tr><td>EXTRACTED</td><td>2456</td></tr>
+      <tr><td>INFERRED</td><td>20</td></tr>
       <tr><td>AMBIGUOUS</td><td>0</td></tr>
     </table>
   </div>
@@ -3861,7 +4272,7 @@ flowchart LR
 
 <div style="text-align:center; padding:40px 0; color: var(--muted); font-size:0.9rem;">
   <p>saibatin-laravel — Architecture Documentation</p>
-  <p>Generated: 2026-09-02 11:23 UTC · graphify callflow-html</p>
+  <p>Generated: 2026-09-03 18:54 UTC · graphify callflow-html</p>
 </div>
 
 </div><!-- .container -->
