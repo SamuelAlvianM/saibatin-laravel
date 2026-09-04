@@ -173,6 +173,35 @@
 }
 
 @layer base {
+  /*
+   * 🔴 PENUNJUK TANGAN PADA SEMUA YANG BISA DIKLIK.
+   *
+   * Tailwind v4 mengubah Preflight-nya: `<button>` tidak lagi mendapat
+   * `cursor: pointer`, melainkan `cursor: default` — sama seperti teks biasa.
+   * Akibatnya SETIAP tombol di portal ini kehilangan satu-satunya isyarat
+   * bahwa ia bisa ditekan. Bagi warga yang tidak terbiasa dengan aplikasi
+   * web, penunjuk yang tidak berubah adalah alasan yang cukup untuk berhenti
+   * mencoba: tombolnya terlihat seperti hiasan.
+   *
+   * ⚠️ Diperbaiki di lapisan dasar, BUKAN dengan menambahkan `cursor-pointer`
+   * satu per satu di ratusan komponen. Kelas yang harus diingat manusia pasti
+   * terlewat di tombol berikutnya yang ditulis, dan cacatnya kembali diam-diam.
+   *
+   * `:disabled` sengaja dikecualikan — tombol mati tidak boleh berpura-pura
+   * masih bisa ditekan.
+   */
+  button:not(:disabled),
+  [role='button']:not([aria-disabled='true']),
+  [role='option'],
+  [role='tab'],
+  summary,
+  label[for],
+  select:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+@layer base {
   * {
     @apply border-border outline-ring/50;
   }
