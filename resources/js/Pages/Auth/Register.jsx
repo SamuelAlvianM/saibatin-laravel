@@ -104,7 +104,6 @@ export default function Register({ kecamatan, otpWajib, otpKanal, prefill, perba
     foto: '',
     ktp: '',
     otpBukti: '',
-    recaptchaToken: '',
   });
 
   // Cermin `data` yang selalu mutakhir, dipakai `bacaKtpOtomatis` untuk tahu

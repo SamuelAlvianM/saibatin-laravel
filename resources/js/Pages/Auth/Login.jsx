@@ -32,13 +32,9 @@ export default function Login({ redirect }) {
     user_id: '',
     password: '',
     remember: false,
-    recaptchaToken: '',
     redirect: redirect ?? '/dashboard',
   });
 
-  // reCAPTCHA hanya aktif bila site key diisi. Tanpa key (dev), tombol tidak
-  // boleh "memuat" selamanya — itu bug yang sudah pernah ada di portal lama.
-  const recaptchaAktif = Boolean(situs?.recaptcha_site_key);
 
   const kirim = (e) => {
     e.preventDefault();
@@ -249,19 +245,7 @@ export default function Login({ redirect }) {
               </Link>
             </div>
 
-            <div className="w-full space-y-2.5 rounded-xl border border-primary/15 bg-primary/[0.04] p-4">
-              <h3 className="text-xs font-semibold uppercase tracking-wide text-primary">Catatan</h3>
-              <div className="space-y-1.5 text-xs leading-relaxed text-slate-600">
-                <p>- Kode Aktivasi (Password Sementara) dan notifikasi Pengajuan Online dikirim melalui WhatsApp dan E-Mail</p>
-                <p>- Gunakan nomor WhatsApp &amp; E-Mail aktif saat pendaftaran. Jika belum, silahkan lengkapi akun profil pendaftaran anda dengan nomor WhatsApp dan E-Mail aktif.</p>
-              </div>
-            </div>
 
-            {!recaptchaAktif && (
-              <p className="text-center text-[11px] text-amber-700">
-                reCAPTCHA nonaktif (kunci belum diisi) — hanya untuk pengembangan.
-              </p>
-            )}
           </CardFooter>
         </form>
       </Card>

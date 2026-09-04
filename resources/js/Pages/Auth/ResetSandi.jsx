@@ -11,7 +11,6 @@ export default function ResetSandi({ kunci }) {
     key: kunci ?? '',
     pass1: '',
     pass2: '',
-    recaptchaToken: '',
   });
 
   // Aturannya sama persis dengan pendaftaran, dan diperiksa juga di server.

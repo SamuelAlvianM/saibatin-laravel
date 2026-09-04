@@ -35,23 +35,6 @@ return [
         ],
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | reCAPTCHA v3
-    |--------------------------------------------------------------------------
-    |
-    | `site_key` boleh publik (dipakai di browser). `secret` HANYA server-side —
-    | jangan pernah ikut dibagikan lewat props Inertia.
-    |
-    | 🔴 Bila `secret` kosong, App\Services\Recaptcha melewatkan verifikasi
-    | (fail-open, untuk dev). Di production itu berarti seluruh endpoint publik
-    | tanpa proteksi bot — persis yang pernah terjadi di project saudara.
-    |
-    */
-    'recaptcha' => [
-        'site_key' => env('RECAPTCHA_SITE_KEY'),
-        'secret' => env('RECAPTCHA_SECRET_KEY'),
-    ],
 
     /*
     |--------------------------------------------------------------------------

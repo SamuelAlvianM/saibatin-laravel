@@ -9,7 +9,6 @@ use App\Models\Wilayah;
 use App\Services\FotoProfil;
 use App\Services\Otp;
 use App\Services\Pemberitahuan;
-use App\Services\Recaptcha;
 use App\Support\AlasanTolak;
 use App\Support\StatusAkun;
 use Illuminate\Http\Request;
@@ -32,7 +31,6 @@ use Inertia\Inertia;
 class RegisterController extends Controller
 {
     public function __construct(
-        private readonly Recaptcha $recaptcha,
         private readonly Otp $otp,
         private readonly FotoProfil $foto,
         private readonly Pemberitahuan $notif,
@@ -94,7 +92,6 @@ class RegisterController extends Controller
             'foto' => ['required', 'string'],
             'ktp' => ['required', 'string'],
             'otpBukti' => ['nullable', 'string'],
-            'recaptchaToken' => ['nullable', 'string'],
         ], [
             'nik.digits' => 'Info: NIK Harus 16 Digit (N-15)',
             'kk.digits' => 'Info: Nomor KK harus 16 digit (N-15)',
@@ -107,9 +104,6 @@ class RegisterController extends Controller
             'pass.min' => 'Info: Password Minimal 6 Karakter (N-08)',
         ]);
 
-        if (! $this->recaptcha->verifikasi($data['recaptchaToken'] ?? null)) {
-            throw ValidationException::withMessages(['nik' => 'Info: Verifikasi reCAPTCHA gagal, harap dicoba kembali (N-00)']);
-        }
         if (preg_match('/^\d+$/', $data['pass'])) {
             throw ValidationException::withMessages(['pass' => 'Info: Password Tidak Boleh Angka Semua (N-07)']);
         }

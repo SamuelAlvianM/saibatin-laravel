@@ -7,7 +7,6 @@ use App\Models\JenisPermohonan;
 use App\Models\Permohonan;
 use App\Services\JamLayanan;
 use App\Services\Pemberitahuan;
-use App\Services\Recaptcha;
 use App\Support\AlasanTolakPermohonan;
 use App\Support\Balasan;
 use Illuminate\Http\Request;
@@ -22,7 +21,6 @@ use Illuminate\Http\Request;
 class PermohonanController extends Controller
 {
     public function __construct(
-        private readonly Recaptcha $recaptcha,
         private readonly JamLayanan $jam,
         private readonly Pemberitahuan $notif,
     ) {}
@@ -109,10 +107,6 @@ class PermohonanController extends Controller
         $jam = $this->jam->status();
         if (! $jam['open']) {
             return Balasan::gagal([$jam['message']], 403);
-        }
-
-        if (! $this->recaptcha->verifikasi($request->input('recaptchaToken'))) {
-            return Balasan::gagal(['Info: Verifikasi reCAPTCHA gagal']);
         }
 
         $kode = (string) $request->input('jenisKode');

@@ -7,7 +7,7 @@ import { Label } from '@/Components/ui/label';
 
 export default function LupaSandi() {
   const { flash } = usePage().props;
-  const { data, setData, post, processing, errors } = useForm({ nik: '', recaptchaToken: '' });
+  const { data, setData, post, processing, errors } = useForm({ nik: '' });
 
   return (
     <KartuAuth

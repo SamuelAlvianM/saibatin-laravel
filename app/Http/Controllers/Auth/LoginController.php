@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\UserLevel;
-use App\Services\Recaptcha;
 use App\Support\StatusAkun;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,7 +29,6 @@ use Inertia\Response as InertiaResponse;
  */
 class LoginController extends Controller
 {
-    public function __construct(private readonly Recaptcha $recaptcha) {}
 
     public function tampilkan(Request $request): InertiaResponse
     {
@@ -47,17 +45,10 @@ class LoginController extends Controller
             'user_id' => ['required', 'string'],
             'password' => ['required', 'string'],
             'remember' => ['boolean'],
-            'recaptchaToken' => ['nullable', 'string'],
         ], [
             'user_id.required' => 'NIK/User ID harus diisi',
             'password.required' => 'Password harus diisi',
         ]);
-
-        if (! $this->recaptcha->verifikasi($data['recaptchaToken'] ?? null)) {
-            throw ValidationException::withMessages([
-                'user_id' => 'Info: Verifikasi reCAPTCHA gagal (L-00)',
-            ]);
-        }
 
         // Username OPD sering tersalin dengan spasi berlebih dari catatan/WA.
         $identitas = trim($data['user_id']);

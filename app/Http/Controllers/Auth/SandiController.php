@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Services\Recaptcha;
 use App\Support\StatusAkun;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -26,7 +25,6 @@ class SandiController extends Controller
     /** Tautan reset berlaku 1 jam. */
     private const UMUR_KODE_DETIK = 3600;
 
-    public function __construct(private readonly Recaptcha $recaptcha) {}
 
     public function formLupa()
     {
@@ -37,12 +35,7 @@ class SandiController extends Controller
     {
         $data = $request->validate([
             'nik' => ['required', 'string'],
-            'recaptchaToken' => ['nullable', 'string'],
         ], ['nik.required' => 'Info: NIK wajib diisi']);
-
-        if (! $this->recaptcha->verifikasi($data['recaptchaToken'] ?? null)) {
-            throw ValidationException::withMessages(['nik' => 'Info: Verifikasi reCAPTCHA gagal']);
-        }
 
         $user = User::where(fn ($q) => $q->where('user_id', $data['nik'])->orWhere('user_nik', $data['nik']))
             ->where('status', StatusAkun::AKTIF)
@@ -92,16 +85,12 @@ class SandiController extends Controller
             'key' => ['required', 'string'],
             'pass1' => ['required', 'string', 'min:6'],
             'pass2' => ['required', 'string'],
-            'recaptchaToken' => ['nullable', 'string'],
         ], [
             'key.required' => 'Info: Kode reset tidak valid',
             'pass1.required' => 'Info: Password wajib diisi',
             'pass1.min' => 'Info: Password minimal 6 karakter',
         ]);
 
-        if (! $this->recaptcha->verifikasi($data['recaptchaToken'] ?? null)) {
-            throw ValidationException::withMessages(['pass1' => 'Info: Verifikasi reCAPTCHA gagal']);
-        }
         if (preg_match('/^\d+$/', $data['pass1'])) {
             throw ValidationException::withMessages(['pass1' => 'Info: Password tidak boleh angka semua']);
         }

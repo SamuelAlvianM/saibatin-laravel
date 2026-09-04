@@ -42,7 +42,6 @@ class HandleInertiaRequests extends Middleware
                 'nama_lengkap' => config('situs.nama_lengkap'),
                 'tenant' => config('situs.tenant'),
                 'tahun' => config('situs.tahun_copyright'),
-                'recaptcha_site_key' => config('services.recaptcha.site_key'),
             ],
             // Isi footer — SATU sumber dengan versi Blade-nya
             // (`publik/partials/footer.blade.php` membaca config yang sama).

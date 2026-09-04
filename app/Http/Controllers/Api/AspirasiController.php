@@ -7,7 +7,6 @@ use App\Models\KritikSaran;
 use App\Models\Pengaduan;
 use App\Models\SkmJawaban;
 use App\Services\Pemberitahuan;
-use App\Services\Recaptcha;
 use App\Support\Balasan;
 use Illuminate\Http\Request;
 
@@ -15,12 +14,15 @@ use Illuminate\Http\Request;
  * Aspirasi warga: pengaduan masyarakat, kritik & saran, survei kepuasan.
  *
  * Ketiganya endpoint **publik** (tanpa login) — karena itu semuanya lewat
- * reCAPTCHA dan pembatas laju. Daftar isinya hanya boleh dibaca petugas.
+ * pembatas laju. Daftar isinya hanya boleh dibaca petugas.
+ *
+ * ⚠️ reCAPTCHA SUDAH DIBUANG atas permintaan dinas. Pembatas laju kini menjadi
+ * satu-satunya penahan pengiriman beruntun di kanal publik ini; jangan
+ * melonggarkannya tanpa mengganti dengan penahan lain.
  */
 class AspirasiController extends Controller
 {
     public function __construct(
-        private readonly Recaptcha $recaptcha,
         private readonly Pemberitahuan $notif,
     ) {}
 
@@ -28,10 +30,6 @@ class AspirasiController extends Controller
 
     public function kirimPengaduan(Request $request)
     {
-        if (! $this->recaptcha->verifikasi($request->input('recaptchaToken'))) {
-            return Balasan::gagal(['Info: Verifikasi reCAPTCHA gagal']);
-        }
-
         $data = $request->validate([
             'nama' => ['required', 'string', 'max:191'],
             'isi' => ['required', 'string'],
@@ -75,10 +73,6 @@ class AspirasiController extends Controller
 
     public function kirimKritik(Request $request)
     {
-        if (! $this->recaptcha->verifikasi($request->input('recaptchaToken'))) {
-            return Balasan::gagal(['Info: Verifikasi reCAPTCHA gagal']);
-        }
-
         $data = $request->validate([
             'nama' => ['required', 'string', 'max:191'],
             'pesan' => ['required', 'string'],
