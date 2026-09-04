@@ -299,10 +299,19 @@ function AreaAkun({ user, mobile, onNavigasi, onKeluar }) {
   }
 
   const nama = user.nama || user.user_id || 'Pengguna';
-  // Petugas (level 1–2) ke dashboard admin; warga & OPD langsung ke pengajuan.
+  /*
+   * 🔴 `level <= 2` MENYINGKIRKAN OPD dari dashboardnya sendiri.
+   *
+   * Rute `/dashboard` sudah dijaga `peran:petugas,opd` — akun instansi memang
+   * diizinkan masuk, lengkap dengan sidebar-nya (Pengajuan Baru & Permohonan
+   * Saya). Tapi header masih mengantar mereka ke `/user/pengajuan`, halaman
+   * warga. Satu akun, dua pintu masuk berbeda, dan tak ada satu pun yang
+   * memberitahu mana yang benar.
+   */
   const petugas = (user.level ?? 3) <= 2;
-  const areaHref = petugas ? '/dashboard' : '/user/pengajuan';
-  const areaLabel = petugas ? 'Dashboard' : 'Pengajuan Saya';
+  const punyaDashboard = petugas || user.level === 4;
+  const areaHref = punyaDashboard ? '/dashboard' : '/user/pengajuan';
+  const areaLabel = punyaDashboard ? 'Dashboard' : 'Pengajuan Saya';
 
   if (mobile) {
     return (
