@@ -9,6 +9,7 @@ use App\Models\News;
 use App\Models\Permohonan;
 use App\Models\StaticContent;
 use App\Support\Balasan;
+use App\Support\PeriodeDemografi;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -68,9 +69,21 @@ class StatistikController extends Controller
         })->all();
 
         // ── Kependudukan ─────────────────────────────────────────────────────
-        $barisDemografi = $kategori->isEmpty()
+        /*
+         * Periode yang ditampilkan. Warga boleh memilih lewat `?tahun&semester`;
+         * tanpa itu, periode TERBARU yang punya data.
+         *
+         * 🔴 Angkanya WAJIB disaring periode. Sejak tabel ini bisa menyimpan
+         * dua semester berdampingan, kueri tanpa saringan menjumlahkan
+         * keduanya — beranda akan mengumumkan penduduk dua kali lipat.
+         */
+        $periodeTersedia = DemografiWilayah::periodeTersedia();
+        $periode = $this->periodeDiminta($kini, $periodeTersedia);
+
+        $barisDemografi = ($kategori->isEmpty() || $periode === null)
             ? collect()
             : DemografiWilayah::whereIn('kategori', $kategori)
+                ->periode($periode['tahun'], $periode['semester'])
                 ->whereIn('level', [DemografiWilayah::LEVEL_KECAMATAN, DemografiWilayah::LEVEL_KELURAHAN])
                 ->get(['kategori', 'level', 'data']);
 
@@ -106,8 +119,56 @@ class StatistikController extends Controller
                     'value' => $nilai,
                 ];
             })->all(),
-            'periodeKependudukan' => env('DKB_PERIODE', 'DKB Semester II 2024'),
+            /*
+             * 🔴 Label ini DIHITUNG dari data, bukan diketik di `.env`.
+             *
+             * Sebelumnya `DKB_PERIODE` sekadar tulisan bebas: badge bisa
+             * berbunyi "Semester II 2024" sementara angka di bawahnya sudah
+             * berasal dari semester lain, dan tak ada satu pun tanda di layar.
+             * Untuk angka resmi kependudukan, keterangan periode yang keliru
+             * lebih berbahaya daripada tidak ada keterangan sama sekali.
+             */
+            'periodeKependudukan' => $periode
+                ? PeriodeDemografi::labelPanjang($periode['tahun'], $periode['semester'])
+                : null,
+            'periode' => $periode,
+            'periodeTersedia' => $periodeTersedia,
         ]);
+    }
+
+    /**
+     * Periode yang diminta pengunjung, atau yang terbaru bila tidak diminta.
+     *
+     * ⚠️ Permintaan ke periode yang TIDAK ADA datanya jatuh ke periode
+     * terbaru, bukan menjawab kosong. Tautan lama yang beredar di grup WA
+     * masih menunjuk semester yang sudah lewat; menjawabnya dengan halaman
+     * kosong membuat warga mengira datanya hilang.
+     *
+     * @param  array<int, array{tahun:int, semester:int, baris:int}>  $tersedia
+     * @return array{tahun:int, semester:int}|null
+     */
+    private function periodeDiminta(Carbon $kini, array $tersedia): ?array
+    {
+        if ($tersedia === []) {
+            return null;
+        }
+
+        $terbaru = ['tahun' => $tersedia[0]['tahun'], 'semester' => $tersedia[0]['semester']];
+
+        $tahun = request()->query('tahun');
+        $semester = request()->query('semester');
+
+        if (! PeriodeDemografi::tahunSah($tahun) || ! PeriodeDemografi::semesterSah($semester)) {
+            return $terbaru;
+        }
+
+        foreach ($tersedia as $t) {
+            if ($t['tahun'] === (int) $tahun && $t['semester'] === (int) $semester) {
+                return ['tahun' => $t['tahun'], 'semester' => $t['semester']];
+            }
+        }
+
+        return $terbaru;
     }
 
     /**

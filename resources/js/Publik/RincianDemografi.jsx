@@ -17,7 +17,9 @@ import { ambilJson } from '@/lib/api';
 
 const angka = (n) => Number(n ?? 0).toLocaleString('id-ID');
 
-export default function RincianDemografi({ kategori, kolom, judul }) {
+export default function RincianDemografi({
+  kategori, kolom, judul, periode, onInfoPeriode,
+}) {
   const [data, setData] = useState(null);
   const [memuat, setMemuat] = useState(true);
   const [galat, setGalat] = useState(null);
@@ -31,6 +33,16 @@ export default function RincianDemografi({ kategori, kolom, judul }) {
 
     const q = new URLSearchParams({ kategori });
     if (induk) q.set('parent', induk.kode);
+    /*
+     * 🔴 Periodenya ikut. Kartu beranda menampilkan periode yang dipilih
+     * warga; kalau rinciannya diambil tanpa periode, server memberi yang
+     * TERBARU — dan totalnya tidak akan cocok dengan angka di kartu yang
+     * baru saja diklik.
+     */
+    if (periode) {
+      q.set('tahun', periode.tahun);
+      q.set('semester', periode.semester);
+    }
 
     ambilJson(`/api/demografi?${q}`).then((j) => {
       if (batal) return;
@@ -41,10 +53,23 @@ export default function RincianDemografi({ kategori, kolom, judul }) {
         return;
       }
       setData(j.data);
+
+      /*
+       * Laporkan periode yang benar-benar dipakai server beserta daftar yang
+       * tersedia. Halaman pemanggil butuh ini untuk pemilihnya, dan mengambil
+       * lewat jawaban yang SUDAH datang jauh lebih murah daripada permintaan
+       * kedua yang menanyakan hal yang sama.
+       */
+      if (j.data?.periode) {
+        onInfoPeriode?.({
+          periode: j.data.periode,
+          tersedia: j.data.periodeTersedia ?? [],
+        });
+      }
     });
 
     return () => { batal = true; };
-  }, [kategori, induk]);
+  }, [kategori, induk, periode?.tahun, periode?.semester]);
 
   const baris = data?.items ?? [];
   // Kolom kartu ditaruh paling depan supaya angka yang sedang dilihat pengguna

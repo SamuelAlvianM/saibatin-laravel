@@ -5,8 +5,10 @@ import {
 } from 'lucide-react';
 import LayoutDashboard from '@/Components/LayoutDashboard';
 import EditorDemografi from '@/Components/EditorDemografi';
+import PemilihPeriode from '@/Components/PemilihPeriode';
 import { Modal, Pesan, Tombol } from '@/Components/Dasbor';
 import { ambilJson, kirimBerkas, kirimJson } from '@/lib/api';
+import { gabungPeriode, kueriPeriode, labelPeriode, periodeDugaan } from '@/lib/periode';
 
 /**
  * Data Demografi — port `app/dashboard/demografi/AdminDemografi.tsx`.
@@ -28,6 +30,16 @@ function unduh(url) {
 
 export default function Demografi({ kategori, kartuBawaan }) {
   const [jumlah, setJumlah] = useState({});
+  /*
+   * Periode yang sedang dikelola. Seluruh halaman ini — hitungan tersimpan,
+   * unggah, unduh, hapus, dan editor — bekerja PADA periode ini saja.
+   *
+   * 🔴 Sebelum ada periode, mengunggah DKB semester baru menghapus semester
+   * sebelumnya: tabelnya berkunci `(kategori, kode)`, satu baris per wilayah,
+   * dan impor mengganti total. Dinas kehilangan datanya tanpa peringatan.
+   */
+  const [periode, setPeriode] = useState(null);
+  const [periodeTersedia, setPeriodeTersedia] = useState([]);
   const [mengunggah, setMengunggah] = useState(null);
   const [sunting, setSunting] = useState(null);
   const [konfirmHapus, setKonfirmHapus] = useState(false);
@@ -37,16 +49,57 @@ export default function Demografi({ kategori, kartuBawaan }) {
   const [pesan, setPesan] = useState(null);
   const inputs = useRef({});
 
-  const segarkan = useCallback(async (slug) => {
-    const j = await ambilJson(`/api/demografi?kategori=${encodeURIComponent(slug)}`);
+  const segarkan = useCallback(async (slug, pakai = periode) => {
+    const q = kueriPeriode(pakai);
+    const j = await ambilJson(
+      `/api/demografi?kategori=${encodeURIComponent(slug)}${q ? `&${q}` : ''}`,
+    );
     setJumlah((c) => ({ ...c, [slug]: j.data?.items?.length ?? 0 }));
-  }, []);
+  }, [periode]);
 
-  const segarkanSemua = useCallback(() => {
-    kategori.forEach((k) => segarkan(k.slug));
-  }, [kategori, segarkan]);
+  /*
+   * Daftar periode diambil dari endpoint ADMIN, bukan publik.
+   *
+   * 🔴 `/api/demografi` menghitung periode untuk SATU kategori saja — angkanya
+   * akan terbaca sebagai "129 baris" padahal seluruh kategori berjumlah 1.032.
+   * Pemilih di halaman ini mengatur SEMUA kategori sekaligus, jadi hitungannya
+   * harus lintas kategori pula.
+   */
+  const segarkanPeriode = useCallback(async () => {
+    const j = await ambilJson(
+      `/api/admin/demografi?kategori=${encodeURIComponent(kategori[0]?.slug ?? '')}`,
+    );
+    const daftar = Array.isArray(j.data?.periodeTersedia) ? j.data.periodeTersedia : [];
+    setPeriodeTersedia((lama) => gabungPeriode(lama, daftar));
 
-  useEffect(() => { segarkanSemua(); }, [segarkanSemua]);
+    return { daftar, periode: j.data?.periode ?? null };
+  }, [kategori]);
+
+  const segarkanSemua = useCallback((pakai = periode) => {
+    kategori.forEach((k) => segarkan(k.slug, pakai));
+  }, [kategori, segarkan, periode]);
+
+  /*
+   * Periode awal ditentukan SEKALI, dari data yang benar-benar ada — bukan
+   * ditebak dari kalender. Kalau tabelnya masih kosong sama sekali, barulah
+   * dugaan dari tanggal hari ini dipakai sebagai isian awal.
+   */
+  useEffect(() => {
+    let batal = false;
+
+    (async () => {
+      const { daftar, periode: dariServer } = await segarkanPeriode();
+      if (batal) return;
+
+      setPeriode(dariServer ?? (daftar[0]
+        ? { tahun: daftar[0].tahun, semester: daftar[0].semester }
+        : periodeDugaan()));
+    })();
+
+    return () => { batal = true; };
+  }, [segarkanPeriode]);
+
+  useEffect(() => { if (periode) segarkanSemua(periode); }, [periode]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const totalTersimpan = kategori.reduce((a, k) => a + (jumlah[k.slug] ?? 0), 0);
 
@@ -57,6 +110,10 @@ export default function Demografi({ kategori, kartuBawaan }) {
     const fd = new FormData();
     fd.append('file', berkas);
     fd.append('kategori', slug);
+    // Tanpa ini server memakai periode terbaru — dan berkas semester I bisa
+    // mendarat menimpa semester II hanya karena periodenya tidak disebut.
+    fd.append('tahun', periode.tahun);
+    fd.append('semester', periode.semester);
 
     const j = await kirimBerkas('/api/admin/demografi/import', fd);
     setMengunggah(null);
@@ -65,17 +122,31 @@ export default function Demografi({ kategori, kartuBawaan }) {
 
     setPesan({ tipe: 'sukses', teks: j.success?.[0] ?? 'Import berhasil' });
     segarkan(slug);
+    // Impor ke periode yang belum pernah ada menambah satu entri di pemilih.
+    segarkanPeriode();
   };
 
+  /*
+   * Menghapus HANYA periode yang sedang dipilih.
+   *
+   * 🔴 Dulu tombol ini menyapu seluruh tabel. Sejak beberapa periode bisa
+   * berdampingan, menyapu semuanya berarti satu klik menghapus data
+   * bertahun-tahun — termasuk semester yang tidak sedang dilihat petugas.
+   */
   const hapusSemua = async () => {
     setMenghapus(true);
-    const j = await kirimJson('/api/admin/demografi', {}, 'DELETE');
+    const j = await kirimJson(
+      `/api/admin/demografi?${kueriPeriode(periode)}`, {}, 'DELETE',
+    );
     setMenghapus(false);
 
     if (j.error?.length) { setPesan({ tipe: 'galat', teks: j.error[0] }); return; }
 
-    setPesan({ tipe: 'sukses', teks: j.success?.[0] ?? 'Semua data demografi dihapus' });
+    setPesan({ tipe: 'sukses', teks: j.success?.[0] ?? 'Data periode ini dihapus' });
     setKonfirmHapus(false);
+    setPeriodeTersedia((d) => d.filter(
+      (x) => !(x.tahun === periode.tahun && x.semester === periode.semester),
+    ));
     segarkanSemua();
   };
 
@@ -104,13 +175,25 @@ export default function Demografi({ kategori, kartuBawaan }) {
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="flex-1 rounded-xl border border-brand/20 bg-brand/5 px-4 py-3 text-sm text-slate-700">
             Unggah file Excel agregat Dukcapil (format SIAK: kolom <b>IDEM, KODE, WILAYAH, …</b>)
-            per kategori. Setiap unggahan <b>mengganti</b> data lama kategori tersebut. Klik{' '}
+            per kategori. Setiap unggahan <b>mengganti</b> data kategori tersebut{' '}
+            <b>pada periode yang sedang dipilih saja</b> — periode lain tidak tersentuh. Klik{' '}
             <b>Edit / Import</b> untuk mengelola data kecamatan &amp; <b>detail desa</b>-nya.
           </div>
-          <div className="flex flex-shrink-0 flex-wrap gap-2">
+          <div className="flex flex-shrink-0 flex-wrap items-center gap-2">
+            {/*
+              Pemilih periode berdiri PALING KIRI di antara tombol-tombol ini,
+              sebelum Export/Reset/Hapus — ketiganya bekerja pada periode yang
+              dipilih di sini, dan urutan bacanya harus mencerminkan itu.
+            */}
+            <PemilihPeriode
+              nilai={periode}
+              tersedia={periodeTersedia}
+              onPilih={setPeriode}
+              bolehBaru
+            />
             <Tombol varian="garis" disabled={totalTersimpan === 0}
                     title="Unduh semua kategori dalam satu file Excel"
-                    onClick={() => unduh('/api/admin/demografi/export')}>
+                    onClick={() => unduh(`/api/admin/demografi/export?${kueriPeriode(periode)}`)}>
               <Download className="h-4 w-4" />Export Semua
             </Tombol>
             <Tombol varian="garis" onClick={() => setKonfirmReset(true)}
@@ -119,8 +202,8 @@ export default function Demografi({ kategori, kartuBawaan }) {
             </Tombol>
             <Tombol varian="garis" kelas="border-rose-300 text-rose-600 hover:bg-rose-50"
                     disabled={totalTersimpan === 0} onClick={() => setKonfirmHapus(true)}
-                    title="Hapus seluruh data demografi (semua kategori)">
-              <Trash2 className="h-4 w-4" />Hapus Semua
+                    title="Hapus data demografi semua kategori PADA PERIODE INI">
+              <Trash2 className="h-4 w-4" />Hapus Periode Ini
             </Tombol>
           </div>
         </div>
@@ -157,7 +240,9 @@ export default function Demografi({ kategori, kartuBawaan }) {
 
                 <button disabled={sibuk || !n} aria-label={`Unduh data ${k.label}`}
                         title="Unduh data kategori ini ke Excel"
-                        onClick={() => unduh(`/api/admin/demografi/export?kategori=${encodeURIComponent(k.slug)}`)}
+                        onClick={() => unduh(
+                          `/api/admin/demografi/export?kategori=${encodeURIComponent(k.slug)}&${kueriPeriode(periode)}`,
+                        )}
                         className="flex-shrink-0 rounded-lg p-2 text-slate-600 hover:bg-slate-100 disabled:opacity-40">
                   <Download className="h-4 w-4" />
                 </button>
@@ -181,19 +266,27 @@ export default function Demografi({ kategori, kartuBawaan }) {
         <EditorDemografi
           kategori={sunting.slug}
           label={sunting.label}
+          periode={periode}
+          periodeTersedia={periodeTersedia}
+          onPeriode={setPeriode}
           onTutup={() => setSunting(null)}
-          onTersimpan={() => segarkan(sunting.slug)}
+          onTersimpan={() => { segarkan(sunting.slug); segarkanPeriode(); }}
         />
       )}
 
       {konfirmHapus && (
-        <Modal judul="Hapus semua data demografi?" onTutup={() => !menghapus && setKonfirmHapus(false)}>
+        <Modal
+          judul={`Hapus data ${periode ? labelPeriode(periode.tahun, periode.semester) : 'periode ini'}?`}
+          onTutup={() => !menghapus && setKonfirmHapus(false)}
+        >
           <p className="flex items-start gap-2 text-sm text-slate-600">
             <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-rose-600" />
             <span>
-              Seluruh data <b>semua kategori</b> (kecamatan &amp; desa) akan dihapus permanen —
-              total <b>{totalTersimpan} kecamatan</b> tersimpan. Sebaiknya <b>Export Semua</b> dulu
-              sebagai cadangan. Tindakan ini tidak dapat dibatalkan.
+              Data <b>semua kategori</b> (kecamatan &amp; desa) pada{' '}
+              <b>{periode ? labelPeriode(periode.tahun, periode.semester) : 'periode ini'}</b>{' '}
+              akan dihapus permanen — total <b>{totalTersimpan} kecamatan</b> tersimpan.
+              Periode lain tidak tersentuh. Sebaiknya <b>Export Semua</b> dulu sebagai
+              cadangan. Tindakan ini tidak dapat dibatalkan.
             </span>
           </p>
           <div className="mt-5 flex justify-end gap-2">

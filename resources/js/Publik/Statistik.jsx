@@ -1,7 +1,8 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import {
-  ArrowRight, Building2, CalendarClock, CalendarDays, CheckCircle2, ExternalLink,
-  FileCheck, Hourglass, Loader2, Map as MapIcon, MapPin, MousePointerClick, Trees,
+  ArrowRight, Building2, CalendarClock, CalendarDays, CheckCircle2, ChevronDown,
+  ExternalLink, FileCheck, Hourglass, Loader2, Map as MapIcon, MapPin,
+  MousePointerClick, Trees,
 } from 'lucide-react';
 import {
   Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle,
@@ -10,6 +11,7 @@ import GrafikTampak from '@/Components/GrafikTampak';
 import { ikon } from '@/lib/ikon';
 import { KARTU_BAWAAN, warnaPreset } from '@/lib/statistik-kartu';
 import { ambilJson } from '@/lib/api';
+import { kueriPeriode, labelPeriode, periodeSama } from '@/lib/periode';
 
 /**
  * Statistik beranda — port `components/landingpage/stats.tsx`.
@@ -348,26 +350,156 @@ function KartuPeta() {
   );
 }
 
+
+/**
+ * Badge periode DKB di beranda — sekaligus pemilihnya.
+ *
+ * 🔴 Sebelum ini badge-nya sekadar `<span>` berisi tulisan dari `.env`: tidak
+ * bisa diklik, tidak berhubungan dengan datanya, dan tidak ada cara apa pun
+ * bagi warga melihat semester lain.
+ *
+ * ⚠️ Dibuat MENONJOL dan jelas bisa diklik — berlatar penuh warna merek,
+ * berbayang, dengan panah yang berputar saat terbuka. Badge yang tampak seperti
+ * label pasif tidak akan pernah dicoba diklik siapa pun, dan fitur filternya
+ * jadi ada tapi tak terpakai.
+ *
+ * Satu periode saja → tetap tampil, tapi sebagai label biasa. Menawarkan
+ * pilihan yang isinya cuma satu hanya membuang waktu orang.
+ */
+function PemilihPeriodePublik({ periode, tersedia = [], onPilih }) {
+  const [buka, setBuka] = useState(false);
+  const bungkus = useRef(null);
+
+  useEffect(() => {
+    if (!buka) return undefined;
+
+    const klikLuar = (e) => {
+      if (bungkus.current && !bungkus.current.contains(e.target)) setBuka(false);
+    };
+    const tekan = (e) => { if (e.key === 'Escape') setBuka(false); };
+
+    document.addEventListener('mousedown', klikLuar);
+    document.addEventListener('keydown', tekan);
+
+    return () => {
+      document.removeEventListener('mousedown', klikLuar);
+      document.removeEventListener('keydown', tekan);
+    };
+  }, [buka]);
+
+  if (!periode) {
+    return (
+      <span className="flex shrink-0 items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-400">
+        <CalendarClock className="h-3.5 w-3.5" />
+        Belum ada data
+      </span>
+    );
+  }
+
+  const label = `DKB ${labelPeriode(periode.tahun, periode.semester)}`;
+
+  if (tersedia.length <= 1) {
+    return (
+      <span className="flex shrink-0 items-center gap-1.5 rounded-full border border-brand/20 bg-brand/10 px-3 py-1.5 text-xs font-semibold text-brand">
+        <CalendarClock className="h-3.5 w-3.5" />{label}
+      </span>
+    );
+  }
+
+  return (
+    <div ref={bungkus} className="relative shrink-0">
+      <button
+        type="button"
+        onClick={() => setBuka((b) => !b)}
+        aria-haspopup="listbox"
+        aria-expanded={buka}
+        title="Pilih tahun & semester data yang ingin dilihat"
+        className="flex items-center gap-2 rounded-full bg-brand px-4 py-2 text-xs font-bold text-white shadow-md shadow-brand/25 transition-all hover:shadow-lg hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40"
+      >
+        <CalendarClock className="h-4 w-4" />
+        {label}
+        <ChevronDown className={`h-4 w-4 transition-transform ${buka ? 'rotate-180' : ''}`} />
+      </button>
+
+      {/* Petunjuk kecil di bawah badge — sekali lihat, warga tahu ini pilihan. */}
+      {!buka && (
+        <span className="pointer-events-none absolute right-1 top-full mt-1 whitespace-nowrap text-[0.6rem] font-medium text-brand/70">
+          ganti periode ▾
+        </span>
+      )}
+
+      {buka && (
+        <div
+          role="listbox"
+          className="absolute right-0 z-50 mt-2 w-56 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl"
+        >
+          <p className="border-b border-slate-100 bg-slate-50 px-3 py-2 text-[0.65rem] font-bold uppercase tracking-widest text-slate-500">
+            Periode data kependudukan
+          </p>
+          <div className="max-h-60 overflow-y-auto">
+            {tersedia.map((t) => {
+              const aktif = periodeSama(t, periode);
+
+              return (
+                <button
+                  key={`${t.tahun}-${t.semester}`}
+                  type="button"
+                  role="option"
+                  aria-selected={aktif}
+                  onClick={() => { setBuka(false); onPilih({ tahun: t.tahun, semester: t.semester }); }}
+                  className={`flex w-full items-center justify-between px-3 py-2.5 text-left text-sm transition-colors ${
+                    aktif ? 'bg-brand/10 font-bold text-brand' : 'text-slate-700 hover:bg-slate-50'
+                  }`}
+                >
+                  {labelPeriode(t.tahun, t.semester)}
+                  {aktif && <CheckCircle2 className="h-4 w-4" />}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 const AWAL = {
   kartuDemografi: KARTU_BAWAAN,
   pelayanan: { total: 0, selesai: 0, aktif: 0, bulanIni: 0, topJenis: [], trend6: [] },
-  periodeKependudukan: 'DKB Semester II 2024',
+  /*
+   * ⚠️ Kosong, bukan "DKB Semester II 2024".
+   *
+   * Kerangka awal ini tampil sepersekian detik sebelum `/api/stats` menjawab.
+   * Menuliskan periode tertentu di sini berarti halaman sempat mengumumkan
+   * periode yang belum tentu benar — dan untuk angka kependudukan resmi,
+   * keterangan yang keliru lebih buruk daripada belum ada keterangan.
+   */
+  periodeKependudukan: null,
+  periode: null,
+  periodeTersedia: [],
 };
 
 export default function Statistik() {
   const [stats, setStats] = useState(AWAL);
   const [rincian, setRincian] = useState(null);
+  /*
+   * Periode yang DIMINTA warga. `null` = "yang terbaru", dan itu memang
+   * keadaan awalnya: pengunjung yang tidak memilih apa pun harus melihat data
+   * terbaru, bukan periode yang kebetulan tertulis di kode.
+   */
+  const [diminta, setDiminta] = useState(null);
 
   useEffect(() => {
     let batal = false;
+    const q = kueriPeriode(diminta);
 
-    ambilJson('/api/stats').then((j) => {
+    ambilJson(`/api/stats${q ? `?${q}` : ''}`).then((j) => {
       if (batal || !j?.data) return;
       setStats((p) => ({ ...p, ...j.data }));
     });
 
     return () => { batal = true; };
-  }, []);
+  }, [diminta?.tahun, diminta?.semester]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="space-y-4">
@@ -376,14 +508,30 @@ export default function Statistik() {
           <p className="mb-1 text-[0.66rem] font-bold uppercase tracking-widest text-slate-400">Data Kependudukan</p>
           <h2 className="text-2xl font-bold tracking-tight text-slate-900 md:text-3xl">Statistik Demografi</h2>
         </div>
-        <span className="flex shrink-0 items-center gap-1.5 rounded-full border border-brand/20 bg-brand/10 px-3 py-1.5 text-xs font-semibold text-brand">
-          <CalendarClock className="h-3.5 w-3.5" />{stats.periodeKependudukan}
-        </span>
+        {/*
+          🔴 Badge ini dulu cuma TULISAN — dan tulisannya diketik di `.env`,
+          lepas sama sekali dari data yang ditampilkan di bawahnya. Kini ia
+          tombol: isinya dihitung dari periode yang benar-benar dipakai, dan
+          warga bisa berpindah ke periode lain yang datanya ada.
+        */}
+        <PemilihPeriodePublik
+          periode={stats.periode}
+          tersedia={stats.periodeTersedia}
+          onPilih={setDiminta}
+        />
       </div>
 
-      <p className="flex items-center gap-1.5 text-xs text-slate-400">
-        <MousePointerClick className="h-3.5 w-3.5" />
-        Klik kartu untuk melihat rincian per kecamatan &amp; desa.
+      <p className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs text-slate-400">
+        <span className="flex items-center gap-1.5">
+          <MousePointerClick className="h-3.5 w-3.5" />
+          Klik kartu untuk melihat rincian per kecamatan &amp; desa.
+        </span>
+        {stats.periodeTersedia?.length > 1 && (
+          <span className="flex items-center gap-1.5">
+            <CalendarClock className="h-3.5 w-3.5" />
+            Tersedia {stats.periodeTersedia.length} periode — klik badge tahun di kanan atas.
+          </span>
+        )}
       </p>
 
       <div className="grid grid-cols-1 items-stretch gap-3 lg:grid-cols-12 lg:gap-4">
@@ -413,7 +561,8 @@ export default function Statistik() {
             <Suspense fallback={
               <div className="flex justify-center py-16"><Loader2 className="h-6 w-6 animate-spin text-brand" /></div>
             }>
-              <RincianDemografi kategori={rincian.kategori} kolom={rincian.kolom} judul={rincian.title} />
+              <RincianDemografi kategori={rincian.kategori} kolom={rincian.kolom} judul={rincian.title}
+                                periode={stats.periode} />
             </Suspense>
           )}
         </DialogContent>

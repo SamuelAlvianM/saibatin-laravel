@@ -95,7 +95,10 @@ class DemografiExcel
     }
 
     /** Susun workbook ekspor: satu sheet per kategori. */
-    public function tulis(?string $kategori = null): ?Spreadsheet
+    /**
+     * @param  array{tahun:int, semester:int}|null  $periode  null = semua periode
+     */
+    public function tulis(?string $kategori = null, ?array $periode = null): ?Spreadsheet
     {
         $slug = array_column(config('demografi.kategori'), 'slug');
         $daftar = $kategori ? [$kategori] : $slug;
@@ -105,7 +108,10 @@ class DemografiExcel
         $adaIsi = false;
 
         foreach ($daftar as $k) {
-            $baris = DemografiWilayah::where('kategori', $k)->orderBy('kode')->get();
+            $baris = DemografiWilayah::where('kategori', $k)
+                ->when($periode, fn ($w) => $w->periode($periode['tahun'], $periode['semester']))
+                ->orderBy('kode')
+                ->get();
             if ($baris->isEmpty()) {
                 continue;
             }

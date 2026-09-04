@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import RincianDemografi from '@/Publik/RincianDemografi';
+import PemilihPeriode from '@/Components/PemilihPeriode';
+import { labelPeriode } from '@/lib/periode';
 
 /**
  * Laporan Data Demografi (`/media/demografi`) — port
@@ -31,10 +33,35 @@ export default function TabelDemografi({ kategori = [] }) {
     window.history.replaceState({}, '', url);
   };
 
+  /*
+   * Periode yang dilihat. `null` = biarkan server memilih yang terbaru —
+   * keadaan awal yang benar untuk pengunjung yang belum memilih apa pun.
+   */
+  const [periode, setPeriode] = useState(null);
+  const [tersedia, setTersedia] = useState([]);
+  const [dipakai, setDipakai] = useState(null);
+
   const terpilih = kategori.find((k) => k.slug === aktif);
 
   return (
     <div className="space-y-5">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <p className="text-xs text-slate-500">
+          {dipakai
+            ? <>Menampilkan data <b className="text-slate-700">{labelPeriode(dipakai.tahun, dipakai.semester)}</b>.</>
+            : 'Memuat periode data…'}
+          {tersedia.length > 1 && ' Pilih periode lain di kanan.'}
+        </p>
+        {/* Warga hanya boleh berpindah ke periode yang ADA datanya — memilih
+            periode kosong cuma menghasilkan tabel kosong yang terlihat rusak. */}
+        <PemilihPeriode
+          nilai={dipakai}
+          tersedia={tersedia}
+          onPilih={setPeriode}
+          ukuran="kecil"
+        />
+      </div>
+
       <div className="flex flex-wrap gap-2" role="tablist" aria-label="Kategori data demografi">
         {kategori.map((k) => (
           <button key={k.slug} type="button" role="tab" aria-selected={k.slug === aktif}
@@ -55,7 +82,12 @@ export default function TabelDemografi({ kategori = [] }) {
               tanpa itu tingkat rincian (kecamatan yang sedang dibuka) ikut
               terbawa ke kategori baru yang belum tentu punya wilayah itu. */}
           <RincianDemografi key={terpilih.slug} kategori={terpilih.slug}
-                            kolom="JML" judul={terpilih.label} />
+                            kolom="JML" judul={terpilih.label}
+                            periode={periode}
+                            onInfoPeriode={({ periode: dp, tersedia: dt }) => {
+                              setDipakai(dp);
+                              setTersedia(dt);
+                            }} />
         </div>
       )}
     </div>
