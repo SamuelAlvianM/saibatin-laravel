@@ -36,6 +36,36 @@ const LABEL_KOLOM = {
 export const labelKolom = (k) => LABEL_KOLOM[k] ?? k;
 
 /**
+ * Ejaan header yang menyebut KUANTITAS YANG SAMA di berkas agregat Dukcapil.
+ * Cerminan `StatistikController::SINONIM_JUMLAH` — keduanya HARUS sama, kalau
+ * tidak editor dan beranda menunjuk kolom berbeda untuk kartu yang sama.
+ *
+ * 🔴 `JML_WKTP` sengaja tidak ikut: "sudah rekam" bukan "jumlah wajib".
+ */
+const SINONIM_JUMLAH = ['JML', 'JUMLAH', 'TOTAL', 'KK_JML', 'JML_KK'];
+
+/**
+ * Nama kolom yang benar-benar ada di data, dari nama yang tersimpan di
+ * konfigurasi kartu. `null` bila tidak ada padanannya — dan itu berarti
+ * "belum ada datanya", bukan nol.
+ */
+export function resolveKolom(kunciData, kolom) {
+  if (!kolom) return null;
+  if (kunciData.includes(kolom)) return kolom;
+
+  const naik = String(kolom).toUpperCase();
+  const samaAbai = kunciData.find((k) => String(k).toUpperCase() === naik);
+  if (samaAbai) return samaAbai;
+
+  if (SINONIM_JUMLAH.includes(naik)) {
+    const sinonim = kunciData.find((k) => SINONIM_JUMLAH.includes(String(k).toUpperCase()));
+    if (sinonim) return sinonim;
+  }
+
+  return null;
+}
+
+/**
  * Susunan kartu bawaan — dipakai sebagai kerangka SEBELUM `/api/stats`
  * menjawab, supaya tinggi seksinya sudah benar sejak render pertama dan isi di
  * bawahnya tidak tersentak turun saat angka tiba.

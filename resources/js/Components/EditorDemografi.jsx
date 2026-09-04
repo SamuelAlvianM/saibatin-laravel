@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 import { Pesan, Tombol } from '@/Components/Dasbor';
 import { ambilJson, kirimBerkas, kirimJson } from '@/lib/api';
-import { KARTU_BAWAAN, WARNA_PRESET, labelKolom, warnaPreset } from '@/lib/statistik-kartu';
+import { KARTU_BAWAAN, WARNA_PRESET, labelKolom, resolveKolom, warnaPreset } from '@/lib/statistik-kartu';
 import { NAMA_IKON, ikon as ikonDari } from '@/lib/ikon';
 import { Input } from '@/Components/ui/input';
 
@@ -21,7 +21,7 @@ import { Input } from '@/Components/ui/input';
  */
 function TabelDemografi({
   baris, kosongTeks, kolom, jkOtomatis, children,
-  sorotKolom, onSorot,
+  sorotKolom, onSorot, kartuLain,
 }) {
   return (
     <div className="min-h-0 flex-1 overflow-auto rounded-2xl border border-slate-200 bg-white">
@@ -35,8 +35,12 @@ function TabelDemografi({
               <th className="px-3 py-2 font-medium">Wilayah</th>
               {kolom.map((k) => {
                 const disorot = sorotKolom === k;
+                // Kolom yang sudah dipakai kartu LAIN di kategori ini.
+                const judulLain = kartuLain?.get(k);
                 return (
-                  <th key={k} className={`px-3 py-2 text-right font-medium ${disorot ? 'bg-amber-50' : ''}`}>
+                  <th key={k} className={`px-3 py-2 text-right font-medium ${
+                    disorot ? 'bg-amber-50' : judulLain ? 'bg-amber-50/40' : ''
+                  }`}>
                     <span className="inline-flex items-center justify-end gap-1.5">
                       {/*
                         Bintang = "jadikan nilai utama". Satu kolom saja per
@@ -58,11 +62,15 @@ function TabelDemografi({
                           onClick={() => onSorot(k)}
                           title={disorot
                             ? `Kolom ${k} sedang tampil sebagai kartu di beranda — klik untuk melepas`
-                            : `Jadikan kolom ${k} nilai utama yang tampil di beranda (hanya satu kolom)`}
+                            : judulLain
+                              ? `Kolom ${k} sudah tampil sebagai kartu “${judulLain}” — klik untuk mengedit kartu itu`
+                              : `Jadikan kolom ${k} nilai utama yang tampil di beranda`}
                           className={`flex h-6 w-6 shrink-0 items-center justify-center rounded border transition-colors ${
                             disorot
                               ? 'border-amber-400 bg-amber-100 text-amber-500 hover:bg-amber-200'
-                              : 'border-slate-200 bg-white text-slate-300 hover:border-amber-300 hover:text-amber-400'
+                              : judulLain
+                                ? 'border-amber-300 bg-white text-amber-400 hover:bg-amber-50'
+                                : 'border-slate-200 bg-white text-slate-300 hover:border-amber-300 hover:text-amber-400'
                           }`}
                         >
                           <Star className={`h-3.5 w-3.5 ${disorot ? 'fill-amber-400' : ''}`} />
@@ -115,7 +123,7 @@ const digit = (s) => String(s ?? '').replace(/\D/g, '');
  * tebak-tebakan "yang mana tadi yang saya pilih".
  */
 function PanelKartuBeranda({
-  sorot, total, judul, onJudul, ikonNama, onIkon, warna, onWarna,
+  sorot, sorotAsli, kartuLain, total, judul, onJudul, ikonNama, onIkon, warna, onWarna,
 }) {
   const w = warnaPreset(warna);
   const Ikon = ikonDari(ikonNama);
@@ -137,10 +145,34 @@ function PanelKartuBeranda({
 
   return (
     <div className="rounded-2xl border border-amber-300 bg-amber-50/60 p-4">
-      <p className="mb-3 flex items-center gap-2 text-sm font-semibold text-amber-900">
+      {/*
+        🔴 Nama kartunya disebut, bukan cuma nama kolomnya. Satu kategori bisa
+        memasok beberapa kartu; tanpa disebut, petugas tidak punya cara tahu
+        kartu MANA yang sedang ia ubah — dan baru sadar setelah beranda berubah.
+      */}
+      <p className="mb-1 flex flex-wrap items-center gap-2 text-sm font-semibold text-amber-900">
         <Star className="h-4 w-4 fill-amber-400 text-amber-500" />
-        Nilai utama: kolom <span className="rounded bg-amber-200/70 px-1.5 py-0.5 font-mono">{sorot}</span>
+        Mengedit kartu “{(judul || '').trim() || labelKolom(sorot)}” — sumbernya kolom{' '}
+        <span className="rounded bg-amber-200/70 px-1.5 py-0.5 font-mono">{sorot}</span>
       </p>
+      {sorot !== sorotAsli && (
+        <p className="mb-1 text-xs text-amber-800">
+          Konfigurasi menyimpannya sebagai <span className="font-mono">{sorotAsli}</span>;
+          kolom itu kini bernama <span className="font-mono">{sorot}</span> di data.
+        </p>
+      )}
+      {kartuLain?.size > 0 && (
+        <p className="mb-3 text-xs text-amber-800">
+          Kategori ini juga memasok{' '}
+          {[...kartuLain].map(([kol, jdl], i) => (
+            <span key={kol}>
+              {i > 0 && ', '}
+              <b>{jdl}</b> (kolom <span className="font-mono">{kol}</span>)
+            </span>
+          ))}
+          . Klik bintang kolomnya untuk mengedit kartu tersebut.
+        </p>
+      )}
 
       <div className="grid gap-4 lg:grid-cols-[minmax(0,15rem)_1fr]">
         {/* Pratinjau kartu — bentuknya sama dengan yang tampil di beranda. */}
@@ -226,13 +258,11 @@ export default function EditorDemografi({ kategori, label, onTutup, onTersimpan 
 
   /*
    * Seluruh kartu beranda apa adanya — kartu kategori LAIN harus ikut dikirim
-   * saat menyimpan, kalau tidak ia terhapus. Disimpan di ref, bukan state:
-   * nilainya tidak pernah dirender, dan menjadikannya state hanya menambah
-   * render ulang tabel yang isinya ratusan baris.
+   * saat menyimpan, kalau tidak ia terhapus.
    */
-  const kartuRef = useRef([]);
-  /** Kolom yang kartunya sedang diedit — identitas kartu sebelum diganti. */
-  const kolomTargetRef = useRef(null);
+  const [kartuSemua, setKartuSemua] = useState([]);
+  /** Kolom yang kartunya sedang diedit — identitas kartu di konfigurasi. */
+  const [kolomTarget, setKolomTarget] = useState(null);
 
   const berkasUtama = useRef(null);
   const berkasDetail = useRef(null);
@@ -268,10 +298,10 @@ export default function EditorDemografi({ kategori, label, onTutup, onTersimpan 
 
       const tersimpan = j.data?.items?.['beranda.statistik']?.kartu;
       const daftar = Array.isArray(tersimpan) && tersimpan.length ? tersimpan : KARTU_BAWAAN;
-      kartuRef.current = daftar.map((k) => ({ ...k }));
+      setKartuSemua(daftar.map((k) => ({ ...k })));
 
       const milik = daftar.find((k) => k.kategori === kategori);
-      kolomTargetRef.current = milik?.kolom ?? null;
+      setKolomTarget(milik?.kolom ?? null);
       setSorot(milik?.kolom ?? null);
       setKartuIkon(milik?.icon ?? 'Users');
       setKartuWarna(milik?.warna ?? 'biru');
@@ -280,14 +310,70 @@ export default function EditorDemografi({ kategori, label, onTutup, onTersimpan 
     return () => { batal = true; };
   }, [kategori]);
 
-  /** Hanya SATU kolom yang bisa jadi nilai utama — klik kolom lain memindahkannya. */
+  /*
+   * Nama kolom SEBENARNYA yang dipakai kartu yang sedang diedit.
+   *
+   * 🔴 Yang tersimpan di konfigurasi belum tentu ada di data. Kartu "Wajib
+   * KTP" menyimpan kolom `JML` sementara berkas Dukcapil terbaru menulis
+   * `Total`; beranda menyetarakan keduanya lewat resolveKolom dan menampilkan
+   * angkanya, tapi editor membaca `JML` mentah — pratinjaunya 0 dan bintangnya
+   * tidak muncul di kolom mana pun. Dua layar, satu kartu, dua jawaban.
+   */
+  const sorotNyata = useMemo(
+    () => (sorot ? resolveKolom(kolom, sorot) : null),
+    [sorot, kolom],
+  );
+
+  /*
+   * Kartu LAIN di kategori ini → { nama kolom nyata: judul kartu }.
+   * Diturunkan, bukan disimpan: daftar kolom dan konfigurasi kartu datang dari
+   * dua permintaan berbeda, dan mana yang tiba lebih dulu tidak dijamin.
+   */
+  const kartuLain = useMemo(() => {
+    const peta = new Map();
+    for (const c of kartuSemua) {
+      if (c.kategori !== kategori || c.kolom === kolomTarget) continue;
+      peta.set(resolveKolom(kolom, c.kolom) ?? c.kolom, c.title);
+    }
+    return peta;
+  }, [kartuSemua, kategori, kolomTarget, kolom]);
+
+  /**
+   * Klik bintang. Tiga arti, bergantung keadaan kolomnya:
+   *
+   * 1. kolom kartu yang sedang diedit    → lepas kartunya dari beranda
+   * 2. kolom yang sudah punya kartu lain → PINDAH mengedit kartu itu
+   * 3. kolom bebas                       → pindahkan kartu yang diedit ke sana
+   *
+   * 🔴 Cabang (2) yang menentukan. Satu kategori bisa memasok beberapa kartu —
+   * `jenis-kelamin` memasok tiga sekaligus. Tanpa cabang ini, membintangi
+   * kolom yang sudah dipakai kartu lain akan MENIMPA kartu yang sedang diedit
+   * ke sana: beranda mendapat dua kartu identik dan kehilangan satu kartu,
+   * diam-diam, tanpa satu pun galat.
+   */
   const alihkanSorot = (k) => {
-    setSorot((lama) => {
-      const baru = lama === k ? null : k;
-      // Judul mengikuti kolom baru, KECUALI petugas sudah menuliskannya sendiri.
-      setKartuJudul((j) => (!j || j === labelKolom(lama) ? (baru ? labelKolom(baru) : '') : j));
-      return baru;
-    });
+    if (sorotNyata === k) {
+      setSorot(null);
+      setKartuJudul('');
+      return;
+    }
+
+    const judulLain = kartuLain.get(k);
+    if (judulLain !== undefined) {
+      const lain = kartuSemua.find(
+        (c) => c.kategori === kategori && (resolveKolom(kolom, c.kolom) ?? c.kolom) === k,
+      );
+      setKolomTarget(lain?.kolom ?? k);
+      setSorot(k);
+      setKartuIkon(lain?.icon ?? 'Users');
+      setKartuWarna(lain?.warna ?? 'biru');
+      setKartuJudul(lain?.title ?? judulLain);
+      return;
+    }
+
+    setSorot(k);
+    // Judul mengikuti kolom baru, KECUALI petugas sudah menuliskannya sendiri.
+    setKartuJudul((j) => (!j || j === labelKolom(sorotNyata) ? labelKolom(k) : j));
   };
 
   // Kunci gulir halaman di belakang selama editor terbuka.
@@ -306,11 +392,11 @@ export default function EditorDemografi({ kategori, label, onTutup, onTersimpan 
    * bawahnya.
    */
   const totalSorot = useMemo(() => {
-    if (!sorot) return null;
+    if (!sorotNyata) return null;
     const pekon = rows.filter((r) => r.level === 5);
     const dipakai = pekon.length ? pekon : rows.filter((r) => r.level === 4);
-    return dipakai.reduce((a, r) => a + (Number(r.data?.[sorot]) || 0), 0);
-  }, [sorot, rows]);
+    return dipakai.reduce((a, r) => a + (Number(r.data?.[sorotNyata]) || 0), 0);
+  }, [sorotNyata, rows]);
   const pekonDetail = useMemo(
     () => (detail ? rows.filter((r) => r.level === 5 && r.parentKode === detail.kode) : []),
     [rows, detail],
@@ -436,22 +522,37 @@ export default function EditorDemografi({ kategori, label, onTutup, onTersimpan 
    * - tanpa sorot: kartu kategori ini dihapus dari beranda
    */
   const simpanKartu = async () => {
-    const sebelum = kartuRef.current;
-    const target = kolomTargetRef.current;
+    const sebelum = kartuSemua;
+    const target = kolomTarget;
     const posisi = sebelum.findIndex((c) => c.kategori === kategori && c.kolom === target);
     const lamaKartu = posisi >= 0 ? sebelum[posisi] : undefined;
 
     const kartu = sebelum.filter((c) => !(c.kategori === kategori && c.kolom === target));
+    // Nama kolom NYATA yang ditulis, bukan ejaan lama dari konfigurasi: sekali
+    // disimpan, editor dan beranda membaca kolom yang sama persis.
+    const kolomBaru = sorot ? (sorotNyata ?? sorot) : null;
 
-    if (sorot) {
+    if (kolomBaru) {
       const entri = {
         ...(lamaKartu ?? {}),
-        title: (kartuJudul || '').trim() || labelKolom(sorot),
+        title: (kartuJudul || '').trim() || labelKolom(kolomBaru),
         icon: kartuIkon,
         kategori,
-        kolom: sorot,
+        kolom: kolomBaru,
         warna: kartuWarna,
       };
+
+      /*
+       * 🔴 Jaring pengaman terakhir: buang kartu lain yang kebetulan sudah
+       * memakai kolom ini. `alihkanSorot` seharusnya sudah mencegahnya, tapi
+       * konfigurasi yang tersimpan sebelum perbaikan ini bisa saja SUDAH
+       * kembar — dan menyimpan ulang tidak boleh melanggengkannya.
+       */
+      const bentrok = kartu.findIndex(
+        (c) => c.kategori === kategori && (resolveKolom(kolom, c.kolom) ?? c.kolom) === kolomBaru,
+      );
+      if (bentrok >= 0) kartu.splice(bentrok, 1);
+
       kartu.splice(posisi >= 0 ? Math.min(posisi, kartu.length) : kartu.length, 0, entri);
     }
 
@@ -463,8 +564,8 @@ export default function EditorDemografi({ kategori, label, onTutup, onTersimpan 
     if (j.error?.length) throw new Error(j.error[0]);
 
     // Kartu target kini beridentitas kolom terbaru.
-    kolomTargetRef.current = sorot;
-    kartuRef.current = kartu;
+    setKolomTarget(kolomBaru);
+    setKartuSemua(kartu);
   };
 
   // Sel tabel: bentuk dasarnya dari `Components/ui/input`, di sini hanya
@@ -579,7 +680,7 @@ export default function EditorDemografi({ kategori, label, onTutup, onTersimpan 
             </div>
 
             <TabelDemografi baris={pekonDetail} kolom={kolom} jkOtomatis={jkOtomatis}
-                            sorotKolom={sorot} onSorot={alihkanSorot}
+                            sorotKolom={sorotNyata} onSorot={alihkanSorot} kartuLain={kartuLain}
                             kosongTeks="Belum ada desa. Import Excel detail atau klik “Tambah Desa”.">
               {pekonDetail.map((r) => barisTabel(r))}
             </TabelDemografi>
@@ -602,7 +703,9 @@ export default function EditorDemografi({ kategori, label, onTutup, onTersimpan 
             </div>
 
             <PanelKartuBeranda
-              sorot={sorot}
+              sorot={sorotNyata}
+              sorotAsli={sorot}
+              kartuLain={kartuLain}
               total={totalSorot}
               judul={kartuJudul}
               onJudul={setKartuJudul}
@@ -613,7 +716,7 @@ export default function EditorDemografi({ kategori, label, onTutup, onTersimpan 
             />
 
             <TabelDemografi baris={kecamatan} kolom={kolom} jkOtomatis={jkOtomatis}
-                            sorotKolom={sorot} onSorot={alihkanSorot}
+                            sorotKolom={sorotNyata} onSorot={alihkanSorot} kartuLain={kartuLain}
                             kosongTeks="Belum ada kecamatan. Import Excel atau klik “Tambah Kecamatan”.">
               {kecamatan.map((r) => barisTabel(r, (baris) => (
                 <button onClick={() => setDetail(baris)}
