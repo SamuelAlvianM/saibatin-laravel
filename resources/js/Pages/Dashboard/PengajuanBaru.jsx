@@ -176,9 +176,21 @@ export default function PengajuanBaru({ daftar, jam, tersembunyi = [], kategori 
                     nonaktif ? 'text-slate-500' : 'text-slate-900 group-hover:text-brand'
                   }`}>{l.title}</p>
                   {nonaktif ? (
-                    <p className="flex items-center gap-1 text-xs font-medium text-slate-400">
-                      <EyeOff className="h-3 w-3" /> Layanan tidak aktif
-                    </p>
+/*
+                      ⚠️ Badge kuning, bukan teks abu-abu.
+
+                      "Layanan sedang ditutup" adalah KEADAAN, bukan keterangan
+                      biasa — ia menggantikan deskripsi layanan di tempat yang
+                      sama. Dengan warna abu-abu yang sama seperti deskripsi,
+                      petugas memindai daftar dan tidak melihat bedanya; kartu
+                      tertutup hanya terasa "agak pudar". Kuning adalah warna
+                      status di portal ini, dan sengaja dipakai apa adanya —
+                      bukan warna merek, jadi aman disamakan di keempat portal.
+                    */
+                    <span className="mt-0.5 inline-flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-[0.68rem] font-semibold text-amber-800 ring-1 ring-amber-200">
+                      <EyeOff className="h-3 w-3" />
+                      Layanan sedang ditutup
+                    </span>
                   ) : (
                     <p className="line-clamp-1 text-xs text-slate-500">{l.description}</p>
                   )}
