@@ -43,15 +43,15 @@ class BuatAkunUji extends Command
 
         $akun = [
             [
-                'id' => 999901, 'user_id' => 'admin.uji.lokal', 'sandi' => 'adm12345',
+                'user_id' => 'admin.uji.lokal', 'sandi' => 'adm12345',
                 'level' => UserLevel::SUPER_ADMIN, 'nama' => 'Super Admin (uji lokal)', 'kec' => null,
             ],
             [
-                'id' => 999902, 'user_id' => 'staf.uji.lokal', 'sandi' => 'staf12345',
+                'user_id' => 'staf.uji.lokal', 'sandi' => 'staf12345',
                 'level' => UserLevel::OPERATOR, 'nama' => 'Operator Capil (uji lokal)', 'kec' => null,
             ],
             [
-                'id' => 999903, 'user_id' => 'opd.uji.lokal', 'sandi' => 'opd12345',
+                'user_id' => 'opd.uji.lokal', 'sandi' => 'opd12345',
                 'level' => UserLevel::OPERATOR_OPD, 'nama' => 'Operator OPD (uji lokal)', 'kec' => $kecamatan,
             ],
             /*
@@ -60,14 +60,26 @@ class BuatAkunUji extends Command
              * mustahil dipakai wilayah mana pun.
              */
             [
-                'id' => 999904, 'user_id' => '9999000000000001', 'sandi' => 'warga12345',
+                'user_id' => '9999000000000001', 'sandi' => 'warga12345',
                 'level' => UserLevel::WARGA, 'nama' => 'Warga Uji (uji lokal)', 'kec' => $kecamatan,
             ],
         ];
 
         foreach ($akun as $a) {
+            /*
+             * 🔴 DICOCOKKAN LEWAT `user_id`, BUKAN `id`.
+             *
+             * `id` tidak ada di $fillable, jadi memberikannya ke updateOrCreate
+             * TIDAK menetapkan id — auto-increment tetap memberi nomor baru dan
+             * setiap kali perintah ini dijalankan lahirlah satu akun kembar
+             * dengan user_id yang sama. Daftar akun pun berisi dua baris
+             * "admin.uji.lokal" yang tak bisa dibedakan petugas.
+             *
+             * `user_id` adalah identitas login, dan justru itulah yang harus
+             * unik di sini.
+             */
             User::updateOrCreate(
-                ['id' => $a['id']],
+                ['user_id' => $a['user_id']],
                 [
                     'user_id' => $a['user_id'],
                     'password' => Hash::make($a['sandi']),
