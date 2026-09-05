@@ -135,7 +135,15 @@ function ItemMenu({ m, url, onKlik, kelas }) {
   );
 }
 
-export default function LayoutDashboard({ judul, children, lebar = 'max-w-7xl' }) {
+/*
+ * ⚠️ Lebar bawaan 1600px, bukan `max-w-7xl` (1280px).
+ *
+ * Dashboard ini sudah punya sidebar; sisa ruangnya di layar 1440px ke atas
+ * berakhir sebagai kolom sempit di tengah dengan pias kosong lebar di
+ * kanan-kiri. Tabel permohonan dan manajemen akun justru butuh lebar itu.
+ * Halaman yang memang harus sempit tetap bisa menimpanya lewat prop `lebar`.
+ */
+export default function LayoutDashboard({ judul, children, lebar = 'max-w-[1600px]' }) {
   const { props, url } = usePage();
   const auth = props.auth;
   const level = auth?.user?.level ?? 3;

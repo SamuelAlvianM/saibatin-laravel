@@ -1,4 +1,4 @@
-import { Link, usePage } from '@inertiajs/react';
+import { Link, router, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 import { ArrowLeft, ArrowRight, Clock, EyeOff, FilePlus2, Search, SlidersHorizontal } from 'lucide-react';
 import LayoutDashboard from '@/Components/LayoutDashboard';
@@ -194,7 +194,23 @@ export default function PengajuanBaru({ daftar, jam, tersembunyi = [], kategori 
 
       {pengaturan && admin && (
         <PengaturanLayanan
-          onTutup={() => setPengaturan(false)}
+          /*
+           * 🔴 Menutup drawer harus MENYEGARKAN daftarnya.
+           *
+           * `tersembunyi` datang sebagai prop Inertia dari server dan tidak
+           * berubah sendiri. Tanpa muat ulang, petugas mematikan sebuah
+           * layanan, menutup drawer, lalu melihat layanan itu masih menyala di
+           * belakangnya — dan menyimpulkan pengaturannya gagal tersimpan,
+           * padahal sudah.
+           *
+           * ⚠️ `only` membatasi muat ulang pada prop yang memang berubah:
+           * daftar layanan bisa panjang, dan menarik seluruh halaman untuk satu
+           * centang adalah pemborosan yang terasa di jaringan kantor.
+           */
+          onTutup={(berubah) => {
+            setPengaturan(false);
+            if (berubah) router.reload({ only: ['tersembunyi', 'jam'] });
+          }}
           onGalat={(teks) => setPesan({ tipe: 'galat', teks })}
         />
       )}

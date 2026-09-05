@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   CalendarX2, Check, Clock, Copy, Eye, EyeOff, ListChecks, Loader2,
   SlidersHorizontal, X,
@@ -54,7 +54,7 @@ const kelasJam = 'w-[116px]';
 
 // ── Tab 1: jam kerja ────────────────────────────────────────────────────────
 
-function EditorJamLayanan({ onGalat }) {
+function EditorJamLayanan({ onGalat, onTersimpan }) {
   const [cfg, setCfg] = useState(null);
   const [memuat, setMemuat] = useState(true);
   const [status, setStatus] = useState('idle');
@@ -89,6 +89,7 @@ function EditorJamLayanan({ onGalat }) {
       if (j.error?.length) { onGalat(j.error[0]); setStatus('idle'); return; }
       terakhir.current = kini;
       setStatus('tersimpan');
+      onTersimpan?.();
     }, 800);
 
     return () => clearTimeout(t);
@@ -222,7 +223,7 @@ function EditorJamLayanan({ onGalat }) {
 
 // ── Tab 2: ketersediaan layanan ─────────────────────────────────────────────
 
-function EditorVisibilitas({ onGalat }) {
+function EditorVisibilitas({ onGalat, onTersimpan, daftarTuntas }) {
   const [hidden, setHidden] = useState(() => new Set());
   const [daftar, setDaftar] = useState([]);
   const [kategori, setKategori] = useState({});
@@ -242,21 +243,47 @@ function EditorVisibilitas({ onGalat }) {
     });
   }, [onGalat]);
 
-  useEffect(() => {
-    if (memuat) return undefined;
-    const kini = JSON.stringify([...hidden].sort());
-    if (kini === terakhir.current) return undefined;
+  /*
+   * 🔴 SIMPAN TERTUNDA HARUS BISA DITUNTASKAN SAAT DRAWER DITUTUP.
+   *
+   * Penyimpanannya ditunda 700 ms supaya mencentang beberapa layanan
+   * berturut-turut tidak melahirkan satu permintaan per klik. Tapi menutup
+   * drawer dalam jeda itu MEMBUANG perubahan terakhir tanpa jejak: petugas
+   * melihat tulisan "tersimpan otomatis", menutup drawer, dan layanan yang
+   * baru saja ia matikan menyala kembali.
+   *
+   * `daftarTuntas` menitipkan fungsi penuntas ke induk, yang memanggilnya
+   * sebelum menutup.
+   */
+  const simpanSekarang = useCallback(async (isi) => {
+    const kini = JSON.stringify([...isi].sort());
+    if (kini === terakhir.current) return false;
 
     setStatus('menyimpan');
-    const t = setTimeout(async () => {
-      const j = await kirimJson('/api/admin/pelayanan-visibilitas', { hidden: [...hidden] }, 'PUT');
-      if (j.error?.length) { onGalat(j.error[0]); setStatus('idle'); return; }
-      terakhir.current = kini;
-      setStatus('tersimpan');
-    }, 700);
+    const j = await kirimJson('/api/admin/pelayanan-visibilitas', { hidden: [...isi] }, 'PUT');
+    if (j.error?.length) { onGalat(j.error[0]); setStatus('idle'); return false; }
+
+    terakhir.current = kini;
+    setStatus('tersimpan');
+    onTersimpan?.();
+
+    return true;
+  }, [onGalat, onTersimpan]);
+
+  useEffect(() => {
+    if (memuat) return undefined;
+    if (JSON.stringify([...hidden].sort()) === terakhir.current) return undefined;
+
+    setStatus('menyimpan');
+    const t = setTimeout(() => { simpanSekarang(hidden); }, 700);
 
     return () => clearTimeout(t);
-  }, [hidden, memuat, onGalat]);
+  }, [hidden, memuat, simpanSekarang]);
+
+  // Induk memanggil ini sebelum menutup drawer.
+  useEffect(() => {
+    daftarTuntas?.(() => simpanSekarang(hidden));
+  }, [daftarTuntas, simpanSekarang, hidden]);
 
   const grup = useMemo(() => {
     const g = {};
@@ -327,13 +354,35 @@ function EditorVisibilitas({ onGalat }) {
 // ── Drawer ──────────────────────────────────────────────────────────────────
 
 export default function PengaturanLayanan({ onTutup, onGalat }) {
+  /*
+   * Penuntas simpan tertunda milik tab visibilitas, dan penanda apakah ada
+   * yang benar-benar tersimpan selama drawer terbuka.
+   *
+   * 🔴 Keduanya dibutuhkan supaya `tutup()` bisa (1) menyelesaikan simpan yang
+   * masih tertunda, lalu (2) memberi tahu halaman bahwa datanya sudah basi.
+   * Tanpa (2), petugas menutup drawer dan daftar layanan di belakangnya masih
+   * menampilkan keadaan lama — seolah pengaturannya tidak tersimpan.
+   */
+  const tuntaskanRef = useRef(null);
+  const adaPerubahan = useRef(false);
+
+  const daftarTuntas = useCallback((fn) => { tuntaskanRef.current = fn; }, []);
+  const tandaiTersimpan = useCallback(() => { adaPerubahan.current = true; }, []);
+
+  const tutup = useCallback(async () => {
+    // Tuntaskan dulu; kalau ada yang tersimpan di detik terakhir, ia ikut
+    // terhitung sebagai perubahan.
+    const baruTersimpan = await tuntaskanRef.current?.();
+    onTutup(adaPerubahan.current || baruTersimpan === true);
+  }, [tutup]);
+
   const [tab, setTab] = useState('jam');
 
   useEffect(() => {
-    const esc = (e) => { if (e.key === 'Escape') onTutup(); };
+    const esc = (e) => { if (e.key === 'Escape') tutup(); };
     window.addEventListener('keydown', esc);
     return () => window.removeEventListener('keydown', esc);
-  }, [onTutup]);
+  }, [tutup]);
 
   const kelasTab = (nilai) =>
     `flex flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-lg border py-2 text-sm font-medium transition-colors ${
@@ -342,7 +391,7 @@ export default function PengaturanLayanan({ onTutup, onGalat }) {
 
   return (
     <div className="fixed inset-0 z-50 flex justify-end">
-      <div className="absolute inset-0 bg-slate-900/50" onClick={onTutup} />
+      <div className="absolute inset-0 bg-slate-900/50" onClick={tutup} />
       <div role="dialog" aria-modal="true" aria-label="Kelola Layanan"
            className="relative flex h-full w-full max-w-xl flex-col overflow-y-auto bg-slate-50 shadow-2xl">
         <div className="sticky top-0 z-10 border-b border-slate-200 bg-white px-5 py-4">
@@ -355,7 +404,7 @@ export default function PengaturanLayanan({ onTutup, onGalat }) {
                 Atur ketersediaan jenis layanan &amp; jam kerja permohonan.
               </p>
             </div>
-            <button onClick={onTutup} aria-label="Tutup pengaturan" className="text-slate-400 hover:text-slate-600">
+            <button onClick={tutup} aria-label="Tutup pengaturan" className="text-slate-400 hover:text-slate-600">
               <X className="h-5 w-5" />
             </button>
           </div>
@@ -372,7 +421,9 @@ export default function PengaturanLayanan({ onTutup, onGalat }) {
           </div>
 
           <div className="pt-4">
-            {tab === 'jam' ? <EditorJamLayanan onGalat={onGalat} /> : <EditorVisibilitas onGalat={onGalat} />}
+            {tab === 'jam'
+              ? <EditorJamLayanan onGalat={onGalat} onTersimpan={tandaiTersimpan} />
+              : <EditorVisibilitas onGalat={onGalat} onTersimpan={tandaiTersimpan} daftarTuntas={daftarTuntas} />}
           </div>
         </div>
       </div>
