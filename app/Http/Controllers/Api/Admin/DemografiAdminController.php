@@ -7,6 +7,7 @@ use App\Models\DemografiWilayah;
 use App\Services\CatatanAktivitas;
 use App\Services\DemografiExcel;
 use App\Support\Balasan;
+use App\Support\KategoriDemografi;
 use App\Support\PeriodeDemografi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -387,7 +388,8 @@ class DemografiAdminController extends Controller
 
     private function sah(string $kategori): bool
     {
-        return in_array($kategori, array_column(config('demografi.kategori'), 'slug'), true);
+        // Lewat registri, bukan config: kategori buatan dinas juga sah.
+        return KategoriDemografi::dikenal($kategori);
     }
 
     /**

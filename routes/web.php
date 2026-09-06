@@ -10,6 +10,7 @@ use App\Http\Controllers\PengajuanPetugasController;
 use App\Models\Wilayah;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Support\KategoriDemografi;
 use Inertia\Inertia;
 
 /*
@@ -156,7 +157,10 @@ Route::middleware('auth')->group(function () {
             Route::get('/konten', fn () => Inertia::render('Dashboard/Konten'));
 
             Route::get('/demografi', fn () => Inertia::render('Dashboard/Demografi', [
-                'kategori' => config('demografi.kategori'),
+                // Registri, bukan config: kategori buatan dinas ikut terkirim
+                // pada render pertama, jadi daftarnya tidak berkedip kosong
+                // sebelum permintaan penyegarnya tiba.
+                'kategori' => KategoriDemografi::semua(),
                 'kartuBawaan' => config('konten.kartu_beranda'),
             ]));
 

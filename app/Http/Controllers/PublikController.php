@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Gallery;
 use App\Models\News;
 use App\Models\Produk;
+use App\Support\KategoriDemografi;
 use App\Support\Konten;
 use Illuminate\Http\Request;
 
@@ -436,8 +437,11 @@ class PublikController extends Controller
     /** Laporan Data Demografi — `/media/demografi`. */
     public function demografi()
     {
+        /* Hanya kategori yang MEMANG ditampilkan di halaman utama.
+           Kategori yang sengaja disembunyikan tidak boleh tetap terlihat
+           warga hanya karena halaman ini membaca daftar yang lain. */
         return view('publik.demografi', [
-            'kategori' => config('demografi.kategori'),
+            'kategori' => KategoriDemografi::tampil(),
         ]);
     }
 

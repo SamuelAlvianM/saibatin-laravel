@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Admin\BeritaAdminController;
 use App\Http\Controllers\Api\Admin\DemografiAdminController;
+use App\Http\Controllers\Api\Admin\KategoriDemografiController;
 use App\Http\Controllers\Api\Admin\GaleriAdminController;
 use App\Http\Controllers\Api\Admin\KontenStatisController;
 use App\Http\Controllers\Api\Admin\LogAktivitasController;
@@ -182,6 +183,13 @@ Route::middleware(['auth', 'peran:petugas'])->prefix('admin')->group(function ()
         // 🔴 `demografi/export`, `import`, `parse` didaftarkan SEBELUM
         // `demografi` polos supaya tidak tertukar, dan seluruhnya sebelum
         // catch-all layanan di bawah.
+        // 🔴 `demografi/kategori` ikut didaftarkan SEBELUM `demografi` polos —
+        // aturan yang sama dengan export/import/parse di bawahnya.
+        Route::get('/demografi/kategori', [KategoriDemografiController::class, 'index']);
+        Route::post('/demografi/kategori', [KategoriDemografiController::class, 'store']);
+        Route::put('/demografi/kategori', [KategoriDemografiController::class, 'update']);
+        Route::delete('/demografi/kategori', [KategoriDemografiController::class, 'destroy']);
+
         Route::get('/demografi/export', [DemografiAdminController::class, 'ekspor']);
         Route::post('/demografi/import', [DemografiAdminController::class, 'impor']);
         Route::post('/demografi/parse', [DemografiAdminController::class, 'pratinjau']);

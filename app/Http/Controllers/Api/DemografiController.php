@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\DemografiWilayah;
 use App\Support\Balasan;
+use App\Support\KategoriDemografi;
 use App\Support\PeriodeDemografi;
 use Illuminate\Http\Request;
 
@@ -31,7 +32,7 @@ class DemografiController extends Controller
         $kategori = trim((string) $request->query('kategori'));
         $parent = trim((string) $request->query('parent'));
 
-        if (! in_array($kategori, array_column(config('demografi.kategori'), 'slug'), true)) {
+        if (! KategoriDemografi::dikenal($kategori)) {
             return Balasan::gagal(['Kategori tidak dikenal']);
         }
 

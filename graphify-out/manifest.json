@@ -12,9 +12,9 @@
     "semantic_hash": "b653abeef9c4b8ad5a168f580cbf66a3"
   },
   "app/Http/Controllers/Api/Admin/DemografiAdminController.php": {
-    "mtime": 1788511140.4204638,
-    "seen": 1788512029.8835604,
-    "ast_hash": "7899b594b19c46b23136abf5ab212743",
+    "mtime": 1788711289.911631,
+    "seen": 1788712478.2136772,
+    "ast_hash": "aac87fe15236d773cbca48b2842cf38e",
     "semantic_hash": ""
   },
   "app/Http/Controllers/Api/Admin/GaleriAdminController.php": {
@@ -102,9 +102,9 @@
     "semantic_hash": "e7a3f288d208fe36af9df8e0c10fec04"
   },
   "app/Http/Controllers/Api/DemografiController.php": {
-    "mtime": 1788511176.7153902,
-    "seen": 1788512029.8835926,
-    "ast_hash": "52a5b704f139e83e55c1455a0448a355",
+    "mtime": 1788711289.912631,
+    "seen": 1788712478.213713,
+    "ast_hash": "bd6af4161ee99c1fa44b1a93b81e2981",
     "semantic_hash": ""
   },
   "app/Http/Controllers/Api/KontenController.php": {
@@ -240,10 +240,10 @@
     "semantic_hash": "05227dcc9d174a75313704c1d2026e02"
   },
   "app/Http/Controllers/PublikController.php": {
-    "mtime": 1786987493.8376403,
-    "seen": 1788252599.762109,
-    "ast_hash": "32fad8af48e6dcc8d2e1ae468a3ae587",
-    "semantic_hash": "32fad8af48e6dcc8d2e1ae468a3ae587"
+    "mtime": 1788711305.5002935,
+    "seen": 1788712478.2137651,
+    "ast_hash": "227f9e26d031c034e97a703dd20e9169",
+    "semantic_hash": ""
   },
   "app/Http/Middleware/HandleInertiaRequests.php": {
     "mtime": 1788538783.3721504,
@@ -396,9 +396,9 @@
     "semantic_hash": "b3d38f349848c49e9a1b7b9dfe7b7eaf"
   },
   "app/Services/DemografiExcel.php": {
-    "mtime": 1788511119.9586792,
-    "seen": 1788512029.8836951,
-    "ast_hash": "fa65c93d8d3a00c89398cfad207c82c2",
+    "mtime": 1788711289.912631,
+    "seen": 1788712478.2138133,
+    "ast_hash": "938242220e9dac7eed8b50d6d88903bc",
     "semantic_hash": ""
   },
   "app/Services/Fonnte.php": {
@@ -1140,9 +1140,9 @@
     "semantic_hash": "16cea8b149c215ccbd1a048b7901f263"
   },
   "resources/js/Pages/Dashboard/Demografi.jsx": {
-    "mtime": 1788677829.9482014,
-    "seen": 1788678630.007562,
-    "ast_hash": "103fa4d3a3392a73a1e7e9e7fde2ae79",
+    "mtime": 1788711814.2771196,
+    "seen": 1788712478.2140749,
+    "ast_hash": "8df16de690fd743912532b4d58bb0568",
     "semantic_hash": ""
   },
   "resources/js/Pages/Dashboard/Galeri.jsx": {
@@ -1632,9 +1632,9 @@
     "semantic_hash": "803c471b04b994ff2769510023cd3d2a"
   },
   "routes/api.php": {
-    "mtime": 1788325251.98715,
-    "seen": 1788337578.8333294,
-    "ast_hash": "b989a5d7b4d3a80677ace2eceaff7d83",
+    "mtime": 1788711273.2565463,
+    "seen": 1788712478.2142477,
+    "ast_hash": "0d279b0c6a60472fc82f7ba97c8ce438",
     "semantic_hash": ""
   },
   "routes/console.php": {
@@ -1644,9 +1644,9 @@
     "semantic_hash": "3c6ce2e6d16444282b24a9aa63885563"
   },
   "routes/web.php": {
-    "mtime": 1788323060.0507803,
-    "seen": 1788323147.5895886,
-    "ast_hash": "c528baaf980181e528de8e7aad948d03",
+    "mtime": 1788711330.3640692,
+    "seen": 1788712478.2142518,
+    "ast_hash": "39e0f0df4f782fd54398557f5a97db96",
     "semantic_hash": ""
   },
   "scripts/salin-aset-ocr.mjs": {
@@ -1842,9 +1842,21 @@
     "semantic_hash": ""
   },
   "resources/js/lib/deteksi-kategori.js": {
-    "mtime": 1788677563.2577791,
-    "seen": 1788678630.0076492,
-    "ast_hash": "2952c3dd7f32531425cfedb3a865ed8a",
+    "mtime": 1788711832.4658897,
+    "seen": 1788712478.2141514,
+    "ast_hash": "2fcf99ea41ec10459e324628a269a01f",
+    "semantic_hash": ""
+  },
+  "app/Http/Controllers/Api/Admin/KategoriDemografiController.php": {
+    "mtime": 1788711234.7825608,
+    "seen": 1788712478.2136827,
+    "ast_hash": "1824e33aa1825b21bd1a8bf84261a49b",
+    "semantic_hash": ""
+  },
+  "app/Support/KategoriDemografi.php": {
+    "mtime": 1788711203.9930353,
+    "seen": 1788712478.2138386,
+    "ast_hash": "d146a7e5e343236e8f4795df05c86791",
     "semantic_hash": ""
   }
 }

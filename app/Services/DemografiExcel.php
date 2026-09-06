@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\DemografiWilayah;
+use App\Support\KategoriDemografi;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx as PenulisXlsx;
@@ -100,7 +101,13 @@ class DemografiExcel
      */
     public function tulis(?string $kategori = null, ?array $periode = null): ?Spreadsheet
     {
-        $slug = array_column(config('demografi.kategori'), 'slug');
+        /*
+         * 🔴 Daftar kategori dari REGISTRI, bukan config.
+         *
+         * Tanpa ini "Export Semua" diam-diam melewatkan seluruh kategori
+         * buatan dinas — berkasnya terlihat lengkap padahal tidak.
+         */
+        $slug = array_column(KategoriDemografi::semua(), 'slug');
         $daftar = $kategori ? [$kategori] : $slug;
 
         $buku = new Spreadsheet();
