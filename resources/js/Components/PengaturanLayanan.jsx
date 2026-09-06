@@ -288,7 +288,21 @@ function EditorVisibilitas({ onGalat, onTersimpan, daftarTuntas }) {
   const grup = useMemo(() => {
     const g = {};
     for (const l of daftar) (g[l.category] ??= []).push(l);
-    return g;
+
+    /*
+     * Kelompok TERBANYAK lebih dulu.
+     *
+     * Urutan bawaannya mengikuti urutan daftar dari peladen, yang kebetulan
+     * menaruh kelompok berisi dua layanan di atas kelompok berisi tujuh.
+     * Akibatnya layar teratas hampir kosong sementara bagian yang paling
+     * sering disetel petugas terdorong ke bawah lipatan. Mengurutkan dari
+     * yang terbanyak menaruh pekerjaan terbesar di tempat pertama yang
+     * dilihat.
+     *
+     * `sort` di JavaScript modern bersifat stabil, jadi kelompok dengan
+     * jumlah sama tetap memakai urutan aslinya.
+     */
+    return Object.entries(g).sort((a, b) => b[1].length - a[1].length);
   }, [daftar]);
 
   if (memuat) {
@@ -315,7 +329,10 @@ function EditorVisibilitas({ onGalat, onTersimpan, daftarTuntas }) {
       </div>
 
       <div className="space-y-5">
-        {Object.entries(grup).map(([kat, isi]) => (
+        {grup.map(([kat, isi]) => {
+          const adaMati = isi.some((l) => hidden.has(l.kunci));
+
+          return (
           <div key={kat} className="rounded-2xl border border-slate-200 bg-white p-5">
             <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-500">
               {kategori[kat] ?? kat}
@@ -324,12 +341,28 @@ function EditorVisibilitas({ onGalat, onTersimpan, daftarTuntas }) {
               {isi.map((l) => {
                 const terlihat = !hidden.has(l.kunci);
                 return (
+                  /*
+                   * 🔴 Keadaan mati TANPA `opacity-70`.
+                   *
+                   * Opasitas memudarkan seluruh isi kotak — termasuk kotak
+                   * centangnya, satu-satunya benda di sini yang masih HARUS
+                   * terbaca sebagai bisa diklik. Bahwa layanan ini mati sudah
+                   * cukup disampaikan teks coret, latar kelabu, dan garis
+                   * putus-putus; sakelarnya sendiri tidak perlu ikut kabur.
+                   */
                   <label key={l.kunci}
                          className={`flex cursor-pointer items-center gap-3 rounded-lg border p-3 transition-colors ${
                            terlihat ? 'border-slate-200 hover:border-brand/40'
-                                    : 'border-dashed border-slate-200 bg-slate-50 opacity-70'
+                                    : 'border-dashed border-slate-300 bg-slate-50 hover:border-brand/40'
                          }`}>
+                    {/*
+                      Saat mati, bingkai kotak centang ditebalkan dan
+                      digelapkan. Kotak kosong bergaris tipis di sebelah teks
+                      coret terbaca sebagai hiasan keadaan "nonaktif", bukan
+                      sebagai sakelar yang menunggu diklik.
+                    */}
                     <Checkbox checked={terlihat}
+                              className={terlihat ? undefined : 'border-2 border-slate-400'}
                               onCheckedChange={() => setHidden((p) => {
                                 const n = new Set(p);
                                 if (n.has(l.kunci)) n.delete(l.kunci); else n.add(l.kunci);
@@ -342,8 +375,26 @@ function EditorVisibilitas({ onGalat, onTersimpan, daftarTuntas }) {
                 );
               })}
             </div>
+
+            {/*
+              ⚠️ Petunjuknya menempel pada KELOMPOK yang punya layanan mati,
+              bukan sekali di kepala halaman.
+
+              Petugas yang bingung sedang menatap kotak-kotak coret di tengah
+              daftar; kalimat penolongnya ada di puncak halaman, jauh di luar
+              layar. Ditaruh di sini ia muncul persis di sebelah kebingungan
+              itu, dan hilang sendiri begitu semua layanan kelompok ini
+              menyala — jadi tidak menjadi kebisingan tetap.
+            */}
+            {adaMati && (
+              <p className="mt-3 flex items-center gap-1.5 text-[0.72rem] font-medium text-amber-700">
+                <EyeOff className="h-3.5 w-3.5 shrink-0" />
+                Centang kembali agar form pengisian kembali aktif.
+              </p>
+            )}
           </div>
-        ))}
+          );
+        })}
       </div>
 
       <StatusSimpan status={status} />
