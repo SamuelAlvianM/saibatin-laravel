@@ -12,9 +12,9 @@
     "semantic_hash": "b653abeef9c4b8ad5a168f580cbf66a3"
   },
   "app/Http/Controllers/Api/Admin/DemografiAdminController.php": {
-    "mtime": 1788711289.911631,
-    "seen": 1788712478.2136772,
-    "ast_hash": "aac87fe15236d773cbca48b2842cf38e",
+    "mtime": 1788714966.5139706,
+    "seen": 1788715238.3411489,
+    "ast_hash": "e8210746f00ae53972bd661811c151ed",
     "semantic_hash": ""
   },
   "app/Http/Controllers/Api/Admin/GaleriAdminController.php": {
@@ -156,9 +156,9 @@
     "semantic_hash": "dab3d91cd1846a3437865cd6c10618d2"
   },
   "app/Http/Controllers/Api/StatistikController.php": {
-    "mtime": 1788511207.5341833,
-    "seen": 1788512029.8836126,
-    "ast_hash": "becaa54fccd737390c86147abbb9f8aa",
+    "mtime": 1788713945.2922733,
+    "seen": 1788715238.3412359,
+    "ast_hash": "2318106ca1d1d33ade019c735db02965",
     "semantic_hash": ""
   },
   "app/Http/Controllers/Api/UnggahController.php": {
@@ -1140,9 +1140,9 @@
     "semantic_hash": "16cea8b149c215ccbd1a048b7901f263"
   },
   "resources/js/Pages/Dashboard/Demografi.jsx": {
-    "mtime": 1788711814.2771196,
-    "seen": 1788712478.2140749,
-    "ast_hash": "8df16de690fd743912532b4d58bb0568",
+    "mtime": 1788714988.014194,
+    "seen": 1788715238.3416944,
+    "ast_hash": "1b5a75830ce1998c7c16518b6eeb720a",
     "semantic_hash": ""
   },
   "resources/js/Pages/Dashboard/Galeri.jsx": {
@@ -1632,9 +1632,9 @@
     "semantic_hash": "803c471b04b994ff2769510023cd3d2a"
   },
   "routes/api.php": {
-    "mtime": 1788711273.2565463,
-    "seen": 1788712478.2142477,
-    "ast_hash": "0d279b0c6a60472fc82f7ba97c8ce438",
+    "mtime": 1788714966.5149703,
+    "seen": 1788715238.3419197,
+    "ast_hash": "ec5b66e68a106215fdcbf76e9bff7344",
     "semantic_hash": ""
   },
   "routes/console.php": {

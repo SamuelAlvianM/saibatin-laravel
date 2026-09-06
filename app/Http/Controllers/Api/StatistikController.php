@@ -9,6 +9,7 @@ use App\Models\News;
 use App\Models\Permohonan;
 use App\Models\StaticContent;
 use App\Support\Balasan;
+use App\Support\KategoriDemografi;
 use App\Support\PeriodeDemografi;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -33,7 +34,26 @@ class StatistikController extends Controller
         $awalBulan = $kini->copy()->startOfMonth();
         $awal6Bulan = $kini->copy()->startOfMonth()->subMonths(5);
 
-        $kartuKonfig = $this->konfigurasiKartu();
+        /*
+         * 🔴 KARTU IKUT SAKELAR "TAMPIL DI HALAMAN UTAMA".
+         *
+         * Kartu statistik adalah benda PALING TERLIHAT di halaman utama, dan
+         * masing-masing menarik angkanya dari satu kategori demografi. Tanpa
+         * penyaringan ini, petugas mematikan kategori Jenis Kelamin, tab-nya
+         * lenyap dari tabel di bawah — tapi "Jumlah Penduduk 121.952" tetap
+         * terpampang besar di puncak halaman, karena kartu itu diam-diam
+         * menarik angkanya dari kategori yang sama. Sakelarnya jadi berbohong
+         * tentang namanya sendiri.
+         *
+         * Kartu yang belum ditentukan sumbernya (tanpa `kategori`) dibiarkan:
+         * ia tidak menampilkan angka siapa pun.
+         */
+        $bolehTampil = array_column(KategoriDemografi::tampil(), 'slug');
+        $kartuKonfig = collect($this->konfigurasiKartu())
+            ->filter(fn ($k) => empty($k['kategori']) || in_array($k['kategori'], $bolehTampil, true))
+            ->values()
+            ->all();
+
         $kategori = collect($kartuKonfig)->pluck('kategori')->filter()->unique()->values();
 
         // ── Pelayanan ────────────────────────────────────────────────────────

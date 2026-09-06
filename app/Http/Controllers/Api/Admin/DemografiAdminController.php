@@ -341,6 +341,68 @@ class DemografiAdminController extends Controller
         ]);
     }
 
+    /**
+     * Jumlah kecamatan tersimpan per kategori, PADA PERIODE YANG DIMINTA PERSIS.
+     *
+     * 🔴 KENAPA METODE SENDIRI, bukan memakai `/api/demografi`.
+     *
+     * Endpoint publik itu sengaja JATUH KE PERIODE TERBARU bila periode yang
+     * diminta tidak punya data — supaya tautan lama yang beredar di grup WA
+     * tidak menjawab halaman kosong. Untuk warga itu benar. Untuk dasbor itu
+     * bencana: dasbor bertanya "berapa isi Semester I 2026?" dan dijawab isi
+     * Semester II 2024, lalu memasang "8 dari 8 kategori terisi" pada wadah
+     * yang sebenarnya kosong melompong — lengkap dengan tombol Export dan
+     * Hapus yang menyala untuk periode yang tak pernah ada isinya.
+     *
+     * Di sini TIDAK ADA cadangan. Periode kosong dijawab nol.
+     *
+     * ⚠️ Sekaligus menggantikan delapan permintaan (satu per kategori) dengan
+     * satu. Membuka empat wadah periode dulu berarti 32 permintaan.
+     */
+    public function hitungan(Request $request)
+    {
+        $tahun = $request->query('tahun');
+        $semester = $request->query('semester');
+
+        if (! PeriodeDemografi::tahunSah($tahun) || ! PeriodeDemografi::semesterSah($semester)) {
+            return Balasan::gagal(['Tahun dan semester harus diisi dan masuk akal']);
+        }
+
+        $tahun = (int) $tahun;
+        $semester = (int) $semester;
+
+        // Dihitung dari baris KECAMATAN (level 4) — angka yang ditampilkan
+        // dasbor memang "N kecamatan tersimpan".
+        $hitungan = DemografiWilayah::periode($tahun, $semester)
+            ->where('level', 4)
+            ->selectRaw('kategori, COUNT(*) as jml')
+            ->groupBy('kategori')
+            ->pluck('jml', 'kategori')
+            ->all();
+
+        // Kategori yang entah bagaimana hanya punya baris desa dihitung dari
+        // induknya yang berbeda, supaya tetap terlihat berisi.
+        $desa = DemografiWilayah::periode($tahun, $semester)
+            ->where('level', 5)
+            ->whereNotNull('parent_kode')
+            ->selectRaw('kategori, COUNT(DISTINCT parent_kode) as jml')
+            ->groupBy('kategori')
+            ->pluck('jml', 'kategori')
+            ->all();
+
+        foreach ($desa as $kat => $jml) {
+            if (empty($hitungan[$kat])) {
+                $hitungan[$kat] = $jml;
+            }
+        }
+
+        return Balasan::ok([
+            'tahun' => $tahun,
+            'semester' => $semester,
+            'hitungan' => (object) $hitungan,
+        ]);
+    }
+
     public function ekspor(Request $request)
     {
         $kategori = trim((string) $request->query('kategori'));

@@ -213,15 +213,24 @@ export default function Demografi({ kategori: kategoriAwal, kartuBawaan }) {
    */
   const muatHitungan = useCallback(async (p) => {
     const k = kunciPeriode(p);
-    const q = kueriPeriode(p);
-    const hasil = {};
 
-    await Promise.all(kategori.map(async (kat) => {
-      const j = await ambilJson(
-        `/api/demografi?kategori=${encodeURIComponent(kat.slug)}&${q}`,
-      );
-      hasil[kat.slug] = j.data?.items?.length ?? 0;
-    }));
+    /*
+     * 🔴 ENDPOINT ADMIN, bukan `/api/demografi` publik.
+     *
+     * Yang publik sengaja JATUH KE PERIODE TERBARU bila periode yang diminta
+     * kosong — benar untuk warga yang membuka tautan lama, bencana di sini.
+     * Dasbor bertanya "berapa isi Semester I 2026?", dijawab isi Semester II
+     * 2024, lalu memasang "8 dari 8 kategori terisi" pada wadah yang
+     * sebenarnya kosong. Tombol Export dan Hapus-nya ikut menyala untuk
+     * periode yang tidak pernah ada isinya.
+     *
+     * Endpoint ini menjawab PERSIS periode yang diminta, dan sekaligus
+     * menggantikan delapan permintaan dengan satu.
+     */
+    const j = await ambilJson(`/api/admin/demografi/hitungan?${kueriPeriode(p)}`);
+    const dari = j.data?.hitungan ?? {};
+    const hasil = {};
+    for (const kat of kategori) hasil[kat.slug] = dari[kat.slug] ?? 0;
 
     setHitungan((h) => ({ ...h, [k]: hasil }));
   }, [kategori]);

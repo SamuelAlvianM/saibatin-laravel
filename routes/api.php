@@ -190,6 +190,7 @@ Route::middleware(['auth', 'peran:petugas'])->prefix('admin')->group(function ()
         Route::put('/demografi/kategori', [KategoriDemografiController::class, 'update']);
         Route::delete('/demografi/kategori', [KategoriDemografiController::class, 'destroy']);
 
+        Route::get('/demografi/hitungan', [DemografiAdminController::class, 'hitungan']);
         Route::get('/demografi/export', [DemografiAdminController::class, 'ekspor']);
         Route::post('/demografi/import', [DemografiAdminController::class, 'impor']);
         Route::post('/demografi/parse', [DemografiAdminController::class, 'pratinjau']);
