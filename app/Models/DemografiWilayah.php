@@ -25,6 +25,10 @@ class DemografiWilayah extends Model
 {
     use PresisiMilidetik;
 
+    /** Kabupaten/kota — baris ringkasan; TIDAK boleh ikut dijumlah
+     *  bersama kecamatan di bawahnya. */
+    public const LEVEL_KABUPATEN = 3;
+
     public const LEVEL_KECAMATAN = 4;
     public const LEVEL_KELURAHAN = 5;
 

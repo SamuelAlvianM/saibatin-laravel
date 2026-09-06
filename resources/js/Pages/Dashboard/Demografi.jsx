@@ -52,6 +52,9 @@ function usulJudul(namaBerkas) {
   return judul.slice(0, 60);
 }
 
+/** Penanda tujuan "buat kategori baru" pada daftar konfirmasi impor. */
+const TUJUAN_BARU = '__baru__';
+
 /** Unduh lewat <a download> — memicu dialog simpan peramban. */
 function unduh(url) {
   const a = document.createElement('a');
@@ -116,8 +119,8 @@ export default function Demografi({ kategori: kategoriAwal, kartuBawaan }) {
   const [judulKategoriBaru, setJudulKategoriBaru] = useState('');
   const [sibukKategori, setSibukKategori] = useState(false);
   const [konfirmHapusKategori, setKonfirmHapusKategori] = useState(null);
-  /** Berkas yang kategorinya tidak terbaca, menunggu keputusan petugas. */
-  const [berkasAsing, setBerkasAsing] = useState(null);
+  /** Berkas yang MENUNGGU DIKONFIRMASI tujuannya — belum ditulis ke mana pun. */
+  const [antre, setAntre] = useState(null);
 
   const berkas = useRef({});
   const sudahBukaAwal = useRef(false);
@@ -372,54 +375,74 @@ export default function Demografi({ kategori: kategoriAwal, kartuBawaan }) {
   };
 
   /*
-   * 🔴 SATU TOMBOL IMPOR UNTUK SELURUH PERIODE, bukan satu per kategori.
+   * 🔴 BERKAS TIDAK LANGSUNG DITULIS — ia masuk daftar konfirmasi dulu.
    *
-   * Dinas menerima paket DKB sebagai sekumpulan berkas sekaligus, dan tidak
-   * menghafal berkas mana milik kategori mana. Selama kategorinya harus
-   * ditunjuk lebih dulu lewat tombol unggah di kartunya masing-masing, salah
-   * taruh hanya soal waktu — dan salah taruh berarti data pekerjaan tertimpa
-   * data pendidikan, diam-diam, tanpa cara mengembalikannya.
+   * Dinas menerima paket DKB sebagai sekumpulan berkas sekaligus dan tidak
+   * menghafal berkas mana milik kategori mana. Deteksi nama berkas menolong,
+   * tapi ia menebak — dan tebakan yang langsung dijalankan adalah tebakan yang
+   * tidak bisa dibatalkan: impor MENGGANTI seluruh isi satu kategori pada satu
+   * periode, jadi satu nama yang keliru menghapus data kategori lain tanpa
+   * satu pun tanda di layar.
    *
-   * Di sini kategori DIBACA DARI NAMA BERKASNYA. Berkas yang tidak terbaca
-   * TIDAK ditebak: namanya disebutkan kepada petugas supaya ia mengimpornya
-   * lewat Edit pada kategori yang ia maksud sendiri.
+   * Karena itu deteksi turun pangkat dari keputusan jadi USULAN. Petugas
+   * melihat "berkas ini → kategori itu" untuk setiap berkas, bisa
+   * mengoreksinya, dan tidak ada apa pun yang ditulis sampai ia menekan Impor.
    */
-  const imporBanyak = async (daftar, p) => {
+  const siapkanImpor = (daftar, p) => {
     if (!daftar || daftar.length === 0) return;
 
-    const k = kunciPeriode(p);
-    const dikenal = [];
-    const asing = [];
+    setAntre({
+      kunci: kunciPeriode(p),
+      periode: p,
+      item: [...daftar].map((file) => {
+        const tebakan = deteksiKategori(file.name, kategori);
 
-    for (const f of [...daftar]) {
-      const kat = deteksiKategori(f.name, kategori);
-      if (kat) dikenal.push({ file: f, slug: kat.slug, label: kat.label });
-      else asing.push({ file: f, usul: usulJudul(f.name) });
-    }
+        return {
+          file,
+          tujuan: tebakan?.slug ?? '',
+          judulBaru: usulJudul(file.name),
+          terdeteksi: !!tebakan,
+        };
+      }),
+    });
+  };
 
-    /*
-     * Berkas yang tak terbaca TIDAK dibuang dan tidak ditebak — ia ditahan
-     * bersama File-nya, dan petugas ditawari membuat kategorinya di tempat.
-     * Menahan File-nya penting: tanpa itu petugas harus memilih berkas yang
-     * sama untuk kedua kalinya setelah kategorinya jadi.
-     */
-    setBerkasAsing(asing.length > 0 ? { kunci: k, periode: p, item: asing } : null);
+  /** Jalankan antrean yang sudah dikonfirmasi petugas. */
+  const jalankanImpor = async () => {
+    if (!antre) return;
 
-    if (dikenal.length === 0) return;
-
+    const { kunci: k, periode: p, item } = antre;
     const gagal = [];
-    for (let i = 0; i < dikenal.length; i += 1) {
-      const { file, slug, label } = dikenal[i];
-      setImpor({ kunci: k, ke: i + 1, dari: dikenal.length, nama: label });
-      // eslint-disable-next-line no-await-in-loop
-      const galat = await imporSatu(slug, file, p);
-      if (galat) gagal.push(`${label}: ${galat}`);
-    }
-    setImpor(null);
+    let berhasil = 0;
 
-    const berhasil = dikenal.length - gagal.length;
-    // Berkas asing tidak dilaporkan di sini — ia punya panelnya sendiri, yang
-    // menawarkan membuat kategorinya, bukan sekadar mengabarkan kegagalan.
+    for (let i = 0; i < item.length; i += 1) {
+      const it = item[i];
+      let slug = it.tujuan;
+      let label = kategori.find((x) => x.slug === slug)?.label ?? slug;
+
+      // Tujuan "kategori baru": dibuat lebih dulu, lalu berkasnya masuk ke situ.
+      if (slug === TUJUAN_BARU) {
+        setImpor({ kunci: k, ke: i + 1, dari: item.length, nama: it.judulBaru });
+        // eslint-disable-next-line no-await-in-loop
+        const dibuat = await tambahKategori(it.judulBaru.trim());
+        if (!dibuat) {
+          gagal.push(`${it.file.name}: kategori gagal dibuat`);
+          continue;
+        }
+        slug = dibuat.slug;
+        label = dibuat.label;
+      }
+
+      setImpor({ kunci: k, ke: i + 1, dari: item.length, nama: label });
+      // eslint-disable-next-line no-await-in-loop
+      const galat = await imporSatu(slug, it.file, p);
+      if (galat) gagal.push(`${label}: ${galat}`);
+      else berhasil += 1;
+    }
+
+    setImpor(null);
+    setAntre(null);
+
     if (gagal.length > 0) {
       setPesan({ tipe: 'galat', teks: gagal.join(' · ') });
     } else if (berhasil > 0) {
@@ -560,7 +583,7 @@ export default function Demografi({ kategori: kategoriAwal, kartuBawaan }) {
 
           <input ref={(el) => { berkas.current[k] = el; }} type="file" accept=".xlsx" multiple
                  className="hidden" disabled={!!impor}
-                 onChange={(e) => { imporBanyak(e.target.files, p); e.target.value = ''; }} />
+                 onChange={(e) => { siapkanImpor(e.target.files, p); e.target.value = ''; }} />
         </div>
 
         <p className="border-b border-slate-100 bg-slate-50/60 px-4 py-2 text-xs text-slate-500">
@@ -569,73 +592,92 @@ export default function Demografi({ kategori: kategoriAwal, kartuBawaan }) {
         </p>
 
         {/*
-          Berkas yang kategorinya tidak terbaca.
+          DAFTAR KONFIRMASI TUJUAN — tampil sebelum apa pun ditulis.
 
-          🔴 Ditawarkan menjadi KATEGORI BARU, bukan sekadar ditolak. Inilah
-          jalan masuk agregat buatan dinas: judulnya dibaca dari nama berkasnya
-          dan boleh disunting, lalu kategori dibuat dan berkasnya langsung
-          diimpor ke periode ini. Menolak saja memaksa petugas menebak sendiri
-          bahwa ia perlu membuat kategori lebih dulu — dan tak ada apa pun di
-          layar yang mengatakan itu.
+          🔴 Impor MENGGANTI seluruh isi satu kategori pada satu periode.
+          Menjalankan tebakan nama berkas secara langsung berarti satu nama
+          yang keliru menghapus data kategori lain, diam-diam, tanpa jalan
+          kembali. Di sini tebakannya ditampilkan sebagai usulan yang bisa
+          dikoreksi, dan Impor baru bisa ditekan setelah setiap berkas punya
+          tujuan yang jelas.
         */}
-        {berkasAsing?.kunci === k && berkasAsing.item.length > 0 && (
-          <div className="border-b border-amber-200 bg-amber-50 px-4 py-3">
-            <p className="mb-2 flex items-center gap-1.5 text-xs font-semibold text-amber-800">
-              <AlertTriangle className="h-3.5 w-3.5 shrink-0" />
-              {berkasAsing.item.length} berkas belum punya kategori
+        {antre?.kunci === k && antre.item.length > 0 && (
+          <div className="border-b border-brand/20 bg-brand/5 px-4 py-3">
+            <p className="mb-2 text-xs font-semibold text-slate-700">
+              {antre.item.length} berkas siap diimpor ke{' '}
+              {labelPeriode(p.tahun, p.semester)} — periksa tujuannya dulu.
             </p>
 
             <div className="space-y-2">
-              {berkasAsing.item.map((it, i) => (
-                <div key={it.file.name} className="flex flex-wrap items-center gap-2">
-                  <span className="min-w-0 flex-1 truncate text-xs text-amber-900">
-                    {it.file.name}
-                  </span>
-                  <input
-                    value={it.usul}
-                    onChange={(e) => setBerkasAsing((b) => (b ? {
-                      ...b,
-                      item: b.item.map((x, j) => (j === i ? { ...x, usul: e.target.value } : x)),
-                    } : b))}
-                    maxLength={60}
-                    aria-label={`Nama kategori untuk ${it.file.name}`}
-                    className="h-8 w-56 rounded-lg border border-amber-300 bg-white px-2 text-sm"
-                  />
-                  <Tombol
-                    disabled={sibukKategori || it.usul.trim().length < 3}
-                    onClick={async () => {
-                      const dibuat = await tambahKategori(it.usul.trim());
-                      if (!dibuat) return;
+              {antre.item.map((it, i) => {
+                const ubah = (ganti) => setAntre((b) => (b
+                  ? { ...b, item: b.item.map((x, j) => (j === i ? { ...x, ...ganti } : x)) }
+                  : b));
 
-                      const galat = await imporSatu(dibuat.slug, it.file, berkasAsing.periode);
-                      if (galat) {
-                        setPesan({ tipe: 'galat', teks: `${dibuat.label}: ${galat}` });
-                        return;
-                      }
-                      setPesan({
-                        tipe: 'sukses',
-                        teks: `${dibuat.label} terimpor ke ${labelPeriode(p.tahun, p.semester)}`,
-                      });
-                      setBerkasAsing((b) => (b
-                        ? { ...b, item: b.item.filter((_, j) => j !== i) }
-                        : b));
-                      muatHitungan(berkasAsing.periode);
-                      segarkanPeriode();
-                    }}
-                  >
-                    Buat kategori &amp; impor
-                  </Tombol>
-                </div>
-              ))}
+                return (
+                  <div key={it.file.name} className="flex flex-wrap items-center gap-2">
+                    <span className="min-w-0 flex-1 truncate text-xs text-slate-600" title={it.file.name}>
+                      {it.file.name}
+                    </span>
+                    <span className="text-xs text-slate-400">&rarr;</span>
+
+                    <select
+                      value={it.tujuan}
+                      onChange={(e) => ubah({ tujuan: e.target.value, terdeteksi: false })}
+                      aria-label={`Kategori tujuan untuk ${it.file.name}`}
+                      className={`h-8 w-56 rounded-lg border bg-white px-2 text-sm ${
+                        it.tujuan ? 'border-slate-300' : 'border-amber-400 bg-amber-50'
+                      }`}
+                    >
+                      <option value="">&mdash; pilih kategori &mdash;</option>
+                      {kategori.map((kat) => (
+                        <option key={kat.slug} value={kat.slug}>{kat.label}</option>
+                      ))}
+                      <option value={TUJUAN_BARU}>+ Kategori baru&hellip;</option>
+                    </select>
+
+                    {it.tujuan === TUJUAN_BARU && (
+                      <input
+                        value={it.judulBaru}
+                        onChange={(e) => ubah({ judulBaru: e.target.value })}
+                        maxLength={60}
+                        placeholder="Nama kategori baru"
+                        aria-label={`Nama kategori baru untuk ${it.file.name}`}
+                        className="h-8 w-52 rounded-lg border border-slate-300 bg-white px-2 text-sm"
+                      />
+                    )}
+
+                    {/* Menyebut asal usulan: petugas berhak tahu mana yang
+                        ditebak mesin dan mana yang ia pilih sendiri. */}
+                    {it.terdeteksi && (
+                      <span className="text-[0.68rem] text-slate-400">dari nama berkas</span>
+                    )}
+                  </div>
+                );
+              })}
             </div>
 
-            <button
-              type="button"
-              onClick={() => setBerkasAsing(null)}
-              className="mt-2 text-[0.7rem] font-medium text-amber-700 underline underline-offset-2"
-            >
-              Lewati berkas ini
-            </button>
+            <div className="mt-3 flex flex-wrap items-center gap-2">
+              <Tombol
+                disabled={!!impor || antre.item.some(
+                  (it) => !it.tujuan
+                    || (it.tujuan === TUJUAN_BARU && it.judulBaru.trim().length < 3),
+                )}
+                onClick={jalankanImpor}
+              >
+                {impor ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
+                Impor {antre.item.length} berkas
+              </Tombol>
+              <Tombol varian="garis" disabled={!!impor} onClick={() => setAntre(null)}>
+                Batal
+              </Tombol>
+              {antre.item.some((it) => !it.tujuan) && (
+                <span className="inline-flex items-center gap-1 text-[0.7rem] font-medium text-amber-700">
+                  <AlertTriangle className="h-3.5 w-3.5 shrink-0" />
+                  Masih ada berkas tanpa tujuan
+                </span>
+              )}
+            </div>
           </div>
         )}
 

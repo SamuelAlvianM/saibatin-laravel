@@ -12,9 +12,9 @@
     "semantic_hash": "b653abeef9c4b8ad5a168f580cbf66a3"
   },
   "app/Http/Controllers/Api/Admin/DemografiAdminController.php": {
-    "mtime": 1788714966.5139706,
-    "seen": 1788715238.3411489,
-    "ast_hash": "e8210746f00ae53972bd661811c151ed",
+    "mtime": 1788716636.183704,
+    "seen": 1788717107.106736,
+    "ast_hash": "f6ffaaeba496272b358daa304b38072c",
     "semantic_hash": ""
   },
   "app/Http/Controllers/Api/Admin/GaleriAdminController.php": {
@@ -156,9 +156,9 @@
     "semantic_hash": "dab3d91cd1846a3437865cd6c10618d2"
   },
   "app/Http/Controllers/Api/StatistikController.php": {
-    "mtime": 1788713945.2922733,
-    "seen": 1788715238.3412359,
-    "ast_hash": "2318106ca1d1d33ade019c735db02965",
+    "mtime": 1788716636.1853106,
+    "seen": 1788717107.1068058,
+    "ast_hash": "394999123a9447d99a959f5b3e016506",
     "semantic_hash": ""
   },
   "app/Http/Controllers/Api/UnggahController.php": {
@@ -270,9 +270,9 @@
     "semantic_hash": "b78154d0b9a0eaafab44dc3ee95e2b31"
   },
   "app/Models/DemografiWilayah.php": {
-    "mtime": 1788511006.6570213,
-    "seen": 1788512029.8836527,
-    "ast_hash": "538c5f24aa5f0d38f2658b9a47ad6d66",
+    "mtime": 1788716608.0211585,
+    "seen": 1788717107.106853,
+    "ast_hash": "757ebc9dc6f71d8e4d3f7996d034ef1b",
     "semantic_hash": ""
   },
   "app/Models/Gallery.php": {
@@ -396,9 +396,9 @@
     "semantic_hash": "b3d38f349848c49e9a1b7b9dfe7b7eaf"
   },
   "app/Services/DemografiExcel.php": {
-    "mtime": 1788711289.912631,
-    "seen": 1788712478.2138133,
-    "ast_hash": "938242220e9dac7eed8b50d6d88903bc",
+    "mtime": 1788716608.05417,
+    "seen": 1788717107.1069005,
+    "ast_hash": "df9b6ebf698ffb3dc71e14eacdcca0d1",
     "semantic_hash": ""
   },
   "app/Services/Fonnte.php": {
@@ -1140,9 +1140,9 @@
     "semantic_hash": "16cea8b149c215ccbd1a048b7901f263"
   },
   "resources/js/Pages/Dashboard/Demografi.jsx": {
-    "mtime": 1788714988.014194,
-    "seen": 1788715238.3416944,
-    "ast_hash": "1b5a75830ce1998c7c16518b6eeb720a",
+    "mtime": 1788716764.648571,
+    "seen": 1788717107.1072333,
+    "ast_hash": "65fc9822426912c9b8c45bdfebf18123",
     "semantic_hash": ""
   },
   "resources/js/Pages/Dashboard/Galeri.jsx": {

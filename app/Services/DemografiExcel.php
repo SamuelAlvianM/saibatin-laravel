@@ -60,7 +60,7 @@ class DemografiExcel
 
         foreach ($lembar->getRowIterator(2) as $baris) {
             $nomor = $baris->getRowIndex();
-            $kelas = $this->klasifikasiKode((string) $lembar->getCell($kolomKode.$nomor)->getValue());
+            $kelas = self::klasifikasiKodeImpor((string) $lembar->getCell($kolomKode.$nomor)->getValue());
 
             if (! $kelas) {
                 continue;
@@ -156,20 +156,48 @@ class DemografiExcel
     }
 
     /**
-     * KODE mentah → kode ternormalisasi + level.
-     * 6 digit = kecamatan (4) · 10 digit = pekon (5) · sisanya diabaikan.
+     * Versi untuk IMPOR Excel: kabupaten/kota sengaja dilewati.
+     *
+     * Berkas SIAK memuat baris kabupaten sebagai ringkasan, dan angkanya sudah
+     * terkandung di baris kecamatan di bawahnya. Menyimpannya berarti menaruh
+     * jebakan penjumlahan ganda di tabel yang sama.
      *
      * @return array{kode:string,level:int}|null
      */
-    private function klasifikasiKode(string $mentah): ?array
+    private static function klasifikasiKodeImpor(string $mentah): ?array
     {
-        $digit = str_replace('.', '', trim($mentah));
+        $hasil = self::klasifikasiKode($mentah);
 
-        if ($digit === '' || ! ctype_digit($digit)) {
+        return $hasil && $hasil['level'] >= 4 ? $hasil : null;
+    }
+
+    /**
+     * KODE mentah → kode ternormalisasi + level, menurut standar Kemendagri.
+     * 4 digit = kabupaten/kota (3) · 6 = kecamatan (4) · 10 = desa (5).
+     *
+     * 🔴 SATU ATURAN UNTUK SEMUA JALUR MASUK. Penyimpanan manual dari editor
+     * dulu punya aturannya sendiri — `strlen($kode) === 10 ? 5 : 4` — sehingga
+     * SEMUA yang bukan 10 digit jadi kecamatan, termasuk baris kabupaten/kota
+     * berkode 4 digit. Sekali saja petugas membuka editor lalu menekan Simpan,
+     * baris "KOTA TIDORE KEPULAUAN" naik pangkat jadi kecamatan ke-9, dan
+     * setiap penjumlahan tingkat kecamatan menghitung seluruh kota DUA KALI.
+     *
+     * Terukur di TIDORE (7 Sep 2026): tujuh kategori punya 8 kecamatan, tapi
+     * `jenis-kelamin` — yang paling sering disunting karena memasok tiga kartu
+     * beranda — punya 9, dan yang ke-9 berkode 8272 sepanjang 4 digit.
+     *
+     * @return array{kode:string,level:int}|null
+     */
+    public static function klasifikasiKode(string $mentah): ?array
+    {
+        $digit = preg_replace('/\D/', '', trim($mentah)) ?? '';
+
+        if ($digit === '') {
             return null; // ada huruf (mis. DUSUN) → lewati
         }
 
         return match (strlen($digit)) {
+            4 => ['kode' => $digit, 'level' => 3],
             6 => ['kode' => $digit, 'level' => 4],
             10 => ['kode' => $digit, 'level' => 5],
             default => null,

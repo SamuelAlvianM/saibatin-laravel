@@ -472,7 +472,21 @@ class DemografiAdminController extends Controller
             }
             $lihat[$kode] = true;
 
-            $level = strlen($kode) === 10 ? 5 : 4;
+            /*
+             * 🔴 LEVEL DITENTUKAN OLEH ATURAN YANG SAMA DENGAN IMPORTIR.
+             *
+             * Dulu di sini berbunyi `strlen($kode) === 10 ? 5 : 4` — apa pun
+             * yang bukan 10 digit dianggap kecamatan. Baris kabupaten/kota
+             * berkode 4 digit yang ikut tampil di editor karena itu NAIK
+             * PANGKAT jadi kecamatan setiap kali petugas menekan Simpan, dan
+             * sejak itu tiap penjumlahan tingkat kecamatan menghitung seluruh
+             * kota dua kali.
+             */
+            $kelas = DemografiExcel::klasifikasiKode($kode);
+            if (! $kelas) {
+                continue; // bentuk kode tak dikenali → dilewati, bukan ditebak
+            }
+            $level = $kelas['level'];
             $data = [];
             foreach ((array) ($r['data'] ?? []) as $k => $v) {
                 $data[$k] = (int) $v;

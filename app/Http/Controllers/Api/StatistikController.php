@@ -104,7 +104,14 @@ class StatistikController extends Controller
             ? collect()
             : DemografiWilayah::whereIn('kategori', $kategori)
                 ->periode($periode['tahun'], $periode['semester'])
-                ->whereIn('level', [DemografiWilayah::LEVEL_KECAMATAN, DemografiWilayah::LEVEL_KELURAHAN])
+                // Tingkat kabupaten ikut diambil supaya kategori yang HANYA punya
+                // baris kabupaten tetap terhitung — `jumlahKolom` yang memastikan
+                // hanya satu tingkat yang dijumlahkan.
+                ->whereIn('level', [
+                    DemografiWilayah::LEVEL_KABUPATEN,
+                    DemografiWilayah::LEVEL_KECAMATAN,
+                    DemografiWilayah::LEVEL_KELURAHAN,
+                ])
                 ->get(['kategori', 'level', 'data']);
 
         return Balasan::ok([
@@ -200,9 +207,28 @@ class StatistikController extends Controller
      */
     private function jumlahKolom($baris, string $kategori, string $kolom): ?int
     {
+        /*
+         * 🔴 SATU TINGKAT SAJA, TIDAK PERNAH DICAMPUR.
+         *
+         * Cadangannya dulu "kalau tidak ada pekon, pakai SEMUA baris kategori
+         * ini". Itu menjumlahkan tingkat yang berbeda ke satu angka: satu
+         * baris kabupaten yang nilainya sudah merupakan jumlah kecamatan,
+         * ditambah kecamatan-kecamatannya sendiri, menghasilkan penduduk DUA
+         * KALI LIPAT — tanpa galat, tanpa tanda apa pun di layar.
+         */
         $sekategori = $baris->where('kategori', $kategori);
-        $pekon = $sekategori->where('level', DemografiWilayah::LEVEL_KELURAHAN);
-        $dipakai = $pekon->isNotEmpty() ? $pekon : $sekategori;
+        $dipakai = collect();
+        foreach ([
+            DemografiWilayah::LEVEL_KELURAHAN,
+            DemografiWilayah::LEVEL_KECAMATAN,
+            DemografiWilayah::LEVEL_KABUPATEN,
+        ] as $tingkat) {
+            $pada = $sekategori->where('level', $tingkat);
+            if ($pada->isNotEmpty()) {
+                $dipakai = $pada;
+                break;
+            }
+        }
 
         if ($dipakai->isEmpty()) {
             return null;
