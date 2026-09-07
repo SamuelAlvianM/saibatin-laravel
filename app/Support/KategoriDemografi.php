@@ -33,6 +33,24 @@ class KategoriDemografi
     /** Batas jumlah kategori kustom — daftar tak terbatas jadi tak terpakai. */
     public const MAKS_KUSTOM = 24;
 
+    /**
+     * Daftar kategori DIKUNCI: tidak bisa ditambah atau dihapus dari dasbor.
+     *
+     * 🔴 Kenapa dikunci. Kolom `kategori` di `m_demografi_wilayah` cuma
+     * teks, dan setiap baris DKB yang sudah diimpor menempel pada slug-nya.
+     * Menghapus satu kategori meninggalkan ribuan baris yang tidak dikenal
+     * siapa pun — tidak muncul di layar, tidak bisa diekspor, tidak bisa
+     * dihapus lewat antarmuka.
+     *
+     * Yang tersisa untuk dinas adalah MENGGANTI NAMANYA, dan itu aman: yang
+     * berubah cuma label di layar, slug-nya tidak tersentuh sedikit pun.
+     *
+     * ⚠️ Satu tetapan ini mengunci ANTARMUKA SEKALIGUS ENDPOINT-nya.
+     * Mengunci tombolnya saja meninggalkan store/destroy yang masih menerima
+     * permintaan — terkunci di layar, terbuka bagi yang tahu alamatnya.
+     */
+    public const TERKUNCI = true;
+
     /** Kategori bawaan dari `config/demografi.php`. */
     public static function bawaan(): array
     {
@@ -82,13 +100,38 @@ class KategoriDemografi
             ? array_values(array_filter($konten['beranda'], 'is_string'))
             : null;
 
-        return ['kustom' => $kustom, 'beranda' => $beranda];
+        $label = [];
+        foreach ((array) ($konten['label'] ?? []) as $slug => $nama) {
+            if (is_string($slug) && is_string($nama) && trim($nama) !== '') {
+                $label[$slug] = trim($nama);
+            }
+        }
+
+        return ['kustom' => $kustom, 'beranda' => $beranda, 'label' => $label];
     }
 
-    /** Seluruh kategori: bawaan dulu, lalu buatan dinas. */
+    /**
+     * Pasang nama pengganti pada daftar kategori.
+     *
+     * 🔴 Dipakai SEMUA jalur baca. Kalau satu jalur saja melewatkannya —
+     * tab halaman utama, judul sheet ekspor, nama di editor kartu — portal
+     * yang sama menyebut satu kategori dengan dua nama berbeda, dan yang
+     * melihatnya tidak punya cara menebak mana yang benar.
+     */
+    private static function pasangLabel(array $daftar, array $label): array
+    {
+        return array_map(
+            fn ($k) => isset($label[$k['slug']]) ? [...$k, 'label' => $label[$k['slug']]] : $k,
+            $daftar,
+        );
+    }
+
+    /** Seluruh kategori: bawaan dulu, lalu buatan dinas — dengan nama terkini. */
     public static function semua(): array
     {
-        return array_merge(self::bawaan(), self::registri()['kustom']);
+        ['kustom' => $kustom, 'label' => $label] = self::registri();
+
+        return self::pasangLabel(array_merge(self::bawaan(), $kustom), $label);
     }
 
     /** Kategori ini dikenal? Pengganti pemeriksaan langsung ke config. */
@@ -105,8 +148,8 @@ class KategoriDemografi
      */
     public static function tampil(): array
     {
-        ['kustom' => $kustom, 'beranda' => $beranda] = self::registri();
-        $semua = array_merge(self::bawaan(), $kustom);
+        ['kustom' => $kustom, 'beranda' => $beranda, 'label' => $label] = self::registri();
+        $semua = self::pasangLabel(array_merge(self::bawaan(), $kustom), $label);
 
         if ($beranda === null) {
             return $semua;
@@ -144,6 +187,7 @@ class KategoriDemografi
                 'konten' => [
                     'kustom' => array_values($registri['kustom']),
                     'beranda' => $registri['beranda'],
+                    'label' => (object) ($registri['label'] ?? []),
                 ],
                 'updated_by' => $olehUid,
             ],

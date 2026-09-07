@@ -188,6 +188,8 @@ Route::middleware(['auth', 'peran:petugas'])->prefix('admin')->group(function ()
         Route::get('/demografi/kategori', [KategoriDemografiController::class, 'index']);
         Route::post('/demografi/kategori', [KategoriDemografiController::class, 'store']);
         Route::put('/demografi/kategori', [KategoriDemografiController::class, 'update']);
+        // Ganti nama tampilan saja; slug (identitas baris DKB) tidak tersentuh.
+        Route::patch('/demografi/kategori', [KategoriDemografiController::class, 'gantiNama']);
         Route::delete('/demografi/kategori', [KategoriDemografiController::class, 'destroy']);
 
         Route::get('/demografi/hitungan', [DemografiAdminController::class, 'hitungan']);

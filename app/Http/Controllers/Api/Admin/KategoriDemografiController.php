@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\DemografiWilayah;
 use App\Services\CatatanAktivitas;
 use App\Support\Balasan;
+use App\Http\Controllers\Api\StatistikController;
+use App\Models\StaticContent;
 use App\Support\KategoriDemografi;
 use Illuminate\Http\Request;
 
@@ -19,25 +21,137 @@ class KategoriDemografiController extends Controller
 {
     public function __construct(private readonly CatatanAktivitas $log) {}
 
-    /** Seluruh kategori + penanda bawaan/kustom + tampil-di-beranda. */
+    /** Balasan seragam saat daftar kategori sedang dikunci. */
+    private function terkunci()
+    {
+        return Balasan::gagal([
+            'Daftar kategori dikunci. Kategori tidak dapat ditambah atau dihapus; '
+            .'nama tampilannya masih bisa diubah lewat tombol Ganti Nama.',
+        ], 409);
+    }
+
+    /**
+     * Seluruh kategori + DI MANA ia benar-benar tampil + jumlah barisnya.
+     *
+     * 🔴 Sebelumnya panel ini cuma berbunyi "8 tampil di halaman utama" —
+     * kalimat yang tidak menyebut tampil di mana. Petugas membandingkannya
+     * dengan enam kartu angka di beranda, menyimpulkan ada dua kategori yang
+     * hilang, lalu hendak menghapus dua kategori yang sebetulnya berisi ribuan
+     * baris DKB. Padahal keduanya hal yang berbeda: kategori mengisi TAB tabel
+     * demografi, sedangkan kartu beranda konfigurasi tersendiri yang boleh
+     * menarik beberapa angka dari kategori yang sama.
+     */
     public function index()
     {
-        ['kustom' => $kustom, 'beranda' => $beranda] = KategoriDemografi::registri();
+        ['beranda' => $beranda] = KategoriDemografi::registri();
         $bawaan = KategoriDemografi::slugBawaan();
-        $semua = array_merge(KategoriDemografi::bawaan(), $kustom);
+        $semua = KategoriDemografi::semua();
+
+        $barisPer = DemografiWilayah::selectRaw('kategori, COUNT(*) as jml')
+            ->groupBy('kategori')->pluck('jml', 'kategori');
+
+        $kartuPer = [];
+        foreach ($this->kartuBeranda() as $kartu) {
+            $slug = (string) ($kartu['kategori'] ?? '');
+            if ($slug !== '') {
+                $kartuPer[$slug] = ($kartuPer[$slug] ?? 0) + 1;
+            }
+        }
 
         return Balasan::ok([
+            'terkunci' => KategoriDemografi::TERKUNCI,
             'kategori' => array_map(fn ($k) => [
                 ...$k,
                 'bawaan' => in_array($k['slug'], $bawaan, true),
                 'beranda' => $beranda === null || in_array($k['slug'], $beranda, true),
+                'kartu' => $kartuPer[$k['slug']] ?? 0,
+                'baris' => (int) ($barisPer[$k['slug']] ?? 0),
             ], $semua),
         ]);
+    }
+
+    /**
+     * Susunan kartu beranda, dengan cadangan yang SAMA dengan yang dipakai
+     * beranda sungguhan — kalau tidak, hitungan di layar ini bisa berkata
+     * "tanpa kartu" untuk kategori yang kartunya jelas terpampang di beranda.
+     */
+    private function kartuBeranda(): array
+    {
+        $konten = StaticContent::where('kunci', StatistikController::KUNCI_KARTU)->value('konten');
+        $kartu = is_array($konten) ? ($konten['kartu'] ?? []) : [];
+
+        if (! is_array($kartu) || $kartu === []) {
+            $kartu = config('konten.kartu_beranda', []);
+        }
+
+        return array_filter(is_array($kartu) ? $kartu : [], 'is_array');
+    }
+
+    /**
+     * Ganti NAMA TAMPILAN satu kategori. Slug-nya tidak pernah ikut berubah.
+     *
+     * 🔴 Inilah satu-satunya cara mengubah daftar kategori sekarang, dan
+     * sengaja dibuat begitu. Slug adalah nilai kolom `kategori` pada setiap
+     * baris DKB yang sudah diimpor dan potongan URL publik
+     * `/media/demografi/<slug>`; mengubahnya berarti seluruh data lama lepas
+     * dari kategorinya dalam satu klik. Nama boleh salah ketik dan diperbaiki
+     * kapan saja — slug tidak.
+     */
+    public function gantiNama(Request $request)
+    {
+        $slug = trim((string) $request->input('slug'));
+        $judul = trim((string) $request->input('judul'));
+
+        if ($slug === '') {
+            return Balasan::gagal(['Kategori tidak disebut']);
+        }
+        if (mb_strlen($judul) < 3) {
+            return Balasan::gagal(['Nama kategori minimal 3 huruf']);
+        }
+        if (mb_strlen($judul) > 60) {
+            return Balasan::gagal(['Nama kategori maksimal 60 huruf']);
+        }
+        if (! KategoriDemografi::dikenal($slug)) {
+            return Balasan::gagal(['Kategori tidak dikenal']);
+        }
+
+        $registri = KategoriDemografi::registri();
+        $sekarang = collect(KategoriDemografi::semua())->firstWhere('slug', $slug);
+
+        /*
+         * Nama yang dikembalikan ke aslinya MENGHAPUS entrinya, bukan menyimpan
+         * salinan yang kebetulan sama. Kalau tidak, label bawaan yang kelak
+         * diperbaiki di konfigurasi akan kalah oleh salinan basi di basis data.
+         */
+        $asli = collect(KategoriDemografi::bawaan())->firstWhere('slug', $slug)['label']
+            ?? collect($registri['kustom'])->firstWhere('slug', $slug)['label']
+            ?? null;
+
+        $label = $registri['label'];
+        if ($judul === $asli) {
+            unset($label[$slug]);
+        } else {
+            $label[$slug] = $judul;
+        }
+        $registri['label'] = $label;
+
+        KategoriDemografi::simpan($registri, $request->user()->id);
+        $this->log->catat(
+            $request->user(), 'UBAH', 'Demografi',
+            'Mengganti nama kategori "'.($sekarang['label'] ?? $slug).'" menjadi "'.$judul.'" ('.$slug.')',
+            $slug, $request,
+        );
+
+        return Balasan::ok(['slug' => $slug, 'label' => $judul], ['Nama kategori disimpan: "'.$judul.'"']);
     }
 
     /** Tambah kategori buatan dinas. */
     public function store(Request $request)
     {
+        if (KategoriDemografi::TERKUNCI) {
+            return $this->terkunci();
+        }
+
         $judul = trim((string) $request->input('judul'));
 
         if (mb_strlen($judul) < 3) {
@@ -129,6 +243,10 @@ class KategoriDemografiController extends Controller
     /** Hapus kategori kustom — ditolak selama masih ada datanya. */
     public function destroy(Request $request)
     {
+        if (KategoriDemografi::TERKUNCI) {
+            return $this->terkunci();
+        }
+
         $slug = trim((string) $request->query('slug'));
         if ($slug === '') {
             return Balasan::gagal(['Kategori tidak disebut']);

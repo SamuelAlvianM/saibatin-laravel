@@ -152,6 +152,9 @@ export default function Demografi({ kategori: kategoriAwal, kartuBawaan }) {
   const [panelKategori, setPanelKategori] = useState(false);
   const [judulKategoriBaru, setJudulKategoriBaru] = useState('');
   const [sibukKategori, setSibukKategori] = useState(false);
+  /* Daftar kategori dikunci di peladen; layar mengikutinya, tidak menebak. */
+  const [kategoriTerkunci, setKategoriTerkunci] = useState(true);
+  const [gantiNama, setGantiNama] = useState(null);
   const [konfirmHapusKategori, setKonfirmHapusKategori] = useState(null);
   /** Berkas yang MENUNGGU DIKONFIRMASI tujuannya — belum ditulis ke mana pun. */
   const [antre, setAntre] = useState(null);
@@ -180,6 +183,7 @@ export default function Demografi({ kategori: kategoriAwal, kartuBawaan }) {
   const segarkanKategori = useCallback(async () => {
     const j = await ambilJson('/api/admin/demografi/kategori');
     if (Array.isArray(j.data?.kategori)) setKategori(j.data.kategori);
+    if (typeof j.data?.terkunci === 'boolean') setKategoriTerkunci(j.data.terkunci);
   }, []);
 
   useEffect(() => {
@@ -225,6 +229,22 @@ export default function Demografi({ kategori: kategoriAwal, kartuBawaan }) {
       setPesan({ tipe: 'galat', teks: j.error[0] });
       setKategori(sebelum); // layar kembali jujur
     }
+  };
+
+  /**
+   * Ganti NAMA TAMPILAN kategori. Slug tidak ikut berubah — lihat
+   * KategoriDemografiController::gantiNama().
+   */
+  const simpanNama = async (slug, judul) => {
+    setSibukKategori(true);
+    const j = await kirimJson('/api/admin/demografi/kategori', { slug, judul }, 'PATCH');
+    setSibukKategori(false);
+
+    if (j.error?.length) { setPesan({ tipe: 'galat', teks: j.error[0] }); return; }
+
+    setPesan({ tipe: 'sukses', teks: j.success?.[0] ?? 'Nama kategori disimpan' });
+    setGantiNama(null);
+    await segarkanKategori();
   };
 
   const hapusKategori = async (slug, label) => {
@@ -667,7 +687,12 @@ export default function Demografi({ kategori: kategoriAwal, kartuBawaan }) {
                       {kategori.map((kat) => (
                         <option key={kat.slug} value={kat.slug}>{kat.label}</option>
                       ))}
-                      <option value={TUJUAN_BARU}>+ Kategori baru&hellip;</option>
+                      {/* Ditutup selama daftar kategori dikunci: memilihnya
+                          hanya berujung penolakan dari peladen, sesudah petugas
+                          mengetikkan namanya. */}
+                      {!kategoriTerkunci && (
+                        <option value={TUJUAN_BARU}>+ Kategori baru&hellip;</option>
+                      )}
                     </select>
 
                     {it.tujuan === TUJUAN_BARU && (
@@ -871,9 +896,16 @@ export default function Demografi({ kategori: kategoriAwal, kartuBawaan }) {
             </span>
             <span className="min-w-0 flex-1">
               <span className="block text-sm font-semibold text-slate-900">Kategori Data</span>
+              {/*
+                🔴 Berhenti berbunyi "8 tampil di halaman utama". Kalimat itu
+                tidak menyebut tampil DI MANA, dan petugas membandingkannya
+                dengan enam kartu angka di beranda lalu menyimpulkan ada dua
+                kategori yang hilang — padahal kedelapannya tampil sebagai tab,
+                dan enam kartu itu cuma menarik dari tiga kategori.
+              */}
               <span className="block truncate text-xs text-slate-400">
                 {kategori.length} kategori · {kategori.filter((k) => k.beranda).length} tampil
-                di halaman utama
+                sebagai tab · {kategori.reduce((a, k) => a + (k.kartu ?? 0), 0)} kartu beranda
               </span>
             </span>
           </button>
@@ -886,19 +918,86 @@ export default function Demografi({ kategori: kategoriAwal, kartuBawaan }) {
               <div className={`divide-y divide-slate-100 border-t border-slate-100 ${GERAK_ISI} ${
                 panelKategori ? GERAK_ISI_BUKA : GERAK_ISI_TUTUP
               }`}>
+                {/*
+                  Keterangan pembuka: dua tempat yang berbeda, disebut sekali di
+                  sini supaya tiap barisnya boleh ringkas.
+                */}
+                <p className="bg-slate-50/60 px-4 py-2.5 text-xs leading-relaxed text-slate-500">
+                  <b>Tab</b> = kategori muncul sebagai tab pada tabel data
+                  kependudukan di halaman utama. <b>Kartu</b> = kotak angka besar
+                  di puncak halaman utama; satu kategori boleh memasok beberapa
+                  kartu, dan banyak kategori memang tidak memasok kartu mana pun.
+                  Nama kategori boleh diganti kapan saja — yang berubah hanya
+                  tulisannya, data yang sudah diimpor tetap menempel pada kodenya.
+                </p>
+
                 {kategori.map((kat) => (
                   <div key={kat.slug} className="flex flex-wrap items-center gap-2 px-4 py-2.5">
                     <div className="min-w-0 flex-1">
-                      <p className="text-sm font-medium text-slate-800">
-                        {kat.label}
-                        {!kat.bawaan && (
-                          <span className="ml-2 rounded-full bg-slate-100 px-2 py-0.5 text-[0.65rem] font-semibold text-slate-500">
-                            dibuat dinas
-                          </span>
-                        )}
+                      {gantiNama?.slug === kat.slug ? (
+                        <div className="flex flex-wrap items-center gap-2">
+                          <input
+                            value={gantiNama.nilai}
+                            autoFocus
+                            maxLength={60}
+                            onChange={(e) => setGantiNama({ slug: kat.slug, nilai: e.target.value })}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Escape') setGantiNama(null);
+                              if (e.key === 'Enter' && gantiNama.nilai.trim().length >= 3) {
+                                simpanNama(kat.slug, gantiNama.nilai.trim());
+                              }
+                            }}
+                            aria-label={`Nama baru untuk ${kat.label}`}
+                            className="h-8 min-w-0 flex-1 rounded-lg border border-brand/40 bg-white px-2 text-sm"
+                          />
+                          <Tombol disabled={sibukKategori || gantiNama.nilai.trim().length < 3}
+                                  onClick={() => simpanNama(kat.slug, gantiNama.nilai.trim())}>
+                            Simpan
+                          </Tombol>
+                          <Tombol varian="garis" disabled={sibukKategori}
+                                  onClick={() => setGantiNama(null)}>
+                            Batal
+                          </Tombol>
+                        </div>
+                      ) : (
+                        <p className="text-sm font-medium text-slate-800">
+                          {kat.label}
+                          {!kat.bawaan && (
+                            <span className="ml-2 rounded-full bg-slate-100 px-2 py-0.5 text-[0.65rem] font-semibold text-slate-500">
+                              dibuat dinas
+                            </span>
+                          )}
+                        </p>
+                      )}
+
+                      {/*
+                        Kode kategori + di mana ia tampil + berapa barisnya,
+                        berdampingan. Inilah jawaban atas "yang benar-benar
+                        tampil yang mana" — terbaca, bukan ditebak.
+                      */}
+                      <p className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs text-slate-400">
+                        <span className="truncate font-mono">{kat.slug}</span>
+                        <span aria-hidden>·</span>
+                        <span className={kat.baris ? 'text-slate-500' : 'text-amber-600'}>
+                          {kat.baris
+                            ? `${kat.baris.toLocaleString('id-ID')} baris`
+                            : 'belum ada data'}
+                        </span>
+                        <span aria-hidden>·</span>
+                        <span className={kat.kartu ? 'text-slate-500' : undefined}>
+                          {kat.kartu ? `${kat.kartu} kartu beranda` : 'tanpa kartu'}
+                        </span>
                       </p>
-                      <p className="truncate text-xs text-slate-400">{kat.slug}</p>
                     </div>
+
+                    {gantiNama?.slug !== kat.slug && (
+                      <Tombol varian="polos" disabled={sibukKategori}
+                              kelas="flex-shrink-0 text-slate-500 hover:text-slate-900"
+                              onClick={() => setGantiNama({ slug: kat.slug, nilai: kat.label })}
+                              title={`Ganti nama tampilan ${kat.label} (kode ${kat.slug} tetap)`}>
+                        <Pencil className="h-3.5 w-3.5" />Ganti Nama
+                      </Tombol>
+                    )}
 
                     {/*
                       Sakelar tampil-di-beranda ditulis sebagai KALIMAT KEADAAN,
@@ -921,7 +1020,7 @@ export default function Demografi({ kategori: kategoriAwal, kartuBawaan }) {
                       {kat.beranda ? 'Tampil di Halaman utama' : 'Tidak tampil'}
                     </button>
 
-                    {!kat.bawaan && (
+                    {!kat.bawaan && !kategoriTerkunci && (
                       <button type="button" disabled={sibukKategori}
                               onClick={() => setKonfirmHapusKategori(kat)}
                               title={`Hapus kategori ${kat.label}`}
@@ -933,6 +1032,7 @@ export default function Demografi({ kategori: kategoriAwal, kartuBawaan }) {
                 ))}
               </div>
 
+              {!kategoriTerkunci && (
               <div className="flex flex-wrap items-center gap-2 border-t border-slate-100 bg-slate-50/60 px-4 py-3">
                 <input
                   value={judulKategoriBaru}
@@ -956,6 +1056,7 @@ export default function Demografi({ kategori: kategoriAwal, kartuBawaan }) {
                   dikenali bila namanya memuat nama kategori ini.
                 </p>
               </div>
+              )}
             </div>
           </div>
         </div>
