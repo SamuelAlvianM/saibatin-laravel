@@ -48,11 +48,20 @@ class StatistikController extends Controller
          * Kartu yang belum ditentukan sumbernya (tanpa `kategori`) dibiarkan:
          * ia tidak menampilkan angka siapa pun.
          */
-        $bolehTampil = array_column(KategoriDemografi::tampil(), 'slug');
-        $kartuKonfig = collect($this->konfigurasiKartu())
-            ->filter(fn ($k) => empty($k['kategori']) || in_array($k['kategori'], $bolehTampil, true))
-            ->values()
-            ->all();
+        /*
+         * 🔴 Diselaraskan SAAT DIBACA, bukan cuma saat disimpan.
+         *
+         * Baris `beranda.statistik` bisa berubah dari jalur lain — editor
+         * kartu, tombol "Reset Kartu Beranda", atau tangan yang menyunting
+         * basis data langsung. Menyaring saja tidak cukup: dua kartu
+         * berkategori sama akan lolos saringan dan beranda kembali
+         * menampilkan satu kategori dua kali. Di sini bentuk akhirnya
+         * dipastikan — satu kartu per kategori yang tampil, paling banyak enam.
+         */
+        $kartuKonfig = KategoriDemografi::selaraskanKartu(
+            $this->konfigurasiKartu(),
+            KategoriDemografi::tampil(),
+        );
 
         $kategori = collect($kartuKonfig)->pluck('kategori')->filter()->unique()->values();
 

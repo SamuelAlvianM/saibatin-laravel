@@ -70,6 +70,20 @@ class KategoriDemografiController extends Controller
         ]);
     }
 
+    /** Tulis ulang kartu beranda: persis satu per kategori yang tampil. */
+    private function selaraskanKartuBeranda(): void
+    {
+        $kartu = KategoriDemografi::selaraskanKartu(
+            $this->kartuBeranda(),
+            KategoriDemografi::tampil(),
+        );
+
+        StaticContent::updateOrCreate(
+            ['kunci' => StatistikController::KUNCI_KARTU],
+            ['judul' => 'Kartu Statistik Beranda', 'konten' => ['kartu' => $kartu]],
+        );
+    }
+
     /**
      * Susunan kartu beranda, dengan cadangan yang SAMA dengan yang dipakai
      * beranda sungguhan — kalau tidak, hitungan di layar ini bisa berkata
@@ -221,12 +235,42 @@ class KategoriDemografiController extends Controller
         );
 
         // Hanya slug dikenal yang disimpan → cegah data sampah di registri.
-        $registri['beranda'] = array_values(array_unique(array_filter(
+        $diminta = array_values(array_unique(array_filter(
             $mentah,
             fn ($s) => is_string($s) && in_array($s, $dikenal, true),
         )));
 
+        /*
+         * 🔴 BATAS ENAM DITEGAKKAN DI SINI, bukan cuma di tombolnya — dan
+         * MENYUSUT SELALU BOLEH walau masih di atas batas.
+         *
+         * Portal yang sudah berjalan bisa punya delapan kategori menyala dari
+         * sebelum aturan ini ada. Menolak setiap daftar yang panjangnya di atas
+         * enam akan menolak juga usaha MEMATIKAN salah satunya — daftar 8 jadi
+         * 7 tetap di atas enam — dan petugas terkunci pada keadaan yang justru
+         * diminta ia perbaiki. Yang ditolak hanya yang MENAMBAH.
+         */
+        $sebelumnya = $registri['beranda'] === null ? PHP_INT_MAX : count($registri['beranda']);
+        if (count($diminta) > KategoriDemografi::MAKS_KARTU && count($diminta) >= $sebelumnya) {
+            return Balasan::gagal([
+                'Paling banyak '.KategoriDemografi::MAKS_KARTU
+                .' kategori yang boleh tampil di halaman utama. '
+                .'Matikan salah satu dulu sebelum menyalakan yang lain.',
+            ]);
+        }
+        $registri['beranda'] = $diminta;
+
         KategoriDemografi::simpan($registri, $request->user()->id);
+
+        /*
+         * 🔴 Kartu beranda IKUT DISELARASKAN, bukan dibiarkan sendiri.
+         *
+         * Kalau tidak, mematikan sebuah kategori menyisakan kartunya
+         * menggantung, dan menyalakan kategori baru tidak memberinya kartu
+         * sama sekali. Sesudah ini jumlah kartu SELALU sama dengan jumlah
+         * kategori yang tampil.
+         */
+        $this->selaraskanKartuBeranda();
         $this->log->catat(
             $request->user(), 'UBAH', 'Demografi',
             'Mengatur kategori tampil di halaman utama ('

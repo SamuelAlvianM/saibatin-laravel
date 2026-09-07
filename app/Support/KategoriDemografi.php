@@ -51,6 +51,78 @@ class KategoriDemografi
      */
     public const TERKUNCI = true;
 
+    /**
+     * Jatah kartu beranda: SATU per kategori, dan paling banyak enam kategori.
+     *
+     * 🔴 ATURANNYA 1:1, BUKAN SEKADAR BATAS ATAS. Sebelum ini kartu bebas
+     * menunjuk kategori mana pun, dan enam kartu bawaan ternyata cuma menarik
+     * dari TIGA kategori: `jenis-kelamin` memasok tiga sekaligus (Jumlah
+     * Penduduk, Laki-laki, Perempuan) dan `wajib-ktp` dua. Beranda terlihat
+     * penuh padahal yang diwakili sedikit, dan lima kategori lain yang datanya
+     * sudah diimpor tidak pernah muncul sebagai angka.
+     *
+     * Sekarang kartu adalah WAJAH satu kategori: menyalakan kategori
+     * memberinya kartu, mematikannya mencabut kartunya.
+     */
+    public const MAKS_KARTU = 6;
+
+    /** Warna dipilih bergiliran supaya kartu baru tidak lahir kembar warnanya. */
+    private const URUTAN_WARNA = ['biru', 'teal', 'amber', 'sky', 'emerald', 'violet'];
+
+    /**
+     * Susun kartu supaya persis satu per kategori yang tampil, seurut daftarnya.
+     *
+     * Setelan yang sudah ada dipertahankan; yang kembar dibuang (yang pertama
+     * menang); kategori yang belum punya kartu diberi satu dengan setelan awal.
+     *
+     * 🔴 Saat yang menyala LEBIH dari jatahnya, yang sudah tersetel menang.
+     * Portal lama bisa punya delapan kategori menyala sementara petaknya cuma
+     * enam; memotong menurut urutan daftar akan membuang justru kartu yang
+     * sudah punya kolom angka, dan beranda terlihat rusak karena urutan
+     * penyimpanan, bukan karena keputusan siapa pun.
+     */
+    public static function selaraskanKartu(array $kartu, array $tampil): array
+    {
+        $perKategori = [];
+        foreach ($kartu as $k) {
+            $slug = (string) ($k['kategori'] ?? '');
+            if ($slug === '' || isset($perKategori[$slug])) {
+                continue;
+            }
+            $perKategori[$slug] = $k;
+        }
+
+        if (count($tampil) > self::MAKS_KARTU) {
+            $tersetel = array_filter($tampil, fn ($k) => ! empty($perKategori[$k['slug']]['kolom']));
+            $belum = array_filter($tampil, fn ($k) => empty($perKategori[$k['slug']]['kolom']));
+            $tampil = array_merge(array_values($tersetel), array_values($belum));
+        }
+
+        $hasil = [];
+        foreach (array_slice($tampil, 0, self::MAKS_KARTU) as $i => $kat) {
+            $ada = $perKategori[$kat['slug']] ?? null;
+            if ($ada) {
+                $hasil[] = [...$ada, 'kategori' => $kat['slug']];
+
+                continue;
+            }
+            $hasil[] = [
+                'title' => $kat['label'],
+                'icon' => 'Users',
+                'kategori' => $kat['slug'],
+                /* Kolomnya sengaja KOSONG bila tidak jelas: kartu tanpa kolom
+                   tampil sebagai "belum ada data", dan itu jujur. Menebak
+                   kolom sembarangan membuat beranda mengumumkan angka yang
+                   tidak dimaksudkan siapa pun. */
+                'kolom' => '',
+                'warna' => self::URUTAN_WARNA[$i % count(self::URUTAN_WARNA)],
+                'badgeKolom' => '',
+            ];
+        }
+
+        return $hasil;
+    }
+
     /** Kategori bawaan dari `config/demografi.php`. */
     public static function bawaan(): array
     {

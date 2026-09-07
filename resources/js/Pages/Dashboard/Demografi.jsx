@@ -53,6 +53,9 @@ function usulJudul(namaBerkas) {
 }
 
 /** Penanda tujuan "buat kategori baru" pada daftar konfirmasi impor. */
+/** Petak kartu di beranda; sama dengan KategoriDemografi::MAKS_KARTU. */
+const MAKS_KARTU = 6;
+
 const TUJUAN_BARU = '__baru__';
 
 /** Unduh lewat <a download> — memicu dialog simpan peramban. */
@@ -215,6 +218,23 @@ export default function Demografi({ kategori: kategoriAwal, kartuBawaan }) {
    * keadaan akhir persis seperti yang terlihat di layar pengirimnya.
    */
   const ubahBeranda = async (slug, tampil) => {
+    /*
+     * 🔴 Ditolak DI SINI supaya petugas tahu sebelum apa pun berubah.
+     * Peladen juga menolaknya, tapi kalau layar mengirim dulu lalu membatalkan
+     * sendiri, sakelarnya sempat berkedip menyala — dan yang terlihat adalah
+     * "sempat bisa, lalu dibatalkan sistem", bukan aturan.
+     */
+    const menyala = kategori.filter((k) => k.beranda).length;
+    if (tampil && menyala >= MAKS_KARTU) {
+      setPesan({
+        tipe: 'galat',
+        teks: `Halaman utama hanya punya ${MAKS_KARTU} petak kartu. `
+          + 'Matikan salah satu kategori dulu, lalu nyalakan yang ini.',
+      });
+
+      return;
+    }
+
     const sebelum = kategori;
     const sesudah = kategori.map((k) => (k.slug === slug ? { ...k, beranda: tampil } : k));
     setKategori(sesudah); // optimistis — jawabannya harus terasa seketika
@@ -922,11 +942,29 @@ export default function Demografi({ kategori: kategoriAwal, kartuBawaan }) {
                   Keterangan pembuka: dua tempat yang berbeda, disebut sekali di
                   sini supaya tiap barisnya boleh ringkas.
                 */}
+                {/*
+                  Portal yang sudah berjalan bisa punya lebih dari enam kategori
+                  menyala dari sebelum aturan ini ada. Dibiarkan apa adanya —
+                  tidak ada yang dimatikan diam-diam — tapi disebut terang-terangan
+                  berikut berapa yang perlu dilepas.
+                */}
+                {kategori.filter((k) => k.beranda).length > MAKS_KARTU && (
+                  <p className="border-b border-amber-200 bg-amber-50 px-4 py-2.5 text-xs leading-relaxed text-amber-800">
+                    <b>
+                      {kategori.filter((k) => k.beranda).length} kategori menyala,
+                      padahal halaman utama hanya punya {MAKS_KARTU} petak kartu.
+                    </b>{' '}
+                    Matikan {kategori.filter((k) => k.beranda).length - MAKS_KARTU} kategori
+                    lagi supaya yang tampil benar-benar yang Anda pilih. Datanya
+                    tidak hilang — hanya tidak ditampilkan.
+                  </p>
+                )}
+
                 <p className="bg-slate-50/60 px-4 py-2.5 text-xs leading-relaxed text-slate-500">
                   <b>Tab</b> = kategori muncul sebagai tab pada tabel data
                   kependudukan di halaman utama. <b>Kartu</b> = kotak angka besar
-                  di puncak halaman utama; satu kategori boleh memasok beberapa
-                  kartu, dan banyak kategori memang tidak memasok kartu mana pun.
+                  di puncak halaman utama; setiap kategori yang menyala mendapat
+                  <b> tepat satu</b> kartu, dan halaman utama menyediakan {MAKS_KARTU} petak.
                   Nama kategori boleh diganti kapan saja — yang berubah hanya
                   tulisannya, data yang sudah diimpor tetap menempel pada kodenya.
                 </p>
