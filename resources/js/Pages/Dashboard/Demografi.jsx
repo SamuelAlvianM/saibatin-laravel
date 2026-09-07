@@ -65,6 +65,40 @@ function unduh(url) {
   a.remove();
 }
 
+/*
+ * Gerak buka-tutup wadah periode dan panel kategori.
+ *
+ * 🔴 DURASI BUKA DAN TUTUP SENGAJA SAMA. Membuka satu semester menutup
+ * pasangannya, jadi dua panel selalu bergerak berlawanan pada saat yang sama.
+ * Kalau yang menutup lebih cepat, tinggi total baris itu menciut dulu lalu
+ * memuai lagi — dan seluruh isi halaman di bawahnya tersentak turun lalu naik.
+ * Dengan durasi yang sama, tinggi totalnya nyaris tetap dan pergantian semester
+ * terbaca sebagai satu panel yang bergeser, bukan dua yang berebut tempat.
+ *
+ * Kurvanya melambat panjang di ujung, tidak seperti `ease-out` bawaan yang
+ * berhenti mendadak persis saat panel mencapai tinggi penuh.
+ *
+ * Isinya ikut memudar dan bergeser sedikit: panel yang tingginya menciut
+ * sementara tulisannya tetap pekat terbaca seperti TERPENGGAL, bukan tertutup.
+ * Saat membuka, pudarnya diberi jeda singkat supaya kotaknya sempat terbuka
+ * lebih dulu — tulisan yang muncul sebelum ada ruangnya terlihat berdesakan.
+ *
+ * `motion-reduce` dihormati: pengguna yang mematikan animasi di sistemnya
+ * langsung melihat keadaan akhirnya, tanpa gerak sama sekali.
+ */
+const GERAK_WADAH = 'grid transition-[grid-template-rows] duration-[340ms] '
+  + 'ease-[cubic-bezier(0.32,0.72,0,1)] motion-reduce:transition-none';
+
+const GERAK_ISI = 'transition-[opacity,transform] ease-out motion-reduce:transition-none';
+
+const GERAK_ISI_BUKA = 'opacity-100 translate-y-0 duration-[260ms] delay-[90ms]';
+
+const GERAK_ISI_TUTUP = 'opacity-0 -translate-y-1.5 duration-[160ms]';
+
+/** Anak panah kepala wadah — ikut kurva yang sama supaya terasa satu gerakan. */
+const GERAK_PANAH = 'transition-transform duration-[340ms] '
+  + 'ease-[cubic-bezier(0.32,0.72,0,1)] motion-reduce:transition-none';
+
 export default function Demografi({ kategori: kategoriAwal, kartuBawaan }) {
   /*
    * 🔴 DAFTAR KATEGORI JADI STATE, bukan prop yang beku.
@@ -845,11 +879,13 @@ export default function Demografi({ kategori: kategoriAwal, kartuBawaan }) {
           </button>
 
           <div inert={!panelKategori}
-               className={`grid transition-[grid-template-rows] duration-300 ease-out ${
+               className={`${GERAK_WADAH} ${
                  panelKategori ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
                }`}>
             <div className="overflow-hidden">
-              <div className="divide-y divide-slate-100 border-t border-slate-100">
+              <div className={`divide-y divide-slate-100 border-t border-slate-100 ${GERAK_ISI} ${
+                panelKategori ? GERAK_ISI_BUKA : GERAK_ISI_TUTUP
+              }`}>
                 {kategori.map((kat) => (
                   <div key={kat.slug} className="flex flex-wrap items-center gap-2 px-4 py-2.5">
                     <div className="min-w-0 flex-1">
@@ -968,14 +1004,18 @@ export default function Demografi({ kategori: kategoriAwal, kartuBawaan }) {
                               dijangkau keyboard — dan ditekan tanpa pernah
                               tampak di layar. */
                            inert={!buka}
-                           className={`grid transition-[grid-template-rows] duration-300 ease-out ${
+                           className={`${GERAK_WADAH} ${
                              buka ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
                            }`}>
                         {/* Padding atasnya ikut di DALAM area yang menciut,
                             supaya panel tertutup benar-benar setinggi nol —
                             bukan menyisakan celah kosong di bawah tiap tahun. */}
                         <div className="overflow-hidden">
-                          <div className="pt-3">{isiPeriode({ tahun, semester: s })}</div>
+                          <div className={`pt-3 ${GERAK_ISI} ${
+                            buka ? GERAK_ISI_BUKA : GERAK_ISI_TUTUP
+                          }`}>
+                            {isiPeriode({ tahun, semester: s })}
+                          </div>
                         </div>
                       </div>
                     );
