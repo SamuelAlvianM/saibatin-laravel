@@ -163,6 +163,9 @@ export function Tombol({ varian = 'utama', kelas = '', anak, children, ...sisa }
     garis: 'border border-slate-300 bg-white text-slate-700 hover:border-brand hover:text-brand disabled:opacity-60',
     bahaya: 'bg-rose-600 text-white hover:bg-rose-700 disabled:opacity-60',
     sukses: 'bg-emerald-600 text-white hover:bg-emerald-700 disabled:opacity-60',
+    // Aksi pendamping: hadir tapi tidak bersaing dengan tombol utama
+    // di barisnya. Dipakai mis. tombol unduh di tiap baris kategori.
+    polos: 'text-slate-600 hover:bg-slate-100 disabled:opacity-40',
   }[varian];
 
   return (

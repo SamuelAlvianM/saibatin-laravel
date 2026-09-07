@@ -713,12 +713,30 @@ export default function Demografi({ kategori: kategoriAwal, kartuBawaan }) {
                   </p>
 
                   {/*
-                    Hanya "Edit" di tiap baris.
+                    Dua tindakan per baris: unduh kategori ini saja, dan Edit.
 
-                    Impor sudah pindah ke atas, dan editor inilah tempat satu
-                    kategori diurus sendirian — termasuk mengimpor berkasnya
-                    bila nama berkasnya tidak terbaca oleh impor massal.
+                    🔴 Tombol Export di kepala wadah mengunduh SELURUH kategori
+                    sekaligus. Yang dibawa ke rapat biasanya satu tabel saja —
+                    tanpa tombol ini petugas harus mengunduh berkas berisi
+                    belasan sheet lalu membuang sendiri yang tidak dipakai, dan
+                    berkas sebesar itu tak jarang dikirim apa adanya. Keduanya
+                    tetap ada: satu berkas untuk arsip, satu tabel untuk dipakai.
+
+                    Nonaktif bila kategori ini kosong pada periode tersebut —
+                    mengunduh berkas nol baris hanya membuat orang mengira
+                    datanya hilang.
                   */}
+                  <Tombol varian="polos" disabled={!n} kelas="flex-shrink-0 text-slate-500 hover:text-slate-900"
+                          onClick={() => unduh(
+                            `/api/admin/demografi/export?${kueriPeriode(p)}&kategori=${encodeURIComponent(kat.slug)}`,
+                          )}
+                          title={n
+                            ? `Unduh ${kat.label} ${labelPeriode(p.tahun, p.semester)} saja`
+                            : `${kat.label} belum berisi data pada ${labelPeriode(p.tahun, p.semester)}`}>
+                    <Download className="h-4 w-4" />
+                    <span className="sr-only">Unduh {kat.label}</span>
+                  </Tombol>
+
                   <Tombol varian="garis" disabled={!!impor} kelas="flex-shrink-0"
                           onClick={() => setSunting({ ...kat, periode: p })}
                           title={`Edit / import ${kat.label} pada ${labelPeriode(p.tahun, p.semester)}`}>

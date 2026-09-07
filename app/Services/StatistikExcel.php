@@ -175,7 +175,12 @@ class StatistikExcel
      *
      * @param  array{sheet:string,judul:string,keterangan?:string,kolom:array,baris:array,total?:bool}  $t
      */
-    private function tulisSheet(Spreadsheet $buku, array $t): void
+    /*
+     * Dipakai juga oleh DemografiExcel: kop surat yang sama, satu penulis
+     * saja. Menyalinnya ke sana berarti dua kop yang lambat laun berbeda
+     * pada berkas yang sama-sama keluar atas nama dinas ini.
+     */
+    public function tulisSheet(Spreadsheet $buku, array $t): void
     {
         $lembar = $buku->createSheet()->setTitle(mb_substr($t['sheet'], 0, 31));
         $lembar->getPageSetup()
