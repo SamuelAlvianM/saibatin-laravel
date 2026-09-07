@@ -1,7 +1,7 @@
-# Graph Report - saibatin-laravel  (2026-09-07)
+# Graph Report - saibatin-laravel  (2026-09-08)
 
 ## Corpus Check
-- 306 files · ~192,408 words
+- 306 files · ~192,489 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `7d96a816`
+- Built from commit: `801aab85`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -26,7 +26,7 @@
 - Dasbor.jsx
 - Layanan
 - User
-- Produk
+- PermohonanAdminController.php
 - Illuminate\Database\Migrations\Migration
 - Statistik.jsx
 - KategoriDemografi
@@ -50,7 +50,7 @@
 - Navbar.jsx
 - Illuminate\Database\Schema\Blueprint
 - kategori.js
-- Gallery
+- News
 - require-dev
 - PengaturanLayanan.jsx
 - geo.js
@@ -98,9 +98,11 @@
 - autoload-dev
 - post-autoload-dump
 - Wilayah
+- Gallery
+- Produk
+- PermohonanPdfController.php
 - FotoProfil
 - Periode
-- News
 - JamLayanan
 - BerkasController.php
 - bukti-pengaduan.js
@@ -156,8 +158,6 @@
 - PermohonanDetail.jsx
 - Media
 - deteksi-kategori.js
-- PermohonanAdminController.php
-- PermohonanPdfController.php
 - Controller
 
 ## God Nodes (most connected - your core abstractions)
@@ -221,6 +221,10 @@ Nodes (8): FilterPeriode(), geser(), labelAcuan(), nomorHalaman(), Paginasi(), P
 Cohesion: 0.12
 Nodes (4): User, Illuminate\Database\Eloquent\Relations\HasMany, Illuminate\Foundation\Auth\User, Illuminate\Notifications\Notifiable
 
+### Community 11 - "PermohonanAdminController.php"
+Cohesion: 0.17
+Nodes (3): PermohonanAdminController, Surel, AlasanTolakPermohonan
+
 ### Community 14 - "Statistik.jsx"
 Cohesion: 0.13
 Nodes (9): penanda, angka(), RincianDemografi(), angka(), AngkaNaik(), AWAL, KartuPelayanan(), PetaKantor (+1 more)
@@ -276,10 +280,6 @@ Nodes (9): class-variance-authority, dependencies, class-variance-authority, @ra
 ### Community 36 - "a11y.js"
 Cohesion: 0.22
 Nodes (5): FONT_BAWAAN_IDX, KUNCI_A11Y, LANGKAH_FONT, PREFS_BAWAAN, SPASI_MAKS
-
-### Community 40 - "Gallery"
-Cohesion: 0.21
-Nodes (3): GaleriAdminController, KontenController, Gallery
 
 ### Community 41 - "require-dev"
 Cohesion: 0.25
@@ -401,6 +401,10 @@ Nodes (3): post-autoload-dump, Illuminate\\Foundation\\ComposerScripts::postAuto
 Cohesion: 0.24
 Nodes (5): BuatAkunUji, IsiWilayahAkun, Wilayah, Illuminate\Console\Command, Illuminate\Support\Collection
 
+### Community 96 - "Gallery"
+Cohesion: 0.21
+Nodes (3): GaleriAdminController, KontenController, Gallery
+
 ### Community 105 - "Periode"
 Cohesion: 0.27
 Nodes (3): Periode, CarbonImmutable, Carbon\CarbonImmutable
@@ -433,10 +437,6 @@ Nodes (8): MediaController, Media, PustakaMedia, UserFactory, Illuminate\Databas
 Cohesion: 0.60
 Nodes (4): deteksiKategori(), POLA_BERKAS, slugKategori(), slugMemuat()
 
-### Community 265 - "PermohonanAdminController.php"
-Cohesion: 0.17
-Nodes (3): PermohonanAdminController, Surel, AlasanTolakPermohonan
-
 ### Community 268 - "Controller"
 Cohesion: 0.12
 Nodes (8): LogAktivitasController, SkmAdminController, StatistikEksporController, BuktiPengaduanController, PendudukController, UnggahController, Controller, Illuminate\Support\Facades\Route
@@ -451,9 +451,9 @@ _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `User` connect `User` to `Illuminate\Http\Request`, `Illuminate\Database\Eloquent\Model`, `CatatanAktivitas`, `Pengaduan`, `StatistikExcel`, `DatabaseSeeder.php`, `AlasanTolak`, `FotoProfil`, `Controller`, `SuntingAkunTest`, `Permohonan`, `UserLevel`, `LoginController`, `SandiController`, `Pemberitahuan.php`, `Media`, `Wilayah`?**
   _High betweenness centrality (0.048) - this node is a cross-community bridge._
-- **Why does `Controller` connect `Controller` to `Illuminate\Http\Request`, `CatatanAktivitas`, `Pemberitahuan`, `PublikController`, `Balasan`, `AlasanTolak`, `PermohonanAdminController.php`, `PermohonanPdfController.php`, `Produk`, `KategoriDemografi`, `Otp`, `LoginController`, `Pengaduan`, `Gallery`, `UserLevel`, `SandiController`, `FotoProfil`, `News`, `JamLayanan`, `BerkasController.php`, `Media`?**
+- **Why does `Controller` connect `Controller` to `Illuminate\Http\Request`, `CatatanAktivitas`, `Pemberitahuan`, `PublikController`, `Balasan`, `AlasanTolak`, `PermohonanAdminController.php`, `KategoriDemografi`, `Otp`, `LoginController`, `Pengaduan`, `News`, `UserLevel`, `SandiController`, `Gallery`, `Produk`, `PermohonanPdfController.php`, `FotoProfil`, `JamLayanan`, `BerkasController.php`, `Media`?**
   _High betweenness centrality (0.032) - this node is a cross-community bridge._
-- **Why does `Balasan` connect `Balasan` to `Illuminate\Http\Request`, `CatatanAktivitas`, `Pengaduan`, `Pemberitahuan`, `AlasanTolak`, `Gallery`, `Periode`, `News`, `JamLayanan`, `Controller`, `PermohonanAdminController.php`, `Produk`, `KategoriDemografi`, `Otp`, `UserLevel`, `Media`?**
+- **Why does `Balasan` connect `Balasan` to `Gallery`, `Produk`, `CatatanAktivitas`, `Pengaduan`, `Illuminate\Http\Request`, `Pemberitahuan`, `AlasanTolak`, `News`, `Periode`, `JamLayanan`, `Controller`, `PermohonanAdminController.php`, `KategoriDemografi`, `Otp`, `UserLevel`, `Media`?**
   _High betweenness centrality (0.028) - this node is a cross-community bridge._
 - **What connects `$schema`, `name`, `type` to the rest of the system?**
   _222 weakly-connected nodes found - possible documentation gaps or missing edges._

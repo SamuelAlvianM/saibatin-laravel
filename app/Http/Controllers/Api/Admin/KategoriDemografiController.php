@@ -50,8 +50,22 @@ class KategoriDemografiController extends Controller
         $barisPer = DemografiWilayah::selectRaw('kategori, COUNT(*) as jml')
             ->groupBy('kategori')->pluck('jml', 'kategori');
 
+        /*
+         * 🔴 Dihitung dari hasil SELARAS, bukan dari konfigurasi mentah.
+         *
+         * Baris `beranda.statistik` masih boleh memuat sisa susunan lama — tiga
+         * kartu berkategori `jenis-kelamin`, misalnya. Yang benar-benar tampil di
+         * beranda adalah hasil `selaraskanKartu`, satu per kategori. Kalau panel
+         * ini menghitung yang mentah, ia berkata "3 kartu beranda" untuk kategori
+         * yang di beranda cuma punya satu — dan seluruh gunanya panel ini adalah
+         * mengatakan apa yang SUNGGUH tampil.
+         */
         $kartuPer = [];
-        foreach ($this->kartuBeranda() as $kartu) {
+        $kartuTampil = KategoriDemografi::selaraskanKartu(
+            $this->kartuBeranda(),
+            KategoriDemografi::tampil(),
+        );
+        foreach ($kartuTampil as $kartu) {
             $slug = (string) ($kartu['kategori'] ?? '');
             if ($slug !== '') {
                 $kartuPer[$slug] = ($kartuPer[$slug] ?? 0) + 1;
