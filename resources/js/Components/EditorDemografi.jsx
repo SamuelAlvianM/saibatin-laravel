@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import {
   AlertTriangle, ArrowLeft, Check, Download, FileUp, Layers, Loader2, Plus,
-  Star, Trash2,
+  Star, Trash2, X,
 } from 'lucide-react';
 import { Pesan, Tombol } from '@/Components/Dasbor';
 import { ambilJson, kirimBerkas, kirimJson } from '@/lib/api';
@@ -69,7 +69,7 @@ function TeksTumbuh({ value, onChange, className = '', ...sisa }) {
 
 function TabelDemografi({
   baris, kosongTeks, kolom, jkOtomatis, children,
-  sorotKolom, onSorot, kartuLain,
+  sorotKolom, onSorot, kartuLain, onGantiNamaKolom, onHapusKolom,
 }) {
   return (
     <div className="min-h-0 flex-1 overflow-auto rounded-2xl border border-slate-200 bg-white">
@@ -86,10 +86,10 @@ function TabelDemografi({
                 // Kolom yang sudah dipakai kartu LAIN di kategori ini.
                 const judulLain = kartuLain?.get(k);
                 return (
-                  <th key={k} className={`px-3 py-2 text-right font-medium ${
+                  <th key={k} className={`px-3 py-2 text-left font-medium ${
                     disorot ? 'bg-amber-50' : judulLain ? 'bg-amber-50/40' : ''
                   }`}>
-                    <span className="inline-flex items-center justify-end gap-1.5">
+                    <span className="flex items-center gap-1.5">
                       {/*
                         Bintang = "jadikan nilai utama". Satu kolom saja per
                         kategori — kolom inilah yang jadi kartu di beranda.
@@ -100,7 +100,34 @@ function TabelDemografi({
                         pertanyaan "yang mana yang tampil di beranda?" harus
                         terjawab dalam sekali lihat.
                       */}
-                      <span className={disorot ? 'font-bold text-amber-700' : ''}>{k}</span>
+                      {onGantiNamaKolom ? (
+                        <input
+                          defaultValue={k}
+                          key={k}
+                          onBlur={(e) => onGantiNamaKolom(k, e.target.value)}
+                          onKeyDown={(e) => { if (e.key === 'Enter') e.target.blur(); }}
+                          title="Klik untuk ganti nama kolom"
+                          className={`w-full min-w-[7rem] rounded border bg-white px-2 py-1 text-left text-xs font-bold uppercase tracking-wide outline-none focus:border-brand ${
+                            disorot
+                              ? 'border-amber-400 bg-amber-50 text-amber-700'
+                              : judulLain
+                                ? 'border-amber-200 bg-amber-50/40 text-slate-700'
+                                : 'border-slate-300 text-slate-700 hover:border-slate-400'
+                          }`}
+                        />
+                      ) : (
+                        <span className={disorot ? 'font-bold text-amber-700' : ''}>{k}</span>
+                      )}
+                      {onHapusKolom && kolom.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => onHapusKolom(k)}
+                          title={`Hapus kolom ${k}`}
+                          className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-slate-400 transition-colors hover:bg-rose-600 hover:text-white"
+                        >
+                          <X className="h-3 w-3" />
+                        </button>
+                      )}
                       {jkOtomatis && k === 'JML' && (
                         <span className="text-[0.6rem] font-normal text-slate-400">(otomatis)</span>
                       )}
@@ -223,15 +250,21 @@ function PanelKartuBeranda({
     );
   }
 
+  /*
+   * Dipadatkan sengaja: yang dikerjakan petugas di layar ini adalah TABEL.
+   * Panel ini keterangan sekali-baca — pratinjau lebih kecil, pengaturan
+   * berdampingan, jarak dirapatkan. Tinggi yang dihemat langsung jadi baris
+   * data yang terlihat tanpa menggulir.
+   */
   return (
-    <div className="rounded-2xl border border-amber-300 bg-amber-50/60 p-4">
+    <div className="rounded-xl border border-amber-300 bg-amber-50/60 px-3 py-2.5">
       {/*
         🔴 Nama kartunya disebut, bukan cuma nama kolomnya. Satu kategori bisa
         memasok beberapa kartu; tanpa disebut, petugas tidak punya cara tahu
         kartu MANA yang sedang ia ubah — dan baru sadar setelah beranda berubah.
       */}
-      <p className="mb-1 flex flex-wrap items-center gap-2 text-sm font-semibold text-amber-900">
-        <Star className="h-4 w-4 fill-amber-400 text-amber-500" />
+      <p className="mb-1 flex flex-wrap items-center gap-1.5 text-[0.8rem] font-semibold text-amber-900">
+        <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-500" />
         Mengedit kartu “{(judul || '').trim() || labelKolom(sorot)}” — sumbernya kolom{' '}
         <span className="rounded bg-amber-200/70 px-1.5 py-0.5 font-mono">{sorot}</span>
       </p>
@@ -242,7 +275,7 @@ function PanelKartuBeranda({
         </p>
       )}
       {kartuLain?.size > 0 && (
-        <p className="mb-3 text-xs text-amber-800">
+        <p className="mb-2 text-[0.7rem] text-amber-800">
           Kategori ini juga memasok{' '}
           {[...kartuLain].map(([kol, jdl], i) => (
             <span key={kol}>
@@ -254,44 +287,45 @@ function PanelKartuBeranda({
         </p>
       )}
 
-      <div className="grid gap-4 lg:grid-cols-[minmax(0,15rem)_1fr]">
+      <div className="grid gap-3 lg:grid-cols-[minmax(0,10rem)_1fr]">
         {/* Pratinjau kartu — bentuknya sama dengan yang tampil di beranda. */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-          <div className={`mb-3 flex h-11 w-11 items-center justify-center rounded-2xl ${w.latar}`}>
-            <Ikon className="h-5 w-5 text-white" />
+        <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-3 py-2 shadow-sm lg:block">
+          <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl lg:mb-2 ${w.latar}`}>
+            <Ikon className="h-4 w-4 text-white" />
           </div>
-          <p className="text-[1.6rem] font-bold leading-none tracking-tight text-slate-900">
-            {total === null ? '—' : angka(total)}
-          </p>
-          <p className="mt-1.5 text-[0.66rem] font-semibold uppercase tracking-widest text-slate-500">
-            {judul || labelKolom(sorot)}
-          </p>
-          <p className="mt-2 text-[0.6rem] text-slate-400">Pratinjau kartu beranda</p>
+          <div className="min-w-0">
+            <p className="text-[1.25rem] font-bold leading-none tracking-tight text-slate-900">
+              {total === null ? '—' : angka(total)}
+            </p>
+            <p className="mt-1 truncate text-[0.6rem] font-semibold uppercase tracking-widest text-slate-500">
+              {judul || labelKolom(sorot)}
+            </p>
+          </div>
         </div>
 
-        <div className="space-y-3">
+        <div className="grid gap-2 sm:grid-cols-2">
           <div>
-            <label className="mb-1 block text-xs font-medium text-slate-600">Judul kartu</label>
+            <label className="mb-0.5 block text-[0.7rem] font-medium text-slate-600">Judul kartu</label>
             <Input value={judul} onChange={(e) => onJudul(e.target.value)}
-                   placeholder={labelKolom(sorot)} className="h-9" />
+                   placeholder={labelKolom(sorot)} className="h-8" />
           </div>
 
           <div>
-            <label className="mb-1 block text-xs font-medium text-slate-600">Warna</label>
-            <div className="flex flex-wrap gap-1.5">
+            <label className="mb-0.5 block text-[0.7rem] font-medium text-slate-600">Warna</label>
+            <div className="flex flex-wrap gap-1">
               {Object.entries(WARNA_PRESET).map(([nama, pre]) => (
                 <button key={nama} type="button" onClick={() => onWarna(nama)}
                         title={pre.label}
-                        className={`h-7 w-7 rounded-lg ${pre.latar} ${
-                          warna === nama ? 'ring-2 ring-slate-900 ring-offset-2' : ''
+                        className={`h-6 w-6 rounded-md ${pre.latar} ${
+                          warna === nama ? 'ring-2 ring-slate-900 ring-offset-1' : ''
                         }`} />
               ))}
             </div>
           </div>
 
-          <div>
-            <label className="mb-1 block text-xs font-medium text-slate-600">Ikon</label>
-            <div className="flex max-h-24 flex-wrap gap-1 overflow-y-auto rounded-lg border border-slate-200 bg-white p-1.5">
+          <div className="sm:col-span-2">
+            <label className="mb-0.5 block text-[0.7rem] font-medium text-slate-600">Ikon</label>
+            <div className="flex max-h-14 flex-wrap gap-1 overflow-y-auto rounded-lg border border-slate-200 bg-white p-1">
               {NAMA_IKON.map((nama) => {
                 const I = ikonDari(nama);
                 return (
@@ -518,6 +552,63 @@ export default function EditorDemografi({
     setRows((p) => [...p, {
       kode: '', wilayah: '', level: 5, parentKode: detail.kode, data: kosong,
     }]);
+  };
+
+  // ── Kelola kolom (tambah / ganti nama / hapus) ────────────────────────────
+
+  /**
+   * 🔴 Kolom Excel BUKAN daftar tetap.
+   *
+   * Berkas DKB tiap dinas berbeda kolomnya, dan berubah tahun ke tahun: satu
+   * kabupaten memakai "TENAGA KERJA", yang lain "TENAGA KERJA LAINNYA". Selama
+   * kolom hanya bisa datang dari berkas, satu salah ketik di Excel berarti
+   * kolomnya harus diimpor ulang seluruhnya — atau dibiarkan salah selamanya.
+   */
+  const ubahKunciBaris = (lama, baru) => (rs) => rs.map((r) => {
+    if (!r.data || !(lama in r.data)) return r;
+    const data = {};
+    for (const [k, v] of Object.entries(r.data)) data[k === lama ? baru : k] = v;
+
+    return { ...r, data };
+  });
+
+  const gantiNamaKolom = (lama, mentah) => {
+    const baru = String(mentah || '').trim().toUpperCase();
+    if (!baru || baru === lama) return;
+    if (kolom.includes(baru)) {
+      setPesan({ tipe: 'galat', teks: `Kolom "${baru}" sudah ada` });
+
+      return;
+    }
+    setKolom((ks) => ks.map((k) => (k === lama ? baru : k)));
+    setRows(ubahKunciBaris(lama, baru));
+    // Bintang ikut nama barunya, kalau kolom inilah yang sedang jadi kartu.
+    setSorot((s) => (s === lama ? baru : s));
+    setKolomTarget((t) => (t === lama ? baru : t));
+  };
+
+  const tambahKolom = () => {
+    let n = kolom.length + 1;
+    let nama = `KOLOM${n}`;
+    while (kolom.includes(nama)) { n += 1; nama = `KOLOM${n}`; }
+    setKolom((ks) => [...ks, nama]);
+    setRows((rs) => rs.map((r) => ({ ...r, data: { ...(r.data || {}), [nama]: 0 } })));
+    setPesan({ tipe: 'sukses', teks: `Kolom "${nama}" ditambahkan — klik judulnya untuk ganti nama` });
+  };
+
+  const hapusKolom = (kunci) => {
+    // Satu kolom terakhir tidak boleh ikut hilang: tabel tanpa kolom nilai
+    // tidak bisa diisi apa pun lagi, dan tidak ada jalan menambahkannya balik
+    // selain lewat impor.
+    if (kolom.length <= 1) return;
+    setSorot((s) => (s === kunci ? null : s));
+    setKolom((ks) => ks.filter((k) => k !== kunci));
+    setRows((rs) => rs.map((r) => {
+      const data = { ...(r.data || {}) };
+      delete data[kunci];
+
+      return { ...r, data };
+    }));
   };
 
   // ── Impor (banyak berkas, tanpa menyimpan) ────────────────────────────────
@@ -839,27 +930,21 @@ export default function EditorDemografi({
 
             <TabelDemografi baris={pekonDetail} kolom={kolom} jkOtomatis={jkOtomatis}
                             sorotKolom={sorotNyata} onSorot={alihkanSorot} kartuLain={kartuLain}
+                            onGantiNamaKolom={gantiNamaKolom} onHapusKolom={hapusKolom}
                             kosongTeks="Belum ada desa. Import Excel detail atau klik “Tambah Desa”.">
               {pekonDetail.map((r) => barisTabel(r))}
             </TabelDemografi>
           </>
         ) : (
           <>
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <div className="flex items-center gap-2">
-                <Tombol varian="garis" onClick={() => berkasUtama.current?.click()} disabled={mengimpor}>
-                  {mengimpor ? <Loader2 className="h-4 w-4 animate-spin" /> : <FileUp className="h-4 w-4" />}
-                  Import Excel
-                </Tombol>
-                <Tombol varian="garis" onClick={tambahKecamatan}><Plus className="h-4 w-4" />Tambah Kecamatan</Tombol>
-                <input ref={berkasUtama} type="file" accept=".xlsx" multiple className="hidden"
-                       onChange={(e) => { impor([...e.target.files]); e.target.value = ''; }} />
-              </div>
-              <p className="text-xs text-slate-500">
-                {kecamatan.length} kecamatan · {rows.filter((r) => r.level === 5).length} desa
-              </p>
-            </div>
+            {/*
+              Panel kartu DI ATAS, tombol tabel tepat di atas tabelnya.
 
+              Tombol Import dan Tambah Baris bekerja pada TABEL; menaruhnya
+              jauh di puncak layar, terpisah dari tabel oleh panel setinggi
+              seperempat layar, membuat hubungan keduanya putus. Panel kartu
+              adalah keterangan, bukan alat — ia boleh duduk di atas.
+            */}
             <PanelKartuBeranda
               sorot={sorotNyata}
               sorotAsli={sorot}
@@ -873,9 +958,26 @@ export default function EditorDemografi({
               onWarna={setKartuWarna}
             />
 
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <div className="flex items-center gap-2">
+                <Tombol varian="garis" onClick={() => berkasUtama.current?.click()} disabled={mengimpor}>
+                  {mengimpor ? <Loader2 className="h-4 w-4 animate-spin" /> : <FileUp className="h-4 w-4" />}
+                  Import Excel
+                </Tombol>
+                <Tombol varian="garis" onClick={tambahKecamatan}><Plus className="h-4 w-4" />Tambah Baris</Tombol>
+                <Tombol varian="garis" onClick={tambahKolom}><Plus className="h-4 w-4" />Kolom</Tombol>
+                <input ref={berkasUtama} type="file" accept=".xlsx" multiple className="hidden"
+                       onChange={(e) => { impor([...e.target.files]); e.target.value = ''; }} />
+              </div>
+              <p className="text-xs text-slate-500">
+                {kecamatan.length} kecamatan · {rows.filter((r) => r.level === 5).length} desa
+              </p>
+            </div>
+
             <TabelDemografi baris={kecamatan} kolom={kolom} jkOtomatis={jkOtomatis}
                             sorotKolom={sorotNyata} onSorot={alihkanSorot} kartuLain={kartuLain}
-                            kosongTeks="Belum ada kecamatan. Import Excel atau klik “Tambah Kecamatan”.">
+                            onGantiNamaKolom={gantiNamaKolom} onHapusKolom={hapusKolom}
+                            kosongTeks="Belum ada baris. Import Excel atau klik “Tambah Baris”.">
               {kecamatan.map((r) => barisTabel(r, (baris) => (
                 <button onClick={() => setDetail(baris)}
                         className="rounded px-2 py-1 text-xs font-medium text-brand hover:bg-brand/5">
