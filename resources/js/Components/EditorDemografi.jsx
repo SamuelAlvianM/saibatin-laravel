@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import {
   AlertTriangle, ArrowLeft, Check, Download, FileUp, Layers, Loader2, Plus,
-  Star, Trash2, X,
+  Star, Trash2,
 } from 'lucide-react';
 import { Pesan, Tombol } from '@/Components/Dasbor';
 import { ambilJson, kirimBerkas, kirimJson } from '@/lib/api';
@@ -21,6 +21,52 @@ import { Input } from '@/Components/ui/input';
  * tabel dilepas & dipasang ulang: fokus input hilang setiap satu huruf.
  * Pola yang sama pernah ada di `Pages/Auth/Register.jsx`.
  */
+/**
+ * Sel baris TOTAL: menempel di kaki tabel, dan LATARNYA PEKAT.
+ *
+ * 🔴 Dua hal gampang salah di sini. Pertama, `position: sticky` TIDAK
+ * berlaku pada `<tfoot>` atau `<tr>` di hampir semua peramban — ia hanya
+ * bekerja pada SEL. Kedua, latar setengah tembus membuat baris data terlihat
+ * MENEMBUS angka total; pada layar pemeriksa angka penduduk, dua angka yang
+ * tumpang tindih bukan cuma jelek, ia terbaca keliru.
+ */
+const SEL_TOTAL =
+  'sticky bottom-0 z-20 border-t-2 border-brand bg-slate-100 px-3 py-2 '
+  + 'text-xs font-bold uppercase tracking-wide text-slate-600 '
+  + 'shadow-[0_-3px_8px_rgba(15,23,42,0.08)]';
+
+/**
+ * Medan teks yang MEMBUNGKUS, bukan memotong.
+ *
+ * 🔴 Nama wilayah SIAK kerap lebih panjang daripada kotaknya: "KOTA TIDORE
+ * KEPULAUAN" terpotong jadi "KOTA TIDORE KEPULAI". Pada layar yang dipakai
+ * mengoreksi angka penduduk resmi, nama yang terpotong lebih berbahaya
+ * daripada baris yang sedikit lebih tinggi — dua wilayah bisa terlihat sama.
+ *
+ * `<input>` tidak bisa membungkus, jadi ini `<textarea>` yang tingginya
+ * mengikuti isinya. Enter tidak menyisipkan baris baru; ia menyelesaikan
+ * suntingan, persis seperti kotak isian biasa.
+ */
+function TeksTumbuh({ value, onChange, className = '', ...sisa }) {
+  const sesuaikan = (el) => {
+    if (!el) return;
+    el.style.height = 'auto';
+    el.style.height = `${el.scrollHeight}px`;
+  };
+
+  return (
+    <textarea
+      ref={sesuaikan}
+      rows={1}
+      value={value}
+      onChange={(e) => { sesuaikan(e.currentTarget); onChange?.(e.target.value); }}
+      onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); e.currentTarget.blur(); } }}
+      className={`resize-none overflow-hidden break-normal leading-snug ${className}`}
+      {...sisa}
+    />
+  );
+}
+
 function TabelDemografi({
   baris, kosongTeks, kolom, jkOtomatis, children,
   sorotKolom, onSorot, kartuLain,
@@ -86,6 +132,38 @@ function TabelDemografi({
             </tr>
           </thead>
           <tbody>{children}</tbody>
+
+          {/*
+            🔴 Baris TOTAL — inilah angka yang dipakai kartu beranda.
+
+            Tanpa baris ini, satu-satunya angka besar di layar adalah sel-sel
+            per wilayah, dan wajar disangka kartu beranda mengambil salah
+            satunya. Yang sebenarnya diambil adalah JUMLAH seluruh baris.
+            Menyebutnya di sini membuat keduanya bisa dibandingkan langsung:
+            begitu ada angka yang keliru, petugas melihatnya saat itu juga,
+            bukan berbulan kemudian.
+
+            ⚠️ Yang dijumlah persis baris yang TAMPIL. Editor ini memang
+            hanya menampilkan satu tingkat sekaligus (kecamatan saja, atau desa
+            satu kecamatan saja), jadi tidak ada tingkat yang tercampur dan
+            tidak ada yang terhitung dua kali.
+          */}
+          <tfoot>
+            <tr>
+              <td className={SEL_TOTAL}>Total</td>
+              <td className={`${SEL_TOTAL} font-normal normal-case text-slate-500`}>
+                {baris.length} baris dijumlah
+              </td>
+              {kolom.map((k) => (
+                <td key={k} className={`${SEL_TOTAL} text-right tabular-nums text-slate-900`}>
+                  {baris
+                    .reduce((a, r) => a + (Number(r.data?.[k]) || 0), 0)
+                    .toLocaleString('id-ID')}
+                </td>
+              ))}
+              <td className={SEL_TOTAL} />
+            </tr>
+          </tfoot>
         </table>
       )}
     </div>
@@ -547,10 +625,23 @@ export default function EditorDemografi({
   const simpanKartu = async () => {
     const sebelum = kartuSemua;
     const target = kolomTarget;
+    /*
+     * 🔴 SATU KATEGORI HANYA PUNYA SATU KARTU, jadi menyimpan berarti
+     * MENGGANTI kartu kategori ini — bukan menambah kartu di sebelahnya.
+     *
+     * Dulu yang dibuang hanya kartu dengan kolom yang sama persis, sehingga
+     * membintangi kolom lain pada kategori yang sudah punya kartu menghasilkan
+     * kartu KEDUA. Sejak beranda hanya menampilkan satu kartu per kategori
+     * (lihat KategoriDemografi::selaraskanKartu), kartu kedua itu dibuang saat
+     * dibaca — dan yang dialami petugas adalah tombol yang ditekan, disimpan,
+     * tidak memberi galat, lalu tidak mengubah apa pun di halaman utama.
+     * Kegagalan diam-diam seperti itu lebih buruk daripada penolakan yang jelas.
+     */
     const posisi = sebelum.findIndex((c) => c.kategori === kategori && c.kolom === target);
     const lamaKartu = posisi >= 0 ? sebelum[posisi] : undefined;
 
-    const kartu = sebelum.filter((c) => !(c.kategori === kategori && c.kolom === target));
+    // SELURUH kartu kategori ini dibuang; satu entri baru disisipkan di bawah.
+    const kartu = sebelum.filter((c) => c.kategori !== kategori);
     // Nama kolom NYATA yang ditulis, bukan ejaan lama dari konfigurasi: sekali
     // disimpan, editor dan beranda membaca kolom yang sama persis.
     const kolomBaru = sorot ? (sorotNyata ?? sorot) : null;
@@ -598,13 +689,18 @@ export default function EditorDemografi({
   const barisTabel = (r, aksiTambahan) => (
     <tr key={r.kode || `baru-${r.level}-${rows.indexOf(r)}`} className="border-b border-slate-100">
       <td className="px-3 py-1.5">
+        {/* Lebar minimum cukup untuk 10 digit: tanpa ini kolom Kode terjepit
+            oleh kolom Wilayah yang melebar, dan SELURUH kecamatan tampil
+            sebagai "181" — tak terbedakan satu sama lain. */}
         <Input value={r.kode} inputMode="numeric" placeholder={r.level === 5 ? '10 digit' : '6 digit'}
                onChange={(e) => ubahKolomTeks(r.kode, 'kode', digit(e.target.value))}
-               className={`${kelasSel} font-mono`} aria-label="Kode wilayah" />
+               className={`${kelasSel} min-w-[7.5rem] font-mono`} aria-label="Kode wilayah" />
       </td>
       <td className="px-3 py-1.5">
-        <Input value={r.wilayah} onChange={(e) => ubahKolomTeks(r.kode, 'wilayah', e.target.value)}
-               className={`${kelasSel} min-w-44`} aria-label="Nama wilayah" />
+        <TeksTumbuh value={r.wilayah}
+                    onChange={(v) => ubahKolomTeks(r.kode, 'wilayah', v)}
+                    aria-label="Nama wilayah"
+                    className="w-full min-w-[14rem] rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-900 outline-none focus:border-brand" />
       </td>
       {kolom.map((k) => (
         <td key={k} className="px-3 py-1.5 text-right">
@@ -676,7 +772,10 @@ export default function EditorDemografi({
             )}
           </div>
 
-          <div className="flex shrink-0 items-center gap-2">
+          {/* Membentang PENUH supaya "Kembali" benar-benar di kiri dan
+              Simpan/Export benar-benar di kanan; dengan `shrink-0` wadahnya
+              hanya selebar isinya sehingga `ml-auto` tak punya ruang. */}
+          <div className="flex w-full flex-wrap items-center gap-2">
             {onPeriode && !detail && (
               <PemilihPeriode
                 nilai={periode}
@@ -686,23 +785,36 @@ export default function EditorDemografi({
                 ukuran="kecil"
               />
             )}
-            <a href={`/api/admin/demografi/export?kategori=${encodeURIComponent(kategori)}&${kueriPeriode(periode)}`} download
-               title={`Unduh data ${label} tersimpan sebagai Excel`}
-               className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:border-brand hover:text-brand">
-              <Download className="h-4 w-4" /> Export Excel
-            </a>
-            {detail ? (
-              <Tombol varian="garis" onClick={() => setDetail(null)} disabled={menyimpan}>
-                <ArrowLeft className="h-4 w-4" />Kembali
-              </Tombol>
-            ) : (
-              <Tombol varian="garis" onClick={onTutup} disabled={menyimpan}>
-                <X className="h-4 w-4" />Batal
-              </Tombol>
-            )}
-            <Tombol onClick={simpan} disabled={menyimpan || memuat}>
-              {menyimpan ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />}Simpan
+            {/*
+              🔴 KIRI keluar, KANAN mengerjakan sesuatu.
+
+              Sebelumnya "Batal" duduk berdempetan dengan "Simpan" dan
+              berukuran sama. Pada layar yang dipakai mengoreksi angka
+              penduduk, tombol yang MEMBUANG suntingan tidak boleh bertetangga
+              dengan yang MENYIMPANNYA — satu klik meleset menghapus pekerjaan
+              setengah jam tanpa bisa dikembalikan.
+
+              Namanya juga jadi "Kembali": tombol itu tidak membatalkan apa pun
+              yang sudah tersimpan, ia cuma menutup layar. "Batal" menjanjikan
+              pembatalan yang tidak pernah terjadi.
+            */}
+            <Tombol varian="garis"
+                    onClick={() => (detail ? setDetail(null) : onTutup())}
+                    disabled={menyimpan}
+                    title={detail ? 'Kembali ke daftar kecamatan' : 'Tutup editor'}>
+              <ArrowLeft className="h-4 w-4" />Kembali
             </Tombol>
+
+            <div className="ml-auto flex flex-wrap items-center gap-2">
+              <a href={`/api/admin/demografi/export?kategori=${encodeURIComponent(kategori)}&${kueriPeriode(periode)}`} download
+                 title={`Unduh data ${label} tersimpan sebagai Excel`}
+                 className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:border-brand hover:text-brand">
+                <Download className="h-4 w-4" /> Export Excel
+              </a>
+              <Tombol onClick={simpan} disabled={menyimpan || memuat}>
+                {menyimpan ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />}Simpan
+              </Tombol>
+            </div>
           </div>
         </div>
       </header>
