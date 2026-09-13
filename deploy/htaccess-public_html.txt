@@ -80,45 +80,27 @@
     ExpiresByType image/webp "access plus 1 month"
 </IfModule>
 
-# =============================================================================
-# BEGIN cPanel-generated php ini directives, do not edit
-# Manual editing of this file may result in unexpected behavior.
-# To make changes to this file, use the cPanel MultiPHP INI Editor
-# (Home >> Software >> MultiPHP INI Editor)
-<IfModule php8_module>
-   php_flag display_errors Off
-   php_value max_execution_time 180
-   php_value max_input_time 60
-   php_value max_input_vars 1000
-   php_value memory_limit 512M
-   php_value post_max_size 10M
-   php_value session.gc_maxlifetime 1440
-   php_value session.save_path "/var/cpanel/php/sessions/ea-php82"
-   php_value upload_max_filesize 5M
-   php_flag zlib.output_compression On
-   php_value error_log "error_log"
-   php_flag log_errors On
-</IfModule>
-<IfModule lsapi_module>
-   php_flag display_errors Off
-   php_value max_execution_time 180
-   php_value max_input_time 60
-   php_value max_input_vars 1000
-   php_value memory_limit 512M
-   php_value post_max_size 10M
-   php_value session.gc_maxlifetime 1440
-   php_value session.save_path "/var/cpanel/php/sessions/ea-php82"
-   php_value upload_max_filesize 5M
-   php_flag zlib.output_compression On
-   php_value error_log "error_log"
-   php_flag log_errors On
-</IfModule>
-# END cPanel-generated php ini directives, do not edit
-# =============================================================================
 
-# php -- BEGIN cPanel-generated handler, do not edit
-# Set the "ea-php82" package as the default "PHP" programming language.
-<IfModule mime_module>
-  AddHandler application/x-httpd-ea-php82 .php .php8 .phtml
-</IfModule>
-# php -- END cPanel-generated handler, do not edit
+# =============================================================================
+# 🔴 BLOK BAWAAN cPANEL SENGAJA TIDAK ADA DI SINI.
+#
+# Berkas ini dulu memuat salinan blok "cPanel-generated" dari mesin tempat ia
+# pertama dibuat — termasuk `AddHandler application/x-httpd-ea-php82 .php`.
+# Blok itu MILIK SERVER, bukan milik aplikasi: ia menentukan PHP versi berapa
+# yang menjalankan berkas .php di host tersebut.
+#
+# Terukur 13 Sep 2026 di server SIMPONI Halmahera Selatan. `.htaccess` paket
+# ditambahkan di bawah blok milik server, sehingga AddHandler ea-php82 datang
+# BELAKANGAN dan menang atas ea-php83 milik server. Akibatnya web dijalankan
+# PHP 8.2, `vendor/composer/platform_check.php` menuntut >= 8.3, dan SETIAP
+# halaman menjawab 500 — sementara `php artisan` tetap mulus karena CLI
+# memakai PHP 8.3. Dua jam tersita untuk menemukannya.
+#
+# Blok milik server sudah ada di `public_html/.htaccess` sejak akun dibuat.
+# Yang benar adalah MENAMBAHKAN aturan portal ini di bawahnya, bukan membawa
+# serta blok versi PHP dari mesin lain.
+#
+# Batas PHP (memory_limit, max_execution_time) diatur lewat cPanel → MultiPHP
+# INI Editor, yang menuliskannya ke `.user.ini` — dan pada host ber-PHP-FPM
+# atau lsapi, `.user.ini` itulah yang dipatuhi, bukan php_value di sini.
+# =============================================================================
