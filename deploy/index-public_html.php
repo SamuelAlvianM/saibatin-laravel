@@ -63,4 +63,24 @@ require $app.'/vendor/autoload.php';
 /** @var Application $laravel */
 $laravel = require_once $app.'/bootstrap/app.php';
 
+/*
+ * 🔴 WAJIB. Tanpa baris ini Laravel mengira folder publiknya ada di
+ * `$app/public` — padahal susunan cPanel ini justru memindahkannya ke
+ * `public_html`, dan paket deploy memang TIDAK menyertakan `public/`.
+ *
+ * Akibatnya `public_path()` menunjuk folder yang tidak ada, `@vite` gagal
+ * menemukan `build/manifest.json`, dan SETIAP halaman menjawab 500 — setiap
+ * layout memuat aset, jadi tidak ada satu pun rute yang lolos. Halaman
+ * galatnya pun generik ("Server Error"), tidak menyebut Vite sama sekali.
+ *
+ * Terukur 13 Sep 2026 di SIMPONI Halmahera Selatan. Yang membuatnya lama tidak
+ * ketahuan: `php artisan` tetap mulus (CLI tidak merender Blade), dan di
+ * SAIBATIN gejalanya tidak muncul — tapi hanya karena folder `public/` di sana
+ * tidak sengaja ikut terekstrak ke dalam folder aplikasi. Kebetulan, bukan
+ * rancangan.
+ *
+ * `public_path()` juga dipakai mencari logo kop untuk PDF dan ekspor Excel.
+ */
+$laravel->usePublicPath(__DIR__);
+
 $laravel->handleRequest(Request::capture());
