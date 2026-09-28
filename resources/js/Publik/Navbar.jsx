@@ -312,6 +312,14 @@ function AreaAkun({ user, mobile, onNavigasi, onKeluar }) {
   const punyaDashboard = petugas || user.level === 4;
   const areaHref = punyaDashboard ? '/dashboard' : '/user/pengajuan';
   const areaLabel = punyaDashboard ? 'Dashboard' : 'Pengajuan Saya';
+  /*
+   * Pengaturan akun mengikuti kerangka perannya: petugas/OPD diarahkan ke
+   * versi DI DALAM dashboard (/dashboard/akun — sidebar tetap ada), warga
+   * tetap ke /profil versi publik. `/profil` sendiri juga me-redirect peran
+   * berdashboard ke sana — dua lapis supaya pintu mana pun yang dipakai
+   * berakhir di tempat yang benar.
+   */
+  const akunHref = punyaDashboard ? '/dashboard/akun' : '/profil';
 
   if (mobile) {
     return (
@@ -327,7 +335,7 @@ function AreaAkun({ user, mobile, onNavigasi, onKeluar }) {
            className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent/50">
           <LayoutDashboard className="h-4 w-4" /> {areaLabel}
         </a>
-        <a href="/profil" onClick={onNavigasi}
+        <a href={akunHref} onClick={onNavigasi}
            className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent/50">
           <UserIcon className="h-4 w-4" /> Pengaturan Akun
         </a>
@@ -372,7 +380,7 @@ function AreaAkun({ user, mobile, onNavigasi, onKeluar }) {
         <a href={areaHref} className="flex items-center gap-2 px-4 py-2.5 text-sm transition-colors hover:bg-accent/50">
           <LayoutDashboard className="h-4 w-4" /> {areaLabel}
         </a>
-        <a href="/profil" className="flex items-center gap-2 px-4 py-2.5 text-sm transition-colors hover:bg-accent/50">
+        <a href={akunHref} className="flex items-center gap-2 px-4 py-2.5 text-sm transition-colors hover:bg-accent/50">
           <UserIcon className="h-4 w-4" /> Pengaturan Akun
         </a>
         <div className="my-1 border-t" />

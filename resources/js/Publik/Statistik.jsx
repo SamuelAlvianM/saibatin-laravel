@@ -549,7 +549,11 @@ export default function Statistik() {
       <KartuPeta />
 
       <Dialog open={!!rincian} onOpenChange={(b) => !b && setRincian(null)}>
-        <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-3xl">
+        {/* w-[95vw] max-w-6xl: tabel per kecamatan (agama = 8 kolom) tidak lagi
+            terpotong di kanan dan harus digeser horizontal — pada 1366×768 muat
+            utuh. Di ponsel tetap hampir penuh layar; tabelnya sendiri boleh
+            digulir horizontal di dalam modal. */}
+        <DialogContent className="w-[95vw] max-w-6xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>{rincian?.title ?? 'Data Demografi'}</DialogTitle>
             <DialogDescription>

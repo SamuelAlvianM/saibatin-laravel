@@ -179,7 +179,13 @@ export default function LayoutDashboard({ judul, children, lebar = 'max-w-[1600p
           </div>
         </a>
 
-        <nav className="flex-1 overflow-y-auto p-3">
+        {/*
+          Scrollbar menu di sisi KIRI (bukan kanan, yang berbatasan dengan konten
+          halaman): kontainer gulir diarahkan RTL lalu isinya LTR lagi — ikon,
+          teks, dan badge tidak ikut terbalik.
+        */}
+        <nav dir="rtl" className="gulir-sidebar flex-1 overflow-y-auto">
+          <div dir="ltr" className="p-3">
           {grup.map((g, i) => (
             <div key={i} className="flex flex-col gap-0.5">
               {g.judul && (
@@ -190,14 +196,18 @@ export default function LayoutDashboard({ judul, children, lebar = 'max-w-[1600p
               {g.items.map((m) => <ItemMenu key={m.href} m={m} url={url} />)}
             </div>
           ))}
+          </div>
         </nav>
 
         <div className="flex items-center gap-2 border-t border-slate-200 p-3">
-          <Link href="/profil" title="Profil Saya"
+          {/* Nama akun membuka PENGATURAN AKUN di dalam dashboard ini — bukan
+              /profil yang berkerangka publik (di sana petugas "keluar" dari
+              dashboard). Warga tetap ke /profil versi publik dari navbar situs. */}
+          <Link href="/dashboard/akun" title="Pengaturan Akun"
                 className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-brand/10 text-sm font-bold text-brand transition-colors hover:bg-brand hover:text-white">
             {nama.charAt(0).toUpperCase()}
           </Link>
-          <Link href="/profil" className="min-w-0 flex-1">
+          <Link href="/dashboard/akun" className="min-w-0 flex-1">
             <p className="truncate text-sm font-medium text-slate-700">{nama}</p>
             <p className="text-[0.65rem] text-slate-400">{level === 1 ? 'Super Admin' : 'Operator'}</p>
           </Link>

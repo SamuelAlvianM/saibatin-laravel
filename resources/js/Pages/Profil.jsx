@@ -33,7 +33,9 @@ import { tanpaAwalanDataUrl } from '@/lib/gambar';
 const GRADIEN = { background: 'linear-gradient(135deg, #2176bd, #1b4b72)' };
 
 /** Foto wajah akun sendiri. */
-function KartuFoto({ foto, diminta, onPesan }) {
+/* Diekspor juga untuk halaman akun versi dashboard (`Dashboard/PengaturanAkun.jsx`) —
+ * satu formulir dipakai dua kerangka, jangan disalin ke sana. */
+export function KartuFoto({ foto, diminta, onPesan = () => {} }) {
   const [ambil, setAmbil] = useState(diminta && !foto);
   const [baru, setBaru] = useState('');
   const [sibuk, setSibuk] = useState(false);
@@ -148,7 +150,7 @@ function KartuFoto({ foto, diminta, onPesan }) {
 }
 
 /** Biodata. NIK & No. KK sengaja terkunci — keduanya identitas terverifikasi. */
-function KartuBiodata({ awal, onPesan }) {
+export function KartuBiodata({ awal, onPesan = () => {} }) {
   const [nama, setNama] = useState(awal.nama);
   const [hp, setHp] = useState(awal.hp);
   const [email, setEmail] = useState(awal.email);
@@ -236,7 +238,7 @@ function KartuBiodata({ awal, onPesan }) {
   );
 }
 
-function KartuSandi({ onPesan }) {
+export function KartuSandi({ onPesan = () => {} }) {
   const [lama, setLama] = useState('');
   const [baru, setBaru] = useState('');
   const [konfirmasi, setKonfirmasi] = useState('');

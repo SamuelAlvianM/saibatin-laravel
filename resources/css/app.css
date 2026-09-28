@@ -9,6 +9,49 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ─────────────────────────────────────────────────────────────────
+   Scrollbar pipih tanpa panah — seluruh situs (publik & dashboard).
+
+   🔴 Tanpa ini scrollbar Chromium tampil tebal berwarna abu gelap lengkap
+   dengan tombol panah atas/bawah — makan ruang dan panahnya tak pernah
+   dipakai di era roda tetikus.
+
+   Firefox: `scrollbar-width: thin` + warna dari token tema.
+   WebKit: 6 px, track transparan, thumb abu semi-transparan yang menggelap
+   saat hover, radius penuh, dan TOMBOL PANAHNYA DIHAPUS eksplisit.
+   Selector `::-webkit-scrollbar*` di sini menarget SEMUA elemen yang bisa
+   digulir — halaman, dialog, dan tabel horizontal ikut kena otomatis.
+   ───────────────────────────────────────────────────────────────── */
+@layer base {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(148, 163, 184, 0.55) transparent; /* abu slate semi-transparan */
+  }
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.55);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(100, 116, 139, 0.75); /* menggelap sedikit saat hover */
+  }
+  /* Tanpa tombol panah atas/bawah/kiri/kanan */
+  ::-webkit-scrollbar-button {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+}
+
 /*
   Palet brand SAIBATIN — nilainya diambil dari `app/globals.css` portal Next.js,
   yang sendirinya berasal dari `app.css` aplikasi Laravel 9 asli. Jangan diubah
@@ -543,4 +586,22 @@ html.a11y-no-motion *::after {
   animation-iteration-count: 1 !important;
   transition-duration: 0.01ms !important;
   scroll-behavior: auto !important;
+}
+
+/* Scrollbar menu sidebar dashboard — pipih, berwarna UTAMA portal (bukan abu
+   seperti scrollbar lain), tanpa panah. Posisinya di kiri diatur `dir="rtl"`
+   di LayoutDashboard.jsx. */
+.gulir-sidebar {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--color-brand) 55%, transparent) transparent;
+}
+.gulir-sidebar::-webkit-scrollbar {
+  width: 5px;
+}
+.gulir-sidebar::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--color-brand) 55%, transparent);
+  border-radius: 9999px;
+}
+.gulir-sidebar::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--color-brand) 80%, transparent);
 }

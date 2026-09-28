@@ -229,3 +229,62 @@ Seluruh langkah server dikerjakan user sendiri; sesi ini tidak menyentuh server.
 | [`../saibatin/saibatin-platform/JOURNAL.md`](../saibatin/saibatin-platform/JOURNAL.md) | portal yang sedang digantikan — **masih melayani warga** |
 | `../app.pesbar.002_debug_20260708/` | Laravel 9 asli SAIBATIN — rujukan "dulu fitur ini bentuknya bagaimana" |
 | [`../journal.md`](../journal.md) · [`../HISTORY.md`](../HISTORY.md) §L, §O | keadaan workspace · detail langkah port · sinkronisasi 13 Agu |
+
+## Rapikan UI publik & dashboard — SELESAI di kode (28 Sep 2026), BELUM di-deploy
+
+Dikerjakan agen freebuff (GLM 5.3) dari `../PROMPT-GLM-UI-2026-09-28.md`, lalu diperiksa,
+dibetulkan, dan diuji ujung-ke-ujung oleh Claude. Keempat portal (SIDAKO, TIDORE,
+SAIBATIN-LARAVEL, HALMAHERA) mendapat perubahan yang sama.
+
+| Butir | Hasil |
+|---|---|
+| Modal rincian demografi | `w-[95vw] max-w-6xl`; tabel memakai kelas bersama (kepala kolom abu + teks gelap, kolom wilayah & kepala **sticky**, baris selang-seling, 0 diredupkan, baris TOTAL). Pembungkus tabel diberi `max-h` + `overflow-auto` — tanpa itu `sticky top-0` tak punya acuan dan kepala kolom ikut hilang |
+| Scrollbar | pipih 6 px tanpa panah, seluruh situs; sidebar dashboard 5 px **berwarna utama portal** (`.gulir-sidebar`) di sisi **kiri** (`dir="rtl"` + isi `dir="ltr"`) |
+| Dashboard | tombol Kembali tiap halaman dibuang; "Kembali ke Beranda" di sidebar dibuang (logo kiri atas → beranda). **Kecuali detail permohonan**: tetap punya "← Kembali ke daftar permohonan" (keputusan user) |
+| Pengaturan akun | di dalam dashboard (`/dashboard/akun`, sidebar tetap), memakai komponen formulir profil yang sama; peran berdashboard yang membuka `/profil` dialihkan ke sana; warga tetap `/profil` publik. Nama akun di pojok kiri bawah sidebar = tautan ke sana |
+| Mode Edit beranda | **tidak rusak** — tombolnya ada di keempat portal (hanya dimuat sesudah halaman siap). Diuji login admin: tampil, tidak tertutup, klik → "Selesai Edit" + penanda sunting muncul |
+
+**Uji ujung-ke-ujung 28 Sep (lokal, akun uji):** login admin · seluruh halaman publik &
+dashboard 200 tanpa galat · endpoint admin & publik · detail permohonan/akun · tambah-ubah-hapus
+berita (data uji dihapus lagi) · semua unduhan (PDF permohonan, PDF statistik, Excel).
+
+🔴 **Regresi yang sempat terjadi & dibetulkan:** freebuff MENIMPA `Pages/Dashboard/Akun.jsx`
+(halaman **Manajemen Akun** — daftar/verifikasi/aktivasi akun warga, route `/dashboard/users`,
+±1.100 baris) dengan halaman pengaturan akun pribadi. Dikembalikan dari git; pengaturan akun
+kini berkas tersendiri `Pages/Dashboard/PengaturanAkun.jsx` (route `/dashboard/akun`). **Nama
+`Dashboard/Akun` milik Manajemen Akun — jangan dipakai untuk halaman lain.**
+
+- `ProfilPageController`: pengalihan ke `/dashboard/akun` mencakup Super Admin, Operator, dan
+  **Operator OPD** — sama dengan pagar rute `peran:petugas,opd` (freebuff hanya 1 & 2).
+- Konstanta kelas tabel dipindah ke `resources/js/lib/tabel-demografi.js` (semula
+  `Publik/TabelDemografi.js`, bersebelahan dengan island `TabelDemografi.jsx` — rawan salah impor).
+
+## Halaman "Statistik Kependudukan" (GIS Dukcapil) — SELESAI di kode (28 Sep 2026), BELUM di-deploy
+
+`/media/gis` (menu & URL tetap) kini halaman statistik ala portal Kota Tual, diporting dari
+portal Next.js saudara: filter periode × wilayah (island `FilterStatistik` + `PilihanDropdown`),
+4 kartu, peta choropleth Highcharts Maps (island `PetaStatistik`) + legenda + peringkat +
+rincian + tabel kecamatan, komposisi (island `GrafikBatang`), usia & tren, dan **Unduh PDF**
+`/media/gis/unduh` (dompdf, templat Tual, kop SAIBATIN, 2 halaman).
+
+| Berkas | Isi |
+|---|---|
+| `app/Services/StatistikKependudukan.php` | satu sumber data halaman + PDF; aturan tingkat desa → kecamatan → kabupaten |
+| `app/Services/StatistikPdf.php` + `resources/views/pdf/statistik*.blade.php` | PDF; peta = SVG data URI; "Halaman x dari n" lewat canvas dompdf |
+| `scripts/bangun-peta.mjs` → `resources/js/lib/peta-wilayah.js` (GeoJSON) + `resources/peta/peta-wilayah.json` (SVG) | 11 kecamatan BPS 1813 + tetangga Kaur, Lampung Barat, Tanggamus |
+| `resources/js/lib/peta-label.js` ↔ `StatistikPdf::LABEL` | posisi label — ubah keduanya bersamaan |
+
+🔴 Jebakan yang ketemu:
+- **`@json([...])` multi-baris berisi `fn () =>` / pemanggilan closure → Blade gagal kompilasi
+  ("Unclosed '['"), halaman 500.** Props island dirakit di `@php`, lalu `@json($variabel)`.
+- **php-svg-lib (dompdf) mengabaikan viewBox sebagai batas** → path di luar kotak meluber menutupi
+  judul. Path tetangga untuk PDF dipotong pas di tepi kotak (GeoJSON web tetap lebar).
+- **`counter(pages)` tidak didukung dompdf** ("dari 0") → `page_text()` di canvas.
+
+⚠️ Data produksi 2026 S-I: kategori **jenis-kelamin rusak dari berkas dinas** (nilai tergeser satu
+baris; penduduk tampil 352.541, seharusnya ±181.516 menurut 5 kategori lain). Importer terbukti
+membaca kode & nilai dari baris yang sama — bukan bug kita. Halaman GIS menyebut selisihnya di
+catatan komposisi. Perlu impor ulang berkas jenis kelamin yang benar oleh dinas.
+
+⚠️ Highmaps (peta web) berlisensi terpisah dari Highcharts — pastikan cakupan lisensi sebelum deploy.
+

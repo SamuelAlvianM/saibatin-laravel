@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UserLevel;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -15,12 +16,27 @@ use Inertia\Inertia;
  *
  * Datanya dikirim sebagai props (bukan `fetch` sesudah render) supaya formulir
  * langsung tampil terisi, sama seperti aslinya yang server component.
+ *
+ * 🔴 Peran berdashboard diarahkan ke `/dashboard/akun`. Halaman ini memakai
+ * kerangka publik (`LayoutPengguna` + navbar situs) — bentuk yang benar untuk
+ * warga yang tidak punya dashboard, tapi membuat petugas yang membuka
+ * pengaturan akunnya "keluar" dari dashboard tanpa jalan pulang ke sidebar.
+ * Alur login pertama TIDAK berubah: pengalihan `?lengkapi=foto` hanya
+ * menyangkut warga, jadi warga tidak pernah kena redirect ini.
  */
 class ProfilPageController extends Controller
 {
     public function __invoke(Request $request)
     {
         $u = $request->user()->loadMissing('level:id,nama');
+
+        // Semua peran berdashboard — daftar yang SAMA dengan pagar rute
+        // `/dashboard/akun` (`peran:petugas,opd` di PastikanPeran). Operator
+        // OPD juga punya dashboard (menu pemohon); tanpa dia di sini, OPD yang
+        // membuka /profil tetap "keluar" ke kerangka publik.
+        if (in_array($u->userlevel_id, [UserLevel::SUPER_ADMIN, UserLevel::OPERATOR, UserLevel::OPERATOR_OPD], true)) {
+            return redirect('/dashboard/akun');
+        }
 
         return Inertia::render('Profil', [
             'awal' => [

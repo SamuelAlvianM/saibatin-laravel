@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { ChevronLeft, Loader2 } from 'lucide-react';
 import { labelKolom } from '@/lib/statistik-kartu';
 import { ambilJson } from '@/lib/api';
+import { BARIS_DEMOGRAFI, TABEL_DEMOGRAFI } from '@/lib/tabel-demografi';
 
 /**
  * Rincian satu kartu demografi — port `components/landingpage/demografi-metric.tsx`.
@@ -110,13 +111,15 @@ export default function RincianDemografi({
         </span>
       </div>
 
-      <div className="overflow-x-auto rounded-xl border border-slate-200">
+      {/* Tinggi maksimum + gulir sendiri supaya kepala kolom `sticky top-0` punya
+          acuan — tanpa itu yang tergulir modalnya dan kepala kolom ikut hilang. */}
+      <div className="max-h-[60vh] overflow-auto rounded-xl border border-slate-200">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-slate-200 bg-slate-50 text-left text-slate-500">
-              <th className="px-3 py-2 font-medium">{induk ? 'Desa / Kelurahan' : 'Kecamatan'}</th>
+            <tr className="border-b border-slate-200">
+              <th className={TABEL_DEMOGRAFI.kepalaPertama}>{induk ? 'Desa / Kelurahan' : 'Kecamatan'}</th>
               {kolomTampil.map((k) => (
-                <th key={k} className={`px-3 py-2 text-right font-medium ${k === kolom ? 'text-brand' : ''}`}>
+                <th key={k} className={TABEL_DEMOGRAFI.kepala(k === kolom)}>
                   {labelKolom(k)}
                 </th>
               ))}
@@ -124,8 +127,8 @@ export default function RincianDemografi({
           </thead>
           <tbody>
             {baris.map((r) => (
-              <tr key={r.kode} className="border-b border-slate-100 last:border-0">
-                <td className="px-3 py-2">
+              <tr key={r.kode} className={BARIS_DEMOGRAFI}>
+                <td className={TABEL_DEMOGRAFI.selPertama}>
                   {induk ? (
                     <span className="text-slate-700">{r.wilayah}</span>
                   ) : (
@@ -138,15 +141,25 @@ export default function RincianDemografi({
                   )}
                 </td>
                 {kolomTampil.map((k) => (
-                  <td key={k} className={`px-3 py-2 text-right tabular-nums ${
-                    k === kolom ? 'font-bold text-slate-900' : 'text-slate-500'
-                  }`}>
+                  <td key={k} className={TABEL_DEMOGRAFI.angka(r.data?.[k], k === kolom)}>
                     {angka(r.data?.[k])}
                   </td>
                 ))}
               </tr>
             ))}
           </tbody>
+          <tfoot>
+            <tr className={TABEL_DEMOGRAFI.totalBaris}>
+              <td className={TABEL_DEMOGRAFI.totalLabel}>
+                {induk ? `TOTAL ${induk.wilayah}` : 'TOTAL'}
+              </td>
+              {kolomTampil.map((k) => (
+                <td key={k} className={TABEL_DEMOGRAFI.totalAngka}>
+                  {angka(baris.reduce((a, b) => a + Number(b.data?.[k] ?? 0), 0))}
+                </td>
+              ))}
+            </tr>
+          </tfoot>
         </table>
       </div>
 

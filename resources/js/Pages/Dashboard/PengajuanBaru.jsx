@@ -1,6 +1,6 @@
 import { Link, router, usePage } from '@inertiajs/react';
 import { useState } from 'react';
-import { ArrowLeft, ArrowRight, Clock, EyeOff, FilePlus2, Search, SlidersHorizontal } from 'lucide-react';
+import { ArrowRight, Clock, EyeOff, FilePlus2, Search, SlidersHorizontal } from 'lucide-react';
 import LayoutDashboard from '@/Components/LayoutDashboard';
 import PengaturanLayanan from '@/Components/PengaturanLayanan';
 import { Pesan, Tombol } from '@/Components/Dasbor';
@@ -67,10 +67,6 @@ export default function PengajuanBaru({ daftar, jam, tersembunyi = [], kategori 
     <LayoutDashboard judul="Pengajuan Baru">
       <Pesan pesan={pesan} onTutup={() => setPesan(null)} />
 
-      <Link href="/dashboard"
-            className="mb-4 inline-flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-brand">
-        <ArrowLeft className="h-4 w-4" />Kembali
-      </Link>
 
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
