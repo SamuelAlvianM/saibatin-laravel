@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Gallery;
 use App\Models\News;
 use App\Models\Produk;
+use App\Services\StatistikKependudukan;
+use App\Services\StatistikPdf;
 use App\Support\KategoriDemografi;
 use App\Support\Konten;
 use Illuminate\Http\Request;
@@ -428,10 +430,35 @@ class PublikController extends Controller
         ]);
     }
 
-    /** GIS Dukcapil — `/media/gis`. Peta sebaran penduduk per kecamatan. */
-    public function gis()
+    /**
+     * GIS Dukcapil — `/media/gis`. Halaman statistik kependudukan (menggantikan
+     * peta lingkaran Leaflet, 28 Sep 2026): filter periode × wilayah, kartu,
+     * peta choropleth + peringkat + tabel kecamatan, komposisi, tren.
+     *
+     * `?periode=2026-1&wilayah=<kode>&ukuran=penduduk|kk|jiwa-kk|rasio-jk`.
+     * Periode/wilayah yang tidak dikenal jatuh ke terbaru / seluruh kabupaten.
+     */
+    public function gis(Request $request, StatistikKependudukan $statistik)
     {
-        return view('publik.gis');
+        return view('publik.gis', [
+            's' => $statistik->ambil(
+                StatistikKependudukan::bacaKunciPeriode($request->query('periode')),
+                $request->query('wilayah'),
+            ),
+            'ukuran' => StatistikKependudukan::bacaUkuran($request->query('ukuran')),
+        ]);
+    }
+
+    /** PDF laporan statistik — `/media/gis/unduh`, data sama dengan halamannya. */
+    public function gisPdf(Request $request, StatistikKependudukan $statistik, StatistikPdf $pdf)
+    {
+        $s = $statistik->ambil(
+            StatistikKependudukan::bacaKunciPeriode($request->query('periode')),
+            $request->query('wilayah'),
+        );
+        abort_if($s === null, 404, 'Data kependudukan belum tersedia.');
+
+        return $pdf->unduh($s);
     }
 
     /** Laporan Data Demografi — `/media/demografi`. */

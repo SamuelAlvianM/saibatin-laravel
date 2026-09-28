@@ -109,6 +109,28 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/pengajuan-baru', [PengajuanPetugasController::class, 'tampilkan']);
         Route::get('/pengajuan-baru/{slug}', [PengajuanPetugasController::class, 'form']);
+
+        /*
+         * Pengaturan akun DI DALAM kerangka dashboard (sidebar tetap tampil).
+         * Menerima props yang sama dengan `/profil` — keduanya memakai kartu
+         * formulir yang sama di `Pages/Profil.jsx`. `/profil` sendiri tetap ada
+         * untuk warga dan me-redirect level 1/2 ke sini (lihat
+         * `ProfilPageController`); dua-duanya ada supaya pintu mana pun yang
+         * dipakai petugas berakhir di tempat yang benar.
+         */
+        Route::get('/akun', fn (Request $r) => Inertia::render('Dashboard/PengaturanAkun', [
+            'awal' => [
+                'userId' => $r->user()->user_id,
+                'nama' => $r->user()->user_fullname ?? '',
+                'nik' => $r->user()->user_nik ?? '',
+                'nokk' => $r->user()->user_nokk ?? '',
+                'hp' => $r->user()->user_hp ?? '',
+                'email' => $r->user()->user_email ?? '',
+                'alamat' => $r->user()->ket ?? '',
+                'levelNama' => $r->user()->level->nama ?? '',
+                'foto' => $r->user()->user_foto,
+            ],
+        ]));
     });
 
     // ── Khusus petugas (memproses, mengelola) ───────────────────────────────
@@ -246,6 +268,8 @@ Route::get('/survei-kepuasan', [App\Http\Controllers\PublikController::class, 's
 // 🔴 Ketiganya HARUS di bawah `/media/berita` di atas — `/media/{slug}` tidak
 // dipakai justru supaya tidak menelan alamat berita.
 Route::get('/media/gis', [App\Http\Controllers\PublikController::class, 'gis'])->name('gis');
+Route::get('/media/gis/unduh', [App\Http\Controllers\PublikController::class, 'gisPdf'])
+    ->middleware('throttle:20,1')->name('gis.unduh');
 Route::get('/media/demografi', [App\Http\Controllers\PublikController::class, 'demografi'])
     ->name('demografi');
 Route::redirect('/media/peta', '/media/gis', 301);
