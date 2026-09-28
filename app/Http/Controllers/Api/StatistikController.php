@@ -132,13 +132,38 @@ class StatistikController extends Controller
                  * Nol adalah pernyataan — "kabupaten ini punya 0 kepala
                  * keluarga". Beranda menampilkan "—" untuk null, bukan angka.
                  */
+                /*
+                 * 🔴 Kartu yang kolomnya BELUM DIPILIH petugas tidak boleh
+                 * berbunyi "belum ada data" bila datanya jelas ada.
+                 *
+                 * `selaraskanKartu` sengaja melahirkan kartu berkolom kosong
+                 * (bintang di editor demografi belum ditekan). Terukur di
+                 * SAIBATIN 28 Sep 2026: agama, pekerjaan, pendidikan lengkap
+                 * 129 baris, tapi beranda publik menulis "Belum ada data" —
+                 * warga membacanya sebagai data hilang.
+                 *
+                 * Tampilkan butir TERBESAR kategori itu ("Agama: Islam") hanya
+                 * di keluaran ini; tidak ada yang disimpan, jadi begitu
+                 * petugas membintangi kolom, pilihan mereka yang menang.
+                 */
+                if ($k['kategori'] && $k['kolom'] === '') {
+                    $utama = $this->kolomUtama($barisDemografi, $k['kategori']);
+                    if ($utama !== null) {
+                        $k['title'] = $k['title'].': '.$this->labelKolom($utama);
+                        $k['kolom'] = $utama;
+                        $k['badgeKolom'] = self::KOLOM_TOTAL_KATEGORI;
+                    }
+                }
+
                 $nilai = ($k['kategori'] && $k['kolom'])
                     ? $this->jumlahKolom($barisDemografi, $k['kategori'], $k['kolom'])
                     : null;
 
                 $badge = null;
                 if (! empty($k['badgeKolom']) && $nilai !== null) {
-                    $dasar = $this->jumlahKolom($barisDemografi, $k['kategori'], $k['badgeKolom']);
+                    $dasar = $k['badgeKolom'] === self::KOLOM_TOTAL_KATEGORI
+                        ? $this->totalKategori($barisDemografi, $k['kategori'])
+                        : $this->jumlahKolom($barisDemografi, $k['kategori'], $k['badgeKolom']);
                     $badge = ($dasar !== null && $dasar > 0) ? round($nilai / $dasar * 100).'%' : null;
                 }
 
@@ -214,6 +239,81 @@ class StatistikController extends Controller
      * (level 4) bila belum. Kalau keduanya dijumlah sekaligus, angkanya jadi
      * DUA KALI LIPAT — kecamatan adalah total pekon di bawahnya.
      */
+    /** Penanda badge "persen dari seluruh butir kategori" (bukan nama kolom data). */
+    private const KOLOM_TOTAL_KATEGORI = '__total_kategori__';
+
+    /**
+     * Butir yang TIDAK layak jadi wajah kategori saat kolom belum dipilih:
+     * ringkasan ("JML", "JUMLAH …"), penanda berkas ("LEVEL"), dan golongan
+     * sisa — "Agama: Tidak diketahui" atau "Pendidikan: Belum sekolah" di
+     * beranda menyesatkan walau angkanya memang terbesar.
+     */
+    private const POLA_BUKAN_UTAMA = '/^(JML|JUMLAH|TOTAL|KK_JML|JML_KK|JML_WKTP|LEVEL|TDK|TIDAK|BELUM|BLM|LAIN)/i';
+
+    /** Baris satu tingkat saja (desa → kecamatan → kabupaten), sama dengan jumlahKolom. */
+    private function barisSetingkat($baris, string $kategori)
+    {
+        $sekategori = $baris->where('kategori', $kategori);
+        foreach ([
+            DemografiWilayah::LEVEL_KELURAHAN,
+            DemografiWilayah::LEVEL_KECAMATAN,
+            DemografiWilayah::LEVEL_KABUPATEN,
+        ] as $tingkat) {
+            $pada = $sekategori->where('level', $tingkat);
+            if ($pada->isNotEmpty()) {
+                return $pada;
+            }
+        }
+
+        return collect();
+    }
+
+    /** Kolom butir bernilai terbesar di satu kategori, atau null bila tak ada yang layak. */
+    private function kolomUtama($baris, string $kategori): ?string
+    {
+        $dipakai = $this->barisSetingkat($baris, $kategori);
+        if ($dipakai->isEmpty()) {
+            return null;
+        }
+
+        $terbaik = null;
+        $maks = 0;
+        foreach (array_keys($dipakai->first()->data ?? []) as $kolom) {
+            if (preg_match(self::POLA_BUKAN_UTAMA, trim((string) $kolom))) {
+                continue;
+            }
+            $jumlah = $dipakai->sum(fn ($d) => (float) ($d->data[$kolom] ?? 0));
+            if ($jumlah > $maks) {
+                $maks = $jumlah;
+                $terbaik = (string) $kolom;
+            }
+        }
+
+        return $terbaik;
+    }
+
+    /** Jumlah seluruh butir kategori (tanpa kolom ringkasan/penanda) — dasar persen. */
+    private function totalKategori($baris, string $kategori): ?int
+    {
+        $dipakai = $this->barisSetingkat($baris, $kategori);
+        if ($dipakai->isEmpty()) {
+            return null;
+        }
+
+        $kolom = array_filter(
+            array_keys($dipakai->first()->data ?? []),
+            fn ($k) => ! preg_match('/^(JML|JUMLAH|TOTAL|KK_JML|JML_KK|JML_WKTP|LEVEL)/i', trim((string) $k)),
+        );
+
+        return (int) $dipakai->sum(fn ($d) => array_sum(array_map(fn ($k) => (float) ($d->data[$k] ?? 0), $kolom)));
+    }
+
+    /** "SLTA/SEDERAJAT" → "Slta/Sederajat", "ISLAM" → "Islam". */
+    private function labelKolom(string $kolom): string
+    {
+        return mb_convert_case(mb_strtolower(str_replace('_', ' ', $kolom)), MB_CASE_TITLE);
+    }
+
     private function jumlahKolom($baris, string $kategori, string $kolom): ?int
     {
         /*

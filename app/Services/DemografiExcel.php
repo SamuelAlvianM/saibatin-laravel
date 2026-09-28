@@ -31,7 +31,12 @@ class DemografiExcel
     private const BARIS_HEADER_MAKS = 15;
 
     /** Kepala kolom yang bukan data: penanda wilayah & penomoran laporan. */
-    private const BUKAN_KOLOM_NILAI = ['IDEM', 'KODE', 'WILAYAH', 'NO', 'NO.'];
+    /*
+     * Kolom penanda/penomoran, bukan angka kependudukan. `LEVEL` ikut sejak
+     * 28 Sep 2026: berkas jenis kelamin SAIBATIN 2026 S-I membawanya, lalu
+     * tersimpan sebagai "kolom nilai" dan muncul di tabel publik & ekspor.
+     */
+    private const BUKAN_KOLOM_NILAI = ['IDEM', 'KODE', 'WILAYAH', 'NO', 'NO.', 'LEVEL'];
 
     public function __construct(private readonly StatistikExcel $statistik) {}
     /**
