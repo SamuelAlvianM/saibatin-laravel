@@ -56,6 +56,46 @@ export default function PetaStatistik({ kecamatan = [], ukuran = 'penduduk', sat
 
   const sempit = ukuranPx.w > 0 && ukuranPx.w < 560;
 
+  /*
+   * Sorot dari luar peta: arahkan kursor ke baris peringkat / tabel kecamatan
+   * (elemen ber-atribut `data-sorot-kode`, dirender Blade) → kecamatan itu
+   * menyala di peta lengkap dengan tooltip-nya. Didelegasikan di `document`
+   * supaya daftar peringkat tetap HTML biasa dari server.
+   */
+  const petaRef = useRef(null);
+  useEffect(() => {
+    const kodeDari = (t) => (t instanceof Element ? t.closest('[data-sorot-kode]')?.dataset.sorotKode : undefined) ?? null;
+    const titikKec = (kode) => {
+      const chart = petaRef.current?.chart;
+      const seri = chart?.series.find((x) => x.name === 'Kecamatan');
+      return { chart, seri, titik: kode ? seri?.points.find((p) => p.kode === kode) : undefined };
+    };
+    const lepas = () => {
+      const { chart, seri } = titikKec(null);
+      seri?.points.forEach((p) => p.setState(''));
+      chart?.tooltip.hide(0);
+    };
+    const masuk = (e) => {
+      const kode = kodeDari(e.target);
+      if (!kode) return;
+      const { chart, titik } = titikKec(kode);
+      if (!chart || !titik) return;
+      lepas();
+      titik.setState('hover');
+      chart.tooltip.refresh(titik);
+    };
+    const keluar = (e) => {
+      const dari = kodeDari(e.target);
+      if (dari && kodeDari(e.relatedTarget) !== dari) lepas();
+    };
+    document.addEventListener('mouseover', masuk);
+    document.addEventListener('mouseout', keluar);
+    return () => {
+      document.removeEventListener('mouseover', masuk);
+      document.removeEventListener('mouseout', keluar);
+    };
+  }, []);
+
   const options = useMemo(() => {
     const perNama = new Map(kecamatan.map((k) => [normalNama(k.nama), k]));
     const nilai = kecamatan.map((k) => nilaiUkuran(k, ukuran)).filter((n) => n !== null && n !== undefined);
@@ -167,7 +207,9 @@ export default function PetaStatistik({ kecamatan = [], ukuran = 'penduduk', sat
           borderColor: '#ffffff',
           borderWidth: 1.2,
           cursor: 'pointer',
-          states: { hover: { brightness: 0.12, borderColor: '#ffffff' } },
+          // Sorot = sedikit LEBIH GELAP + garis tepi tegas. Mencerahkan (brightness +)
+          // membuat kelas warna terterang nyaris putih — terlihat seperti hilang.
+          states: { hover: { brightness: -0.12, borderColor: '#1e293b', borderWidth: 2 } },
           point: {
             events: {
               click() {
@@ -224,7 +266,7 @@ export default function PetaStatistik({ kecamatan = [], ukuran = 'penduduk', sat
 
   return (
     <div ref={wadah} className="h-full w-full">
-      {ukuranPx.h > 0 && <HighchartsReact highcharts={Highcharts} constructorType="mapChart" options={options} />}
+      {ukuranPx.h > 0 && <HighchartsReact ref={petaRef} highcharts={Highcharts} constructorType="mapChart" options={options} />}
     </div>
   );
 }

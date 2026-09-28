@@ -188,7 +188,8 @@
                             <p class="mt-6 text-sm font-medium text-slate-700">Peringkat {{ mb_strtolower($info['label']) }}</p>
                             <ol class="mt-2 space-y-1">
                                 @foreach ($peringkat as $i => $p)
-                                    <li>
+                                    {{-- data-sorot-kode: kursor di baris ini menyalakan kecamatannya di peta. --}}
+                                    <li data-sorot-kode="{{ $p['k']['kode'] }}">
                                         <a href="{{ $kueri(['wilayah' => $p['k']['kode']]) }}"
                                            class="flex items-center gap-3 rounded-lg px-2 py-1.5 text-sm transition hover:bg-slate-50 {{ $p['k']['kode'] === $kecDipilih ? 'bg-amber-50 ring-1 ring-amber-200' : '' }}">
                                             <span class="w-5 text-right text-xs text-slate-400">{{ $i + 1 }}</span>
@@ -243,7 +244,7 @@
                             </thead>
                             <tbody class="divide-y divide-slate-100">
                                 @foreach (collect($s['kecamatan'])->sortByDesc(fn ($k) => $k['penduduk'] ?? -1) as $k)
-                                    <tr class="{{ $k['kode'] === $kecDipilih ? 'bg-amber-50/60' : '' }}">
+                                    <tr data-sorot-kode="{{ $k['kode'] }}" class="transition-colors hover:bg-slate-50 {{ $k['kode'] === $kecDipilih ? 'bg-amber-50/60' : '' }}">
                                         <td class="px-4 py-2.5"><a href="{{ $kueri(['wilayah' => $k['kode']]) }}" class="text-slate-800 hover:text-brand">{{ S::namaCantik($k['nama']) }}</a></td>
                                         <td class="px-4 py-2.5 text-right tabular-nums">{{ S::angka($k['penduduk']) }}</td>
                                         <td class="px-4 py-2.5 text-right tabular-nums">{{ S::angka($k['kk']) }}</td>
