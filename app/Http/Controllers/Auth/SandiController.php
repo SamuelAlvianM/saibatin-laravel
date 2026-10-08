@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Support\Balasan;
+use App\Support\KlienMobile;
 use App\Support\StatusAkun;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -65,8 +67,15 @@ class SandiController extends Controller
 
         // 🔴 Balasannya SELALU sama, ada atau tidak ada akunnya. Kalau dibedakan,
         // halaman ini berubah jadi alat memastikan NIK mana yang punya akun aktif.
-        return back()->with('sukses',
-            'Info: Jika NIK terdaftar, instruksi reset password telah dikirim ke kontak terdaftar.');
+        $pesan = 'Info: Jika NIK terdaftar, instruksi reset password telah dikirim ke kontak terdaftar.';
+
+        // Tautan di surel tetap membuka halaman reset di WEBSITE — aplikasi
+        // cukup meneruskan permintaannya.
+        if (KlienMobile::dari($request)) {
+            return Balasan::ok(null, [$pesan]);
+        }
+
+        return back()->with('sukses', $pesan);
     }
 
     public function formReset(Request $request)

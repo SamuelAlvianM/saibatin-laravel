@@ -13,6 +13,7 @@ use App\Models\SkmJawaban;
 use App\Models\User;
 use App\Models\UserLevel;
 use App\Services\PencacahKunjungan;
+use App\Support\Balasan;
 use App\Support\StatusAkun;
 use Illuminate\Support\Carbon;
 use Inertia\Inertia;
@@ -60,6 +61,29 @@ class DashboardController extends Controller
             return redirect('/user/pengajuan');
         }
 
+        return Inertia::render('Dashboard/Beranda', $this->ringkasan($u));
+    }
+
+    /**
+     * Angka yang sama untuk aplikasi mobile — `GET /api/mobile/v1/dashboard`.
+     *
+     * Docblock kelas di atas menolak endpoint terpisah karena "dua tempat yang
+     * harus dijaga sinkron". Itu tetap dihindari: halaman web dan endpoint ini
+     * memanggil `ringkasan()` yang sama, jadi sumbernya tetap satu.
+     */
+    public function ringkasanJson()
+    {
+        $u = request()->user();
+
+        if (! $u->isPetugas()) {
+            return Balasan::gagal(['Ringkasan dashboard hanya untuk petugas'], 403);
+        }
+
+        return Balasan::ok($this->ringkasan($u));
+    }
+
+    private function ringkasan(User $u): array
+    {
         $kini = Carbon::now();
         $awalBulan = $kini->copy()->startOfMonth();
         $awal6Bulan = $kini->copy()->startOfMonth()->subMonths(5);
@@ -106,7 +130,7 @@ class DashboardController extends Controller
         $perLevel = User::selectRaw('userlevel_id, COUNT(*) c')->groupBy('userlevel_id')->pluck('c', 'userlevel_id');
         $level = fn (array $ids) => (int) collect($ids)->sum(fn ($i) => (int) ($perLevel[$i] ?? 0));
 
-        return Inertia::render('Dashboard/Beranda', [
+        return [
             'permohonan' => [
                 'total' => $totalPermohonan,
                 'perStatus' => [
@@ -157,6 +181,6 @@ class DashboardController extends Controller
                         'pelaku' => $l->user->user_fullname ?? $l->user->user_id ?? 'Petugas',
                     ])
                 : [],
-        ]);
+        ];
     }
 }

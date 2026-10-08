@@ -10,6 +10,8 @@ use App\Services\FotoProfil;
 use App\Services\Otp;
 use App\Services\Pemberitahuan;
 use App\Support\AlasanTolak;
+use App\Support\Balasan;
+use App\Support\KlienMobile;
 use App\Support\StatusAkun;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -37,6 +39,17 @@ class RegisterController extends Controller
     ) {}
 
     public function tampilkan(Request $request)
+    {
+        return Inertia::render('Auth/Register', $this->dataFormulir($request));
+    }
+
+    /** Bahan formulir daftar untuk aplikasi mobile — `GET auth/register`. */
+    public function formulirJson(Request $request)
+    {
+        return Balasan::ok($this->dataFormulir($request));
+    }
+
+    private function dataFormulir(Request $request): array
     {
         // Warga yang pendaftarannya DITOLAK datang ke sini dari Cek Status
         // membawa NIK-nya, supaya cukup memperbaiki bagian yang ditandai petugas
@@ -68,14 +81,14 @@ class RegisterController extends Controller
             }
         }
 
-        return Inertia::render('Auth/Register', [
+        return [
             'kecamatan' => Wilayah::where('jenis', Wilayah::KECAMATAN)
                 ->orderBy('nama')->pluck('nama'),
             'otpWajib' => $this->otp->wajib(),
             'otpKanal' => $this->otp->kanal() ?? 'email',
             'prefill' => $prefill,
             'perbaiki' => $perbaiki,
-        ]);
+        ];
     }
 
     public function daftar(Request $request)
@@ -142,10 +155,14 @@ class RegisterController extends Controller
                 throw ValidationException::withMessages(['nik' => 'Info: NIK sudah terdaftar dan aktif. Silahkan Login (N-03)']);
             }
             if ($akunLama->status !== StatusAkun::DITOLAK) {
-                return redirect('/cek-status?nik='.$data['nik'])->with(
-                    'sukses',
-                    'Info: NIK ini sudah pernah didaftarkan. Kami arahkan ke halaman status pendaftaran.'
-                );
+                $pesan = 'Info: NIK ini sudah pernah didaftarkan. Kami arahkan ke halaman status pendaftaran.';
+
+                // Aplikasi: 409 + petunjuk ke Cek Status, padanan redirect di bawah.
+                if (KlienMobile::dari($request)) {
+                    return Balasan::gagal([$pesan], 409, ['cekStatus' => ['nik' => $data['nik']]]);
+                }
+
+                return redirect('/cek-status?nik='.$data['nik'])->with('sukses', $pesan);
             }
         }
 
@@ -216,8 +233,14 @@ class RegisterController extends Controller
             refId: $user->id,
         ));
 
-        return redirect('/cek-status?nik='.$data['nik'])->with('sukses', $akunLama
+        $pesan = $akunLama
             ? 'Info: Pendaftaran ulang terkirim. Data Anda diperbarui dan kembali menunggu verifikasi petugas.'
-            : 'Info: Permohonan akun Anda sedang diproses dan menunggu verifikasi/aktivasi');
+            : 'Info: Permohonan akun Anda sedang diproses dan menunggu verifikasi/aktivasi';
+
+        if (KlienMobile::dari($request)) {
+            return Balasan::ok(['nik' => $data['nik'], 'status' => StatusAkun::MENUNGGU], [$pesan], 201);
+        }
+
+        return redirect('/cek-status?nik='.$data['nik'])->with('sukses', $pesan);
     }
 }

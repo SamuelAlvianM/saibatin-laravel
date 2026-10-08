@@ -288,3 +288,30 @@ catatan komposisi. Perlu impor ulang berkas jenis kelamin yang benar oleh dinas.
 
 ⚠️ Highmaps (peta web) berlisensi terpisah dari Highcharts — pastikan cakupan lisensi sebelum deploy.
 
+
+## API aplikasi mobile — SELESAI di kode (8 Okt 2026), BELUM di-deploy
+
+Permintaan user: aplikasi mobile untuk **warga dan petugas**, dikerjakan rekan (Galang/Manda)
+yang mengambil kode dari GitHub. Panduan untuk mereka: [`docs/API-MOBILE.md`](docs/API-MOBILE.md).
+
+| Bagian | Isi |
+|---|---|
+| Auth | **Laravel Sanctum 4.3**, token Bearer, berlaku 90 hari (`SANCTUM_EXPIRATION`, menit). `config/sanctum.php` `guard => []` — Sanctum HANYA untuk token |
+| Prefix | `/api/mobile/v1/*` — stateless (`api`), tanpa sesi & CSRF. Didaftarkan lewat `then:` di `bootstrap/app.php` |
+| Reuse | `routes/mobile.php` memuat ULANG seluruh `routes/api.php` → 82 endpoint website ikut tersedia. Kuncinya `PakaiTokenMobile`: `Auth::shouldUse('sanctum')`, jadi `auth`, `peran:*`, dan `$request->user()` di controller lama membaca token |
+| Endpoint baru (13) | `auth/login`, `auth/logout`, `auth/me`, `auth/register` (GET bahan + POST), `auth/otp/*`, `auth/cek-status`, `auth/ajukan-ulang`, `auth/forgot-password`, `layanan`, `layanan/{slug}`, `dashboard`, `uploads/{jalur}` |
+| Galat | di prefix mobile, validasi/401/403/404/429 memakai kontrak `Balasan` (`{error[], success[], data, html[]}`); 422 menyertakan `data.kolom` |
+| Controller bersama | `RegisterController::daftar` & `SandiController::kirimTautan` membalas JSON bila `KlienMobile::dari($request)`, redirect seperti biasa untuk website. `DashboardController` → `ringkasan()` dipakai halaman web dan `ringkasanJson()` |
+| Tambahan web | `GET /api/admin/permohonan/{id}` kini juga mengirim `alasanPilihan` & `alasanWajibRincian` (aditif) |
+
+**Uji 8 Okt (lokal):** 54 uji lolos, termasuk `tests/Feature/ApiMobileTest.php` (9 uji, read-only lewat
+`Sanctum::actingAs`). Ujung-ke-ujung dengan curl: login benar/salah/kosong, `me`, dashboard, layanan +
+formulir + prefill, warga 403 di endpoint petugas, unggah berkas → pemilik & petugas 200, warga lain &
+tanpa token 404, logout mencabut token, website (`/api/*` sesi, CSRF 419, halaman publik) tidak berubah.
+Token & berkas uji sudah dihapus.
+
+🔴 Saat deploy: **`php artisan migrate --force`** (tabel baru `personal_access_tokens`) dan unggah `vendor/`
+yang memuat `laravel/sanctum`. Tanpa tabel itu login mobile galat 500; website tidak terpengaruh.
+
+⚠️ Urutan di `routes/mobile.php`: endpoint khusus mobile HARUS di atas `require routes/api.php` —
+catch-all `POST {layanan}/{aksi}` di sana menelan rute dua-segmen seperti `auth/login`.

@@ -325,6 +325,12 @@ class PermohonanAdminController extends Controller
              * permohonan yang berbeda punya isian dan lampiran yang berbeda.
              */
             'rincianPilihan' => AlasanTolakPermohonan::pilihan($form),
+
+            // Daftar alasan penolakan yang diterima `update()`. Website memakai
+            // salinannya sendiri di React; aplikasi mobile membacanya dari sini
+            // supaya tidak ada daftar ketiga yang bisa berbeda dari server.
+            'alasanPilihan' => AlasanTolakPermohonan::ALASAN,
+            'alasanWajibRincian' => AlasanTolakPermohonan::WAJIB_RINCIAN,
         ]]);
     }
 
