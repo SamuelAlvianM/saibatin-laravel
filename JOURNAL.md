@@ -289,7 +289,7 @@ catatan komposisi. Perlu impor ulang berkas jenis kelamin yang benar oleh dinas.
 ⚠️ Highmaps (peta web) berlisensi terpisah dari Highcharts — pastikan cakupan lisensi sebelum deploy.
 
 
-## API aplikasi mobile — SELESAI di kode (8 Okt 2026), BELUM di-deploy
+## API aplikasi mobile — LIVE di produksi sejak 8 Okt 2026
 
 Permintaan user: aplikasi mobile untuk **warga dan petugas**, dikerjakan rekan (Galang/Manda)
 yang mengambil kode dari GitHub. Panduan untuk mereka: [`docs/API-MOBILE.md`](docs/API-MOBILE.md).
@@ -338,3 +338,22 @@ Yang DITEMUKAN & dibetulkan:
    `FotoProfil::gambarSah()` (membaca angka ajaib berkasnya) SEBELUM akun dibuat → 422 N-18/N-19.
 3. **`rincian` penolakan berbentuk objek → 500** (`(string) array`). Butir non-teks kini dibuang → 422.
 4. **Galat 500 di jalur mobile** kini tetap berkontrak `Balasan` (pesan umum bila `APP_DEBUG=false`).
+
+### Deploy ke cPanel (8 Okt 2026, ±11:50 WIB)
+
+User mengunggah `deploy/dist/saibatin-app.zip` (41 MB) lewat File Manager; Claude menjalankan sisanya
+lewat SSH ke akun cPanel. Rincian akses sengaja TIDAK ditulis di repo.
+
+1. Kode di server dibandingkan md5 dengan lokal per `fee5a8e` → **identik**, kecuali berkas API
+   mobile (tidak ada hotfix server yang tertimpa). `app/Services/Recaptcha.php` hanya ada di server —
+   sisa lama, tak dipakai, dibiarkan.
+2. Backup kode lama: `~/saibatin-kode.bak-20261008.tgz` (38 MB, tanpa storage). Pulihkan:
+   `cd ~ && tar xzf saibatin-kode.bak-20261008.tgz && cd saibatin-app && php artisan optimize:clear && php artisan config:cache && php artisan route:cache`
+3. `unzip -oq saibatin-app.zip -d saibatin-app` → `config:cache` → `migrate --force` (HANYA
+   `personal_access_tokens`) → `route:cache` → `view:cache`.
+4. Verifikasi dari luar: halaman website 200; `/api/mobile/v1` publik, 401/422 berkontrak; token
+   sementara Super Admin → `auth/me`, `dashboard` (12.663 permohonan), `layanan`, antrean 200 —
+   **header Authorization lolos Apache**; token dicabut, total token produksi 0. Log tanpa galat.
+5. Sertifikat Let's Encrypt (YR1 → Root YR → ISRG X1) rantainya lengkap — aman untuk Android.
+
+`saibatin-public.zip` ikut terunggah tapi TIDAK diekstrak (tampilan tidak berubah).
