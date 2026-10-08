@@ -81,4 +81,16 @@ return Application::configure(basePath: dirname(__DIR__))
                 }], $kode);
             }
         });
+
+        // Galat tak terduga (500). Didaftarkan TERAKHIR — callback dicoba
+        // berurutan, jadi jenis yang lebih khusus di atas tetap menang. Pesan
+        // aslinya hanya ditampilkan saat APP_DEBUG; di produksi cukup kalimat
+        // umum (jejaknya tetap tercatat di log, `render` tidak menghentikan `report`).
+        $exceptions->render(function (Throwable $e, Request $request) {
+            if (KlienMobile::dari($request) && ! $e instanceof Illuminate\Http\Exceptions\HttpResponseException) {
+                return Balasan::gagal([config('app.debug')
+                    ? $e::class.': '.$e->getMessage()
+                    : 'Terjadi kesalahan di server. Silakan coba lagi.'], 500);
+            }
+        });
     })->create();

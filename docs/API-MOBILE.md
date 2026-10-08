@@ -45,6 +45,7 @@ Aturan membacanya: **cek kode HTTP**, lalu tampilkan `error` bila ada.
 | 422 | isian tidak valid — `data.kolom` berisi galat per kolom |
 | 423 | permohonan sudah final (Selesai/Ditolak) dan terkunci |
 | 429 | terlalu sering mencoba — tunggu ±1 menit |
+| 500 | galat di server — `error[0]` berisi pesan umum; laporkan ke pengelola beserta jamnya |
 
 Contoh 422:
 
@@ -69,7 +70,8 @@ Contoh 422:
 | `password` | ya | |
 | `perangkat` | tidak | nama perangkat, mis. `"Samsung A15 — Android 14"` |
 
-Batas: 5 percobaan per menit.
+Batas: 5 percobaan per menit **per akun** (bukan per IP — warga yang berbagi IP
+operator seluler tidak saling mengunci), plus 60 per menit per IP.
 
 ```json
 // 200
@@ -148,12 +150,16 @@ data lamanya dan `perbaiki` berisi kolom yang perlu dibetulkan.
 | `nama`, `email`, `hp`, `kecamatan` | teks; `kecamatan` salah satu dari daftar langkah 1 |
 | `nik`, `kk` | 16 digit |
 | `pass`, `pass2` | min. 6 karakter, tidak boleh angka semua, harus sama |
-| `foto` | foto wajah/selfie — **base64 polos** (tanpa awalan `data:image/...;base64,`) |
-| `ktp` | foto KTP — base64 polos |
+| `foto` | foto wajah/selfie — **JPEG/PNG/WebP**, base64 polos (tanpa awalan `data:image/...;base64,`), maks. 4 MB |
+| `ktp` | foto KTP — ketentuan sama |
 | `otpBukti` | dari langkah 3 (wajib bila `otpWajib`) |
 
 > Kirim base64 **tanpa** awalan `data:`. Firewall hosting (mod_security) memblokir
 > badan permintaan yang memuat awalan itu.
+>
+> ⚠️ **iPhone menyimpan foto sebagai HEIC** — format itu ditolak (422, kode N-18/N-19).
+> Konversi ke JPEG dulu di aplikasi (mis. `image_picker` dengan `imageQuality`,
+> atau kompres ulang ke JPEG). Sekalian perkecil ke lebar ±1000 px supaya unggah cepat.
 
 Balasan: `201` `{nik, status: 0}` (0 = menunggu verifikasi), atau `409` bila NIK
 sudah pernah mendaftar dan masih diproses (`data.cekStatus.nik`).
@@ -171,7 +177,7 @@ sudah pernah mendaftar dan masih diproses (`data.cekStatus.nik`).
 | `GET /berita?limit=&kategori=&q=` | daftar berita |
 | `GET /berita/{slug}` | detail berita |
 | `GET /galeri?limit=&kategori=` | galeri |
-| `GET /demografi` | data kependudukan |
+| `GET /demografi?kategori=jenis-kelamin` | data kependudukan per kecamatan; `&parent=<kode kecamatan>` → per pekon; `&tahun=&semester=` → periode tertentu. `kategori` wajib |
 | `GET /stats` | statistik ringkas |
 | `GET /jam-layanan` | jam buka layanan |
 | `GET /jenis-permohonan` | jenis permohonan |
@@ -262,7 +268,7 @@ Badan = objek `{ <name>: <nilai>, ... }` untuk semua field.
 | `GET /profil` 🔒 | biodata |
 | `PUT /profil` 🔒 | `{nama, hp?, email?, alamat?}` |
 | `POST /profil/change-password` 🔒 | `{passwordLama, passwordBaru, konfirmasi}` |
-| `PUT /profil/foto` 🔒 | `{foto}` base64 polos |
+| `PUT /profil/foto` 🔒 | `{foto}` base64 polos JPEG/PNG/WebP |
 | `DELETE /profil/foto` 🔒 | hapus foto |
 | `GET /notifikasi?limit=` 🔒 | `{items[], unread}` |
 | `PATCH /notifikasi` 🔒 | tandai semua dibaca |

@@ -395,8 +395,11 @@ class PermohonanAdminController extends Controller
         if ($status === Permohonan::STATUS_DITOLAK) {
             $alasan = trim((string) $request->input('alasan'));
             $keterangan = trim((string) $request->input('keterangan'));
+            // Butir non-teks (objek/array dari klien yang salah bentuk) dibuang,
+            // bukan di-cast: `(string) array` melempar galat 500. Tanpa butir
+            // yang sah, pemeriksaan "rincian wajib" di bawah menjawab 422.
             $rincian = array_values(array_filter(
-                array_map(fn ($s) => trim((string) $s), (array) $request->input('rincian', [])),
+                array_map(fn ($s) => is_scalar($s) ? trim((string) $s) : '', (array) $request->input('rincian', [])),
                 fn ($s) => $s !== '',
             ));
 

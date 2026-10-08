@@ -315,3 +315,26 @@ yang memuat `laravel/sanctum`. Tanpa tabel itu login mobile galat 500; website t
 
 ⚠️ Urutan di `routes/mobile.php`: endpoint khusus mobile HARUS di atas `require routes/api.php` —
 catch-all `POST {layanan}/{aksi}` di sana menelan rute dua-segmen seperti `auth/login`.
+
+### Uji ujung-ke-ujung API mobile (8 Okt 2026) — 145/145 lolos
+
+Skrip Python di luar repo (curl-setara) menjalankan alur nyata di DB lokal: daftar akun → ditolak →
+ajukan ulang → diaktifkan petugas → login → **ke-15 layanan diajukan** (unggah berkas + kirim) →
+riwayat, PDF, notifikasi → petugas proses/tolak/selesai (+423 untuk yang final) → loket atas nama warga
+→ profil/foto/ganti sandi/lupa sandi → aspirasi (pengaduan, kritik, SKM) → batas wewenang warga & OPD →
+token palsu/kedaluwarsa/logout → sapu SEMUA GET untuk Super Admin. Juga diuji dengan `config:cache` +
+`route:cache` (seperti produksi). Seluruh data uji (3 akun, 32 permohonan, 622 notifikasi, 33 berkas)
+dihapus lagi; total permohonan kembali 11.920.
+
+Yang DITEMUKAN & dibetulkan:
+
+1. 🔴 **Rate limit per IP mengunci warga lain (CGNAT).** `throttle:5,1` memberi tamu kunci `domain|IP`
+   tanpa nama rute — login, daftar, lupa sandi, ajukan ulang berbagi SATU penghitung per IP. Jalur mobile
+   kini memakai limiter bernama `mobile-ketat` (5/menit per rute per akun + 60/menit per IP) dan
+   `mobile-longgar` (OTP, cek status) di `AppServiceProvider`. ⚠️ Website MASIH memakai `throttle:X,1`
+   polos — masalah yang sama ada di sana, tidak diubah di sini.
+2. 🔴 **Pendaftaran menerima foto/KTP yang bukan gambar** — `FotoProfil::simpan()` diam-diam null dan
+   akun tersimpan TANPA selfie & KTP. Foto HEIC iPhone memicunya. `RegisterController` kini memeriksa
+   `FotoProfil::gambarSah()` (membaca angka ajaib berkasnya) SEBELUM akun dibuat → 422 N-18/N-19.
+3. **`rincian` penolakan berbentuk objek → 500** (`(string) array`). Butir non-teks kini dibuang → 422.
+4. **Galat 500 di jalur mobile** kini tetap berkontrak `Balasan` (pesan umum bila `APP_DEBUG=false`).

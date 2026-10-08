@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
+use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -46,6 +49,35 @@ class AppServiceProvider extends ServiceProvider
         // Yang dikirim SENGAJA cuma tiga kolom. Prop island tercetak sebagai
         // atribut HTML di sumber halaman — apa pun yang ditaruh di sini bisa
         // dibaca siapa saja yang membuka "view source".
+        /*
+         * Pembatas laju endpoint tamu di API mobile (`routes/mobile.php`).
+         *
+         * 🔴 Bukan `throttle:5,1` seperti di website, dan alasannya CGNAT.
+         * `throttle:X,Y` polos memberi tamu kunci `domain|IP` saja — tanpa nama
+         * rute — jadi login, daftar, lupa sandi, dan ajukan ulang berbagi SATU
+         * penghitung per IP. Operator seluler menaruh ribuan pelanggan di
+         * belakang satu IP publik; dengan kunci itu, lima warga yang login dari
+         * jaringan yang sama dalam semenit membuat warga keenam terkunci.
+         * Terbukti saat uji ujung-ke-ujung 8 Okt 2026.
+         *
+         * Di sini batas ketatnya per RUTE per AKUN (NIK/username/email/HP yang
+         * dikirim) — tebak-sandi terhadap satu akun tetap tertahan — ditambah
+         * batas per IP yang longgar sebagai rem serangan massal.
+         */
+        $identitas = fn (Request $r) => strtolower(trim((string) (
+            $r->input('user_id') ?? $r->input('nik') ?? $r->input('email') ?? $r->input('hp') ?? ''
+        ))) ?: 'ip:'.$r->ip();
+
+        RateLimiter::for('mobile-ketat', fn (Request $r) => [
+            Limit::perMinute(5)->by('akun|'.$r->path().'|'.$identitas($r)),
+            Limit::perMinute(60)->by('ip|'.$r->path().'|'.$r->ip()),
+        ]);
+
+        RateLimiter::for('mobile-longgar', fn (Request $r) => [
+            Limit::perMinute(20)->by('akun|'.$r->path().'|'.$identitas($r)),
+            Limit::perMinute(120)->by('ip|'.$r->path().'|'.$r->ip()),
+        ]);
+
         View::composer('publik.layout', function ($view) {
             $u = Auth::user();
 

@@ -124,6 +124,20 @@ class RegisterController extends Controller
             throw ValidationException::withMessages(['pass2' => 'Info: Password Konfirmasi Tidak Sama (N-09)']);
         }
 
+        // 🔴 Isi gambar diperiksa DI SINI, sebelum akun dibuat. Aturan `required`
+        // di atas hanya memastikan teksnya ada; kalau bukan gambar, `FotoProfil`
+        // di bawah diam-diam membalas null dan akun tetap tersimpan TANPA selfie
+        // dan KTP — petugas lalu diminta memverifikasi akun yang tak bisa
+        // diverifikasi. Ditemukan lewat uji API mobile 8 Okt 2026 (foto HEIC iPhone
+        // lolos pola base64); website tidak pernah memicunya karena browser
+        // selalu mengirim JPEG hasil canvas.
+        if (! $this->foto->gambarSah($data['foto'])) {
+            throw ValidationException::withMessages(['foto' => 'Info: Foto wajah/selfie tidak valid — kirim gambar JPG/PNG/WebP (N-18)']);
+        }
+        if (! $this->foto->gambarSah($data['ktp'])) {
+            throw ValidationException::withMessages(['ktp' => 'Info: Foto KTP tidak valid — kirim gambar JPG/PNG/WebP (N-19)']);
+        }
+
         // Identitas (email/WA sesuai kanal aktif) wajib lolos OTP — kecuali
         // layanan OTP memang belum dikonfigurasi di production.
         if ($this->otp->wajib()) {

@@ -34,17 +34,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 // ── Tamu ────────────────────────────────────────────────────────────────────
-Route::post('/auth/login', [AuthMobileController::class, 'masuk'])->middleware('throttle:5,1');
+// Pembatas laju bernama, bukan `throttle:5,1` seperti website — dihitung per
+// akun per rute, bukan per IP. Alasannya (CGNAT) di AppServiceProvider.
+Route::post('/auth/login', [AuthMobileController::class, 'masuk'])->middleware('throttle:mobile-ketat');
 
 Route::get('/auth/register', [RegisterController::class, 'formulirJson']);
-Route::post('/auth/register', [RegisterController::class, 'daftar'])->middleware('throttle:5,1');
-Route::post('/auth/otp/send', [OtpController::class, 'kirim'])->middleware('throttle:10,1');
-Route::post('/auth/otp/verify', [OtpController::class, 'verifikasi'])->middleware('throttle:20,1');
+Route::post('/auth/register', [RegisterController::class, 'daftar'])->middleware('throttle:mobile-ketat');
+Route::post('/auth/otp/send', [OtpController::class, 'kirim'])->middleware('throttle:mobile-longgar');
+Route::post('/auth/otp/verify', [OtpController::class, 'verifikasi'])->middleware('throttle:mobile-longgar');
 
-Route::post('/auth/cek-status', [CekStatusController::class, 'periksa'])->middleware('throttle:20,1');
-Route::post('/auth/ajukan-ulang', [CekStatusController::class, 'ajukanUlang'])->middleware('throttle:5,1');
+Route::post('/auth/cek-status', [CekStatusController::class, 'periksa'])->middleware('throttle:mobile-longgar');
+Route::post('/auth/ajukan-ulang', [CekStatusController::class, 'ajukanUlang'])->middleware('throttle:mobile-ketat');
 
-Route::post('/auth/forgot-password', [SandiController::class, 'kirimTautan'])->middleware('throttle:5,1');
+Route::post('/auth/forgot-password', [SandiController::class, 'kirimTautan'])->middleware('throttle:mobile-ketat');
 
 // ── Berizin (token) ─────────────────────────────────────────────────────────
 Route::middleware('auth')->group(function () {

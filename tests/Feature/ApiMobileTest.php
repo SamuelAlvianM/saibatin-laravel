@@ -2,10 +2,14 @@
 
 namespace Tests\Feature;
 
+use App\Http\Middleware\PakaiTokenMobile;
 use App\Models\Permohonan;
 use App\Models\User;
 use App\Models\UserLevel;
+use App\Support\KlienMobile;
+use Illuminate\Support\Facades\Route;
 use Laravel\Sanctum\Sanctum;
+use RuntimeException;
 use Tests\TestCase;
 
 /**
@@ -113,6 +117,36 @@ class ApiMobileTest extends TestCase
 
         Sanctum::actingAs($this->akun(UserLevel::SUPER_ADMIN));
         $this->get(self::P.'/layanan/'.$slug)->assertOk()->assertJsonPath('data.prefill', []);
+    }
+
+    public function test_galat_server_tetap_memakai_kontrak_balasan(): void
+    {
+        config(['app.debug' => false]);
+        Route::middleware([PakaiTokenMobile::class, 'api'])
+            ->get(KlienMobile::PREFIX.'/__uji-galat', fn () => throw new RuntimeException('rahasia internal'));
+
+        $this->get(self::P.'/__uji-galat')
+            ->assertStatus(500)
+            ->assertJsonPath('error.0', 'Terjadi kesalahan di server. Silakan coba lagi.')
+            ->assertDontSee('rahasia internal');
+    }
+
+    public function test_batas_login_per_akun_bukan_per_ip(): void
+    {
+        // 🔴 CGNAT: banyak warga berbagi satu IP. Akun lain dari IP yang sama
+        // TIDAK boleh ikut terkunci karena satu akun salah sandi berkali-kali.
+        config(['cache.default' => 'array']);
+
+        for ($i = 0; $i < 5; $i++) {
+            $this->post(self::P.'/auth/login', ['user_id' => 'uji-batas-a', 'password' => 'x']);
+        }
+
+        $this->post(self::P.'/auth/login', ['user_id' => 'uji-batas-a', 'password' => 'x'])
+            ->assertStatus(429)
+            ->assertJsonStructure(['error', 'success', 'data', 'html']);
+
+        $this->post(self::P.'/auth/login', ['user_id' => 'uji-batas-b', 'password' => 'x'])
+            ->assertStatus(401);
     }
 
     public function test_website_tetap_memakai_sesi_bukan_token(): void

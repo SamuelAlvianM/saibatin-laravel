@@ -69,6 +69,37 @@ class FotoProfil
      */
     public function simpan(?string $dataUrl, int $userId, string $folder = self::SELFIE): ?string
     {
+        $gambar = $this->uraikan($dataUrl);
+
+        if ($gambar === null) {
+            return null;
+        }
+
+        [$biner, $ext] = $gambar;
+
+        $nama = $userId.'_'.now()->getTimestampMs().'.'.$ext;
+
+        Storage::disk(self::DISK)->put(self::INDUK.'/'.$folder.'/'.$nama, $biner);
+
+        return '/uploads/'.$folder.'/'.$nama;
+    }
+
+    /**
+     * Apakah nilai ini akan BENAR-BENAR tersimpan oleh `simpan()`?
+     *
+     * `adalahDataUrlGambar()` hanya memeriksa bentuk teksnya. Foto HEIC dari
+     * iPhone, misalnya, lolos pola base64 tapi ditolak `simpan()` — dan
+     * penolakan itu diam (null). Pemanggil yang harus menolak SEBELUM menulis
+     * data lain (pendaftaran akun) memakai pemeriksaan ini.
+     */
+    public function gambarSah(mixed $nilai): bool
+    {
+        return $this->uraikan($nilai) !== null;
+    }
+
+    /** @return array{0: string, 1: string}|null  [biner, ekstensi] */
+    private function uraikan(mixed $dataUrl): ?array
+    {
         if (! $this->adalahDataUrlGambar($dataUrl)) {
             return null;
         }
@@ -89,15 +120,7 @@ class FotoProfil
             ? (str_contains($meta, 'png') ? 'png' : (str_contains($meta, 'webp') ? 'webp' : 'jpg'))
             : $this->ekstensiDariBiner($biner);
 
-        if ($ext === null) {
-            return null;
-        }
-
-        $nama = $userId.'_'.now()->getTimestampMs().'.'.$ext;
-
-        Storage::disk(self::DISK)->put(self::INDUK.'/'.$folder.'/'.$nama, $biner);
-
-        return '/uploads/'.$folder.'/'.$nama;
+        return $ext === null ? null : [$biner, $ext];
     }
 
     /** Simpan foto/scan KTP — folder terpisah, kontrol akses sama. */
